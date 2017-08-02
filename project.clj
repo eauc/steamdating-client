@@ -1,16 +1,21 @@
 (defproject steamdating "0.1.0-SNAPSHOT"
   :min-lein-version "2.0.0"
-  :main steamdating.server.core
-  :clean-targets ^{:protect false} ["node_modules" "target" "resources/public/js"]
+  :clean-targets ^{:protect false} ["node_modules"
+                                    "resources/public/css"
+                                    "resources/public/js"
+                                    "target"]
   :dependencies [[org.clojure/clojure "1.9.0-alpha4"]
                  [org.clojure/clojurescript "1.9.854"]
                  [devcards "0.2.3"]
+                 [garden "1.3.2"]
                  [re-frame "0.9.4"]]
   :plugins [[lein-cljsbuild "1.1.7"]
-            [lein-figwheel "0.5.12"]
+            [lein-figwheel "0.5.12" :exclusions [org.clojure/clojure]]
+            [lein-garden "0.3.0" :exclusions [org.clojure/clojure org.apache.commons/commons-compress]]
             [lein-pprint "1.1.2"]]
-  :source-paths ["src"]
+  :source-paths []
   :hooks [leiningen.cljsbuild]
+  :prep-tasks [["garden" "once"]]
   :cljsbuild
   {:builds
    {:client {:source-paths ["src/client"]
@@ -35,7 +40,15 @@
                         :npm-deps {:compression "1.7.0"
                                    :express "4.15.3"}
                         :install-deps true}}}}
-  :figwheel {:validate-config false}
+  :figwheel {:css-dirs ["resources/public/css"]
+             :validate-config false}
+  :garden
+  {:builds
+   [{:id :screen
+     :source-paths ["src/client"]
+     :stylesheet steamdating.styles/screen
+     :compiler {:output-to "resources/public/css/screen.css"
+                :pretty-print? true}}]}
   :profiles
   {:dev
    {:dependencies [[binaryage/devtools "0.9.4"]

@@ -5,3 +5,4 @@ package.json
 resources/public/js/client*
 figwheel_server.log
 resources/public/js/test*
+resources/public/css
