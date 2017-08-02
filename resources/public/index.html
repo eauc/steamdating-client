@@ -4,8 +4,26 @@
     <title>Steamdating</title>
   </head>
   <body>
-    Hello world.
-
+    <div class="sd">
+      <div class="sd-Nav">
+        <div class="sd-NavBrand">
+          SteamDating
+        </div>
+        <div class="sd-NavMenu-container"></div>
+      </div>
+      <div class="sd-Page-container">
+        Loading...
+      </div>
+      <div class="sd-Prompt-container">
+      </div>
+      <div class="sd-Debug">
+      </div>
+    </div>
     <script type="text/javascript" src="js/client.js"></script>
+    <script>
+      window.addEventListener("load", function onLoad() {
+        steamdating.core.init();
+      });
+    </script>
   </body>
 </html>

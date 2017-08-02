@@ -4,7 +4,8 @@
   :clean-targets ^{:protect false} ["node_modules" "target" "resources/public/js"]
   :dependencies [[org.clojure/clojure "1.9.0-alpha4"]
                  [org.clojure/clojurescript "1.9.854"]
-                 [devcards "0.2.3"]]
+                 [devcards "0.2.3"]
+                 [re-frame "0.9.4"]]
   :plugins [[lein-cljsbuild "1.1.7"]
             [lein-figwheel "0.5.12"]
             [lein-pprint "1.1.2"]]
@@ -38,11 +39,11 @@
   :profiles
   {:dev
    {:dependencies [[binaryage/devtools "0.9.4"]
-                   [figwheel-sidecar "0.5.12"]
+                   [figwheel-sidecar "0.5.12" :exclusions [org.clojure/tools.nrepl org.clojure/core.async]]
                    [com.cemerick/piggieback "0.2.2"]]
     :cljsbuild
     {:builds
-     {:client {:figwheel true
+     {:client {:figwheel {:on-jsload "steamdating.core/mount-root"}
                :compiler {:pretty-print true
                           :output-dir "resources/public/js/client"
                           :asset-path "js/client"
