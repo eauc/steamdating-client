@@ -9,7 +9,8 @@
             [steamdating.styles.4-objects.menu :refer [menu]]
             [steamdating.styles.4-objects.nav :refer [nav]]
             [steamdating.styles.4-objects.text-muted :refer [text-muted]]
-            [steamdating.styles.5-components.prompt :refer [prompt]]))
+            [steamdating.styles.5-components.prompt :refer [prompt]]
+            [steamdating.styles.5-components.toaster :refer [toaster]]))
 
 (gdef/defstyles screen
   fonts
@@ -20,4 +21,5 @@
    menu
    nav
    prompt
-   text-muted])
+   text-muted
+   toaster])

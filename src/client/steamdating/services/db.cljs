@@ -2,6 +2,7 @@
   (:require [cljs.spec.alpha :as spec]
             [re-frame.core :as re-frame]
             [steamdating.components.prompt.spec]
+            [steamdating.components.toaster.spec]
             [steamdating.services.debug :refer [debug?]]))
 
 
@@ -13,9 +14,14 @@
   (spec/nilable :steamdating.prompt/prompt))
 
 
+(spec/def ::toaster
+  (spec/nilable :steamdating.toaster/toaster))
+
+
 (spec/def ::db
   (spec/keys :req-un [::page
-                      ::prompt]))
+                      ::prompt
+                      ::toaster]))
 
 
 (defn check-db-schema
@@ -47,7 +53,8 @@
 
 (def default-db
   {:page nil
-   :prompt nil})
+   :prompt nil
+   :toaster nil})
 
 
 (reg-event-fx
