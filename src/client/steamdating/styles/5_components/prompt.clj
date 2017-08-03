@@ -2,8 +2,7 @@
   (:require [garden.def :as gdef]
             [steamdating.styles.0-settings.box-model :refer [box-model]]
             [steamdating.styles.0-settings.colors :refer [colors]]
-            [steamdating.styles.1-tools.button :refer [button]]
-            [steamdating.styles.1-tools.input :refer [input]]))
+            [steamdating.styles.1-tools.button :refer [button]]))
 
 (def control
   {:margin "0 0.5em"
@@ -32,7 +31,6 @@
             :margin-top "1em"
             :min-width "10em"
             :min-height "2em"}]
-   (input [:&-value])
    [:&-controls {:display "flex"
                  :flex-direction "row"
                  :justify-content "space-around"
@@ -45,6 +43,5 @@
    (button
      [:&-control-cancel]
      control)
-   [:&-control-hide {:display "none"}]
    [:&-show {:opacity 1
              :pointer-events "all"}]])

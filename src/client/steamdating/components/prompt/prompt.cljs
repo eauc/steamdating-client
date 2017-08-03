@@ -1,21 +1,21 @@
 (ns steamdating.components.prompt.prompt
   (:require [re-frame.core :as re-frame]
             [steamdating.components.generics.icon :refer [icon]]
+            [steamdating.components.generics.input :refer [input]]
             [steamdating.components.prompt.handler]
             [steamdating.components.prompt.spec]
             [steamdating.components.prompt.sub]))
 
 
 (defn render
-  [_ {:keys [on-cancel on-update on-validate]}]
+  [_ {:keys [on-cancel on-update on-validate value]}]
 
   (let [on-form-click #(-> % .stopPropagation)
         on-form-submit (fn [event]
                          (doto event
                            (.preventDefault)
                            (.stopPropagation))
-                         (on-validate))
-        on-input-change #(on-update (-> % .-target .-value))]
+                         (on-validate))]
     (fn prompt-render
       [{:keys [message type value] :as state} _]
 
@@ -24,23 +24,20 @@
         [:form.sd-Prompt-content {:on-click on-form-click
                                   :on-submit on-form-submit}
          [:div.sd-Prompt-msg message]
-         [:input.sd-Prompt-value {:class (when (not= type :prompt)
-                                           "sd-Prompt-control-hide")
-                                  :type (if (number? value) "number" "text")
-                                  :id "prompt.value"
-                                  :name "prompt.value"
-                                  :value value
-                                  :on-change on-input-change}]
+         (when (= type :prompt)
+           [input {:field "prompt.value"
+                   :value value
+                   :on-update on-update}])
          [:div.sd-Prompt-controls
           [:button.sd-Prompt-control-ok {:type "submit"}
            [:span "Ok "]
            [icon {:name "check"}]]
-          [:button.sd-Prompt-control-cancel {:class (when (= type :alert)
-                                                      "sd-Prompt-control-hide")
-                                             :type "button"
-                                             :on-click on-cancel}
-           [:span "No "]
-           [icon {:name "close"}]]]]]])))
+          (when (not= type :alert)
+            [:button.sd-Prompt-control-cancel
+             {:type "button"
+              :on-click on-cancel}
+             [:span "No "]
+             [icon {:name "close"}]])]]]])))
 
 
 (defn prompt
@@ -48,7 +45,7 @@
 
   (let [state (re-frame/subscribe [:prompt])
         on-cancel #(re-frame/dispatch [:prompt-cancel])
-        on-update #(re-frame/dispatch [:prompt-update %])
+        on-update #(re-frame/dispatch [:prompt-update %2])
         on-validate #(re-frame/dispatch [:prompt-validate])]
     (fn prompt-component
       []
