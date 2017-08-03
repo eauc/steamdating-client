@@ -1,8 +1,12 @@
-(ns steamdating.db
-  (:require [re-frame.core :as re-frame]
-            [cljs.spec.alpha :as spec]
+(ns steamdating.services.db
+  (:require [cljs.spec.alpha :as spec]
+            [re-frame.core :as re-frame]
             [steamdating.components.prompt.spec]
-            [steamdating.debug :refer [debug?]]))
+            [steamdating.services.debug :refer [debug?]]))
+
+
+(spec/def ::page
+  (spec/nilable keyword?))
 
 
 (spec/def ::prompt
@@ -10,7 +14,8 @@
 
 
 (spec/def ::db
-  (spec/keys :req-un [::prompt]))
+  (spec/keys :req-un [::page
+                      ::prompt]))
 
 
 (defn check-db-schema
@@ -41,7 +46,8 @@
 
 
 (def default-db
-  {:prompt {:type :prompt :message "Alert" :value 42}})
+  {:page nil
+   :prompt nil})
 
 
 (reg-event-fx

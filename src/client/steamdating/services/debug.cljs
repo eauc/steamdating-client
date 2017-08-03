@@ -1,4 +1,4 @@
-(ns steamdating.debug)
+(ns steamdating.services.debug)
 
 
 (defonce debug?

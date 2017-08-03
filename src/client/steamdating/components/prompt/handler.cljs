@@ -1,6 +1,14 @@
 (ns steamdating.components.prompt.handler
-  (:require [steamdating.db :as db]
-            [re-frame.core :as re-frame]))
+  (:require [re-frame.core :as re-frame]
+            [steamdating.services.db :as db]))
+
+
+(db/reg-event-fx
+  :prompt-set
+  [(re-frame/path :prompt)]
+  (fn prompt-set
+    [_ [prompt]]
+    {:db prompt}))
 
 
 (db/reg-event-fx

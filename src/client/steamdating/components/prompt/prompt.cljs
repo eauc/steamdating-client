@@ -1,6 +1,6 @@
 (ns steamdating.components.prompt.prompt
   (:require [re-frame.core :as re-frame]
-            [steamdating.components.misc.icon :refer [icon]]
+            [steamdating.components.generics.icon :refer [icon]]
             [steamdating.components.prompt.handler]
             [steamdating.components.prompt.spec]
             [steamdating.components.prompt.sub]))

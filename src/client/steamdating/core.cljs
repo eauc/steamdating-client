@@ -4,8 +4,9 @@
             [steamdating.components.nav.menu :as nav]
             [steamdating.components.page.root :as page]
             [steamdating.components.prompt.prompt :refer [prompt]]
-            [steamdating.debug :as debug]
-            [steamdating.db :as db]))
+            [steamdating.services.debug :as debug]
+            [steamdating.services.db :as db]
+            [steamdating.services.routes :as routes]))
 
 
 (defn mount-root
@@ -23,4 +24,5 @@
   []
   (debug/setup)
   (re-frame/dispatch-sync [:initialize-db])
+  (routes/init)
   (mount-root))

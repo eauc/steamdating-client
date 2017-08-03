@@ -1,5 +1,6 @@
 (ns steamdating.components.nav.toggle
-  (:require [steamdating.components.misc.icon :refer [icon]]))
+  (:require [steamdating.components.generics.icon :refer [icon]]))
+
 
 (defn toggle
   [{:keys [toggle-show]}]

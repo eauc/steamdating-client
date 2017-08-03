@@ -51,9 +51,9 @@
            :margin 0}])
    (at-break
      :pc
-     {:padding "0 1em 0 0"
-      :text-align "right"}
-     [:& {:display "initial"}]
+     [:& {:display "initial"
+          :padding "0 1em 0 0"
+          :text-align "right"}]
      [:&Item {:padding-left "3em"}]
      [:hr {:border-width "1px"
            :margin-bottom 0

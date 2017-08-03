@@ -13,11 +13,11 @@
 
 
 (spec/def :steamdating.prompt/on-cancel
-  (spec/coll-of keyword? :kind vector?))
+  vector?)
 
 
 (spec/def :steamdating.prompt/on-validate
-  (spec/coll-of keyword? :kind vector?))
+  vector?)
 
 
 (spec/def :steamdating.prompt/value

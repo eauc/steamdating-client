@@ -1,4 +1,5 @@
-(ns steamdating.components.misc.icon)
+(ns steamdating.components.generics.icon)
+
 
 (defn icon
   [{:keys [name]}]
