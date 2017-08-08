@@ -8,7 +8,12 @@
             [clojure.string :as str]))
 
 
-(defroute home "/" {}
+(defroute root "/" {}
+  (println "route home")
+  (re-frame/dispatch [:page :home]))
+
+
+(defroute home "/home" {}
   (println "route home")
   (re-frame/dispatch [:page :home]))
 

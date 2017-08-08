@@ -6,7 +6,8 @@
             [steamdating.components.prompt.prompt :refer [prompt]]
             [steamdating.services.debug :as debug]
             [steamdating.services.db :as db]
-            [steamdating.services.routes :as routes]))
+            [steamdating.services.routes :as routes]
+            [steamdating.services.tournament :as tournament]))
 
 
 (defn mount-root

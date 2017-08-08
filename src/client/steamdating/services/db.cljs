@@ -18,10 +18,15 @@
   (spec/nilable :steamdating.toaster/toaster))
 
 
+(spec/def ::tournament
+  map?)
+
+
 (spec/def ::db
   (spec/keys :req-un [::page
                       ::prompt
-                      ::toaster]))
+                      ::toaster
+                      ::tournament]))
 
 
 (defn check-db-schema
@@ -52,9 +57,10 @@
 
 
 (def default-db
-  {:page nil
+  {:page :home
    :prompt nil
-   :toaster nil})
+   :toaster nil
+   :tournament {}})
 
 
 (reg-event-fx

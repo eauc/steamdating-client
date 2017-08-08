@@ -3,6 +3,7 @@
   (:require [goog.events :as events]
             [goog.history.EventType :as EventType]
             [secretary.core :as secretary]
+            [steamdating.pages.file :as file]
             [steamdating.pages.home :as home]
             [steamdating.services.db :as db]
             [re-frame.core :as re-frame]))

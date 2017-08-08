@@ -10,16 +10,21 @@
             [steamdating.styles.4-objects.nav :refer [nav]]
             [steamdating.styles.4-objects.text-muted :refer [text-muted]]
             [steamdating.styles.5-components.prompt :refer [prompt]]
-            [steamdating.styles.5-components.toaster :refer [toaster]]))
+            [steamdating.styles.5-components.toaster :refer [toaster]]
+            [steamdating.styles.5-components.tournament :refer [tournament]]
+            [steamdating.styles.6-pages.file :refer [file-page]]))
+
 
 (gdef/defstyles screen
   fonts
   text
   [:.sd
+   file-page
    input
    layout
    menu
    nav
    prompt
    text-muted
-   toaster])
+   toaster
+   tournament])
