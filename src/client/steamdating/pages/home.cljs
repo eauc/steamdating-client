@@ -24,7 +24,7 @@
     [_ [message value]]
     (println "test-prompt" message value)
     {:dispatch [:toaster-set {:type :info
-                              :message (str/join " : " [message value])}]}))
+                              :message (str/join " : " (remove nil? [message value]))}]}))
 
 
 (defmethod page-root/render :home

@@ -1,0 +1,3 @@
+---
+default: --profile html_report
+html_report: --format pretty --format html --out features/report/report.html
