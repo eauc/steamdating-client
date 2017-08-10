@@ -25,9 +25,11 @@
                                   :on-submit on-form-submit}
          [:div.sd-Prompt-msg message]
          (when (= type :prompt)
-           [input {:field "prompt.value"
+           [input {:name "value"
+                   :type (if (number? value) "number" "text")
                    :value value
-                   :on-update on-update}])
+                   :on-update on-update
+                   :autofocus "autofocus"}])
          [:div.sd-Prompt-controls
           [:button.sd-Prompt-control-ok {:type "submit"}
            [:span "Ok "]

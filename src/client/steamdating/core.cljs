@@ -6,6 +6,7 @@
             [steamdating.components.prompt.prompt :refer [prompt]]
             [steamdating.services.debug :as debug]
             [steamdating.services.db :as db]
+            [steamdating.services.forms :as forms]
             [steamdating.services.routes :as routes]
             [steamdating.services.tournament :as tournament]))
 

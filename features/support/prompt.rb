@@ -7,7 +7,7 @@ module Prompt
 
   def set_prompt_value(value)
     within(PROMPT_SELECTOR) do
-      fill_in("prompt.value", with: value)
+      fill_in("value", with: value)
       sleep 0.5
     end
   end

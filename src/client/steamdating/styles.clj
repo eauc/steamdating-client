@@ -4,6 +4,7 @@
             [steamdating.styles.0-settings.colors :refer [colors]]
             [steamdating.styles.2-generics.fonts :refer [fonts]]
             [steamdating.styles.3-elements.text :refer [text]]
+            [steamdating.styles.4-objects.form :refer [form]]
             [steamdating.styles.4-objects.input :refer [input]]
             [steamdating.styles.4-objects.layout :refer [layout]]
             [steamdating.styles.4-objects.menu :refer [menu]]
@@ -20,6 +21,7 @@
   text
   [:.sd
    file-page
+   form
    input
    layout
    menu

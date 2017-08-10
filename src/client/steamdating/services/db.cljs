@@ -3,7 +3,12 @@
             [re-frame.core :as re-frame]
             [steamdating.components.prompt.spec]
             [steamdating.components.toaster.spec]
+            [steamdating.models.form]
             [steamdating.services.debug :refer [debug?]]))
+
+
+(spec/def ::forms
+  (spec/map-of keyword? :steamdating.form/form))
 
 
 (spec/def ::page
@@ -23,7 +28,8 @@
 
 
 (spec/def ::db
-  (spec/keys :req-un [::page
+  (spec/keys :req-un [::forms
+                      ::page
                       ::prompt
                       ::toaster
                       ::tournament]))
@@ -57,7 +63,8 @@
 
 
 (def default-db
-  {:page :home
+  {:forms {}
+   :page :home
    :prompt nil
    :toaster nil
    :tournament {}})
