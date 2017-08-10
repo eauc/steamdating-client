@@ -8,6 +8,7 @@
             [steamdating.services.db :as db]
             [steamdating.services.forms :as forms]
             [steamdating.services.routes :as routes]
+            [steamdating.services.players :as players]
             [steamdating.services.tournament :as tournament]))
 
 

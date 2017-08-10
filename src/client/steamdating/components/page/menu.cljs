@@ -5,11 +5,13 @@
 
 (defn menu-item
   [{:keys [href on-click]} & children]
-  [:a.sd-PageMenuItem {:href (or href "#")
-                       :on-click (fn [event]
-                                   (.preventDefault event)
-                                   (on-click))}
-   children])
+  (apply conj
+         [:a.sd-PageMenuItem
+          {:href (or href "#")
+           :on-click (fn [event]
+                       (.preventDefault event)
+                       (on-click))}]
+         children))
 
 
 (defn menu-toggle

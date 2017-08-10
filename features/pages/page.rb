@@ -6,7 +6,7 @@ module Pages
     include Capybara::DSL
 
     def load
-      visit "/#/#{@name}"
+      visit "/#/#{@route}"
     end
   end
 end

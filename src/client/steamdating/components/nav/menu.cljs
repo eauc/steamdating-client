@@ -21,5 +21,9 @@
               :path "/file"
               :on-click toggle-show}
         "File"]
+       [link {:current-hash @current-hash
+              :path "/players"
+              :on-click toggle-show}
+        "Players"]
        [:div.sd-NavMenu-actions
         [toggle {:toggle-show toggle-show}]]])))

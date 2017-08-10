@@ -3,7 +3,7 @@ require_relative "./page"
 module Pages
   class Home < Page
     def initialize
-      @name = "home"
+      @route = "home"
     end
 
     def test(feature)
