@@ -16,7 +16,7 @@
 
 (defn root
   []
-  (let [page (re-frame/subscribe [:page])]
+  (let [page (re-frame/subscribe [:steamdating.routes/page])]
     (fn root-component
       []
       [render {:page @page}])))

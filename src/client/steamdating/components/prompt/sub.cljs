@@ -2,7 +2,7 @@
   (:require [re-frame.core :as re-frame]))
 
 (re-frame/reg-sub
-  :prompt
+  :steamdating.prompt/prompt
   (fn prompt-sub
     [db _]
     (:prompt db)))

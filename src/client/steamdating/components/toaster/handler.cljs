@@ -8,23 +8,25 @@
 
 
 (re-frame/reg-fx
-  :toaster-timeout
+  :steamdating.toaster/timeout
   (fn []
     (when @timeout (js/clearTimeout @timeout))
-    (reset! timeout (js/setTimeout #(re-frame/dispatch [:toaster-clear]) 1000))))
+    (reset! timeout (js/setTimeout
+                      #(re-frame/dispatch
+                         [:steamdating.toaster/clear]) 1000))))
 
 
 (db/reg-event-fx
-  :toaster-set
+  :steamdating.toaster/set
   [(re-frame/path :toaster)]
   (fn toaster-set
     [_ [toaster]]
     {:db toaster
-     :toaster-timeout nil}))
+     :steamdating.toaster/timeout nil}))
 
 
 (db/reg-event-fx
-  :toaster-clear
+  :steamdating.toaster/clear
   [(re-frame/path :toaster)]
   (fn toaster-clear
     []

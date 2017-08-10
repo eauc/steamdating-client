@@ -43,10 +43,10 @@
 (defn prompt
   []
 
-  (let [state (re-frame/subscribe [:prompt])
-        on-cancel #(re-frame/dispatch [:prompt-cancel])
-        on-update #(re-frame/dispatch [:prompt-update %2])
-        on-validate #(re-frame/dispatch [:prompt-validate])]
+  (let [state (re-frame/subscribe [:steamdating.prompt/prompt])
+        on-cancel #(re-frame/dispatch [:steamdating.prompt/cancel])
+        on-update #(re-frame/dispatch [:steamdating.prompt/update %2])
+        on-validate #(re-frame/dispatch [:steamdating.prompt/validate])]
     (fn prompt-component
       []
 

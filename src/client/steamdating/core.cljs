@@ -24,6 +24,6 @@
 (defn ^:export init
   []
   (debug/setup)
-  (re-frame/dispatch-sync [:initialize-db])
+  (re-frame/dispatch-sync [:steamdating.db/initialize])
   (routes/init)
   (mount-root))

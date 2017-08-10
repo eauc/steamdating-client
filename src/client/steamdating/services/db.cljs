@@ -64,7 +64,7 @@
 
 
 (reg-event-fx
-  :initialize-db
+  :steamdating.db/initialize
   (fn initialize-db
     []
     {:db default-db}))

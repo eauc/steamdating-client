@@ -8,7 +8,7 @@
 
 (defroute file "/file" {}
   (println "route file")
-  (re-frame/dispatch [:page :file]))
+  (re-frame/dispatch [:steamdating.routes/page :file]))
 
 
 (defmethod page-root/render :file

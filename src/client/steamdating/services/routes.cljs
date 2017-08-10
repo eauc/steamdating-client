@@ -25,7 +25,7 @@
 
 
 (db/reg-event-fx
-  :page
+  :steamdating.routes/page
   [(re-frame/path :page)]
-  (fn page-handler [_ [page]]
+  (fn routes-page [_ [page]]
     {:db page}))

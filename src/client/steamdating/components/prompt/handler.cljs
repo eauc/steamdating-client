@@ -4,7 +4,7 @@
 
 
 (db/reg-event-fx
-  :prompt-set
+  :steamdating.prompt/set
   [(re-frame/path :prompt)]
   (fn prompt-set
     [_ [prompt]]
@@ -12,7 +12,7 @@
 
 
 (db/reg-event-fx
-  :prompt-cancel
+  :steamdating.prompt/cancel
   [(re-frame/path :prompt)]
   (fn prompt-cancel
     [{:keys [db]}]
@@ -23,7 +23,7 @@
 
 
 (db/reg-event-fx
-  :prompt-validate
+  :steamdating.prompt/validate
   [(re-frame/path :prompt)]
   (fn prompt-validate
     [{:keys [db]}]
@@ -35,7 +35,7 @@
 
 
 (db/reg-event-fx
-  :prompt-update
+  :steamdating.prompt/update
   [(re-frame/path :prompt)]
   (fn prompt-update
     [{:keys [db]} [value]]

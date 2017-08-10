@@ -5,17 +5,17 @@
 
 
 (db/reg-event-fx
-  :tournament-confirm-set
+  :steamdating.tournament/confirm-set
   (fn tournament-confirm-set [_ [value]]
     {:dispatch
-     [:prompt-set
+     [:steamdating.prompt/set
       {:type :confirm
        :message "All previous data will be replaced. You sure ?"
-       :on-validate [:tournament-set value]}]}))
+       :on-validate [:steamdating.tournament/set value]}]}))
 
 
 (db/reg-event-fx
-  :tournament-set
+  :steamdating.tournament/set
   [(re-frame/path :tournament)]
   (fn tournament-set [_ [value]]
     {:db value}))

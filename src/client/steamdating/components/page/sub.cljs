@@ -2,7 +2,7 @@
   (:require [re-frame.core :as re-frame]))
 
 (re-frame/reg-sub
-  :page
+  :steamdating.routes/page
   (fn page-sub
     [db _]
     (:page db)))

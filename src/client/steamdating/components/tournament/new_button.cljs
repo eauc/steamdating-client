@@ -6,6 +6,7 @@
 (defn new-button
   []
   [:button.sd-TournamentNewButton
-   {:on-click #(re-frame/dispatch [:tournament-confirm-set {}])}
+   {:on-click #(re-frame/dispatch
+                 [:steamdating.tournament/confirm-set {}])}
    [icon {:name "file-o"}]
    [:span " New"]])
