@@ -25,7 +25,9 @@
                            :error (form/field-error @state name)
                            :on-update update-field)])))
         [:button.sd-Form-submit
-         {:class (when-not (form/is-valid @state) "sd-Form-disabled")}
+         {:class (when-not (form/is-valid @state) "sd-Form-disabled")
+          :type "submit"
+          :value "submit"}
          [icon {:name "check"}]]]])))
 
 

@@ -1,10 +1,10 @@
 (ns steamdating.components.generics.form-test
-  (:require [devcards.core :as dc :refer-macros [defcard-rg]]
+  (:require [cljs.spec.alpha :as spec]
+            [devcards.core :as dc :refer-macros [defcard-rg]]
             [reagent.core :as reagent]
             [steamdating.components.generics.form :refer [render-form]]
             [steamdating.components.generics.input :refer [input]]
-            [steamdating.models.form :as form]
-            [cljs.spec.alpha :as spec]))
+            [steamdating.models.form :as form]))
 
 
 (spec/def ::text
@@ -65,19 +65,19 @@
                :label "Select field"
                :type "select"
                :order "3"
-               :options {:opt1 "Option 1"
-                         :opt2 "Option 2"
+               :options {:opt2 "Option 2"
+                         :opt4 "Option 4"
                          :opt3 "Option 3"
-                         :opt4 "Option 4"}}]
+                         :opt1 "Option 1"}}]
        [input {:name :select-multiple
                :label "Select multiple field"
                :type "select"
                :order "4"
                :multiple true
-               :options {:opt1 "Option 1"
-                         :opt2 "Option 2"
-                         :opt3 "Option 3"
-                         :opt4 "Option 4"}}]
+               :options {:opt3 "Option 3"
+                         :opt1 "Option 1"
+                         :opt4 "Option 4"
+                         :opt2 "Option 2"}}]
        [input {:name :checkbox
                :label "Checkbox field"
                :type "checkbox"

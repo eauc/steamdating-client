@@ -66,10 +66,11 @@
   [:select.sd-Input-value
    (dissoc props :options :type)
    (when-not multiple [:option {:value ""} ""])
-   (for [[value label] options]
-     [:option {:key value
-               :value value}
-      label])])
+   (let [sorted-options (sort-by #(nth % 1) options)]
+     (for [[value label] sorted-options]
+       [:option {:key value
+                 :value value}
+        label]))])
 
 
 (defmethod render-value "textarea"
@@ -96,10 +97,11 @@
            (when autofocus
              (js/setTimeout #(.focus element) 100))))
        :reagent-render
-       (fn [{:keys [value]}]
+       (fn [{:keys [options value]}]
          (render-value
-           (assoc props
-                  :value (if-not (nil? value) value default-value))))})))
+           (-> props
+               (cond-> (not (nil? options)) (assoc :options options))
+               (assoc :value (if-not (nil? value) value default-value)))))})))
 
 
 (defmulti render-input :type)

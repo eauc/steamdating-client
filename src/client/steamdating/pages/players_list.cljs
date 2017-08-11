@@ -4,10 +4,11 @@
             [steamdating.components.generics.icon :refer [icon]]
             [steamdating.components.page.menu :refer [menu menu-item]]
             [steamdating.components.page.page :refer [content page]]
-            [steamdating.components.page.root :as page-root]))
+            [steamdating.components.page.root :as page-root]
+            [steamdating.components.player.list :refer [players-list]]))
 
 
-(defroute players-list "/players" {}
+(defroute players-list-route "/players" {}
   (println "route players-list")
   (re-frame/dispatch [:steamdating.routes/page :players-list]))
 
@@ -21,4 +22,4 @@
      "Create Player "
      [icon {:name "user"}]]]
    [content
-    "Players List"]])
+    [players-list]]])

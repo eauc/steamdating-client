@@ -6,6 +6,7 @@
             [steamdating.components.prompt.prompt :refer [prompt]]
             [steamdating.services.debug :as debug]
             [steamdating.services.db :as db]
+            [steamdating.services.factions :as factions]
             [steamdating.services.forms :as forms]
             [steamdating.services.routes :as routes]
             [steamdating.services.players :as players]
@@ -27,5 +28,6 @@
   []
   (debug/setup)
   (re-frame/dispatch-sync [:steamdating.db/initialize])
+  (re-frame/dispatch [:steamdating.factions/initialize])
   (routes/init)
   (mount-root))

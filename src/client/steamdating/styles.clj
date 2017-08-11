@@ -10,6 +10,8 @@
             [steamdating.styles.4-objects.menu :refer [menu]]
             [steamdating.styles.4-objects.nav :refer [nav]]
             [steamdating.styles.4-objects.text-muted :refer [text-muted]]
+            [steamdating.styles.5-components.faction-icon :refer [faction-icon]]
+            [steamdating.styles.5-components.players-list :refer [players-list]]
             [steamdating.styles.5-components.prompt :refer [prompt]]
             [steamdating.styles.5-components.toaster :refer [toaster]]
             [steamdating.styles.5-components.tournament :refer [tournament]]
@@ -20,12 +22,14 @@
   fonts
   text
   [:.sd
+   faction-icon
    file-page
    form
    input
    layout
    menu
    nav
+   players-list
    prompt
    text-muted
    toaster

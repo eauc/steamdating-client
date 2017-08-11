@@ -12,7 +12,14 @@ When(/^I start to create Player$/) do
 end
 
 When(/^I create a valid Player$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  @created_player = {
+    name: "Toto",
+    origin: "Lyon",
+    faction: "Legion",
+    lists: ["Fyanna2", "Absylonia1"],
+    notes: "Notes sur le joueur",
+  }
+  @page.create_player(@created_player)
 end
 
 When(/^I try to create a Player whose name already exists$/) do
@@ -30,7 +37,7 @@ Then(/^I can edit the Player information$/) do
 end
 
 Then(/^I see the created Player in the Players list$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  @page.expect_player_in_list(@created_player)
 end
 
 Then(/^I cannot create the invalid Player$/) do

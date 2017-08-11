@@ -1,10 +1,17 @@
 (ns steamdating.services.db
   (:require [cljs.spec.alpha :as spec]
+            [expound.alpha :refer [expound-str]]
             [re-frame.core :as re-frame]
             [steamdating.components.prompt.spec]
             [steamdating.components.toaster.spec]
+            [steamdating.models.faction]
             [steamdating.models.form]
+            [steamdating.models.tournament :refer [->tournament]]
             [steamdating.services.debug :refer [debug?]]))
+
+
+(spec/def ::factions
+  (spec/nilable :steamdating.faction/factions))
 
 
 (spec/def ::forms
@@ -24,11 +31,12 @@
 
 
 (spec/def ::tournament
-  map?)
+  :steamdating.tournament/tournament)
 
 
 (spec/def ::db
-  (spec/keys :req-un [::forms
+  (spec/keys :req-un [::factions
+                      ::forms
                       ::page
                       ::prompt
                       ::toaster
@@ -39,7 +47,7 @@
   [db]
   (when (not (spec/valid? ::db db))
     (throw (ex-info "db spec check failed"
-                    (spec/explain-data ::db db)))))
+                    (expound-str ::db db)))))
 
 
 (def check-spec-interceptor
@@ -63,11 +71,12 @@
 
 
 (def default-db
-  {:forms {}
+  {:factions nil
+   :forms {}
    :page :home
    :prompt nil
    :toaster nil
-   :tournament {}})
+   :tournament (->tournament)})
 
 
 (reg-event-fx

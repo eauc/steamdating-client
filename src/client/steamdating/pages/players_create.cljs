@@ -22,4 +22,4 @@
      "Cancel "
      [icon {:name "close"}]]]
    [content
-    [edit]]])
+    [edit {:on-submit :steamdating.players/create-current-edit}]]])

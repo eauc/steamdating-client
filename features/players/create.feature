@@ -1,11 +1,11 @@
 Feature: Players Create
 
-  @wip
   Scenario: Start Create
     Given I open Players page
     When I start to create Player
     Then I can edit the Player information
 
+  @wip
   Scenario: Create Valid Player
     Given I open Players page
     When I create a valid Player
