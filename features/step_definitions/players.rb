@@ -4,6 +4,15 @@ Given(/^I open Players page$/) do
   @page = Pages::Players.new.load
 end
 
+Given(/^more Players have been defined$/) do
+  @tournament = JSON.parse(File.read("features/data/morePlayers.json"))
+  Pages::File.new
+    .load
+    .open("morePlayers.json")
+  expect_toaster("File loaded")
+  validate_prompt
+end
+
 Given(/^some Players have been defined$/) do
   @tournament = JSON.parse(File.read("features/data/somePlayers.json"))
   Pages::File.new
@@ -11,6 +20,11 @@ Given(/^some Players have been defined$/) do
     .open("somePlayers.json")
   expect_toaster("File loaded")
   validate_prompt
+end
+
+When(/^I filter the Players list with "([^"]*)"$/) do |filter|
+  @filter_value = filter
+  @page.filter_with(filter)
 end
 
 When(/^I start to create Player$/) do
@@ -86,4 +100,37 @@ Then(/^I do not see the deleted Player in the Players list$/) do
   within(".sd-PageContent") do
     expect(page).to have_no_content(@deleted_player["name"])
   end
+end
+
+more_players_filter_matches = {
+  "toto" => {
+    "headers" => ['Name', 'Origin', 'Faction', 'Lists'],
+    "players" => [
+      ['toto', 'lyon', 'Legion', 'Absylonia1, Bethayne1'],
+    ],
+  },
+  "lyon" => {
+    "headers" => ['Name', 'Origin', 'Faction', 'Lists'],
+    "players" => [
+      ['tete', 'lyon', 'Khador', 'Butcher2, Koslov1'],
+      ['toto', 'lyon', 'Legion', 'Absylonia1, Bethayne1'],
+    ],
+  },
+  "kha" => {
+    "headers" => ['Name', 'Faction', 'Origin', 'Lists'],
+    "players" => [
+      ['tete', 'Khador', 'lyon', 'Butcher2, Koslov1'],
+    ],
+  },
+  "abs" => {
+    "headers" => ['Name', 'Lists', 'Origin', 'Faction'],
+    "players" => [
+      ['toto', 'Absylonia1, Bethayne1', 'lyon', 'Legion'],
+      ['toutou', 'Absylonia1, Lylyth2', 'paris', 'Legion'],
+    ],
+  },
+}
+
+Then(/^I see the matching Players with the matching columns first$/) do
+  @page.expect_players_list_with_headers(more_players_filter_matches[@filter_value])
 end

@@ -47,17 +47,17 @@
 
 
 (defmethod render-value :default
-  [{:keys [label] :as props}]
+  [{:keys [label placeholder] :as props}]
   [:input.sd-Input-value
    (assoc props
-          :placeholder label)])
+          :placeholder (or placeholder label))])
 
 
 (defmethod render-value "checkbox"
-  [{:keys [label value] :as props}]
+  [{:keys [label placeholder value] :as props}]
   [:input.sd-Input-value
    (assoc props
-          :placeholder label
+          :placeholder (or placeholder label)
           :checked value)])
 
 
@@ -74,9 +74,9 @@
 
 
 (defmethod render-value "textarea"
-  [{:keys [label] :as props}]
+  [{:keys [label placeholder] :as props}]
   [:textarea.sd-Input-value
-   (assoc props :placeholder label)])
+   (assoc props :placeholder (or placeholder label))])
 
 
 (defn value

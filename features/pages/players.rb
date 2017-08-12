@@ -7,6 +7,13 @@ module Pages
       @route = "players"
     end
 
+    def filter_with(filter)
+      within(".sd-PageContent") do
+        fill_in(placeholder: "Filter", with: filter)
+      end
+      sleep 0.5
+    end
+
     def start_create_player
       within(".sd-PageMenu") do
         click_on("Create Player")
@@ -74,6 +81,15 @@ module Pages
         expect(page).to have_selector("tr", text: row_text)
       end
       self
+    end
+
+    def expect_players_list_with_headers(match)
+      headers = match["headers"].join(".*")
+      players = match["players"].map {|p| p.join(".*") }.join(".*")
+      list = Regexp.new("#{headers}.*#{players}", "i")
+      within(".sd-PageContent") do
+        expect(page).to have_content(list)
+      end
     end
   end
 end

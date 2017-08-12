@@ -5,6 +5,7 @@
             [steamdating.components.prompt.spec]
             [steamdating.components.toaster.spec]
             [steamdating.models.faction]
+            [steamdating.models.filter]
             [steamdating.models.form]
             [steamdating.models.tournament :refer [->tournament]]
             [steamdating.services.debug :refer [debug?]]))
@@ -12,6 +13,10 @@
 
 (spec/def ::factions
   (spec/nilable :steamdating.faction/factions))
+
+
+(spec/def ::filters
+  (spec/nilable :steamdating.filter/filters))
 
 
 (spec/def ::forms
@@ -36,6 +41,7 @@
 
 (spec/def ::db
   (spec/keys :req-un [::factions
+                      ::filters
                       ::forms
                       ::page
                       ::prompt
@@ -72,6 +78,7 @@
 
 (def default-db
   {:factions nil
+   :filters nil
    :forms {}
    :page :home
    :prompt nil

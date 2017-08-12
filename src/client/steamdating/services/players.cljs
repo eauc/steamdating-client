@@ -81,9 +81,10 @@
 (re-frame/reg-sub
   :steamdating.players/list
   :<- [:steamdating.players/players]
+  :<- [:steamdating.filters/pattern :player]
   (fn players-list-sub
-    [players _]
-    players))
+    [[players pattern] _]
+    (player/pattern players pattern)))
 
 
 (re-frame/reg-sub

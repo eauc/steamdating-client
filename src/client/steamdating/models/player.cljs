@@ -62,3 +62,32 @@
   (-> players
       (delete base)
       (add edit)))
+
+
+(def list-columns
+  [:name :origin :faction :lists])
+
+
+(def player->columns
+  (apply juxt list-columns))
+
+
+(defn pattern
+  [players pattern]
+  (let [matches (->> players
+                     (sort-by :name)
+                     (map (fn [p] [p, (select-keys p list-columns)]))
+                     (map (fn [[p cs]] [p, (filter (fn [[key value]]
+                                                     (->> value
+                                                          clj->js
+                                                          (.stringify js/JSON)
+                                                          (re-find pattern)))
+                                                   cs)]))
+                     (remove (fn [[p cs]] (empty? cs))))]
+    {:list (mapv first matches)
+     :columns (vec (set (apply conj (->> matches
+                                         (map #(nth % 1))
+                                         (map #(map first %))
+                                         (flatten)
+                                         (apply conj [:name]))
+                               list-columns)))}))

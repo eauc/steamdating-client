@@ -7,12 +7,14 @@
 
 (gdef/defstyles players-list
   [:&-PlayersList
+   [:.sd-Input {:max-width "20em"}]
    (table [:&-list])
-   [:&-list>:tr {:cursor "pointer"}
-    [(gsel/th (gsel/nth-child "1n+4"))
-     (gsel/td (gsel/nth-child "1n+4")) {:display "none"}
-     (at-break
-       :tablet
-       [:& {:display "table-cell"}])]]
+   [:&-list
+    [:tr {:cursor "pointer"}
+     [(gsel/th (gsel/nth-child "1n+4"))
+      (gsel/td (gsel/nth-child "1n+4")) {:display "none"}
+      (at-break
+        :tablet
+        [:& {:display "table-cell"}])]]]
    [:&Row
     [:&-faction {:white-space "nowrap"}]]])

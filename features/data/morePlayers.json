@@ -1,0 +1,68 @@
+{
+  "players": [
+    {
+      "name": "toto",
+      "origin": "lyon",
+      "faction": "Legion",
+      "lists": [
+        "Absylonia1",
+        "Bethayne1"
+      ]
+    },
+    {
+      "name": "titi",
+      "origin": "dijon",
+      "faction": "Protectorate",
+      "lists": [
+        "Amon1",
+        "Feora1"
+      ]
+    },
+    {
+      "name": "tutu",
+      "origin": "aubagne",
+      "faction": "Mercenaries",
+      "lists": [
+        "Bartolo1",
+        "Cyphon1"
+      ]
+    },
+    {
+      "name": "tete",
+      "origin": "lyon",
+      "faction": "Khador",
+      "lists": [
+        "Butcher2",
+        "Koslov1"
+      ]
+    },
+    {
+      "name": "tyty",
+      "origin": "nantes",
+      "faction": "Protectorate",
+      "lists": [
+        "Malekus1",
+        "Severius1"
+      ]
+    },
+    {
+      "name": "toutou",
+      "origin": "paris",
+      "faction": "Legion",
+      "lists": [
+        "Absylonia1",
+        "Lylyth2"
+      ]
+    },
+    {
+      "name": "teuteu",
+      "origin": "paris",
+      "faction": "Retribution",
+      "lists": [
+        "Helynna1",
+        "Vyros1"
+      ]
+    }
+  ],
+  "version": 1
+}

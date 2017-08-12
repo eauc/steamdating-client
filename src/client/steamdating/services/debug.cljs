@@ -10,3 +10,10 @@
   (when debug?
     (enable-console-print!)
     (println "dev mode")))
+
+
+(defn spy
+  [msg data]
+  (when debug?
+    (println msg data))
+  data)
