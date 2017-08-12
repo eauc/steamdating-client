@@ -97,11 +97,12 @@
            (when autofocus
              (js/setTimeout #(.focus element) 100))))
        :reagent-render
-       (fn [{:keys [options value]}]
+       (fn [{:keys [class options value]}]
          (render-value
            (-> props
                (cond-> (not (nil? options)) (assoc :options options))
-               (assoc :value (if-not (nil? value) value default-value)))))})))
+               (assoc :class class
+                      :value (if-not (nil? value) value default-value)))))})))
 
 
 (defmulti render-input :type)
@@ -114,7 +115,7 @@
      [:label {:for (name (:name props))}
       label])
    [value props]
-   [:p.sd-Input-error
+   [:p.sd-Input-info
     (or error "No error")]])
 
 
@@ -124,7 +125,7 @@
    [:label {:for (name (:name props))}
     [value props]
     [:span (str " " label)]]
-   [:p.sd-Input-error
+   [:p.sd-Input-info
     (or error "No error")]])
 
 

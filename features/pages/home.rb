@@ -8,6 +8,7 @@ module Pages
 
     def test(feature)
       click_on("Test #{feature}")
+      self
     end
   end
 end

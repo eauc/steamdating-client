@@ -3,7 +3,8 @@
             [secretary.core :as secretary :refer-macros [defroute]]
             [steamdating.components.page.page :refer [content page]]
             [steamdating.components.page.root :as page-root]
-            [steamdating.components.tournament.new-button :refer [new-button]]))
+            [steamdating.components.tournament.new-button :refer [new-button]]
+            [steamdating.components.tournament.open-button :refer [open-button]]))
 
 
 (defroute file "/file" {}
@@ -17,4 +18,5 @@
    [content
     [:h3.sd-FilePage-header "Files"]
     [:div.sd-FilePage-fileActions
-     [new-button]]]])
+     [new-button]
+     [open-button]]]])

@@ -45,3 +45,8 @@
   (if (not-empty (find #(= (:name %) (:name player)) players))
     players
     (conj players player)))
+
+
+(defn names
+  [players]
+  (set (map :name players)))

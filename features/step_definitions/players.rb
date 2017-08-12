@@ -1,10 +1,13 @@
 Given(/^I open Players page$/) do
-  @page = Pages::Players.new
-  @page.load
+  @page = Pages::Players.new.load
 end
 
 Given(/^some Players have been defined$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  Pages::File.new
+    .load
+    .open("somePlayers.json")
+  expect_toaster("File loaded")
+  validate_prompt
 end
 
 When(/^I start to create Player$/) do
@@ -23,7 +26,9 @@ When(/^I create a valid Player$/) do
 end
 
 When(/^I try to create a Player whose name already exists$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  @page
+    .start_create_player
+    .fill_player_form({name: "toto"})
 end
 
 Then(/^I can edit the Player information$/) do
@@ -41,5 +46,8 @@ Then(/^I see the created Player in the Players list$/) do
 end
 
 Then(/^I cannot create the invalid Player$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  within(".sd-PageContent") do
+    expect_input_error("Name", "Name already exists")
+    expect_submit_disabled
+  end
 end

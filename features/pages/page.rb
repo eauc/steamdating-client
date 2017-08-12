@@ -7,6 +7,7 @@ module Pages
 
     def load
       visit "/#/#{@route}"
+      self
     end
   end
 end

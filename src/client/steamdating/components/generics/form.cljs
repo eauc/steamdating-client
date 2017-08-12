@@ -6,12 +6,12 @@
 
 (defn render-form
   [state {:keys [label name spec submit update-field]}]
-  (let [on-submit (fn [event]
-                    (.preventDefault event)
-                    (when (form/is-valid @state)
-                      (submit))
-                    false)]
-    (fn [_ _ & children]
+  (fn [_ {:keys [error]} & children]
+    (let [valid? (and (not error) (form/is-valid @state))
+          on-submit (fn [event]
+                      (.preventDefault event)
+                      (when valid? (submit))
+                      false)]
       [:form.sd-Form {:no-validate true
                       :on-submit on-submit}
        [:fieldset.sd-Form-group
@@ -22,10 +22,11 @@
               [node (assoc props
                            :key name
                            :value (form/field-value @state name)
-                           :error (form/field-error @state name)
+                           :error (or (:error props)
+                                      (form/field-error @state name))
                            :on-update update-field)])))
         [:button.sd-Form-submit
-         {:class (when-not (form/is-valid @state) "sd-Form-disabled")
+         {:class (when-not valid? "sd-Form-disabled")
           :type "submit"
           :value "submit"}
          [icon {:name "check"}]]]])))

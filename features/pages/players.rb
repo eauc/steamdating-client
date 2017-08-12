@@ -11,6 +11,7 @@ module Pages
       within(".sd-PageMenu") do
         click_on("Create Player")
       end
+      self
     end
 
     def fill_player_form(player)
@@ -22,6 +23,7 @@ module Pages
         player[:lists].each { |list| select(list, from: "Lists") } if player.key? :lists
       end
       sleep 0.5
+      self
     end
 
     def create_player(player)
@@ -30,6 +32,7 @@ module Pages
       within(".sd-PageContent") do
         click_button({value: "submit"})
       end
+      self
     end
 
     def expect_player_in_list player
@@ -43,6 +46,7 @@ module Pages
       within(".sd-PageContent") do
         expect(page).to have_selector("tr", text: row_text)
       end
+      self
     end
   end
 end

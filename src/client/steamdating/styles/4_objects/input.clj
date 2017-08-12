@@ -18,13 +18,13 @@
     [(gsel/& (gsel/attr :required)) {:border-width "1px 1px 1px 5px"}]
     [:&:focus {:border-color (:focus colors)
                :box-shadow (str "0 0 4px " (gcomp/render-css (:focus-shadow colors)))
-               :outline "none"}]]
-   [:&-error {:font-size "0.8em"
+               :outline "none"}]
+    [:&.error {:border-color "red"}
+     [:&:focus { :outline-color "red"}]]]
+   [:&-info {:font-size "0.8em"
               :font-style "italic"
               :font-weight "bold"
               :color "transparent"
               :margin "0.25em 0 0 0"}]
    [:&.error
-    [:.sd-Input-value {:border-color "red"}
-     [:&:focus { :outline-color "red"}]]
-    [:.sd-Input-error {:color "rgba(255,0,0,0.85)"}]]])
+    [:.sd-Input-info {:color "rgba(255,0,0,0.85)"}]]])

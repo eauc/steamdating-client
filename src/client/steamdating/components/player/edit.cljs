@@ -8,19 +8,22 @@
 (defn edit
   [{:keys [on-submit]}]
   (let [factions-names (re-frame/subscribe [:steamdating.factions/names])
-        casters-names (re-frame/subscribe [:steamdating.players/edit-casters])]
+        casters-names (re-frame/subscribe [:steamdating.players/edit-casters])
+        name-error (re-frame/subscribe [:steamdating.players/edit-name-error])]
     (fn edit-component
       []
       [form {:name :player
              :label "Create Player"
              :on-submit on-submit
-             :spec :steamdating.player/player}
+             :spec :steamdating.player/player
+             :error (boolean @name-error)}
        [input {:name :name
                :label "Name"
                :type "text"
                :required "required"
                :autofocus "autofocus"
-               :order "1"}]
+               :order "1"
+               :error @name-error}]
        [input {:name :origin
                :label "Origin"
                :type "text"

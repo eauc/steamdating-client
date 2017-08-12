@@ -30,10 +30,26 @@
 
 
 (re-frame/reg-sub
-  :steamdating.players/list
-  (fn players-list
+  :steamdating.players/players
+  (fn players-sub
     [db _]
     (get-in db [:tournament :players])))
+
+
+(re-frame/reg-sub
+  :steamdating.players/names
+  :<- [:steamdating.players/players]
+  (fn players-names-sub
+    [players _]
+    (player/names players)))
+
+
+(re-frame/reg-sub
+  :steamdating.players/list
+  :<- [:steamdating.players/players]
+  (fn players-list-sub
+    [players _]
+    players))
 
 
 (re-frame/reg-sub
@@ -42,7 +58,21 @@
     []
     [(re-frame/subscribe [:steamdating.factions/factions])
      (re-frame/subscribe [:steamdating.forms/form :player])])
-  (fn edit-casters
+  (fn edit-casters-sub
     [[factions {:keys [edit] :as form}] _]
     (let [edit-faction (:faction edit)]
       (faction/casters factions edit-faction))))
+
+
+(re-frame/reg-sub
+  :steamdating.players/edit-name-error
+  (fn edit-name-error-input
+    []
+    [(re-frame/subscribe [:steamdating.players/names])
+     (re-frame/subscribe [:steamdating.forms/form :player])])
+  (fn edit-name-error-sub
+    [[names {{base-name :name} :base
+             {edit-name :name} :edit}] _]
+    (let [restricted-names (disj names base-name)]
+      (when (restricted-names edit-name)
+        "Name already exists"))))

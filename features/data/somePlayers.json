@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "players": [
+    {
+      "lists": [
+        "Absylonia1",
+        "Bethayne1"
+      ],
+      "faction": "Legion",
+      "origin": "lyon",
+      "name": "toto"
+    },
+    {
+      "lists": [
+        "Amon1",
+        "Feora1"
+      ],
+      "faction": "Protectorate",
+      "origin": "dijon",
+      "name": "titi"
+    },
+    {
+      "lists": [
+        "Bartolo1",
+        "Cyphon1"
+      ],
+      "faction": "Mercenaries",
+      "origin": "aubagne",
+      "name": "tutu"
+    }
+  ]
+}
