@@ -6,14 +6,14 @@
 
 
 (defn edit
-  [{:keys [on-submit]}]
+  [{:keys [label on-submit]}]
   (let [factions-names (re-frame/subscribe [:steamdating.factions/names])
         casters-names (re-frame/subscribe [:steamdating.players/edit-casters])
         name-error (re-frame/subscribe [:steamdating.players/edit-name-error])]
     (fn edit-component
       []
       [form {:name :player
-             :label "Create Player"
+             :label label
              :on-submit on-submit
              :spec :steamdating.player/player
              :error (boolean @name-error)}

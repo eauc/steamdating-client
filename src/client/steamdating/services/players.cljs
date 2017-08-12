@@ -6,10 +6,18 @@
 
 (db/reg-event-fx
   :steamdating.players/start-create
-  (fn players-start-create
+  (fn start-create
     []
     {:dispatch-n [[:steamdating.forms/reset :player {}]
                   [:steamdating.routes/navigate "/players/create"]]}))
+
+
+(db/reg-event-fx
+  :steamdating.players/start-edit
+  (fn start-edit
+    [_ [player]]
+    {:dispatch-n [[:steamdating.forms/reset :player player]
+                  [:steamdating.routes/navigate "/players/edit"]]}))
 
 
 (db/reg-event-fx
@@ -27,6 +35,15 @@
   (fn create
     [{:keys [db]} [player]]
     {:db (player/add db player)}))
+
+
+(db/reg-event-fx
+  :steamdating.players/delete-current-edit
+  (fn delete-current-edit
+    [{:keys [db]} _]
+    (let [player (get-in db [:forms :player :base])]
+      {:db (update-in db [:tournament :players] player/delete player)
+       :steamdating.routes/back nil})))
 
 
 (re-frame/reg-sub

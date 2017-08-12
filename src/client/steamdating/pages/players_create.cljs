@@ -22,4 +22,5 @@
      "Cancel "
      [icon {:name "close"}]]]
    [content
-    [edit {:on-submit :steamdating.players/create-current-edit}]]])
+    [edit {:label "Create player"
+           :on-submit :steamdating.players/create-current-edit}]]])

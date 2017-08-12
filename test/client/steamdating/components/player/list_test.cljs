@@ -7,7 +7,9 @@
 (defcard-rg players-list-test
   "Players list component"
   (fn [state]
-    [render-list (:players @state)])
+    (let [on-player-click #(println "player-click" %)]
+      [render-list (:players @state)
+       {:on-player-click on-player-click}]))
   (reagent/atom {:players [{:name "toto"
                             :origin "lyon"
                             :faction "Legion"

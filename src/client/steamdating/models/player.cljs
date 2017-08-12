@@ -50,3 +50,8 @@
 (defn names
   [players]
   (set (map :name players)))
+
+
+(defn delete
+  [players {:keys [name] :as player}]
+  (vec (remove #(= (:name %) name) players)))

@@ -6,6 +6,7 @@
             [steamdating.pages.file :as file]
             [steamdating.pages.home :as home]
             [steamdating.pages.players-create :as players-create]
+            [steamdating.pages.players-edit :as players-edit]
             [steamdating.pages.players-list :as players-list]
             [steamdating.services.db :as db]
             [re-frame.core :as re-frame]))

@@ -5,8 +5,8 @@
 
 
 (defn row
-  [{:keys [player]}]
-  [:tr
+  [{:keys [on-click player]}]
+  [:tr {:on-click #(on-click player)}
    [:td (:name player)]
    [:td (:origin player)]
    [:td
@@ -16,7 +16,7 @@
 
 
 (defn render-list
-  [players]
+  [players {:keys [on-player-click]}]
   [:div.sd-PlayersList
        [:table.sd-PlayersList-list
         [:thead
@@ -28,11 +28,14 @@
         [:tbody
          (for [{:keys [name] :as player} players]
            [row {:key name
+                 :on-click on-player-click
                  :player player}])]]])
 
 (defn players-list
   []
-  (let [players (re-frame/subscribe [:steamdating.players/list])]
+  (let [players (re-frame/subscribe [:steamdating.players/list])
+        player-edit #(re-frame/dispatch [:steamdating.players/start-edit %])]
     (fn list-component
       []
-      [render-list @players])))
+      [render-list @players
+       {:on-player-click player-edit}])))
