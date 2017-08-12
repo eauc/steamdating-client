@@ -55,3 +55,10 @@
 (defn delete
   [players {:keys [name] :as player}]
   (vec (remove #(= (:name %) name) players)))
+
+
+(defn edit
+  [players {:keys [base edit]}]
+  (-> players
+      (delete base)
+      (add edit)))

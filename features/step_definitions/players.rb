@@ -35,7 +35,14 @@ When(/^I try to create a Player whose name already exists$/) do
 end
 
 When(/^I edit a Player$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  @updated_player = {
+    "name" => "tete",
+    "origin" => "paris",
+    "faction" => "Cryx",
+    "lists" => ["Agathia1","Asphyxious2"],
+  }
+  @outdated_player = @tournament["players"][1]
+  @page.edit_player(@outdated_player, @updated_player)
 end
 
 When(/^I delete a Player$/) do
@@ -55,11 +62,16 @@ Then(/^I can edit the Player information$/) do
 end
 
 Then(/^I see the created Player in the Players list$/) do
+  expect(Pages::Players.new).to be_loaded
   @page.expect_player_in_list(@created_player)
 end
 
 Then(/^I see the updated Player in the Players list$/) do
-  pending # Write code here that turns the phrase above into concrete actions
+  expect(Pages::Players.new).to be_loaded
+  @page.expect_player_in_list(@updated_player)
+  within(".sd-PageContent") do
+    expect(page).to have_no_content(@outdated_player["name"])
+  end
 end
 
 Then(/^I cannot create the invalid Player$/) do

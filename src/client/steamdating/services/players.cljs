@@ -30,11 +30,28 @@
 
 
 (db/reg-event-fx
+  :steamdating.players/update-current-edit
+  [(re-frame/path [:forms :player])]
+  (fn create-current-edit
+    [{:keys [db]}]
+    {:dispatch-n [[:steamdating.players/edit db]
+                  [:steamdating.routes/back]]}))
+
+
+(db/reg-event-fx
   :steamdating.players/create
   [(re-frame/path [:tournament :players])]
   (fn create
     [{:keys [db]} [player]]
     {:db (player/add db player)}))
+
+
+(db/reg-event-fx
+  :steamdating.players/edit
+  [(re-frame/path [:tournament :players])]
+  (fn create
+    [{:keys [db]} [form]]
+    {:db (player/edit db form)}))
 
 
 (db/reg-event-fx
