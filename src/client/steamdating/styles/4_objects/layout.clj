@@ -14,9 +14,10 @@
              :width "100%"
              :display "flex"
              :flex-direction "column"}]
-   [:&-PageMenu {:order 2}]
-   [:&-PageContent {:order 1
-                    :flex-grow 1
+   [:&-PageMenu {:position "absolute"
+                 :right 0
+                 :height "100%"}]
+   [:&-PageContent {:flex-grow 1
                     :position "relative"}
     [:&-insider {:position "absolute"
                  :box-sizing "border-box"
@@ -34,10 +35,9 @@
                          :pointer-events "none"}]
    (at-break
      :tablet
-     [:&-PageContent
-      [:&-insider {:padding "1em"}]])
-   (at-break
-     :pc
      [:&-Page {:flex-direction "row"}]
-     [:&-PageMenu {:order 0}]
-     [:&-PageContent {:order 0}])])
+     [:&-PageMenu {:position "relative"
+                   :right "auto"
+                   :height "auto"}]
+     [:&-PageContent
+      [:&-insider {:padding "1em"}]])])

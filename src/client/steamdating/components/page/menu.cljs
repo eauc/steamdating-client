@@ -17,18 +17,21 @@
 (defn menu-toggle
   [{:keys [on-toggle show]}]
   [:button.sd-PageMenuToggle {:on-click on-toggle}
-   [icon {:name (if show "chevron-down" "chevron-up")}]])
+   [icon {:name (if show "chevron-right" "chevron-left")}]])
 
 
 (defn menu
   []
   (let [show (reagent/atom false)
+        do-hide #(reset! show false)
         toggle-show #(swap! show not)]
     (fn menu-component
       [& children]
-      (conj
-        (apply conj
-               [:div.sd-PageMenu {:class (when @show "sd-PageMenu-show")}]
-               children)
-        [menu-toggle {:on-toggle toggle-show
-                      :show @show}]))))
+      [:div.sd-PageMenu
+       {:class (when @show "sd-PageMenu-show")}
+       (apply conj
+              [:div.sd-PageMenu-insider
+               {:on-click do-hide}]
+              children)
+       [menu-toggle {:on-toggle toggle-show
+                     :show @show}]])))

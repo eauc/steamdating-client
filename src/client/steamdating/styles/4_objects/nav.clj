@@ -56,7 +56,7 @@
      :&:active
      :&-active {:background-color (:primary-dark colors)}]]
    [:&Menu-show
-    [:&Item {:display "block"}]]
+    [:.sd-NavItem {:display "block"}]]
    (at-break
      :tablet
      [:& {:display "flex"
