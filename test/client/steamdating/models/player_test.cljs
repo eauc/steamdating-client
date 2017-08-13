@@ -22,118 +22,112 @@
 
 (deftest player-model-test
   (testing "filter-with"
-    (are [pattern players-list columns]
-        (= {:list players-list
-            :columns columns}
-           (player/filter-with players (filter/filter->regexp pattern)))
-
-      ""
-      players
-      [:name :origin :faction :lists]
-
-      "toto"
-      []
-      [:name :origin :faction :lists]
-
-      "tete"
-      [{:name "tete" :origin "Dijon" :faction "Cygnar"}]
-      [:name :origin :faction :lists]
-
-      "tete toto"
-      [{:name "tete" :origin "Dijon" :faction "Cygnar"}]
-      [:name :origin :faction :lists]
-
-      "tutu tete"
-      [{:name "tete" :origin "Dijon" :faction "Cygnar"}
-       {:name "tutu" :origin "Lyon" :faction "Khador"}]
-      [:name :origin :faction :lists]
-
-      "cyg"
-      [{:name "tete" :origin "Dijon" :faction "Cygnar"}]
-      [:name :faction :origin :lists]
-
-      "cyg toto"
-      [{:name "tete" :origin "Dijon" :faction "Cygnar"}]
-      [:name :faction :origin :lists]
-
-      "Khad Cyg"
-      [{:name "tete" :origin "Dijon" :faction "Cygnar"}
-       {:name "titi" :origin "Paris" :faction "Khador"}
-       {:name "tutu" :origin "Lyon" :faction "Khador"}]
-      [:name :faction :origin :lists]
-
-      "dij cyg"
-      [{:name "tete" :origin "Dijon" :faction "Cygnar"}]
-      [:name :origin :faction :lists]
-
-      "kha dij"
-      [{:name "tete" :origin "Dijon" :faction "Cygnar"}
-       {:name "titi" :origin "Paris" :faction "Khador"}
-       {:name "tutu" :origin "Lyon" :faction "Khador"}]
-      [:name :origin :faction :lists]))
+    (let [examples [{:desc "no filter"
+                     :pattern ""
+                     :list players
+                     :columns [:name :origin :faction :lists]}
+                    {:desc "simple name"
+                     :pattern "toto"
+                     :list []
+                     :columns [:name :origin :faction :lists]}
+                    {:pattern "tete"
+                     :list [{:name "tete" :origin "Dijon" :faction "Cygnar"}]
+                     :columns [:name :origin :faction :lists]}
+                    {:desc "OR names"
+                     :pattern "tete toto"
+                     :list [{:name "tete" :origin "Dijon" :faction "Cygnar"}]
+                     :columns [:name :origin :faction :lists]}
+                    {:pattern "tutu tete"
+                     :list [{:name "tete" :origin "Dijon" :faction "Cygnar"}
+                            {:name "tutu" :origin "Lyon" :faction "Khador"}]
+                     :columns [:name :origin :faction :lists]}
+                    {:desc "simple other"
+                     :pattern "cyg"
+                     :list [{:name "tete" :origin "Dijon" :faction "Cygnar"}]
+                     :columns [:name :faction :origin :lists]}
+                    {:desc "name&other same match"
+                     :pattern "cyg toto"
+                     :list [{:name "tete" :origin "Dijon" :faction "Cygnar"}]
+                     :columns [:name :faction :origin :lists]}
+                    {:desc "OR others"
+                     :pattern "Khad Cyg"
+                     :list [{:name "tete" :origin "Dijon" :faction "Cygnar"}
+                            {:name "titi" :origin "Paris" :faction "Khador"}
+                            {:name "tutu" :origin "Lyon" :faction "Khador"}]
+                     :columns [:name :faction :origin :lists]}
+                    {:desc "mix others"
+                     :pattern "dij cyg"
+                     :list [{:name "tete" :origin "Dijon" :faction "Cygnar"}]
+                     :columns [:name :origin :faction :lists]}
+                    {:pattern "kha dij"
+                     :list [{:name "tete" :origin "Dijon" :faction "Cygnar"}
+                            {:name "titi" :origin "Paris" :faction "Khador"}
+                            {:name "tutu" :origin "Lyon" :faction "Khador"}]
+                     :columns [:name :origin :faction :lists]}]]
+      (doall
+        (for [{:keys [desc pattern list columns]} examples]
+          (is (= {:list list
+                  :columns columns}
+                 (player/filter-with players (filter/filter->regexp pattern)))
+              desc)))))
 
 
   (testing "sort-with"
-    (are [players sort sorted-players]
-        (= sorted-players
-           (player/sort-with players sort))
-
-      []
-      {:by :name
-       :reverse false}
-      []
-
-      ;; simple sort : by name
-      [{:name "toto"}
-       {:name "tata"}
-       {:name "tutu"}]
-      {:by :name :reverse false}
-      [{:name "tata"}
-       {:name "toto"}
-       {:name "tutu"}]
-
-      [{:name "toto"}
-       {:name "tata"}
-       {:name "tutu"}]
-      {:by :name :reverse true}
-      [{:name "tutu"}
-       {:name "toto"}
-       {:name "tata"}]
-
-      ;; sort by another prop
-      [{:name "toto" :origin "Lyon"}
-       {:name "tata" :origin "Paris"}
-       {:name "tutu" :origin "Dijon"}]
-      {:by :origin :reverse false}
-      [{:name "tutu" :origin "Dijon"}
-       {:name "toto" :origin "Lyon"}
-       {:name "tata" :origin "Paris"}]
-
-      [{:name "toto" :origin "Lyon"}
-       {:name "tata" :origin "Paris"}
-       {:name "tutu" :origin "Dijon"}]
-      {:by :origin :reverse true}
-      [{:name "tata" :origin "Paris"}
-       {:name "toto" :origin "Lyon"}
-       {:name "tutu" :origin "Dijon"}]
-
-      ;; resolve equalities using name
-      [{:name "toto" :origin "Lyon"}
-       {:name "titi" :origin "Lyon"}
-       {:name "tata" :origin "Paris"}
-       {:name "tutu" :origin "Dijon"}]
-      {:by :origin :reverse true}
-      [{:name "tata" :origin "Paris"}
-       {:name "toto" :origin "Lyon"}
-       {:name "titi" :origin "Lyon"}
-       {:name "tutu" :origin "Dijon"}]
-
-      [{:name "toto" :origin "Lyon"}
-       {:name "titi" :origin "Lyon"}
-       {:name "tata" :origin "Paris"}
-       {:name "tutu" :origin "Dijon"}]
-      {:by :origin :reverse false}
-      [{:name "tutu" :origin "Dijon"}
-       {:name "titi" :origin "Lyon"}
-       {:name "toto" :origin "Lyon"}
-       {:name "tata" :origin "Paris"}])))
+    (let [examples [{:players []
+                     :sort {:by :name
+                            :reverse false}
+                     :result []}
+                    {:desc "simple sort : by name"
+                     :players [{:name "toto"}
+                               {:name "tata"}
+                               {:name "tutu"}]
+                     :sort {:by :name :reverse false}
+                     :result [{:name "tata"}
+                              {:name "toto"}
+                              {:name "tutu"}]}
+                    {:players [{:name "toto"}
+                               {:name "tata"}
+                               {:name "tutu"}]
+                     :sort {:by :name :reverse true}
+                     :result [{:name "tutu"}
+                              {:name "toto"}
+                              {:name "tata"}]}
+                    {:desc "sort by another prop"
+                     :players [{:name "toto" :origin "Lyon"}
+                               {:name "tata" :origin "Paris"}
+                               {:name "tutu" :origin "Dijon"}]
+                     :sort {:by :origin :reverse false}
+                     :result [{:name "tutu" :origin "Dijon"}
+                              {:name "toto" :origin "Lyon"}
+                              {:name "tata" :origin "Paris"}]}
+                    {:players [{:name "toto" :origin "Lyon"}
+                               {:name "tata" :origin "Paris"}
+                               {:name "tutu" :origin "Dijon"}]
+                     :sort {:by :origin :reverse true}
+                     :result [{:name "tata" :origin "Paris"}
+                              {:name "toto" :origin "Lyon"}
+                              {:name "tutu" :origin "Dijon"}]}
+                    {:desc "resolve equalities using name"
+                     :players [{:name "toto" :origin "Lyon"}
+                               {:name "titi" :origin "Lyon"}
+                               {:name "tata" :origin "Paris"}
+                               {:name "tutu" :origin "Dijon"}]
+                     :sort {:by :origin :reverse true}
+                     :result [{:name "tata" :origin "Paris"}
+                              {:name "toto" :origin "Lyon"}
+                              {:name "titi" :origin "Lyon"}
+                              {:name "tutu" :origin "Dijon"}]}
+                    {:players [{:name "toto" :origin "Lyon"}
+                               {:name "titi" :origin "Lyon"}
+                               {:name "tata" :origin "Paris"}
+                               {:name "tutu" :origin "Dijon"}]
+                     :sort {:by :origin :reverse false}
+                     :result [{:name "tutu" :origin "Dijon"}
+                              {:name "titi" :origin "Lyon"}
+                              {:name "toto" :origin "Lyon"}
+                              {:name "tata" :origin "Paris"}]}]]
+      (doall
+        (for [{:keys [desc players sort result]} examples]
+          (is (= result
+                 (player/sort-with players sort))
+              desc))))))
