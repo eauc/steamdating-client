@@ -21,11 +21,11 @@
 
 
 (deftest player-model-test
-  (testing "pattern"
+  (testing "filter-with"
     (are [pattern players-list columns]
         (= {:list players-list
             :columns columns}
-           (player/pattern players (filter/filter->regexp pattern)))
+           (player/filter-with players (filter/filter->regexp pattern)))
 
       ""
       players
@@ -70,4 +70,70 @@
       [{:name "tete" :origin "Dijon" :faction "Cygnar"}
        {:name "titi" :origin "Paris" :faction "Khador"}
        {:name "tutu" :origin "Lyon" :faction "Khador"}]
-      [:name :origin :faction :lists])))
+      [:name :origin :faction :lists]))
+
+
+  (testing "sort-with"
+    (are [players sort sorted-players]
+        (= sorted-players
+           (player/sort-with players sort))
+
+      []
+      {:by :name
+       :reverse false}
+      []
+
+      ;; simple sort : by name
+      [{:name "toto"}
+       {:name "tata"}
+       {:name "tutu"}]
+      {:by :name :reverse false}
+      [{:name "tata"}
+       {:name "toto"}
+       {:name "tutu"}]
+
+      [{:name "toto"}
+       {:name "tata"}
+       {:name "tutu"}]
+      {:by :name :reverse true}
+      [{:name "tutu"}
+       {:name "toto"}
+       {:name "tata"}]
+
+      ;; sort by another prop
+      [{:name "toto" :origin "Lyon"}
+       {:name "tata" :origin "Paris"}
+       {:name "tutu" :origin "Dijon"}]
+      {:by :origin :reverse false}
+      [{:name "tutu" :origin "Dijon"}
+       {:name "toto" :origin "Lyon"}
+       {:name "tata" :origin "Paris"}]
+
+      [{:name "toto" :origin "Lyon"}
+       {:name "tata" :origin "Paris"}
+       {:name "tutu" :origin "Dijon"}]
+      {:by :origin :reverse true}
+      [{:name "tata" :origin "Paris"}
+       {:name "toto" :origin "Lyon"}
+       {:name "tutu" :origin "Dijon"}]
+
+      ;; resolve equalities using name
+      [{:name "toto" :origin "Lyon"}
+       {:name "titi" :origin "Lyon"}
+       {:name "tata" :origin "Paris"}
+       {:name "tutu" :origin "Dijon"}]
+      {:by :origin :reverse true}
+      [{:name "tata" :origin "Paris"}
+       {:name "toto" :origin "Lyon"}
+       {:name "titi" :origin "Lyon"}
+       {:name "tutu" :origin "Dijon"}]
+
+      [{:name "toto" :origin "Lyon"}
+       {:name "titi" :origin "Lyon"}
+       {:name "tata" :origin "Paris"}
+       {:name "tutu" :origin "Dijon"}]
+      {:by :origin :reverse false}
+      [{:name "tutu" :origin "Dijon"}
+       {:name "titi" :origin "Lyon"}
+       {:name "toto" :origin "Lyon"}
+       {:name "tata" :origin "Paris"}])))

@@ -14,6 +14,7 @@
             [steamdating.styles.5-components.faction-icon :refer [faction-icon]]
             [steamdating.styles.5-components.players-list :refer [players-list]]
             [steamdating.styles.5-components.prompt :refer [prompt]]
+            [steamdating.styles.5-components.sort-header :refer [sort-header]]
             [steamdating.styles.5-components.toaster :refer [toaster]]
             [steamdating.styles.5-components.tournament :refer [tournament]]
             [steamdating.styles.6-pages.file :refer [file-page]]))
@@ -33,6 +34,7 @@
    nav
    players-list
    prompt
+   sort-header
    text-muted
    toaster
    tournament])

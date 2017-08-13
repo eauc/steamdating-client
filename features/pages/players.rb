@@ -12,6 +12,22 @@ module Pages
         fill_in(placeholder: "Filter", with: filter)
       end
       sleep 0.5
+      self
+    end
+
+    def sort_by(sort)
+      within(".sd-PageContent") do
+        find("th", text: "Name").click
+        find("th", text: sort).click
+      end
+      self
+    end
+
+    def invert_sort_by(sort)
+      within(".sd-PageContent") do
+        find("th", text: sort).click
+      end
+      self
     end
 
     def start_create_player
@@ -67,6 +83,7 @@ module Pages
       within(".sd-PageMenu") do
         click_on("Delete")
       end
+      self
     end
 
     def expect_player_in_list player
@@ -83,6 +100,14 @@ module Pages
       self
     end
 
+    def expect_players_list(players)
+      list = Regexp.new(players.map {|p| p.join(".*") }.join(".*"), "i")
+      within(".sd-PageContent") do
+        expect(page).to have_content(list)
+      end
+      self
+    end
+
     def expect_players_list_with_headers(match)
       headers = match["headers"].join(".*")
       players = match["players"].map {|p| p.join(".*") }.join(".*")
@@ -90,6 +115,7 @@ module Pages
       within(".sd-PageContent") do
         expect(page).to have_content(list)
       end
+      self
     end
   end
 end

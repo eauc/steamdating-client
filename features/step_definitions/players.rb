@@ -27,6 +27,15 @@ When(/^I filter the Players list with "([^"]*)"$/) do |filter|
   @page.filter_with(filter)
 end
 
+When(/^I sort the Players list by "([^"]*)"$/) do |sort|
+  @sort_value = sort
+  @page.sort_by(sort)
+end
+
+When(/^I invert the sort order$/) do
+  @page.invert_sort_by(@sort_value)
+end
+
 When(/^I start to create Player$/) do
   @page.start_create_player
 end
@@ -133,4 +142,33 @@ more_players_filter_matches = {
 
 Then(/^I see the matching Players with the matching columns first$/) do
   @page.expect_players_list_with_headers(more_players_filter_matches[@filter_value])
+end
+
+more_players_sort_by = {
+  "Faction" => [
+    ["tete"   , "lyon"    , "Khador"       , "Butcher2, Koslov1"],
+    ["toto"   , "lyon"    , "Legion"       , "Absylonia1, Bethayne1"],
+    ["toutou" , "paris"   , "Legion"       , "Absylonia1, Lylyth2"],
+    ["tutu"   , "aubagne" , "Mercenaries"  , "Bartolo1, Cyphon1"],
+    ["titi"   , "dijon"   , "Protectorate" , "Amon1, Feora1"],
+    ["tyty"   , "nantes"  , "Protectorate" , "Malekus1, Severius1"],
+    ["teuteu" , "paris"   , "Retribution"  , "Helynna1, Vyros1"],
+  ],
+  "Origin" => [
+    ["tutu"   , "aubagne" , "Mercenaries"  , "Bartolo1, Cyphon1"],
+    ["titi"   , "dijon"   , "Protectorate" , "Amon1, Feora1"],
+    ["tete"   , "lyon"    , "Khador"       , "Butcher2, Koslov1"],
+    ["toto"   , "lyon"    , "Legion"       , "Absylonia1, Bethayne1"],
+    ["tyty"   , "nantes"  , "Protectorate" , "Malekus1, Severius1"],
+    ["teuteu" , "paris"   , "Retribution"  , "Helynna1, Vyros1"],
+    ["toutou" , "paris"   , "Legion"       , "Absylonia1, Lylyth2"],
+  ],
+}
+
+Then(/^I see the Players sorted by "([^"]*)"$/) do |sort|
+  @page.expect_players_list(more_players_sort_by[sort])
+end
+
+Then(/^I see the Players sorted by "([^"]*)" in revert order$/) do |sort|
+  @page.expect_players_list(more_players_sort_by[sort].reverse)
 end

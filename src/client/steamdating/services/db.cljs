@@ -7,6 +7,7 @@
             [steamdating.models.faction]
             [steamdating.models.filter]
             [steamdating.models.form]
+            [steamdating.models.sort]
             [steamdating.models.tournament :refer [->tournament]]
             [steamdating.services.debug :refer [debug?]]))
 
@@ -31,6 +32,10 @@
   (spec/nilable :steamdating.prompt/prompt))
 
 
+(spec/def ::sorts
+  (spec/nilable :steamdating.sort/sorts))
+
+
 (spec/def ::toaster
   (spec/nilable :steamdating.toaster/toaster))
 
@@ -45,6 +50,7 @@
                       ::forms
                       ::page
                       ::prompt
+                      ::sorts
                       ::toaster
                       ::tournament]))
 
@@ -82,6 +88,7 @@
    :forms {}
    :page :home
    :prompt nil
+   :sorts nil
    :toaster nil
    :tournament (->tournament)})
 

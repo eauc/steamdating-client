@@ -41,19 +41,29 @@
 (defcard-rg players-list-test.
   "Players list component"
   (fn [state]
-    (let [on-player-click #(println "player-click" %)
-          on-filter-update #(reset! state (player/pattern
-                                            players
-                                            (filter/filter->regexp %2)))]
+    (let [update-players #(swap! state assoc :players
+                                 (player/filter-with
+                                   (player/sort-with players (:sort @state))
+                                   (filter/filter->regexp (:filter @state))))
+          on-player-click #(println "player-click" %)
+          on-filter-update #(do (swap! state assoc :filter %2)
+                                (update-players))
+          on-sort-by #(do (swap! state assoc :sort %)
+                          (update-players))]
       [:div
        [render-filter-input ""
         {:name :player
          :on-update on-filter-update}]
-       [render-list @state
-        {:on-player-click on-player-click}]]))
+       [render-list (:players @state) (:sort @state)
+        {:on-player-click on-player-click
+         :on-sort-by on-sort-by}]]))
   (reagent/atom
-    (player/pattern
-      players
-      (filter/filter->regexp "")))
+    (let [filter ""
+          sort {:by :name :reverse false}]
+      {:filter filter
+       :sort sort
+       :players (player/filter-with
+                  (player/sort-with players sort)
+                  (filter/filter->regexp filter))}))
   {:inspect-data true
    :history true})

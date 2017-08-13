@@ -72,10 +72,9 @@
   (apply juxt list-columns))
 
 
-(defn pattern
+(defn filter-with
   [players pattern]
   (let [matches (->> players
-                     (sort-by :name)
                      (map (fn [p] [p, (select-keys p list-columns)]))
                      (map (fn [[p cs]] [p, (filter (fn [[key value]]
                                                      (->> value
@@ -91,3 +90,10 @@
                                          (flatten)
                                          (apply conj [:name]))
                                list-columns)))}))
+
+
+(defn sort-with
+  [players {:keys [by reverse]}]
+  (-> players
+      (->> (sort-by (juxt by :name)))
+      (cond-> reverse (cljs.core/reverse))))

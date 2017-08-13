@@ -2,7 +2,8 @@
   (:require [clojure.string :as s]
             [re-frame.core :as re-frame]
             [steamdating.components.faction.icon :refer [faction-icon]]
-            [steamdating.components.filter.input :refer [filter-input]]))
+            [steamdating.components.filter.input :refer [filter-input]]
+            [steamdating.components.sort.header :refer [sort-header]]))
 
 
 (defn row
@@ -18,19 +19,22 @@
 
 
 (defn headers
-  [columns]
+  [sort {:keys [columns on-sort-by]}]
   [:thead
    [:tr
     (for [c columns]
-      [:th {:key c}
-       (s/capitalize (name c))])]])
+      ^{:key c} [sort-header sort
+                 {:name c
+                  :label (s/capitalize (name c))
+                  :on-sort-by on-sort-by}])]])
 
 
 (defn render-list
-  [players {:keys [on-player-click]}]
+  [players sort {:keys [on-player-click on-sort-by]}]
   (let [columns (vec (:columns players))]
     [:table.sd-PlayersList-list
-     [headers columns]
+     [headers sort {:columns columns
+                    :on-sort-by on-sort-by}]
      [:tbody
       (for [{:keys [name] :as player} (:list players)]
         [row {:columns columns
@@ -42,10 +46,13 @@
 (defn players-list
   []
   (let [players (re-frame/subscribe [:steamdating.players/list])
-        player-edit #(re-frame/dispatch [:steamdating.players/start-edit %])]
+        sort (re-frame/subscribe [:steamdating.sorts/sort :player {:by :name}])
+        on-player-edit #(re-frame/dispatch [:steamdating.players/start-edit %])
+        on-sort-by #(re-frame/dispatch [:steamdating.sorts/set :player %])]
     (fn list-component
       []
       [:div.sd-PlayersList
        [filter-input {:name :player}]
-       [render-list @players
-        {:on-player-click player-edit}]])))
+       [render-list @players @sort
+        {:on-player-click on-player-edit
+         :on-sort-by on-sort-by}]])))

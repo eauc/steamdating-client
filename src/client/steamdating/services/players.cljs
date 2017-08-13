@@ -79,12 +79,21 @@
 
 
 (re-frame/reg-sub
-  :steamdating.players/list
+  :steamdating.players/sorted
   :<- [:steamdating.players/players]
+  :<- [:steamdating.sorts/sort :player {:by :name}]
+  (fn players-sorted-sub
+    [[players sort] _]
+    (player/sort-with players sort)))
+
+
+(re-frame/reg-sub
+  :steamdating.players/list
+  :<- [:steamdating.players/sorted]
   :<- [:steamdating.filters/pattern :player]
   (fn players-list-sub
     [[players pattern] _]
-    (player/pattern players pattern)))
+    (player/filter-with players pattern)))
 
 
 (re-frame/reg-sub
