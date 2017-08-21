@@ -92,8 +92,17 @@
                                list-columns)))}))
 
 
+(defn sort-prop
+  [by]
+  (fn [player]
+    (let [prop (by player)]
+      (if (string? prop)
+        (.toLowerCase prop)
+        prop))))
+
+
 (defn sort-with
   [players {:keys [by reverse]}]
   (-> players
-      (->> (sort-by (juxt by :name)))
+      (->> (sort-by (juxt (sort-prop by) (sort-prop :name))))
       (cond-> reverse (cljs.core/reverse))))

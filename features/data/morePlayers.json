@@ -1,7 +1,7 @@
 {
   "players": [
     {
-      "name": "toto",
+      "name": "Toto",
       "origin": "lyon",
       "faction": "Legion",
       "lists": [
@@ -19,8 +19,8 @@
       ]
     },
     {
-      "name": "tutu",
-      "origin": "aubagne",
+      "name": "Tutu",
+      "origin": "Aubagne",
       "faction": "Mercenaries",
       "lists": [
         "Bartolo1",
@@ -38,7 +38,7 @@
     },
     {
       "name": "tyty",
-      "origin": "nantes",
+      "origin": "Nantes",
       "faction": "Protectorate",
       "lists": [
         "Malekus1",
@@ -47,7 +47,7 @@
     },
     {
       "name": "toutou",
-      "origin": "paris",
+      "origin": "Paris",
       "faction": "Legion",
       "lists": [
         "Absylonia1",
@@ -55,7 +55,7 @@
       ]
     },
     {
-      "name": "teuteu",
+      "name": "Teuteu",
       "origin": "paris",
       "faction": "Retribution",
       "lists": [
