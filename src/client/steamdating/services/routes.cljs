@@ -8,6 +8,8 @@
             [steamdating.pages.players-create :as players-create]
             [steamdating.pages.players-edit :as players-edit]
             [steamdating.pages.players-list :as players-list]
+            [steamdating.pages.rounds-next :as rounds-next]
+            [steamdating.pages.rounds-summary :as rounds-summary]
             [steamdating.services.db :as db]
             [re-frame.core :as re-frame]))
 

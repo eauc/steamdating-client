@@ -1,5 +1,7 @@
 (ns steamdating.components.generics.input
-  (:require [reagent.core :as reagent]))
+  (:require [reagent.core :as reagent]
+            [steamdating.models.form :as form]
+            [clojure.string :as s]))
 
 
 (defn debounce [fun ms]
@@ -79,13 +81,17 @@
    (assoc props :placeholder (or placeholder label))])
 
 
+(def value-dom-props
+  [:multiple :options :order :placeholder :required :type])
+
+
 (defn value
-  [{:keys [autofocus label multiple on-change] :as base-props}]
+  [{:keys [autofocus id multiple on-change] :as base-props}]
   (let [on-change #(on-change (get-value % base-props))
         props (-> base-props
-                  (select-keys [:type :required :order :options :multiple :placeholder])
-                  (assoc :id (name (:name base-props))
-                         :name (name (:name base-props))
+                  (select-keys value-dom-props)
+                  (assoc :id id
+                         :name id
                          :on-change on-change))
         default-value (if multiple [] "")]
     (reagent/create-class
@@ -98,11 +104,11 @@
              (js/setTimeout #(.focus element) 100))))
        :reagent-render
        (fn [{:keys [class options value]}]
-         (render-value
+         [render-value
            (-> props
                (cond-> (not (nil? options)) (assoc :options options))
                (assoc :class class
-                      :value (if-not (nil? value) value default-value)))))})))
+                      :value (if-not (nil? value) value default-value)))])})))
 
 
 (defmulti render-input :type)
@@ -130,26 +136,30 @@
 
 
 (defn input
-  [{:keys [on-update value] :as base-props}]
-  (let [current-value (reagent/atom value)
+  [{:keys [field on-update state] :as base-props}]
+  (let [current-value (reagent/atom (form/field-value state field))
         pristine (reagent/atom true)
+        id (s/join "." (map name field))
         on-update-debounced (debounce on-update 250)
         on-change (fn [new-value]
                     (reset! current-value new-value)
                     (reset! pristine false)
-                    (on-update-debounced (:name base-props) new-value))]
+                    (on-update-debounced field new-value))]
     (fn input-component
-      [{:keys [error] :as props}]
+      [{:keys [state] :as props}]
       (let [has-value? (or (and (seq? @current-value) (not-empty @current-value))
                            (and (not (seq? @current-value)) (not (nil? @current-value))))
             clear? (and @pristine (not has-value?))
+            error (form/field-error state field)
             show-error? (and (not clear?) error)
             show-valid? (and (not clear?) (not error))
-            class (str (when @pristine "pristine ")
-                       (when show-valid? "valid ")
-                       (when show-error? "error "))]
-        (render-input (assoc props
-                             :class class
-                             :on-change on-change
-                             :pristine @pristine
-                             :value @current-value))))))
+            class [(when @pristine "pristine")
+                   (when show-valid? "valid")
+                   (when show-error? "error")]]
+        [render-input
+         (assoc (select-keys props [:autofocus :label :multiple :order :options :placeholder :required :type])
+                :id id
+                :class class
+                :error error
+                :on-change on-change
+                :value @current-value)]))))

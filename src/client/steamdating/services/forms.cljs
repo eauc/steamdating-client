@@ -16,8 +16,8 @@
   :steamdating.forms/update
   [(re-frame/path :forms)]
   (fn forms-reset
-    [{:keys [db]} [form field value]]
-    {:db (assoc-in db [form :edit field] value)}))
+    [{:keys [db]} [name field value]]
+    {:db (assoc-in db (into [name :edit] field) value)}))
 
 
 (re-frame/reg-sub
@@ -32,5 +32,5 @@
   (fn form-validate-input[[_ name] _]
     (re-frame/subscribe [:steamdating.forms/form name]))
   (fn form-validate-sub
-    [state [_ _ spec]]
-    (form/validate state spec)))
+    [state [_ _ validation-fn]]
+    (validation-fn state)))

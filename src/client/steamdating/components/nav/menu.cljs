@@ -25,5 +25,9 @@
               :path "/players"
               :on-click toggle-show}
         "Players"]
+       [link {:current-hash @current-hash
+              :path "/rounds/all"
+              :on-click toggle-show}
+        "Rounds"]
        [:div.sd-NavMenu-actions
         [toggle {:toggle-show toggle-show}]]])))

@@ -29,13 +29,13 @@
 
 
 (defn field-value
-  [form field-name]
-  (get-in form [:edit field-name]))
+  [form field]
+  (get-in form (into [:edit] field)))
 
 
 (defn field-error
-  [form field-name]
-  (get-in form [:error field-name]))
+  [form field]
+  (get-in form (into [:error] field)))
 
 
 (defn is-valid
