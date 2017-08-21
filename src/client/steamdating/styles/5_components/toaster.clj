@@ -11,7 +11,7 @@
 (gdef/defstyles toaster
   [:&-Toaster {:opacity 0
                :pointer-events "none"
-               :position "absolute"
+               :position "fixed"
                :left 0
                :right 0
                :bottom 0

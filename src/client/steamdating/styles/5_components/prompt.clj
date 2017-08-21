@@ -16,7 +16,7 @@
              :flex-direction "column"
              :justify-content "space-around"
              :align-items "center"
-             :position "absolute"
+             :position "fixed"
              :width "100%"
              :height "100%"
              :background-color "rgba(0,0,0,0.5)"}]
