@@ -2,9 +2,7 @@
   (:require [re-frame.core :as re-frame]
             [steamdating.components.generics.icon :refer [icon]]
             [steamdating.components.generics.input :refer [input]]
-            [steamdating.components.prompt.handler]
-            [steamdating.components.prompt.spec]
-            [steamdating.components.prompt.sub]))
+            [steamdating.services.prompt]))
 
 
 (defn render
@@ -25,9 +23,9 @@
                                   :on-submit on-form-submit}
          [:div.sd-Prompt-msg message]
          (when (= type :prompt)
-           [input {:name "value"
-                   :type (if (number? value) "number" "text")
-                   :value value
+           [input {:type (if (number? value) "number" "text")
+                   :field [:value]
+                   :state {:edit {:value value}}
                    :on-update on-update
                    :autofocus "autofocus"}])
          [:div.sd-Prompt-controls

@@ -2,11 +2,11 @@
   (:require [cljs.spec.alpha :as spec]
             [expound.alpha :refer [expound-str]]
             [re-frame.core :as re-frame]
-            [steamdating.components.prompt.spec]
             [steamdating.components.toaster.spec]
             [steamdating.models.faction]
             [steamdating.models.filter]
             [steamdating.models.form]
+            [steamdating.models.prompt]
             [steamdating.models.sort]
             [steamdating.models.tournament :refer [->tournament]]
             [steamdating.services.debug :refer [debug?]]))

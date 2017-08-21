@@ -1,6 +1,6 @@
-(ns steamdating.components.prompt.spec
+(ns steamdating.models.prompt
   (:require [cljs.spec.alpha :as spec]
-            [clojure.string :as str]))
+            [clojure.string :as s]))
 
 
 (spec/def :steamdating.prompt/type
@@ -9,7 +9,7 @@
 
 (spec/def :steamdating.prompt/message
   (spec/and string?
-            (comp not empty? str/trim)))
+            (comp not empty? s/trim)))
 
 
 (spec/def :steamdating.prompt/on-cancel

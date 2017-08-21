@@ -1,4 +1,4 @@
-(ns steamdating.components.prompt.handler
+(ns steamdating.services.prompt
   (:require [re-frame.core :as re-frame]
             [steamdating.services.db :as db]))
 
@@ -40,3 +40,10 @@
   (fn prompt-update
     [{:keys [db]} [value]]
     {:db (assoc db :value value)}))
+
+
+(re-frame/reg-sub
+  :steamdating.prompt/prompt
+  (fn prompt-sub
+    [db _]
+    (:prompt db)))
