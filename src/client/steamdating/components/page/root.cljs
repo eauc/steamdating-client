@@ -1,9 +1,9 @@
 (ns steamdating.components.page.root
   (:require [re-frame.core :as re-frame]
-            [steamdating.components.page.sub]))
+            [steamdating.services.routes]))
 
 
-(defmulti render :page)
+(defmulti render :route)
 
 
 (defmethod render :default
@@ -16,7 +16,5 @@
 
 (defn root
   []
-  (let [page (re-frame/subscribe [:steamdating.routes/page])]
-    (fn root-component
-      []
-      [render {:page @page}])))
+  (let [page @(re-frame/subscribe [:steamdating.routes/page])]
+    [render page]))

@@ -4,7 +4,6 @@ Feature: Rounds Next
     Given more Players have been defined
     Given I open Rounds/Next page
 
-  @wip
   Scenario: Start Next
     Then I can edit the Next Round information
 

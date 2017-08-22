@@ -8,11 +8,10 @@
 
 (defn edit
   [{:keys [label on-submit]}]
-  (let [state @(re-frame/subscribe [:steamdating.forms/form :round round/validate])
-        update-field #(re-frame/dispatch [:steamdating.forms/update :round %1 %2])
-        players-options (into {} (map vector (get-in state [:base :players]) (get-in state [:base :players])))]
+  (let [state @(re-frame/subscribe [:steamdating.rounds/edit])
+        update-field #(re-frame/dispatch [:steamdating.forms/update :round %1 %2])]
     [form state {:label label
-                 :on-submit on-submit}
+                 :on-submit #(re-frame/dispatch [on-submit])}
      [:div.sd-RoundEdit
       [:table.sd-RoundEdit-gamesList
        [:thead
@@ -28,22 +27,25 @@
             [:tr {:key n}
              [:td
               [input {:type "select"
-                      :field [:player1 :name]
+                      :field [:games n :player1 :name]
                       :state state
-                      :options players-options
-                      :on-update update-field}]]
-             [:td.faction
-              [faction-icon {:name nil}]]
-             [:td..sd-RoundGamesEdit-table
+                      :options (get-in state [:edit :players])
+                      :on-update update-field
+                      :order (* 3 n)}]]
+             [:td.sd-RoundGamesEdit-faction
+              [faction-icon {:faction (get-in state [:edit :games n :player1 :faction])}]]
+             [:td.sd-RoundGamesEdit-table
               [input {:type "number"
-                      :field [:table]
+                      :field [:games n :table]
                       :state state
-                      :on-update update-field}]]
-             [:td.faction
-              [faction-icon {:name nil}]]
+                      :on-update update-field
+                      :order (+ (* 3 n) 1)}]]
+             [:td.sd-RoundGamesEdit-faction
+              [faction-icon {:faction (get-in state [:edit :games n :player2 :faction])}]]
              [:td
               [input {:type "select"
-                      :field [:player2 :name]
+                      :field [:games n :player2 :name]
                       :state state
-                      :options players-options
-                      :on-update update-field}]]]))]]]]))
+                      :options (get-in state [:edit :players])
+                      :on-update update-field
+                      :order (+ (* 3 n) 2)}]]]))]]]]))

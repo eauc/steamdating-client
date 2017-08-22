@@ -1,9 +1,9 @@
 (ns steamdating.pages.rounds-summary
   (:require [re-frame.core :as re-frame]
             [secretary.core :as secretary :refer-macros [defroute]]
-            [steamdating.components.page.menu :refer [menu menu-item]]
             [steamdating.components.page.page :refer [content page]]
             [steamdating.components.page.root :as page-root]
+            [steamdating.components.round.menu :refer [rounds-menu]]
             [steamdating.services.rounds]))
 
 
@@ -15,9 +15,6 @@
 (defmethod page-root/render :rounds-summary
   []
   [page
-   [menu
-    [menu-item
-     {:on-click #(re-frame/dispatch [:steamdating.rounds/start-next])}
-     "Next round"]]
+   [rounds-menu]
    [content
     [:button "Create first round"]]])

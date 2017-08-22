@@ -69,7 +69,7 @@
   [:select.sd-Input-value
    (dissoc props :options :type)
    (when-not multiple [:option {:value ""} ""])
-   (let [sorted-options (sort-by #(nth % 1) options)]
+   (let [sorted-options (sort-by #(.toLowerCase (nth % 1)) options)]
      (for [[value label] sorted-options]
        [:option {:key value
                  :value value}
@@ -140,7 +140,7 @@
   [{:keys [field on-update state] :as base-props}]
   (let [current-value (reagent/atom (form/field-value state field))
         pristine (reagent/atom true)
-        id (s/join "." (map name field))
+        id (s/join "." (map #(if (keyword? %) (name %) %) field))
         on-update-debounced (debounce on-update 250)
         on-change (fn [new-value]
                     (reset! current-value new-value)

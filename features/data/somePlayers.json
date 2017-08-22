@@ -1,5 +1,4 @@
 {
-  "version": 1,
   "players": [
     {
       "lists": [
@@ -28,5 +27,7 @@
       "origin": "aubagne",
       "name": "tutu"
     }
-  ]
+  ],
+  "rounds": [],
+  "version": 1
 }

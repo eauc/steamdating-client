@@ -6,6 +6,7 @@
             [steamdating.models.faction]
             [steamdating.models.filter]
             [steamdating.models.form]
+            [steamdating.models.page]
             [steamdating.models.prompt]
             [steamdating.models.sort]
             [steamdating.models.tournament :refer [->tournament]]
@@ -25,7 +26,7 @@
 
 
 (spec/def ::page
-  (spec/nilable keyword?))
+  (spec/nilable :steamdating.page/page))
 
 
 (spec/def ::prompt
@@ -86,7 +87,7 @@
   {:factions nil
    :filters nil
    :forms {}
-   :page :home
+   :page nil
    :prompt nil
    :sorts nil
    :toaster nil

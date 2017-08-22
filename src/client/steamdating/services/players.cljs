@@ -80,6 +80,14 @@
 
 
 (re-frame/reg-sub
+  :steamdating.players/factions
+  :<- [:steamdating.players/players]
+  (fn players-factions-sub
+    [players _]
+    (player/factions players)))
+
+
+(re-frame/reg-sub
   :steamdating.players/sorted
   :<- [:steamdating.players/players]
   :<- [:steamdating.sorts/sort :player {:by :name}]
@@ -111,11 +119,11 @@
 
 (re-frame/reg-sub
   :steamdating.players/edit
-  (fn edit-name-error-input
+  (fn edit-input
     []
     [(re-frame/subscribe [:steamdating.players/names])
      (re-frame/subscribe [:steamdating.forms/form :player player/validate])])
-  (fn edit-name-error-sub
+  (fn edit-sub
     [[names {{base-name :name} :base
              {edit-name :name} :edit
              :as form-state}] _]

@@ -1,6 +1,7 @@
 (ns steamdating.models.player
   (:require [cljs.spec.alpha :as spec]
-            [steamdating.models.form :as form]))
+            [steamdating.models.form :as form]
+            [steamdating.services.debug :as debug]))
 
 
 (spec/def :steamdating.player/name
@@ -51,6 +52,11 @@
 (defn names
   [players]
   (set (map :name players)))
+
+
+(defn factions
+  [players]
+  (into {} (map (juxt :name :faction) players)))
 
 
 (defn delete

@@ -2,16 +2,9 @@
   (:import goog.History)
   (:require [goog.events :as events]
             [goog.history.EventType :as EventType]
+            [re-frame.core :as re-frame]
             [secretary.core :as secretary]
-            [steamdating.pages.file :as file]
-            [steamdating.pages.home :as home]
-            [steamdating.pages.players-create :as players-create]
-            [steamdating.pages.players-edit :as players-edit]
-            [steamdating.pages.players-list :as players-list]
-            [steamdating.pages.rounds-next :as rounds-next]
-            [steamdating.pages.rounds-summary :as rounds-summary]
-            [steamdating.services.db :as db]
-            [re-frame.core :as re-frame]))
+            [steamdating.services.db :as db]))
 
 
 (defonce history (History.))
@@ -32,8 +25,9 @@
 (db/reg-event-fx
   :steamdating.routes/page
   [(re-frame/path :page)]
-  (fn routes-page [_ [page]]
-    {:db page}))
+  (fn routes-page [_ [route params]]
+    {:db {:route route
+          :params params}}))
 
 
 (re-frame/reg-fx
@@ -62,3 +56,10 @@
   (fn routes-back
     [_ _]
     {:steamdating.routes/back nil}))
+
+
+(re-frame/reg-sub
+  :steamdating.routes/page
+  (fn page-sub
+    [db _]
+    (:page db)))
