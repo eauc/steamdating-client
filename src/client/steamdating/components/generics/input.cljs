@@ -1,7 +1,8 @@
 (ns steamdating.components.generics.input
-  (:require [reagent.core :as reagent]
+  (:require [clojure.string :as s]
+            [reagent.core :as reagent]
             [steamdating.models.form :as form]
-            [clojure.string :as s]))
+            [steamdating.services.debug :as debug]))
 
 
 (defn debounce [fun ms]
@@ -115,10 +116,10 @@
 
 
 (defmethod render-input :default
-  [{:keys [class error label] :as props}]
+  [{:keys [class error id label] :as props}]
   [:div.sd-Input {:class class}
    (when label
-     [:label {:for (name (:name props))}
+     [:label {:for id}
       label])
    [value props]
    [:p.sd-Input-info
@@ -126,9 +127,9 @@
 
 
 (defmethod render-input "checkbox"
-  [{:keys [class error label] :as props}]
+  [{:keys [class error id label] :as props}]
   [:div.sd-Input {:class class}
-   [:label {:for (name (:name props))}
+   [:label {:for id}
     [value props]
     [:span (str " " label)]]
    [:p.sd-Input-info
@@ -153,9 +154,9 @@
             error (form/field-error state field)
             show-error? (and (not clear?) error)
             show-valid? (and (not clear?) (not error))
-            class [(when @pristine "pristine")
-                   (when show-valid? "valid")
-                   (when show-error? "error")]]
+            class (s/join " " (remove nil? [(when @pristine "pristine")
+                                            (when show-valid? "valid")
+                                            (when show-error? "error")]))]
         [render-input
          (assoc (select-keys props [:autofocus :label :multiple :order :options :placeholder :required :type])
                 :id id

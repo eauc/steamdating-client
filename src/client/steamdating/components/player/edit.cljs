@@ -2,44 +2,52 @@
   (:require [re-frame.core :as re-frame]
             [steamdating.components.generics.form :refer [form]]
             [steamdating.components.generics.input :refer [input]]
-            [steamdating.models.player]))
+            [steamdating.models.player :as player]
+            [steamdating.services.debug :as debug]))
 
 
 (defn edit
   [{:keys [label on-submit]}]
-  (let [factions-names (re-frame/subscribe [:steamdating.factions/names])
-        casters-names (re-frame/subscribe [:steamdating.players/edit-casters])
-        name-error (re-frame/subscribe [:steamdating.players/edit-name-error])]
-    (fn edit-component
-      []
-      [form {:name :player
-             :label label
-             :on-submit on-submit
-             :spec :steamdating.player/player
-             :error (boolean @name-error)}
-       [input {:name :name
-               :label "Name"
-               :type "text"
-               :required "required"
-               :autofocus "autofocus"
-               :order "1"
-               :error @name-error}]
-       [input {:name :origin
-               :label "Origin"
-               :type "text"
-               :order "2"}]
-       [input {:name :faction
-               :label "Faction"
-               :type "select"
-               :options @factions-names
-               :order "3"}]
-       [input {:name :lists
-               :label "Lists"
-               :type "select"
-               :options @casters-names
-               :multiple "multiple"
-               :order "4"}]
-       [input {:name :notes
-               :label "Notes"
-               :type "textarea"
-               :order "6"}]])))
+  (let [state @(re-frame/subscribe [:steamdating.players/edit])
+        factions-names @(re-frame/subscribe [:steamdating.factions/names])
+        casters-names @(re-frame/subscribe [:steamdating.players/edit-casters])
+        update-field #(re-frame/dispatch [:steamdating.forms/update :player %1 %2])]
+    [form state
+     {:label label
+      :on-submit #(re-frame/dispatch [on-submit])}
+     [:div
+      [input {:type "text"
+              :label "Name"
+              :field [:name]
+              :state state
+              :on-update update-field
+              :required "required"
+              :autofocus "autofocus"
+              :order "1"}]
+      [input {:type "text"
+              :label "Origin"
+              :field [:origin]
+              :state state
+              :on-update update-field
+              :order "2"}]
+      [input {:type "select"
+              :label "Faction"
+              :field [:faction]
+              :state state
+              :on-update update-field
+              :options factions-names
+              :order "3"}]
+      [input {:type "select"
+              :label "Lists"
+              :field [:lists]
+              :state state
+              :on-update update-field
+              :options casters-names
+              :multiple "multiple"
+              :order "4"}]
+      [input {:type "textarea"
+              :label "Notes"
+              :field [:notes]
+              :state state
+              :on-update update-field
+              :order "6"}]]]))

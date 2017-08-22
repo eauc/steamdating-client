@@ -1,5 +1,6 @@
 (ns steamdating.models.player
-  (:require [cljs.spec.alpha :as spec]))
+  (:require [cljs.spec.alpha :as spec]
+            [steamdating.models.form :as form]))
 
 
 (spec/def :steamdating.player/name
@@ -106,3 +107,8 @@
   (-> players
       (->> (sort-by (juxt (sort-prop by) (sort-prop :name))))
       (cond-> reverse (cljs.core/reverse))))
+
+
+(defn validate
+  [form-state]
+  (form/validate form-state :steamdating.player/player))

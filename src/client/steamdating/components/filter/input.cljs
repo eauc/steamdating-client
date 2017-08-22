@@ -6,11 +6,11 @@
 
 (defn render-filter-input
   [value {:keys [name on-update]}]
-  [input {:name (str "filter-" (clojure.core/name name))
+  [input {:type "text"
           :on-update on-update
           :placeholder "Filter"
-          :type "text"
-          :value value}])
+          :field [:filter name]
+          :state {:edit {:filter {name value}}}}])
 
 
 (defn filter-input

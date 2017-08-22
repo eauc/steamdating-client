@@ -2,7 +2,8 @@
   (:require [re-frame.core :as re-frame]
             [steamdating.models.faction :as faction]
             [steamdating.models.player :as player]
-            [steamdating.services.db :as db]))
+            [steamdating.services.db :as db]
+            [steamdating.services.debug :as debug]))
 
 (db/reg-event-fx
   :steamdating.players/start-create
@@ -109,14 +110,16 @@
 
 
 (re-frame/reg-sub
-  :steamdating.players/edit-name-error
+  :steamdating.players/edit
   (fn edit-name-error-input
     []
     [(re-frame/subscribe [:steamdating.players/names])
-     (re-frame/subscribe [:steamdating.forms/form :player])])
+     (re-frame/subscribe [:steamdating.forms/form :player player/validate])])
   (fn edit-name-error-sub
     [[names {{base-name :name} :base
-             {edit-name :name} :edit}] _]
+             {edit-name :name} :edit
+             :as form-state}] _]
     (let [restricted-names (disj names base-name)]
-      (when (restricted-names edit-name)
-        "Name already exists"))))
+      (cond-> form-state
+        (restricted-names edit-name)
+        (assoc-in [:error :name] "Name already exists")))))
