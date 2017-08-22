@@ -8,7 +8,7 @@
 
 
 (def players
-  [{:name "toto"
+  [{:name "Toto"
     :origin "lyon"
     :faction "Legion"
     :lists ["Absylonia1" "Bethayne1"]}
@@ -16,8 +16,8 @@
     :origin "dijon"
     :faction "Protectorate"
     :lists ["Amon1" "Feora1"]}
-   {:name "tutu"
-    :origin "aubagne"
+   {:name "Tutu"
+    :origin "Aubagne"
     :faction "Mercenaries"
     :lists ["Bartolo1" "Cyphon1"]}
    {:name "tete"
@@ -25,20 +25,20 @@
     :faction "Khador"
     :lists ["Butcher2" "Koslov1"]}
    {:name "tyty"
-    :origin "nantes"
+    :origin "Nantes"
     :faction "Protectorate"
     :lists ["Malekus1" "Severius1"]}
    {:name "toutou"
     :origin "paris"
     :faction "Legion"
     :lists ["Absylonia1" "Lylyth2"]}
-   {:name "teuteu"
-    :origin "paris"
+   {:name "Teuteu"
+    :origin "Paris"
     :faction "Scyrah"
     :lists ["Helynna1" "Vyros1"]}])
 
 
-(defcard-rg players-list-test.
+(defcard-rg players-list-test
   "Players list component"
   (fn [state]
     (let [update-players #(swap! state assoc :players
