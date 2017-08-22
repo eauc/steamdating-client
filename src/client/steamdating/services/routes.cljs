@@ -24,9 +24,9 @@
 
 (db/reg-event-fx
   :steamdating.routes/page
-  [(re-frame/path :page)]
-  (fn routes-page [_ [route params]]
-    {:db {:route route
+  [(re-frame/path :route)]
+  (fn routes-page [_ [page params]]
+    {:db {:page page
           :params params}}))
 
 
@@ -59,7 +59,7 @@
 
 
 (re-frame/reg-sub
-  :steamdating.routes/page
+  :steamdating.routes/route
   (fn page-sub
     [db _]
-    (:page db)))
+    (:route db)))

@@ -3,12 +3,13 @@
             [steamdating.services.routes]))
 
 
-(defmulti render :route)
+(defmulti render :page)
 
 
 (defmethod render :default
-  []
+  [state]
   [:div.sd-Page
+   ;; (pr-str state)
    [:div.sd-PageContent
     [:div.sd-PageContent-insider
      [:p "Unknown page"]]]])
@@ -16,5 +17,5 @@
 
 (defn root
   []
-  (let [page @(re-frame/subscribe [:steamdating.routes/page])]
-    [render page]))
+  (let [state @(re-frame/subscribe [:steamdating.routes/route])]
+    [render state]))

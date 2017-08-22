@@ -6,8 +6,8 @@
             [steamdating.models.faction]
             [steamdating.models.filter]
             [steamdating.models.form]
-            [steamdating.models.page]
             [steamdating.models.prompt]
+            [steamdating.models.route]
             [steamdating.models.sort]
             [steamdating.models.tournament :refer [->tournament]]
             [steamdating.services.debug :refer [debug?]]))
@@ -25,8 +25,8 @@
   (spec/map-of keyword? :steamdating.form/form))
 
 
-(spec/def ::page
-  (spec/nilable :steamdating.page/page))
+(spec/def ::route
+  (spec/nilable :steamdating.route/route))
 
 
 (spec/def ::prompt
@@ -49,8 +49,8 @@
   (spec/keys :req-un [::factions
                       ::filters
                       ::forms
-                      ::page
                       ::prompt
+                      ::route
                       ::sorts
                       ::toaster
                       ::tournament]))
@@ -87,8 +87,8 @@
   {:factions nil
    :filters nil
    :forms {}
-   :page nil
    :prompt nil
+   :route nil
    :sorts nil
    :toaster nil
    :tournament (->tournament)})
