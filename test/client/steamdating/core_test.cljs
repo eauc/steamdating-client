@@ -3,11 +3,14 @@
             [pjstadig.humane-test-output]
             [steamdating.components.generics.form-test]
             [steamdating.components.player.list-test]
-            [steamdating.models.player-test]))
+            [steamdating.components.round.round-test]
+            [steamdating.models.player-test]
+            [steamdating.models.round-test]))
 
 
 (enable-console-print!)
 (devcards.core/start-devcard-ui!)
 
 
-(run-tests 'steamdating.models.player-test)
+(run-tests 'steamdating.models.player-test
+           'steamdating.models.round-test)
