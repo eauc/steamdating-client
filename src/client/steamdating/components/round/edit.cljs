@@ -1,6 +1,6 @@
 (ns steamdating.components.round.edit
   (:require [re-frame.core :as re-frame]
-            [steamdating.components.faction.icon :refer [faction-icon]]
+            [steamdating.components.generics.faction-icon :refer [faction-icon]]
             [steamdating.components.generics.form :refer [form]]
             [steamdating.components.generics.input :refer [input]]
             [steamdating.models.round :as round]))
@@ -33,7 +33,7 @@
                       :on-update update-field
                       :order (* 3 n)}]]
              [:td.sd-RoundGamesEdit-faction
-              [faction-icon {:faction (get-in state [:edit :games n :player1 :faction])}]]
+              [faction-icon (get-in state [:edit :games n :player1 :faction])]]
              [:td.sd-RoundGamesEdit-table
               [input {:type "number"
                       :field [:games n :table]
@@ -41,7 +41,7 @@
                       :on-update update-field
                       :order (+ (* 3 n) 1)}]]
              [:td.sd-RoundGamesEdit-faction
-              [faction-icon {:faction (get-in state [:edit :games n :player2 :faction])}]]
+              [faction-icon (get-in state [:edit :games n :player2 :faction])]]
              [:td
               [input {:type "select"
                       :field [:games n :player2 :name]

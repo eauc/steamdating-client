@@ -1,7 +1,7 @@
 (ns steamdating.components.player.list
   (:require [clojure.string :as s]
             [re-frame.core :as re-frame]
-            [steamdating.components.faction.icon :refer [faction-icon]]
+            [steamdating.components.generics.faction-icon :refer [faction-icon]]
             [steamdating.components.filter.input :refer [filter-input]]
             [steamdating.components.sort.header :refer [sort-header]]))
 
@@ -12,7 +12,7 @@
    (for [c columns]
      (condp = c
        :faction [:td {:key c}
-                 [faction-icon player]
+                 [faction-icon (:faction player)]
                  [:span " " (:faction player)]]
        :lists [:td {:key c} (s/join ", " (sort (:lists player)))]
        [:td {:key c} (c player)]))])

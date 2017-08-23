@@ -1,6 +1,6 @@
 (ns steamdating.components.round.round
   (:require [re-frame.core :as re-frame]
-            [steamdating.components.faction.icon :refer [faction-icon]]))
+            [steamdating.components.generics.faction-icon :refer [faction-icon]]))
 
 
 (defn render-round
@@ -33,11 +33,11 @@
        [:td
         (or (get-in game [:player1 :name]) "Phantom")]
        [:td.sd-RoundGameRow-faction
-        [faction-icon {:faction (get-in game [:player1 :faction])}]]
+        [faction-icon (get-in game [:player1 :faction])]]
        [:td.sd-RoundGameRow-table
         (:table game)]
        [:td.sd-RoundGameRow-faction
-        [faction-icon {:faction (get-in game [:player2 :faction])}]]
+        [faction-icon (get-in game [:player2 :faction])]]
        [:td
         (or (get-in game [:player2 :name]) "Phantom")]
        [:td.sd-RoundGameRow-score

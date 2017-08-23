@@ -40,3 +40,11 @@
   (fn names-sub
     [factions _]
     (faction/names factions)))
+
+
+(re-frame/reg-sub
+  :steamdating.factions/icon
+  :<- [:steamdating.factions/factions]
+  (fn names-sub
+    [factions [_ name]]
+    (faction/icon factions name)))
