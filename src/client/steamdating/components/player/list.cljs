@@ -45,14 +45,12 @@
 
 (defn players-list
   []
-  (let [players (re-frame/subscribe [:steamdating.players/list])
-        sort (re-frame/subscribe [:steamdating.sorts/sort :player {:by :name}])
+  (let [players @(re-frame/subscribe [:steamdating.players/list])
+        sort @(re-frame/subscribe [:steamdating.sorts/sort :player {:by :name}])
         on-player-edit #(re-frame/dispatch [:steamdating.players/start-edit %])
         on-sort-by #(re-frame/dispatch [:steamdating.sorts/set :player %])]
-    (fn list-component
-      []
-      [:div.sd-PlayersList
-       [filter-input {:name :player}]
-       [render-list @players @sort
-        {:on-player-click on-player-edit
-         :on-sort-by on-sort-by}]])))
+    [:div.sd-PlayersList
+     [filter-input {:name :player}]
+     [render-list players sort
+      {:on-player-click on-player-edit
+       :on-sort-by on-sort-by}]]))

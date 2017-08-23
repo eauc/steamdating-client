@@ -29,7 +29,8 @@
      :width toggle-size
      :box-shadow (:box_shadow box-model)
      :border-radius (gunits/em-div toggle-size 2)
-     :pointer-events "all"}]
+     :pointer-events "all"}
+    [:&-hide {:opacity 0}]]
    [:&Toggle
     {:border-top-right-radius 0
      :border-bottom-right-radius 0}]

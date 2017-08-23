@@ -6,19 +6,16 @@
 
 
 (defn sort-header
-  [{:keys [by reverse] :as current-sort}
+  [{:keys [by reverse]}
    {:keys [label name on-sort-by]}]
-  (let [active (= name by)
-        on-click #(on-sort-by
-                    {:by name
-                     :reverse (if active
-                                (not reverse)
-                                false)})]
+  (let [active (= name by)]
     [:th.sd-SortHeader
-     {:on-click on-click
+     {:on-click #(on-sort-by
+                   {:by name
+                    :reverse (if active (not reverse) false)})
       :title (str "Click to sort by " label)}
      [:span label " "]
      [:span.sd-SortHeader-icon
       {:class (when active
                 "sd-SortHeader-icon-show")}
-      [icon {:name (str "chevron-" (if reverse "up" "down"))}]]]))
+      [icon (str "chevron-" (if reverse "up" "down"))]]]))

@@ -1,6 +1,6 @@
-(ns steamdating.components.toaster.handler
-  (:require [steamdating.services.db :as db]
-            [re-frame.core :as re-frame]))
+(ns steamdating.services.toaster
+  (:require [re-frame.core :as re-frame]
+            [steamdating.services.db :as db]))
 
 
 (defonce timeout
@@ -31,3 +31,10 @@
   (fn toaster-clear
     []
     {:db nil}))
+
+
+(re-frame/reg-sub
+  :toaster
+  (fn toaster-sub
+    [db _]
+    (:toaster db)))

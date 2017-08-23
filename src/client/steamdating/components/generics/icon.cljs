@@ -2,5 +2,5 @@
 
 
 (defn icon
-  [{:keys [name]}]
+  [name]
   [:span {:class (str "fa fa-" name)}])

@@ -1,17 +1,13 @@
 (ns steamdating.components.toaster.toaster
-  (:require [re-frame.core :as re-frame]
-            [steamdating.components.toaster.handler]
-            [steamdating.components.toaster.sub]
-            [clojure.string :as str]))
+  (:require [clojure.string :as s]
+            [re-frame.core :as re-frame]
+            [steamdating.services.toaster]))
 
 
 (defn toaster
   []
-  (let [state (re-frame/subscribe [:toaster])]
-    (fn toaster-component
-      []
-      (let [{:keys [type message]} @state
-            type-class (some->> type (name) (str "sd-Toaster-"))]
-        [:div.sd-Toaster
-         {:class (str/join " " [type-class (when type "sd-Toaster-show")])}
-         message]))))
+  (let [{:keys [type message]} @(re-frame/subscribe [:toaster])
+        type-class (some->> type (name) (str "sd-Toaster-"))]
+    [:div.sd-Toaster
+     {:class (s/join " " [type-class (when type "sd-Toaster-show")])}
+     message]))

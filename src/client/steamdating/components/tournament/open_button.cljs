@@ -8,5 +8,6 @@
   [file/open-button
    {:id "tournament-open"
     :on-open [:steamdating.tournament/open-file]}
-   [icon {:name "folder-open-o"}]
-   [:span " Open"]])
+   [:span
+    [icon "folder-open-o"]
+    " Open"]])

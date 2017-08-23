@@ -1,4 +1,4 @@
-(ns steamdating.components.toaster.spec
+(ns steamdating.models.toaster
   (:require [cljs.spec.alpha :as spec]))
 
 

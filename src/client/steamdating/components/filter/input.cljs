@@ -15,10 +15,8 @@
 
 (defn filter-input
   [{:keys [name]}]
-  (let [value (re-frame/subscribe [:steamdating.filters/filter name])
+  (let [value @(re-frame/subscribe [:steamdating.filters/filter name])
         on-update #(re-frame/dispatch [:steamdating.filters/set name %2])]
-    (fn filter-component
-      []
-      [render-filter-input @value
-       {:name name
-        :on-update on-update}])))
+    [render-filter-input value
+     {:name name
+      :on-update on-update}]))

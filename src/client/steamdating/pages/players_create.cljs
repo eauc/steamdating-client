@@ -20,7 +20,7 @@
     [menu-item
      {:on-click #(re-frame/dispatch [:steamdating.routes/back])}
      "Cancel "
-     [icon {:name "close"}]]]
+     [icon "close"]]]
    [content
     [edit {:label "Create player"
            :on-submit :steamdating.players/create-current-edit}]]])

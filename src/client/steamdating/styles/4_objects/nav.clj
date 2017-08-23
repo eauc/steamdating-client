@@ -43,6 +43,7 @@
       :width "1.4em"
       :padding 0
       :font-size "2em"
+      :font-weight "bold"
       :border 0
       :background-color (:primary colors)
       :color (:text-inverted colors)})

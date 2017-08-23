@@ -2,13 +2,13 @@
   (:require [cljs.spec.alpha :as spec]
             [expound.alpha :refer [expound-str]]
             [re-frame.core :as re-frame]
-            [steamdating.components.toaster.spec]
             [steamdating.models.faction]
             [steamdating.models.filter]
             [steamdating.models.form]
             [steamdating.models.prompt]
             [steamdating.models.route]
             [steamdating.models.sort]
+            [steamdating.models.toaster]
             [steamdating.models.tournament :refer [->tournament]]
             [steamdating.services.debug :refer [debug?]]))
 

@@ -2,7 +2,6 @@
   (:require [reagent.core :as reagent]
             [steamdating.components.generics.icon :refer [icon]]))
 
-
 (defn menu-item
   [{:keys [href on-click]} & children]
   (apply conj
@@ -16,8 +15,10 @@
 
 (defn menu-toggle
   [{:keys [on-toggle show]}]
-  [:button.sd-PageMenuToggle {:on-click on-toggle}
-   [icon {:name (if show "chevron-right" "chevron-left")}]])
+  [:button.sd-PageMenuToggle
+   {:class (when show "sd-PageMenuToggle-hide")
+    :on-click on-toggle}
+   [icon "chevron-left"]])
 
 
 (defn menu
@@ -33,5 +34,6 @@
               [:div.sd-PageMenu-insider
                {:on-click do-hide}]
               children)
-       [menu-toggle {:on-toggle toggle-show
-                     :show @show}]])))
+       [menu-toggle
+        {:on-toggle toggle-show
+         :show @show}]])))

@@ -25,7 +25,7 @@
 
 (re-frame/reg-sub
   :steamdating.rounds/edit
-  :<- [:steamdating.forms/form :round round/validate]
+  :<- [:steamdating.forms/validate :round round/validate]
   :<- [:steamdating.players/factions]
   (fn edit-sub
     [[form-state factions] _]

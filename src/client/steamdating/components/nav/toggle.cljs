@@ -1,8 +1,7 @@
-(ns steamdating.components.nav.toggle
-  (:require [steamdating.components.generics.icon :refer [icon]]))
-
+(ns steamdating.components.nav.toggle)
 
 (defn toggle
   [{:keys [toggle-show]}]
-  [:button.sd-NavToggle {:on-click toggle-show}
-   [icon {:name "bars"}]])
+  [:button.sd-NavToggle
+   {:on-click toggle-show}
+   "☰"])

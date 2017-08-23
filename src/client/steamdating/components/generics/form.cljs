@@ -8,11 +8,12 @@
 (defn form
   [state {:keys [label on-submit]} children]
   (let [valid? (form/is-valid state)]
-    [:form.sd-Form {:no-validate true
-                    :on-submit (fn [event]
-                                 (.preventDefault event)
-                                 (when valid? (on-submit))
-                                 false)}
+    [:form.sd-Form
+     {:no-validate true
+      :on-submit (fn [event]
+                   (.preventDefault event)
+                   (when valid? (on-submit))
+                   false)}
      [:fieldset.sd-Form-group
       [:legend.sd-Form-legend label]
       children
@@ -20,4 +21,4 @@
        {:class (when-not valid? "sd-Form-disabled")
         :type "submit"
         :value "submit"}
-       [icon {:name "check"}]]]]))
+       [icon "check"]]]]))

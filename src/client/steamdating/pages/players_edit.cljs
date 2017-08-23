@@ -20,7 +20,7 @@
     [menu-item
      {:on-click #(re-frame/dispatch [:steamdating.routes/back])}
      "Cancel "
-     [icon {:name "close"}]]
+     [icon "close"]]
     [menu-item
      {:on-click #(re-frame/dispatch
                    [:steamdating.prompt/set
@@ -28,7 +28,7 @@
                      :message "Delete this player ?"
                      :on-validate [:steamdating.players/delete-current-edit]}])}
      "Delete "
-     [icon {:name "trash"}]]]
+     [icon "trash"]]]
    [content
     [edit {:label "Edit player"
            :on-submit :steamdating.players/update-current-edit}]]])
