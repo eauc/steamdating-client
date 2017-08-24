@@ -2,8 +2,11 @@
   (:require [cljs.spec.alpha :as spec]
             [devcards.core :as dc :refer-macros [defcard-rg]]
             [reagent.core :as reagent]
+            [steamdating.components.generics.checkbox :refer [checkbox]]
             [steamdating.components.generics.form :refer [form]]
             [steamdating.components.generics.input :refer [input]]
+            [steamdating.components.generics.select :refer [select]]
+            [steamdating.components.generics.textarea :refer [textarea]]
             [steamdating.models.form :as form-model]))
 
 
@@ -49,7 +52,7 @@
       [form @state {:label "Test form"
                     :on-submit on-submit}
        [:div
-        [input {:type "text"
+        [input {:type :text
                 :label "Text field"
                 :field [:text]
                 :state @state
@@ -57,45 +60,41 @@
                 :required true
                 :autofocus true
                 :order "1"}]
-        [input {:type "number"
+        [input {:type :number
                 :label "Numeric field"
                 :field [:number]
                 :state @state
                 :on-update update-field
                 :order "2"}]
-        [input {:type "select"
-                :label "Select field"
-                :field [:select]
-                :state @state
-                :on-update update-field
-                :options {:opt2 "Option 2"
-                          :opt4 "Option 4"
-                          :opt3 "Option 3"
-                          :opt1 "Option 1"}
-                :order "3"}]
-        [input {:type "select"
-                :label "Select multiple field"
-                :multiple true
-                :field [:select-multiple]
-                :state @state
-                :on-update update-field
-                :options {:opt3 "Option 3"
-                          :opt1 "Option 1"
-                          :opt4 "Option 4"
-                          :opt2 "Option 2"}
-                :order "4"}]
-        [input {:type "checkbox"
-                :label "Checkbox field"
-                :field [:checkbox]
-                :state @state
-                :on-update update-field
-                :order "5"}]
-        [input {:type "textarea"
-                :label "Textarea field"
-                :field [:textarea]
-                :state @state
-                :on-update update-field
-                :order "6"}]]]))
+        [select {:label "Select field"
+                 :field [:select]
+                 :state @state
+                 :on-update update-field
+                 :options {:opt2 "Option 2"
+                           :opt4 "Option 4"
+                           :opt3 "Option 3"
+                           :opt1 "Option 1"}
+                 :order "3"}]
+        [select {:label "Select multiple field"
+                 :multiple true
+                 :field [:select-multiple]
+                 :state @state
+                 :on-update update-field
+                 :options {:opt3 "Option 3"
+                           :opt1 "Option 1"
+                           :opt4 "Option 4"
+                           :opt2 "Option 2"}
+                 :order "4"}]
+        [checkbox {:label "Checkbox field"
+                   :field [:checkbox]
+                   :state @state
+                   :on-update update-field
+                   :order "5"}]
+        [textarea {:label "Textarea field"
+                   :field [:textarea]
+                   :state @state
+                   :on-update update-field
+                   :order "6"}]]]))
   (reagent/atom (form-model/validate
                   {:edit {:text "hello"
                           :number 42

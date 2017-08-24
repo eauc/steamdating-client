@@ -6,7 +6,7 @@
 
 (defn render-filter-input
   [value {:keys [name on-update]}]
-  [input {:type "text"
+  [input {:type :text
           :on-update on-update
           :placeholder "Filter"
           :field [:filter name]

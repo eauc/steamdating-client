@@ -19,7 +19,7 @@
                    (on-validate))}
      [:div.sd-Prompt-msg message]
      (when (= type :prompt)
-       [input {:type (if (number? value) "number" "text")
+       [input {:type (if (number? value) :number :text)
                :field [:value]
                :state {:edit {:value value}}
                :on-update on-update
