@@ -8,11 +8,12 @@
                  [org.clojure/clojurescript "1.9.854"]
                  [devcards "0.2.3"]
                  [garden "1.3.2"]
-                 [re-frame "0.9.4"]
+                 [re-frame "0.9.4" :exclusions [reagent]]
                  [secretary "1.2.3"]
                  [expound "0.1.2"]
                  [day8.re-frame/http-fx "0.1.4"]
-                 [pjstadig/humane-test-output "0.8.2"]]
+                 [pjstadig/humane-test-output "0.8.2"]
+                 [reagent "0.7.0"]]
   :plugins [[lein-cljsbuild "1.1.7"]
             [lein-figwheel "0.5.12" :exclusions [org.clojure/clojure]]
             [lein-garden "0.3.0" :exclusions [org.clojure/clojure org.apache.commons/commons-compress]]
@@ -56,7 +57,9 @@
   :profiles
   {:dev
    {:dependencies [[binaryage/devtools "0.9.4"]
-                   [figwheel-sidecar "0.5.12" :exclusions [org.clojure/tools.nrepl org.clojure/core.async]]
+                   [figwheel-sidecar "0.5.12" :exclusions [commons-codec
+                                                           org.clojure/tools.nrepl
+                                                           org.clojure/core.async]]
                    [com.cemerick/piggieback "0.2.2"]]
     :cljsbuild
     {:builds
