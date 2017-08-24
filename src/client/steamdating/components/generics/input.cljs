@@ -71,14 +71,21 @@
 
 
 (defn render-input
-  [value {:keys [class error id label] :as props}]
-  [:div.sd-Input {:class class}
-   (when label
-     [:label {:for id}
-      label])
-   [value (dissoc props :autofocus :error)]
-   [:p.sd-Input-info
-    (or error "No error")]])
+  []
+  (let [once (reagent/atom false)]
+    (fn
+      [render-value {:keys [autofocus class error id label] :as props}]
+      [:div.sd-Input {:class class}
+       (when label
+         [:label {:for id} label])
+       [render-value (-> props
+                         (dissoc :autofocus :error)
+                         (assoc :ref (fn [element]
+                                       (when (and autofocus element (not @once))
+                                         (reset! once true)
+                                         (js/setTimeout #(.focus element) 100)))))]
+       [:p.sd-Input-info
+        (or error "No error")]])))
 
 
 (defn ->input-component
@@ -91,7 +98,7 @@
         [props]
         (let [dyn-props (merge static-props
                                (dynamic-props current-value pristine props))]
-          (render-input render-value dyn-props))))))
+          [render-input render-value dyn-props])))))
 
 
 (def input
