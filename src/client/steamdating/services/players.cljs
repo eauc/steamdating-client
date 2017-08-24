@@ -122,7 +122,7 @@
   (fn edit-input
     []
     [(re-frame/subscribe [:steamdating.players/names])
-     (re-frame/subscribe [:steamdating.forms/form :player player/validate])])
+     (re-frame/subscribe [:steamdating.forms/validate :player player/validate])])
   (fn edit-sub
     [[names {{base-name :name} :base
              {edit-name :name} :edit
