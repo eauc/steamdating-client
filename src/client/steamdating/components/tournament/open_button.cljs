@@ -9,5 +9,5 @@
    {:id "tournament-open"
     :on-open [:steamdating.tournament/open-file]}
    [:span
-    [icon "folder-open-o"]
+    [icon "file-text"]
     " Open"]])

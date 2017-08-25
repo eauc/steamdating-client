@@ -33,7 +33,7 @@
          {:type "button"
           :on-click on-cancel}
          [:span "No "]
-         [icon "close"]])]]]])
+         [icon "x"]])]]]])
 
 
 (defn prompt

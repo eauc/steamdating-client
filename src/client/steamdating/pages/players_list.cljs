@@ -20,6 +20,6 @@
     [menu-item
      {:on-click #(re-frame/dispatch [:steamdating.players/start-create])}
      "Create Player "
-     [icon "user"]]]
+     [icon "user-plus"]]]
    [content
     [players-list]]])

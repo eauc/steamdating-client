@@ -26,7 +26,9 @@
    {:client {:source-paths ["src/client"]
              :compiler {:main "steamdating.core"
                         :optimizations :none
-                        :output-to "resources/public/js/client.js"}}
+                        :output-to "resources/public/js/client.js"
+                        :npm-deps {:feather-icons "3.2.2"}
+                        :install-deps true}}
     :test {:source-paths ["src/client" "test/client"]
            :compiler {:main "steamdating.core-test"
                       :devcards true
@@ -75,5 +77,6 @@
    :production
    {:cljsbuild
     {:builds
-     {:client {:compiler {:optimizations :advanced}}}}}
+     {:client {:compiler {:closure-defines {"goog.DEBUG" true}
+                          :optimizations :advanced}}}}}
    :repl [:dev]})

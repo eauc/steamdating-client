@@ -20,7 +20,7 @@
     [menu-item
      {:on-click #(re-frame/dispatch [:steamdating.routes/back])}
      "Cancel "
-     [icon "close"]]
+     [icon "x"]]
     [menu-item
      {:on-click #(re-frame/dispatch
                    [:steamdating.prompt/set
