@@ -77,6 +77,6 @@
    :production
    {:cljsbuild
     {:builds
-     {:client {:compiler {:closure-defines {"goog.DEBUG" true}
+     {:client {:compiler {:closure-defines {"goog.DEBUG" false}
                           :optimizations :advanced}}}}}
    :repl [:dev]})

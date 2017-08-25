@@ -5,11 +5,12 @@
             [steamdating.components.page.menu :refer [menu menu-item]]
             [steamdating.components.page.page :refer [content page]]
             [steamdating.components.page.root :as page-root]
-            [steamdating.components.player.list :refer [players-list]]))
+            [steamdating.components.player.list :refer [players-list]]
+            [steamdating.services.debug :as debug]))
 
 
 (defroute players-list-route "/players" {}
-  (println "route players-list")
+  (debug/log "route players-list")
   (re-frame/dispatch [:steamdating.routes/page :players-list]))
 
 

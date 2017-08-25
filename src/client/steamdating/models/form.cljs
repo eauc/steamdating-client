@@ -2,7 +2,7 @@
   (:require [cljs.spec.alpha :as spec]
             [clojure.string :as str]
             [expound.alpha :refer [expound-str]]
-            [steamdating.services.debug :refer [debug?]]))
+            [steamdating.services.debug :as debug]))
 
 
 (spec/def :steamdating.form/value
@@ -61,6 +61,5 @@
   [{:keys [edit] :as form} spec]
   (let [valid? (spec/valid? spec edit)
         error (when-not valid? (validate-error spec edit))]
-    (when debug?
-      (do (println "form/validate:" (expound-str spec edit))))
+    (debug/log "form/validate:" (expound-str spec edit))
     (assoc form :error error)))

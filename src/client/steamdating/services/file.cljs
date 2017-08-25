@@ -1,5 +1,6 @@
 (ns steamdating.services.file
-  (:require [re-frame.core :as re-frame]))
+  (:require [re-frame.core :as re-frame]
+            [steamdating.services.debug :as debug]))
 
 
 (re-frame/reg-fx
@@ -14,10 +15,10 @@
                            (->> (conj on-success))
                            (re-frame/dispatch))
                        (catch js/Object e
-                         (println "Parse file error" (.-message e))
+                         (debug/spy "Parse file error" (.-message e))
                          (re-frame/dispatch on-failure))))
           on-error #(do
-                      (println "Load file error" %)
+                      (debug/spy "Load file error" %)
                       (re-frame/dispatch on-failure))]
       (doto (js/FileReader.)
         (aset "onload" on-load)

@@ -5,11 +5,12 @@
             [steamdating.components.player.edit :refer [edit]]
             [steamdating.components.page.menu :refer [menu menu-item]]
             [steamdating.components.page.page :refer [content page]]
-            [steamdating.components.page.root :as page-root]))
+            [steamdating.components.page.root :as page-root]
+            [steamdating.services.debug :as debug]))
 
 
 (defroute players-create "/players/create" {}
-  (println "route players-create")
+  (debug/log "route players-create")
   (re-frame/dispatch [:steamdating.routes/page :players-create]))
 
 

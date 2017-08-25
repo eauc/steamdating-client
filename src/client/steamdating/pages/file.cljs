@@ -4,11 +4,12 @@
             [steamdating.components.page.page :refer [content page]]
             [steamdating.components.page.root :as page-root]
             [steamdating.components.tournament.new-button :refer [new-button]]
-            [steamdating.components.tournament.open-button :refer [open-button]]))
+            [steamdating.components.tournament.open-button :refer [open-button]]
+            [steamdating.services.debug :as debug]))
 
 
 (defroute file "/file" {}
-  (println "route file")
+  (debug/log "route file")
   (re-frame/dispatch [:steamdating.routes/page :file]))
 
 

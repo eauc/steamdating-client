@@ -17,3 +17,9 @@
   (when debug?
     (println msg data))
   data)
+
+
+(defn log
+  [& args]
+  (when debug?
+    (apply println args)))

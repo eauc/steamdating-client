@@ -1,20 +1,21 @@
 (ns steamdating.pages.home
-  (:require [re-frame.core :as re-frame]
+  (:require [clojure.string :as str]
+            [re-frame.core :as re-frame]
             [secretary.core :as secretary :refer-macros [defroute]]
             [steamdating.components.page.menu :refer [menu menu-item]]
             [steamdating.components.page.page :refer [content page]]
             [steamdating.components.page.root :as page-root]
             [steamdating.services.db :as db]
-            [clojure.string :as str]))
+            [steamdating.services.debug :as debug]))
 
 
 (defroute root "/" {}
-  (println "route home")
+  (debug/log "route home")
   (re-frame/dispatch [:steamdating.routes/page :home]))
 
 
 (defroute home "/home" {}
-  (println "route home")
+  (debug/log "route home")
   (re-frame/dispatch [:steamdating.routes/page :home]))
 
 
@@ -22,7 +23,7 @@
   ::test-prompt
   (fn test-prompt
     [_ [message value]]
-    (println "test-prompt" message value)
+    (debug/log "test-prompt" message value)
     {:dispatch [:steamdating.toaster/set
                 {:type :info
                  :message (str/join " : " (remove nil? [message value]))}]}))

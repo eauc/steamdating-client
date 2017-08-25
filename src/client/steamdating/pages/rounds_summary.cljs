@@ -4,11 +4,11 @@
             [steamdating.components.page.page :refer [content page]]
             [steamdating.components.page.root :as page-root]
             [steamdating.components.round.menu :refer [rounds-menu]]
-            [steamdating.services.rounds]))
+            [steamdating.services.debug :as debug]))
 
 
 (defroute rounds-summary-route "/rounds/all" {}
-  (println "routes rounds-summary")
+  (debug/log "routes rounds-summary")
   (re-frame/dispatch [:steamdating.routes/page :rounds-summary]))
 
 

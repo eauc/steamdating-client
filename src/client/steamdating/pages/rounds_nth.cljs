@@ -4,11 +4,12 @@
             [steamdating.components.page.page :refer [content page]]
             [steamdating.components.page.root :as page-root]
             [steamdating.components.round.menu :refer [rounds-menu]]
-            [steamdating.components.round.round :refer [round]]))
+            [steamdating.components.round.round :refer [round]]
+            [steamdating.services.debug :as debug]))
 
 
 (defroute rounds-next "/rounds/nth/:n" {n :n}
-  (println "route rounds-nth" n)
+  (debug/log "route rounds-nth" n)
   (re-frame/dispatch [:steamdating.routes/page
                       :rounds-nth {:n (js/parseInt n 10)}]))
 
