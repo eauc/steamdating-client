@@ -19,8 +19,8 @@
             [lein-garden "0.3.0" :exclusions [org.clojure/clojure org.apache.commons/commons-compress]]
             [lein-pprint "1.1.2"]]
   :source-paths []
+  :aliases {"compile" ["do" ["garden" "once"] ["compile" ":all"]]}
   :hooks [leiningen.cljsbuild]
-  :prep-tasks [["garden" "once"]]
   :cljsbuild
   {:builds
    {:client {:source-paths ["src/client"]
