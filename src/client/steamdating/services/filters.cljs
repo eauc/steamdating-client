@@ -1,8 +1,13 @@
 (ns steamdating.services.filters
-  (:require [re-frame.core :as re-frame]
+  (:require [clairvoyant.core :refer-macros [trace-forms]]
+            [re-frame.core :as re-frame]
+            [re-frame-tracer.core :refer [tracer]]
             [steamdating.models.filter :as filter]
             [steamdating.services.db :as db]))
 
+
+;; (trace-forms
+;;   {:tracer (tracer :color "gold")}
 
 (db/reg-event-fx
   :steamdating.filters/set
@@ -27,3 +32,5 @@
   (fn regexp-sub
     [state _]
     (filter/filter->regexp state)))
+
+;; )

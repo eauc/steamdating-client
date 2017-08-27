@@ -6,14 +6,17 @@
                                     "target"]
   :dependencies [[org.clojure/clojure "1.9.0-alpha4"]
                  [org.clojure/clojurescript "1.9.854"]
-                 [devcards "0.2.3"]
-                 [garden "1.3.2"]
-                 [re-frame "0.9.4" :exclusions [reagent]]
-                 [secretary "1.2.3"]
-                 [expound "0.1.2"]
                  [day8.re-frame/http-fx "0.1.4"]
+                 [day8/re-frame-tracer "0.1.1-SNAPSHOT"]
+                 [devcards "0.2.3" :exclusions [cljsjs/react
+                                                cljsjs/react-dom]]
+                 [expound "0.1.2"]
+                 [garden "1.3.2"]
+                 [org.clojars.stumitchell/clairvoyant "0.2.1"]
                  [pjstadig/humane-test-output "0.8.2"]
-                 [reagent "0.7.0"]]
+                 [re-frame "0.9.4" :exclusions [reagent]]
+                 [reagent "0.7.0"]
+                 [secretary "1.2.3"]]
   :plugins [[lein-cljsbuild "1.1.7"]
             [lein-figwheel "0.5.12" :exclusions [org.clojure/clojure]]
             [lein-garden "0.3.0" :exclusions [org.clojure/clojure org.apache.commons/commons-compress]]
@@ -59,16 +62,17 @@
   :profiles
   {:dev
    {:dependencies [[binaryage/devtools "0.9.4"]
+                   [com.cemerick/piggieback "0.2.2"]
                    [figwheel-sidecar "0.5.12" :exclusions [commons-codec
                                                            org.clojure/tools.nrepl
-                                                           org.clojure/core.async]]
-                   [com.cemerick/piggieback "0.2.2"]]
+                                                           org.clojure/core.async]]]
     :cljsbuild
     {:builds
      {:client {:figwheel {:on-jsload "steamdating.core/mount-root"}
                :compiler {:pretty-print true
                           :output-dir "resources/public/js/client"
                           :asset-path "js/client"
+                          :closure-defines {"clairvoyant.core.devmode" true}
                           :preloads [devtools.preload]
                           :tooling-config {:devtools/config {:features-to-install :all}}}}
       :test {:figwheel {:devcards true}

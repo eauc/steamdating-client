@@ -1,7 +1,12 @@
 (ns steamdating.services.prompt
-  (:require [re-frame.core :as re-frame]
+  (:require [clairvoyant.core :refer-macros [trace-forms]]
+            [re-frame.core :as re-frame]
+            [re-frame-tracer.core :refer [tracer]]
             [steamdating.services.db :as db]))
 
+
+;; (trace-forms
+;;   {:tracer (tracer :color "brown")}
 
 (db/reg-event-fx
   :steamdating.prompt/set
@@ -47,3 +52,5 @@
   (fn prompt-sub
     [db _]
     (:prompt db)))
+
+;; )

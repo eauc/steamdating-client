@@ -1,10 +1,15 @@
 (ns steamdating.services.factions
   (:require [ajax.core :as ajax]
+            [clairvoyant.core :refer-macros [trace-forms]]
             [day8.re-frame.http-fx]
             [re-frame.core :as re-frame]
+            [re-frame-tracer.core :refer [tracer]]
             [steamdating.models.faction :as faction]
             [steamdating.services.db :as db]))
 
+
+;; (trace-forms
+;;   {:tracer (tracer :color "brown")}
 
 (db/reg-event-fx
   :steamdating.factions/initialize
@@ -48,3 +53,5 @@
   (fn names-sub
     [factions [_ name]]
     (faction/icon factions name)))
+
+;; )

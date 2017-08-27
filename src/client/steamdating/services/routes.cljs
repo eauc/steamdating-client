@@ -1,7 +1,9 @@
 (ns steamdating.services.routes
   (:import goog.History)
-  (:require [goog.events :as events]
+  (:require [clairvoyant.core :refer-macros [trace-forms]]
+            [goog.events :as events]
             [goog.history.EventType :as EventType]
+            [re-frame-tracer.core :refer [tracer]]
             [re-frame.core :as re-frame]
             [secretary.core :as secretary]
             [steamdating.services.db :as db]))
@@ -21,6 +23,9 @@
   (secretary/set-config! :prefix "#")
   (hook-browser-navigation!))
 
+
+;; (trace-forms
+;;   {:tracer (tracer :color "brown")}
 
 (db/reg-event-fx
   :steamdating.routes/page
@@ -63,3 +68,5 @@
   (fn page-sub
     [db _]
     (:route db)))
+
+;; )

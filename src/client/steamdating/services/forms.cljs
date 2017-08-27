@@ -1,8 +1,13 @@
 (ns steamdating.services.forms
-  (:require [re-frame.core :as re-frame]
+  (:require [clairvoyant.core :refer-macros [trace-forms]]
+            [re-frame.core :as re-frame]
+            [re-frame-tracer.core :refer [tracer]]
             [steamdating.models.form :as form]
             [steamdating.services.db :as db]))
 
+
+;; (trace-forms
+;;   {:tracer (tracer :color "brown")}
 
 (db/reg-event-fx
   :steamdating.forms/reset
@@ -34,3 +39,5 @@
   (fn form-validate-sub
     [state [_ _ validation-fn]]
     (validation-fn state)))
+
+;; )

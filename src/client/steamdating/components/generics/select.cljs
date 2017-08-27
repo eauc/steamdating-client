@@ -1,7 +1,8 @@
 (ns steamdating.components.generics.select
   (:require [reagent.core :as reagent]
             [steamdating.components.generics.input :refer [->input-component]]
-            [steamdating.models.form :as form]))
+            [steamdating.models.form :as form]
+            [steamdating.services.debug :as debug]))
 
 
 (defn get-value

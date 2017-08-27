@@ -1,11 +1,16 @@
 (ns steamdating.services.toaster
-  (:require [re-frame.core :as re-frame]
+  (:require [clairvoyant.core :refer-macros [trace-forms]]
+            [re-frame.core :as re-frame]
+            [re-frame-tracer.core :refer [tracer]]
             [steamdating.services.db :as db]))
 
 
 (defonce timeout
   (atom nil))
 
+
+;; (trace-forms
+;;   {:tracer (tracer :color "brown")}
 
 (re-frame/reg-fx
   :steamdating.toaster/timeout
@@ -38,3 +43,5 @@
   (fn toaster-sub
     [db _]
     (:toaster db)))
+
+;; )

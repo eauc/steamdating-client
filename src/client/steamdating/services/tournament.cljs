@@ -1,9 +1,14 @@
 (ns steamdating.services.tournament
-  (:require [cljs.spec.alpha :as spec]
+  (:require [clairvoyant.core :refer-macros [trace-forms]]
+            [cljs.spec.alpha :as spec]
             [re-frame.core :as re-frame]
+            [re-frame-tracer.core :refer [tracer]]
             [steamdating.services.db :as db]
             [steamdating.services.file]))
 
+
+;; (trace-forms
+;;   {:tracer (tracer :color "green")}
 
 (db/reg-event-fx
   :steamdating.tournament/confirm-set
@@ -45,3 +50,5 @@
       [:steamdating.toaster/set
        {:type :success
         :message "File loaded"}]]}))
+
+;; )
