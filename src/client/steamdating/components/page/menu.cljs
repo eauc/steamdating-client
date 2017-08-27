@@ -18,7 +18,7 @@
   [:button.sd-PageMenuToggle
    {:class (when show "sd-PageMenuToggle-hide")
     :on-click on-toggle}
-   [icon "chevron-left"]])
+   [icon "chevrons-left"]])
 
 
 (defn menu

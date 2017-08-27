@@ -18,15 +18,18 @@
 
 
 (defn static-props
-  [current-value pristine get-event-value
+  [current-value pristine get-event-value debounce?
    {:keys [field on-update] :as props}]
   (let [id (s/join "." (map #(if (keyword? %) (name %) %) field))
 
-        on-update-debounced (debounce on-update 250)
+        on-update-debounced (when debounce?
+                              (debounce on-update 250))
         on-change #(let [new-value (get-event-value % props)]
                      (reset! current-value new-value)
                      (reset! pristine false)
-                     (on-update-debounced field new-value))]
+                     (if debounce?
+                       (on-update-debounced field new-value)
+                       (on-update field new-value)))]
 
     {:id id
      :on-change on-change}))
@@ -37,7 +40,7 @@
 
 
 (defn dynamic-props
-  [current-value pristine
+  [current-value pristine debounce?
    {:keys [field label multiple placeholder state] :as props}]
   (let [has-value? (or (and (seq? @current-value) (not-empty @current-value))
                        (and (not (seq? @current-value)) (not (nil? @current-value))))
@@ -48,10 +51,9 @@
         class (s/join " " (remove nil? [(when @pristine "pristine")
                                         (when show-valid? "valid")
                                         (when show-error? "error")]))
-
-        default-value (if multiple [] "")
-        value (if (nil? @current-value) default-value @current-value)]
-
+        value (if debounce?
+                @current-value
+                (form/field-value state field @current-value))]
     (assoc (select-keys props dyn-props-keys)
            :class class
            :error error
@@ -89,16 +91,19 @@
 
 
 (defn ->input-component
-  [render-value get-event-value]
-  (fn [{:keys [field on-update state] :as base-props}]
-    (let [current-value (reagent/atom (form/field-value state field))
-          pristine (reagent/atom true)
-          static-props (static-props current-value pristine get-event-value base-props)]
-      (fn input-component
-        [props]
-        (let [dyn-props (merge static-props
-                               (dynamic-props current-value pristine props))]
-          [render-input render-value dyn-props])))))
+  ([render-value get-event-value debounce?]
+   (fn [{:keys [field multiple on-update state] :as base-props}]
+     (let [default-value (if multiple [] "")
+           current-value (reagent/atom (form/field-value state field default-value))
+           pristine (reagent/atom true)
+           static-props (static-props current-value pristine get-event-value debounce? base-props)]
+       (fn input-component
+         [props]
+         (let [dyn-props (merge static-props
+                                (dynamic-props current-value pristine debounce? props))]
+           [render-input render-value dyn-props])))))
+  ([render-value get-event-value]
+   (->input-component render-value get-event-value true)))
 
 
 (def input

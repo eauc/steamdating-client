@@ -21,11 +21,11 @@
   [{:keys [field state] :as props}]
   (let [current-value (reagent/atom (form/field-value state field))
         pristine (reagent/atom true)
-        static-props (input/static-props current-value pristine get-value props)]
+        static-props (input/static-props current-value pristine get-value false props)]
     (fn [current-props]
       (let [{:keys [class error id label] :as dyn-props}
             (merge static-props
-                   (input/dynamic-props current-value pristine current-props))]
+                   (input/dynamic-props current-value pristine false current-props))]
         [:div.sd-Input {:class class}
          [:label {:for id}
           [render-checkbox (dissoc dyn-props :error)]

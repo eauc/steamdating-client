@@ -74,6 +74,18 @@ module Pages
       end
     end
 
+    def expect_empty_pairing(index)
+      within_fieldset("Next round") do
+        expect(find(:xpath, "(.//select)[#{index+1}]").value).to eq("")
+      end
+    end
+
+    def expect_unpaired_players_error(names)
+      within_fieldset("Next round") do
+        expect(page).to have_content(Regexp.new("#{names.join(",\s+")} are not paired"))
+      end
+    end
+
     def expect_games(games)
       expected_content = games.map do |game|
         [

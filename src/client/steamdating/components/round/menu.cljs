@@ -1,6 +1,7 @@
 (ns steamdating.components.round.menu
   (:require [re-frame.core :as re-frame]
-            [steamdating.components.page.menu :refer [menu menu-item]]))
+            [steamdating.components.page.menu :refer [menu menu-item]]
+            [steamdating.services.rounds]))
 
 
 (defn rounds-menu

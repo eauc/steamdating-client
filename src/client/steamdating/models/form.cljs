@@ -29,8 +29,10 @@
 
 
 (defn field-value
-  [form field]
-  (get-in form (into [:edit] field)))
+  ([form field default-value]
+   (get-in form (into [:edit] field) default-value))
+  ([form field]
+   (field-value form field nil)))
 
 
 (defn field-error

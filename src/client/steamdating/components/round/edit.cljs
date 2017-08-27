@@ -10,10 +10,12 @@
 (defn edit
   [{:keys [label on-submit]}]
   (let [state @(re-frame/subscribe [:steamdating.rounds/edit])
-        update-field #(re-frame/dispatch [:steamdating.forms/update :round %1 %2])]
+        update-player #(re-frame/dispatch [:steamdating.rounds/update-edit-player %1 %2])
+        update-table #(re-frame/dispatch [:steamdating.forms/update :round %1 %2])]
     [form state {:label label
                  :on-submit #(re-frame/dispatch [on-submit])}
      [:div.sd-RoundEdit
+      ;; (pr-str state)
       [:table.sd-RoundEdit-gamesList
        [:thead
         [:tr
@@ -29,21 +31,34 @@
             [select {:field [:games n :player1 :name]
                      :state state
                      :options (get-in state [:edit :players])
-                     :on-update update-field
+                     :on-update update-player
                      :order (* 3 n)}]]
            [:td.sd-RoundGamesEdit-faction
-            [faction-icon (get-in state [:edit :games n :player1 :faction])]]
+            {:class (when (get-in state [:warn :games n :faction])
+                      "sd-RoundGamesEdit-warning")}
+            [faction-icon (get-in state [:edit :games n :player1 :faction])]
+            [:p]]
            [:td.sd-RoundGamesEdit-table
             [input {:type :number
                     :field [:games n :table]
                     :state state
-                    :on-update update-field
+                    :on-update update-table
                     :order (+ (* 3 n) 1)}]]
            [:td.sd-RoundGamesEdit-faction
-            [faction-icon (get-in state [:edit :games n :player2 :faction])]]
+            {:class (when (get-in state [:warn :games n :faction])
+                      "sd-RoundGamesEdit-warning")}
+            [faction-icon (get-in state [:edit :games n :player2 :faction])]
+            [:p]]
            [:td
             [select {:field [:games n :player2 :name]
                      :state state
                      :options (get-in state [:edit :players])
-                     :on-update update-field
-                     :order (+ (* 3 n) 2)}]]])]]]]))
+                     :on-update update-player
+                     :order (+ (* 3 n) 2)}]]])]]
+      [:div.sd-RoundEdit-info
+       (for [[key error] (get-in state [:error :global])]
+         [:p.sd-RoundEdit-error {:key key}
+          error])
+       (for [[key warn] (get-in state [:warn :global])]
+         [:p.sd-RoundEdit-warning.sd-text-muted {:key key}
+          warn])]]]))

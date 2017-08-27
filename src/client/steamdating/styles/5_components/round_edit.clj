@@ -9,11 +9,10 @@
     [:&Edit
      [:&-gamesList {:width "100%"
                     :border "0px solid transparent"}]
-     [:&-warning
-      [:&-info {:margin "0.5em 0 1em 0"
-                :color (:warning colors)
-                :font-size "0.85em"
-                :font-style "italic"}]]
+     [:&-info {:margin "0.5em 0 1em 0"
+               :font-size "0.85em"
+               :font-style "italic"}]
+     [:&-error {:color (:error colors)}]
      [:input
       :select {:padding "0.3em 0"}
       (at-break
@@ -23,4 +22,4 @@
     [:&-table
      :&-faction {:width "1%"}]
     [:input {:max-width "3em"}]
-    [:&.sd-RoundGamesEdit-warning {:background-color (:warning-bckgnd colors)}]]])
+    [:&-warning {:background-color (:warning-bckgnd colors)}]]])

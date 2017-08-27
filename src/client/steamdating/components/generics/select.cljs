@@ -19,15 +19,17 @@
 (defn render-select
   [{:keys [on-change options multiple] :as props}]
   [:select.sd-Input-value
-   (dissoc props :options)
+   (-> props
+       (dissoc :options)
+       (update :value #(if (some? %) % "")))
 
    (when-not multiple [:option {:value ""} ""])
    (let [sorted-options (sort-by #(.toLowerCase (nth % 1)) options)]
-     (for [[value label] sorted-options]
-       [:option {:key value
-                 :value value}
+     (for [[val label] sorted-options]
+       [:option {:key val
+                 :value val}
         label]))])
 
 
 (def select
-  (->input-component render-select get-value))
+  (->input-component render-select get-value false))
