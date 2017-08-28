@@ -30,6 +30,21 @@ module Pages
       self
     end
 
+    def sort_by(by)
+      within(".sd-PageContent") do
+        find("th", text: "Player1").click
+        find("th", text: by).click
+      end
+      self
+    end
+
+    def invert_sort_by(by)
+      within(".sd-PageContent") do
+        find("th", text: by).click
+      end
+      self
+    end
+
     def nb_games_for_players(players)
       ((players.length + 1) / 2).floor
     end

@@ -112,6 +112,19 @@
   (update round :games #(vec (filter (fn [game] (game/match-pattern? game pattern)) %))))
 
 
+(def sort-props
+  {:table :table
+   :player1 #(.toLowerCase (or (get-in % [:player1 :name]) ""))
+   :player2 #(.toLowerCase (or (get-in % [:player2 :name]) ""))})
+
+
+(defn sort-with
+  [round {:keys [by reverse]}]
+  (update round :games #(-> %
+                            (->> (sort-by (by sort-props)))
+                            (cond-> reverse (cljs.core/reverse)))))
+
+
 (defn update-factions
   [round factions]
   (update round :games

@@ -22,5 +22,5 @@ Feature: Rounds Nth
 
     Examples:
     | by      |
-    | Player2  |
+    | Player2 |
     | Table   |

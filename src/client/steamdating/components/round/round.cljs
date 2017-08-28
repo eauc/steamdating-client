@@ -1,23 +1,30 @@
 (ns steamdating.components.round.round
   (:require [re-frame.core :as re-frame]
+            [steamdating.components.filter.input :refer [filter-input]]
             [steamdating.components.generics.icon :refer [icon]]
             [steamdating.components.generics.faction-icon :refer [faction-icon]]
-            [steamdating.components.filter.input :refer [filter-input]]))
+            [steamdating.components.sort.header :refer [sort-header]]))
 
 
 (defn render-round
-  [state]
+  [state sort {:keys [on-sort-by]}]
   [:table.sd-Round-list
    [:thead
     [:tr.sd-RoundHeader
      [:th.sd-RoundHeader-score "AP"]
      [:th.sd-RoundHeader-score "CP"]
      [:th.sd-RoundHeader-score "CK"]
-     [:th "Player1"]
+     [sort-header sort {:name :player1
+                        :label "Player1"
+                        :on-sort-by on-sort-by}]
      [:th.sd-RoundHeader-faction]
-     [:th.sd-RoundHeader-table "Table"]
+     [sort-header sort {:name :table
+                        :label "Table"
+                        :on-sort-by on-sort-by}]
      [:th.sd-RoundHeader-faction]
-     [:th "Player2"]
+     [sort-header sort {:name :player2
+                        :label "Player2"
+                        :on-sort-by on-sort-by}]
      [:th.sd-RoundHeader-score "CK"]
      [:th.sd-RoundHeader-score "CP"]
      [:th.sd-RoundHeader-score "AP"]]]
@@ -54,8 +61,10 @@
 
 (defn round
   [n]
-  (let [state @(re-frame/subscribe [:steamdating.rounds/round-view n])]
+  (let [state @(re-frame/subscribe [:steamdating.rounds/round-view n])
+        sort @(re-frame/subscribe [:steamdating.sorts/sort :round {:by :table}])
+        on-sort-by #(re-frame/dispatch [:steamdating.sorts/set :round %])]
     [:div.sd-Round
      ;; (pr-str n state)
      [filter-input {:name :round}]
-     [render-round state]]))
+     [render-round state sort {:on-sort-by on-sort-by}]]))

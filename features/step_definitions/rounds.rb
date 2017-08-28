@@ -70,6 +70,15 @@ When(/^I filter the Round with "([^"]*)"$/) do |filter_value|
   @filter_value = filter_value
 end
 
+When(/^I sort the Round by "([^"]*)"$/) do |by|
+  @page.sort_by(by)
+  @sort_by = by
+end
+
+When(/^I invert the Round sort order$/) do
+  @page.invert_sort_by(@sort_by)
+end
+
 Then(/^I can edit the Next Round information$/) do
   @page
     .expect_games_forms_for_players(@tournament["players"])
@@ -109,4 +118,27 @@ matching_games = {
 
 Then(/^I see the matching Games$/) do
   @page.expect_games(matching_games[@filter_value])
+end
+
+sorted_games = {
+  "Player2" => [
+    { p1ap: 0, p1cp: 0, p1: 'tyty', table: 4, p2: 'Phantom', p2cp: 0, p2ap: 0 },
+    { p1ap: 52, p1cp: 5, p1: 'tete', table: 1, p2: 'teuteu', p2cp: 3, p2ap: 21 },
+    { p1ap: 32, p1cp: 3, p1: 'titi', table: 2, p2: 'toto', p2cp: 5, p2ap: 75 },
+    { p1ap: 46, p1cp: 0, p1: 'toutou', table: 3, p2: 'tutu', p2cp: 4, p2ap: 30 },
+  ],
+  "Table" => [
+    { p1ap: 52, p1cp: 5, p1: 'tete', table: 1, p2: 'teuteu', p2cp: 3, p2ap: 21 },
+    { p1ap: 32, p1cp: 3, p1: 'titi', table: 2, p2: 'toto', p2cp: 5, p2ap: 75 },
+    { p1ap: 46, p1cp: 0, p1: 'toutou', table: 3, p2: 'tutu', p2cp: 4, p2ap: 30 },
+    { p1ap: 0, p1cp: 0, p1: 'tyty', table: 4, p2: 'Phantom', p2cp: 0, p2ap: 0 },
+  ],
+};
+
+Then(/^I see the Round sorted by "([^"]*)"$/) do |by|
+  @page.expect_games(sorted_games[by])
+end
+
+Then(/^I see the Round sorted by "([^"]*)" in reverse order$/) do |by|
+  @page.expect_games(sorted_games[by].reverse)
 end

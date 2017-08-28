@@ -66,11 +66,13 @@
       [[_ n] _]
       [(re-frame/subscribe [:steamdating.rounds/round n])
        (re-frame/subscribe [:steamdating.filters/pattern :round])
+       (re-frame/subscribe [:steamdating.sorts/sort :round {:by :table}])
        (re-frame/subscribe [:steamdating.players/factions])])
     (fn round-view-sub
-      [[round pattern factions] _]
+      [[round pattern sort factions] _]
       (-> round
           (round/filter-with pattern)
+          (round/sort-with sort)
           (round/update-factions factions))))
 
   )
