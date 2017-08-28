@@ -7,6 +7,50 @@
             [steamdating.models.round :as round]))
 
 
+(defn game-row
+  [{:keys [n update-player update-table]} state]
+  [:tr
+   [:td
+    [select {:field [:games n :player1 :name]
+             :form-state state
+             :options (get-in state [:edit :players])
+             :on-update update-player
+             :order (* 3 n)}]]
+   [:td.sd-RoundGamesEdit-faction
+    {:class (when (get-in state [:warn :games n :faction])
+              "sd-RoundGamesEdit-warning")}
+    [faction-icon (get-in state [:edit :games n :player1 :faction])]
+    [:p]]
+   [:td.sd-RoundGamesEdit-table
+    [input {:type :number
+            :field [:games n :table]
+            :form-state state
+            :on-update update-table
+            :order (+ (* 3 n) 1)}]]
+   [:td.sd-RoundGamesEdit-faction
+    {:class (when (get-in state [:warn :games n :faction])
+              "sd-RoundGamesEdit-warning")}
+    [faction-icon (get-in state [:edit :games n :player2 :faction])]
+    [:p]]
+   [:td
+    [select {:field [:games n :player2 :name]
+             :form-state state
+             :options (get-in state [:edit :players])
+             :on-update update-player
+             :order (+ (* 3 n) 2)}]]])
+
+
+(defn info
+  [state]
+  [:div.sd-RoundEdit-info
+   (for [[key error] (get-in state [:error :global])]
+     [:p.sd-RoundEdit-error {:key key}
+      error])
+   (for [[key warn] (get-in state [:warn :global])]
+     [:p.sd-RoundEdit-warning.sd-text-muted {:key key}
+      warn])])
+
+
 (defn edit
   [{:keys [label on-submit]}]
   (let [state @(re-frame/subscribe [:steamdating.rounds/edit])
@@ -26,39 +70,7 @@
          [:th "Player2"]]]
        [:tbody.sd-RoundGamesEdit
         (for [[n g] (map vector (range) (:games (:edit state)))]
-          [:tr {:key n}
-           [:td
-            [select {:field [:games n :player1 :name]
-                     :form-state state
-                     :options (get-in state [:edit :players])
-                     :on-update update-player
-                     :order (* 3 n)}]]
-           [:td.sd-RoundGamesEdit-faction
-            {:class (when (get-in state [:warn :games n :faction])
-                      "sd-RoundGamesEdit-warning")}
-            [faction-icon (get-in state [:edit :games n :player1 :faction])]
-            [:p]]
-           [:td.sd-RoundGamesEdit-table
-            [input {:type :number
-                    :field [:games n :table]
-                    :form-state state
-                    :on-update update-table
-                    :order (+ (* 3 n) 1)}]]
-           [:td.sd-RoundGamesEdit-faction
-            {:class (when (get-in state [:warn :games n :faction])
-                      "sd-RoundGamesEdit-warning")}
-            [faction-icon (get-in state [:edit :games n :player2 :faction])]
-            [:p]]
-           [:td
-            [select {:field [:games n :player2 :name]
-                     :form-state state
-                     :options (get-in state [:edit :players])
-                     :on-update update-player
-                     :order (+ (* 3 n) 2)}]]])]]
-      [:div.sd-RoundEdit-info
-       (for [[key error] (get-in state [:error :global])]
-         [:p.sd-RoundEdit-error {:key key}
-          error])
-       (for [[key warn] (get-in state [:warn :global])]
-         [:p.sd-RoundEdit-warning.sd-text-muted {:key key}
-          warn])]]]))
+          [game-row {:key n :n n
+                     :update-player update-player
+                     :update-table update-table} state])]]
+      [info state]]]))

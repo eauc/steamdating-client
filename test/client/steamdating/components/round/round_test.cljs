@@ -1,14 +1,14 @@
 (ns steamdating.components.round.round-test
   (:require [devcards.core :as dc :refer-macros [defcard-rg]]
             [reagent.core :as reagent]
-            [steamdating.components.round.round :refer [render-round]]))
+            [steamdating.components.round.round :refer [round]]))
 
 
 (defcard-rg round-test
   "Round view component"
   (fn [state]
     [:div
-     [render-round (:round @state)]])
+     [round (:round @state)]])
   (reagent/atom
     {:round {:players ["Toto" "titi" "Tutu" "tete" "tyty" "toutou" "Teuteu"]
              :games [{:table 1

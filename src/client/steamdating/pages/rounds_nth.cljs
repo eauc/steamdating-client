@@ -4,7 +4,7 @@
             [steamdating.components.page.page :refer [content page]]
             [steamdating.components.page.root :as page-root]
             [steamdating.components.round.menu :refer [rounds-menu]]
-            [steamdating.components.round.round :refer [round]]
+            [steamdating.components.round.round :refer [round-component]]
             [steamdating.services.debug :as debug]))
 
 
@@ -19,5 +19,4 @@
   [page
    [rounds-menu]
    [content
-    [:h4 (str "Round #" (+ n 1))]
-    [round n]]])
+    [round-component n]]])
