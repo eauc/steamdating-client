@@ -1,7 +1,22 @@
+Given(/^some Rounds have been defined$/) do
+  @tournament = JSON.parse(File.read("features/data/someRounds.json"))
+  Pages::File.new
+    .load
+    .open("someRounds.json")
+  expect_toaster("File loaded")
+  validate_prompt
+end
+
 Given(/^I open Rounds\/Next page$/) do
   @page = Pages::Rounds.new
             .load
             .start_edit_next
+end
+
+Given(/^I open Rounds\/(\d+) page$/) do |n|
+  @page = Pages::Rounds.new
+            .load
+            .start_nth(n)
 end
 
 Given(/^some players are paired$/) do
@@ -50,6 +65,11 @@ When(/^I create the Next Round$/) do
   @page.create_round
 end
 
+When(/^I filter the Round with "([^"]*)"$/) do |filter_value|
+  @page.filter(filter_value)
+  @filter_value = filter_value
+end
+
 Then(/^I can edit the Next Round information$/) do
   @page
     .expect_games_forms_for_players(@tournament["players"])
@@ -75,4 +95,18 @@ end
 
 Then(/^I see an error with the unpaired players names$/) do
   @page.expect_unpaired_players_error(@unpaired_players_names);
+end
+
+matching_games = {
+  "to" => [
+    { p1ap: 32, p1cp: 3, p1: 'titi', table: 2, p2: 'toto', p2cp: 5, p2ap: 75 },
+    { p1ap: 46, p1cp: 0, p1: 'toutou', table: 3, p2: 'tutu', p2cp: 4, p2ap: 30 },
+  ],
+  "te" => [
+    { p1ap: 52, p1cp: 5, p1: 'tete', table: 1, p2: 'teuteu', p2cp: 3, p2ap: 21 },
+  ],
+};
+
+Then(/^I see the matching Games$/) do
+  @page.expect_games(matching_games[@filter_value])
 end

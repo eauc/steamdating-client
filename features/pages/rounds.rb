@@ -16,6 +16,20 @@ module Pages
       self
     end
 
+    def start_nth(n)
+      within(".sd-PageMenu") do
+        click_on("Round ##{n}")
+      end
+      self
+    end
+
+    def filter(value)
+      within(".sd-PageContent") do
+        fill_in("Filter", with: value)
+      end
+      self
+    end
+
     def nb_games_for_players(players)
       ((players.length + 1) / 2).floor
     end
@@ -42,18 +56,21 @@ module Pages
       n_tables.times do |i|
         set_table(i, i+1)
       end
+      self
     end
 
     def set_table(index, value)
       within_fieldset("Next round") do
         find(:xpath, "(.//input)[#{index+1}]").set(value)
       end
+      self
     end
 
     def create_round
       within_fieldset("Next round") do
         click_button({value: "submit"})
       end
+      self
     end
 
     def expect_games_forms_for_players(players)
@@ -72,18 +89,21 @@ module Pages
       within_fieldset("Next round") do
         expect(page.all(:xpath, selector).length).to be(nb_games * 2)
       end
+      self
     end
 
     def expect_empty_pairing(index)
       within_fieldset("Next round") do
         expect(find(:xpath, "(.//select)[#{index+1}]").value).to eq("")
       end
+      self
     end
 
     def expect_unpaired_players_error(names)
       within_fieldset("Next round") do
         expect(page).to have_content(Regexp.new("#{names.join(",\s+")} are not paired"))
       end
+      self
     end
 
     def expect_games(games)
@@ -91,9 +111,9 @@ module Pages
         [
           game[:p1ap] || 0,
           game[:p1cp] || 0,
-          game[:p1] || 0,
-          game[:table] || 0,
-          game[:p2] || 0,
+          game[:p1] || "Phantom",
+          game[:table] || 1,
+          game[:p2] || "Phantom",
           game[:p2cp] || 0,
           game[:p2ap] || 0,
         ]
@@ -104,6 +124,7 @@ module Pages
       within(".sd-PageContent") do
         expect(page).to have_content(Regexp.new(expected_content, "i"))
       end
+      self
     end
   end
 end

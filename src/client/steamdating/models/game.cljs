@@ -1,13 +1,42 @@
 (ns steamdating.models.game
-  (:require [cljs.spec.alpha :as spec]))
+  (:require [cljs.spec.alpha :as spec]
+            [steamdating.models.player]))
+
+
+(spec/def :steamdating.score/tournament
+  #{0 1})
+
+
+(spec/def :steamdating.score/assassination
+  boolean?)
+
+
+(spec/def :steamdating.score/scenario
+  (spec/and integer? #(>= % 0)))
+
+
+(spec/def :steamdating.score/army
+  (spec/and integer? #(>= % 0)))
+
+
+(spec/def :steamdating.game/score
+  (spec/keys :req-un [:steamdating.score/tournament
+                      :steamdating.score/assassination
+                      :steamdating.score/scenario
+                      :steamdating.score/army]))
 
 
 (spec/def :steamdating.game/table
-  (spec/nilable (spec/and integer? #(> % 0))))
+  (spec/nilable (spec/and integer? pos?)))
+
+
+(spec/def :steamdating.game/name
+  (spec/nilable :steamdating.player/name))
 
 
 (spec/def :steamdating.game/player
-  (spec/keys :req-un [:steamdating.game/name]))
+  (spec/keys :req-un [:steamdating.game/name
+                      :steamdating.game/score]))
 
 
 (spec/def :steamdating.game/player1
@@ -24,11 +53,21 @@
                       :steamdating.game/table]))
 
 
+(defn ->score
+  []
+  {:tournament 0
+   :assassination false
+   :scenario 0
+   :army 0})
+
+
 (defn ->game
   [{:keys [table]}]
   {:table table
-   :player1 {:name nil}
-   :player2 {:name nil}})
+   :player1 {:name nil
+             :score (->score)}
+   :player2 {:name nil
+             :score (->score)}})
 
 
 (def player-names
@@ -48,6 +87,12 @@
         f2 (get factions (get-in game [:player2 :name]))]
     (and (some? f1)
          (= f1 f2))))
+
+
+(defn match-pattern?
+  [game pattern]
+  (or (re-find pattern (or (get-in game [:player1 :name]) ""))
+      (re-find pattern (or (get-in game [:player2 :name]) ""))))
 
 
 (defn unpair-player

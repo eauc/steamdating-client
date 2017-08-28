@@ -65,9 +65,12 @@
     (fn round-view-input
       [[_ n] _]
       [(re-frame/subscribe [:steamdating.rounds/round n])
+       (re-frame/subscribe [:steamdating.filters/pattern :round])
        (re-frame/subscribe [:steamdating.players/factions])])
     (fn round-view-sub
-      [[round factions] _]
-      (round/update-factions round factions)))
+      [[round pattern factions] _]
+      (-> round
+          (round/filter-with pattern)
+          (round/update-factions factions))))
 
   )

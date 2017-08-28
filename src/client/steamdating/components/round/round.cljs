@@ -1,6 +1,8 @@
 (ns steamdating.components.round.round
   (:require [re-frame.core :as re-frame]
-            [steamdating.components.generics.faction-icon :refer [faction-icon]]))
+            [steamdating.components.generics.icon :refer [icon]]
+            [steamdating.components.generics.faction-icon :refer [faction-icon]]
+            [steamdating.components.filter.input :refer [filter-input]]))
 
 
 (defn render-round
@@ -25,11 +27,12 @@
        {:key (str (get-in game [:player1 :name])
                   (get-in game [:player2 :name]))}
        [:td.sd-RoundGameRow-score
-        (or (get-in game [:player1 :ap]) 0)]
+        (get-in game [:player1 :score :army] 0)]
        [:td.sd-RoundGameRow-score
-        (or (get-in game [:player1 :cp]) 0)]
+        (get-in game [:player1 :score :scenario] 0)]
        [:td.sd-RoundGameRow-score
-        (get-in game [:player1 :ck])]
+        (when (get-in game [:player1 :score :assassination])
+          [icon "check"])]
        [:td
         (or (get-in game [:player1 :name]) "Phantom")]
        [:td.sd-RoundGameRow-faction
@@ -41,11 +44,12 @@
        [:td
         (or (get-in game [:player2 :name]) "Phantom")]
        [:td.sd-RoundGameRow-score
-        (get-in game [:player2 :ck])]
+        (when (get-in game [:player2 :score :assassination])
+          [icon "check"])]
        [:td.sd-RoundGameRow-score
-        (or (get-in game [:player2 :cp]) 0)]
+        (get-in game [:player2 :score :scenario] 0)]
        [:td.sd-RoundGameRow-score
-        (or (get-in game [:player2 :ap]) 0)]])]])
+        (get-in game [:player2 :score :army] 0)]])]])
 
 
 (defn round
@@ -53,4 +57,5 @@
   (let [state @(re-frame/subscribe [:steamdating.rounds/round-view n])]
     [:div.sd-Round
      ;; (pr-str n state)
+     [filter-input {:name :round}]
      [render-round state]]))

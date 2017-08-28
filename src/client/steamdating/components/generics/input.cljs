@@ -52,9 +52,9 @@
 
 
 (defn update-local-state!
-  [local-state {:keys [field form-state]}]
+  [local-state {:keys [field form-state multiple]}]
   (let [{:keys [last-form-value]} @local-state
-				form-value (form/field-value form-state field)]
+        form-value (form/field-value form-state field (if multiple [] ""))]
 		(when-not (= last-form-value form-value)
 			(swap! local-state merge {:current-value form-value
 																:last-form-value form-value}))))

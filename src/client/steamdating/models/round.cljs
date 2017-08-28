@@ -3,7 +3,8 @@
             [clojure.string :as s]
             [steamdating.models.form :as form]
             [steamdating.models.game :as game]
-            [steamdating.models.player]))
+            [steamdating.models.player]
+            [steamdating.services.debug :as debug]))
 
 
 (spec/def :steamdating.round/games
@@ -104,6 +105,11 @@
   (-> round
       (unpair-player name)
       (assoc-in field name)))
+
+
+(defn filter-with
+  [round pattern]
+  (update round :games #(vec (filter (fn [game] (game/match-pattern? game pattern)) %))))
 
 
 (defn update-factions

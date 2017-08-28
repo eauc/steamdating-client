@@ -10,7 +10,7 @@
           :on-update on-update
           :placeholder "Filter"
           :field [:filter name]
-          :state {:edit {:filter {name value}}}}])
+          :form-state {:edit {:filter {name value}}}}])
 
 
 (defn filter-input
