@@ -41,6 +41,7 @@ When(/^I select a player who is already paired$/) do
   @changed_pairing_index = 1
   @changed_pairing_name = @paired_players_names[@changed_pairing_index]
   @page.set_player_name(@unpaired_indices[0], @changed_pairing_name)
+  sleep 0.25
 end
 
 When(/^I create the Next Round$/) do

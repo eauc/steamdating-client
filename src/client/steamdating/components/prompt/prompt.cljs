@@ -21,7 +21,7 @@
      (when (= type :prompt)
        [input {:type (if (number? value) :number :text)
                :field [:value]
-               :state {:edit {:value value}}
+               :form-state {:edit {:value value}}
                :on-update on-update
                :autofocus "autofocus"}])
      [:div.sd-Prompt-controls

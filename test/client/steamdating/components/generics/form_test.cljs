@@ -55,7 +55,7 @@
         [input {:type :text
                 :label "Text field"
                 :field [:text]
-                :state @state
+                :form-state @state
                 :on-update update-field
                 :required true
                 :autofocus true
@@ -63,12 +63,12 @@
         [input {:type :number
                 :label "Numeric field"
                 :field [:number]
-                :state @state
+                :form-state @state
                 :on-update update-field
                 :order "2"}]
         [select {:label "Select field"
                  :field [:select]
-                 :state @state
+                 :form-state @state
                  :on-update update-field
                  :options {:opt2 "Option 2"
                            :opt4 "Option 4"
@@ -78,7 +78,7 @@
         [select {:label "Select multiple field"
                  :multiple true
                  :field [:select-multiple]
-                 :state @state
+                 :form-state @state
                  :on-update update-field
                  :options {:opt3 "Option 3"
                            :opt1 "Option 1"
@@ -87,12 +87,12 @@
                  :order "4"}]
         [checkbox {:label "Checkbox field"
                    :field [:checkbox]
-                   :state @state
+                   :form-state @state
                    :on-update update-field
                    :order "5"}]
         [textarea {:label "Textarea field"
                    :field [:textarea]
-                   :state @state
+                   :form-state @state
                    :on-update update-field
                    :order "6"}]]]))
   (reagent/atom (form-model/validate

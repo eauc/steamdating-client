@@ -29,7 +29,7 @@
           [:tr {:key n}
            [:td
             [select {:field [:games n :player1 :name]
-                     :state state
+                     :form-state state
                      :options (get-in state [:edit :players])
                      :on-update update-player
                      :order (* 3 n)}]]
@@ -41,7 +41,7 @@
            [:td.sd-RoundGamesEdit-table
             [input {:type :number
                     :field [:games n :table]
-                    :state state
+                    :form-state state
                     :on-update update-table
                     :order (+ (* 3 n) 1)}]]
            [:td.sd-RoundGamesEdit-faction
@@ -51,7 +51,7 @@
             [:p]]
            [:td
             [select {:field [:games n :player2 :name]
-                     :state state
+                     :form-state state
                      :options (get-in state [:edit :players])
                      :on-update update-player
                      :order (+ (* 3 n) 2)}]]])]]

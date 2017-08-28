@@ -1,6 +1,6 @@
 (ns steamdating.components.generics.textarea
   (:require [reagent.core :as reagent]
-            [steamdating.components.generics.input :refer [->input-component get-value]]
+            [steamdating.components.generics.input :refer [->input-component]]
             [steamdating.models.form :as form]))
 
 
@@ -10,4 +10,4 @@
 
 
 (def textarea
-  (->input-component render-textarea get-value))
+  (->input-component {:render-value render-textarea}))

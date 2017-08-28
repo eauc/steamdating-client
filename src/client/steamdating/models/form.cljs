@@ -1,6 +1,6 @@
 (ns steamdating.models.form
   (:require [cljs.spec.alpha :as spec]
-            [clojure.string :as str]
+            [clojure.string :as s]
             [expound.alpha :refer [expound-str]]
             [steamdating.services.debug :as debug]))
 
@@ -45,16 +45,33 @@
   (not error))
 
 
-(defn path->string
+(defn field->id
+  [field]
+  (s/join "." (map #(if (keyword? %) (name %) %) field)))
+
+
+(defn state->class
+  [{:keys [current-value error pristine?]}]
+  (let [has-value? (or (and (seq? current-value) (not-empty current-value))
+                       (and (not (seq? current-value)) (not (nil? current-value))))
+        clear? (and pristine? (not has-value?))
+        show-error? (and (not clear?) error)
+        show-valid? (and (not clear?) (not error))]
+    (s/join " " (remove nil? [(when pristine? "pristine")
+                              (when show-valid? "valid")
+                              (when show-error? "error")]))))
+
+
+(defn spec-path->desc
   [path]
-  (str/join " " (map name path)))
+  (s/join " " (map name path)))
 
 
 (defn validate-error
   [spec edit]
   (let [expl (spec/explain-data spec edit)]
     (reduce #(let [path (:path %2)
-                   name (path->string path)]
+                   name (spec-path->desc path)]
                (assoc-in %1 path (str "Invalid " name)))
             {} (:cljs.spec.alpha/problems expl))))
 

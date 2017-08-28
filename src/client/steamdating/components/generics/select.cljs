@@ -32,4 +32,6 @@
 
 
 (def select
-  (->input-component render-select get-value false))
+  (->input-component {:get-value get-value
+                      :render-value render-select
+                      :debounce? false}))

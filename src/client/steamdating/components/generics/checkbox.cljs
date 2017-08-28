@@ -1,7 +1,7 @@
 (ns steamdating.components.generics.checkbox
   (:require [reagent.core :as reagent]
             [steamdating.models.form :as form]
-            [steamdating.components.generics.input :as input]))
+            [steamdating.components.generics.input :refer [->input-component]]))
 
 
 (defn get-value
@@ -10,25 +10,19 @@
 
 
 (defn render-checkbox
-  [{:keys [on-change value] :as props}]
-  [:input.sd-Input-value
-   (assoc props
-          :type "checkbox"
-          :checked value)])
+  [_ {:keys [class error id label value] :as props}]
+  [:div.sd-Input {:class class}
+   [:label {:for id}
+    [:input.sd-Input-value
+     (-> props
+         (dissoc :error)
+         (assoc :type "checkbox" :checked value))]
+    [:span (str " " label)]]
+   [:p.sd-Input-info
+    (or error "No error")]])
 
 
-(defn checkbox
-  [{:keys [field state] :as props}]
-  (let [current-value (reagent/atom (form/field-value state field))
-        pristine (reagent/atom true)
-        static-props (input/static-props current-value pristine get-value false props)]
-    (fn [current-props]
-      (let [{:keys [class error id label] :as dyn-props}
-            (merge static-props
-                   (input/dynamic-props current-value pristine false current-props))]
-        [:div.sd-Input {:class class}
-         [:label {:for id}
-          [render-checkbox (dissoc dyn-props :error)]
-          [:span (str " " label)]]
-         [:p.sd-Input-info
-          (or error "No error")]]))))
+(def checkbox
+  (->input-component {:render-input render-checkbox
+                      :get-value get-value
+                      :debounce? false}))

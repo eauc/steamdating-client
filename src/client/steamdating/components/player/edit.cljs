@@ -21,7 +21,7 @@
       [input {:type :text
               :label "Name"
               :field [:name]
-              :state state
+              :form-state state
               :on-update update-field
               :required "required"
               :autofocus "autofocus"
@@ -29,24 +29,24 @@
       [input {:type :text
               :label "Origin"
               :field [:origin]
-              :state state
+              :form-state state
               :on-update update-field
               :order "2"}]
       [select {:label "Faction"
                :field [:faction]
-               :state state
+               :form-state state
                :on-update update-field
                :options factions-names
                :order "3"}]
       [select {:label "Lists"
                :field [:lists]
-               :state state
+               :form-state state
                :on-update update-field
                :options casters-names
                :multiple "multiple"
                :order "4"}]
       [textarea {:label "Notes"
                  :field [:notes]
-                 :state state
+                 :form-state state
                  :on-update update-field
                  :order "6"}]]]))
