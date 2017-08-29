@@ -1,3 +1,8 @@
+require "json"
+require_relative "../pages/file"
+require_relative "../pages/rounds_next"
+require_relative "../pages/rounds_nth"
+
 Given(/^some Rounds have been defined$/) do
   @tournament = JSON.parse(File.read("features/data/someRounds.json"))
   Pages::File.new
@@ -8,15 +13,13 @@ Given(/^some Rounds have been defined$/) do
 end
 
 Given(/^I open Rounds\/Next page$/) do
-  @page = Pages::Rounds.new
+  @page = Pages::RoundsNext.new
             .load
-            .start_edit_next
 end
 
 Given(/^I open Rounds\/(\d+) page$/) do |n|
-  @page = Pages::Rounds.new
+  @page = Pages::RoundsNth.new(n)
             .load
-            .start_nth(n)
 end
 
 Given(/^some players are paired$/) do
@@ -99,7 +102,8 @@ Then(/^I see the New Round's page$/) do
   within(".sd-PageContent") do
     expect(page).to have_content("Round ##{@new_round_index+1}")
   end
-  @page.expect_games(@new_round_games)
+  Pages::RoundsNth.new(@new_round_index+1)
+    .expect_games(@new_round_games)
 end
 
 Then(/^I see an error with the unpaired players names$/) do

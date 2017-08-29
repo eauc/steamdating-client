@@ -1,6 +1,10 @@
 require "rspec/expectations"
 
 module Pages
+  NAV = ".sd-Nav"
+  PAGE_MENU = ".sd-PageMenu"
+  PAGE_CONTENT = ".sd-PageContent"
+
   class Page
     include RSpec::Matchers
     include Capybara::DSL

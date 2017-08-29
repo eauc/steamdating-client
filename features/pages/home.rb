@@ -2,8 +2,11 @@ require_relative "./page"
 
 module Pages
   class Home < Page
-    def initialize
-      @route = "home"
+    def load
+      within(NAV) do
+        click_on("Home")
+      end
+      self
     end
 
     def test(feature)

@@ -1,3 +1,4 @@
 ---
-default: --profile html_report
+default: --profile commons --profile html_report
 html_report: --format pretty --format html --out features/report/report.html
+commons: --expand --exclude features/pages --exclude features/mixins

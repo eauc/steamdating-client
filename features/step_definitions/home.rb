@@ -1,6 +1,8 @@
+require_relative "../pages/home"
+
 Given(/^I open Home page$/) do
   @page = Pages::Home.new
-  @page.load
+            .load
 end
 
 When(/^I test the "([^"]*)"$/) do |feature|
