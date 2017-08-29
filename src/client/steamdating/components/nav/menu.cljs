@@ -1,15 +1,15 @@
 (ns steamdating.components.nav.menu
-  (:require [reagent.core :as reagent]
+  (:require [re-frame.core :as re-frame]
+            [reagent.core :as reagent]
             [steamdating.components.nav.link :refer [link]]
             [steamdating.components.nav.toggle :refer [toggle]]))
 
 
 (defn menu
   []
-  (let [current-hash (reagent/atom (.-hash js/location))
+  (let [current-hash (re-frame/subscribe [:steamdating.routes/hash])
         show (reagent/atom false)
         toggle-show #(swap! show not)]
-    (js/addEventListener "hashchange" #(reset! current-hash (.-hash js/location)))
     (fn menu-component
       []
       [:div.sd-NavMenu {:class (when @show "sd-NavMenu-show")}
@@ -23,10 +23,12 @@
         "File"]
        [link {:current-hash @current-hash
               :path "/players"
+              :active "#/players"
               :on-click toggle-show}
         "Players"]
        [link {:current-hash @current-hash
               :path "/rounds/all"
+              :active "#/rounds"
               :on-click toggle-show}
         "Rounds"]
        [:div.sd-NavMenu-actions

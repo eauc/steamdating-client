@@ -1,16 +1,22 @@
 (ns steamdating.components.page.menu
-  (:require [reagent.core :as reagent]
+  (:require [re-frame.core :as re-frame]
+            [reagent.core :as reagent]
             [steamdating.components.generics.icon :refer [icon]]))
 
 (defn menu-item
-  [{:keys [href on-click]} & children]
-  (apply conj
-         [:a.sd-PageMenuItem
-          {:href (or href "#")
-           :on-click (fn [event]
-                       (.preventDefault event)
-                       (on-click))}]
-         children))
+  [{:keys [active href on-click]} & children]
+  (let [current-hash @(re-frame/subscribe [:steamdating.routes/hash])
+        active? (or (.startsWith current-hash active)
+                    (= current-hash href))]
+    (apply conj
+           [:a.sd-PageMenuItem
+            {:class (when active? "active")
+             :href (or href "#")
+             :on-click (fn [event]
+                         (when on-click
+                           (.preventDefault event)
+                           (on-click)))}]
+           children)))
 
 
 (defn menu-toggle

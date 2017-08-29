@@ -6,7 +6,7 @@
             [steamdating.models.filter]
             [steamdating.models.form]
             [steamdating.models.prompt]
-            [steamdating.models.route]
+            [steamdating.models.route :refer [->route]]
             [steamdating.models.sort]
             [steamdating.models.toaster]
             [steamdating.models.tournament :refer [->tournament]]

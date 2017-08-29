@@ -27,12 +27,21 @@
 ;; (trace-forms
 ;;   {:tracer (tracer :color "brown")}
 
+(re-frame/reg-cofx
+  :steamdating.routes/current-hash
+  (fn current-hash
+    [coeffects]
+    (assoc coeffects :steamdating.routes/current-hash (.-hash js/location))))
+
+
 (db/reg-event-fx
   :steamdating.routes/page
-  [(re-frame/path :route)]
-  (fn routes-page [_ [page params]]
-    {:db {:page page
-          :params params}}))
+  [(re-frame/path :route)
+   (re-frame/inject-cofx :steamdating.routes/current-hash)]
+  (fn routes-page [{:keys [db :steamdating.routes/current-hash]} [page params]]
+    {:db (merge db {:page page
+                    :hash current-hash
+                    :params params})}))
 
 
 (re-frame/reg-fx
@@ -68,5 +77,13 @@
   (fn page-sub
     [db _]
     (:route db)))
+
+
+(re-frame/reg-sub
+  :steamdating.routes/hash
+  :<- [:steamdating.routes/route]
+  (fn hash-sub
+    [route _]
+    (get route :hash "")))
 
 ;; )

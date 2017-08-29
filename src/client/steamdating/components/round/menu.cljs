@@ -8,14 +8,17 @@
   []
   (let [rounds @(re-frame/subscribe [:steamdating.rounds/rounds])]
     [menu
+     [menu-item
+      {:key "all"
+       :href "#/rounds/all"}
+      "Summary"]
      (for [[n round] (map vector (range) rounds)]
        [menu-item
         {:key n
-         :on-click #(re-frame/dispatch
-                      [:steamdating.routes/navigate
-                       (str "/rounds/nth/" n)])}
+         :href (str "#/rounds/nth/" n)}
         (str "Round #" (+ n 1))])
      [menu-item
       {:key "next"
+       :active "#/rounds/next"
        :on-click #(re-frame/dispatch [:steamdating.rounds/start-next])}
       "Next round"]]))
