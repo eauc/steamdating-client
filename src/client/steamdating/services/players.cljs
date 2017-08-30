@@ -28,6 +28,16 @@
 
 
   (db/reg-event-fx
+    :steamdating.players/start-edit-name
+    (fn start-edit
+      [{:keys [db]} [name]]
+      (let [player (first (filter #(= name (:name %))
+                                  (get-in db [:tournament :players])))]
+        (when player
+          {:dispatch [:steamdating.players/start-edit player]}))))
+
+
+  (db/reg-event-fx
     :steamdating.players/create-current-edit
     [(re-frame/path [:forms :player :edit])]
     (fn create-current-edit

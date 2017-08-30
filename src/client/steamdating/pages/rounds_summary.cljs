@@ -4,6 +4,7 @@
             [steamdating.components.page.page :refer [content page]]
             [steamdating.components.page.root :as page-root]
             [steamdating.components.round.menu :refer [rounds-menu]]
+            [steamdating.components.round.summary :refer [summary-component]]
             [steamdating.services.debug :as debug]))
 
 
@@ -17,4 +18,4 @@
   [page
    [rounds-menu]
    [content
-    [:button "Create first round"]]])
+    [summary-component]]])

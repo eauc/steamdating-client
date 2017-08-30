@@ -4,6 +4,7 @@
             [steamdating.components.generics.form-test]
             [steamdating.components.player.list-test]
             [steamdating.components.round.round-test]
+            [steamdating.components.round.summary-test]
             [steamdating.models.player-test]
             [steamdating.models.round-test]))
 

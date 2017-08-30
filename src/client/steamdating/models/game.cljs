@@ -1,10 +1,11 @@
 (ns steamdating.models.game
   (:require [cljs.spec.alpha :as spec]
-            [steamdating.models.player]))
+            [steamdating.models.player]
+            [steamdating.services.debug :as debug]))
 
 
 (spec/def :steamdating.score/tournament
-  #{0 1})
+  (spec/nilable #{0 1}))
 
 
 (spec/def :steamdating.score/assassination
@@ -55,7 +56,7 @@
 
 (defn ->score
   []
-  {:tournament 0
+  {:tournament nil
    :assassination false
    :scenario 0
    :army 0})
@@ -79,6 +80,42 @@
   [game name]
   (or (= name (get-in game [:player1 :name]))
       (= name (get-in game [:player2 :name]))))
+
+
+(defn list-for-player
+  [game name]
+  (cond
+    (= name (get-in game [:player1 :name]))
+    (get-in game [:player1 :list])
+    (= name (get-in game [:player2 :name]))
+    (get-in game [:player2 :list])
+    :else nil))
+
+
+(defn opponent-for-player
+  [game name]
+  (cond
+    (= name (get-in game [:player1 :name]))
+    (get-in game [:player2 :name])
+    (= name (get-in game [:player2 :name]))
+    (get-in game [:player1 :name])
+    :else nil))
+
+
+(defn result-for-player
+  [game name]
+  (cond
+    (= name (get-in game [:player1 :name]))
+    {:table (:table game)
+     :opponent (get-in game [:player2 :name])
+     :score (get-in game [:player1 :score])
+     :game game}
+    (= name (get-in game [:player2 :name]))
+    {:table (:table game)
+     :opponent (get-in game [:player1 :name])
+     :score (get-in game [:player2 :score])
+     :game game}
+    :else nil))
 
 
 (defn faction-mirror?
@@ -111,3 +148,25 @@
                 (get factions (get-in game [:player1 :name])))
       (assoc-in [:player2 :faction]
                 (get factions (get-in game [:player2 :name])))))
+
+
+(defn game-player->title
+  [player]
+  (str (or (:name player) "Phantom")
+       (case (get-in player [:score :tournament])
+         0 " - Loser"
+         1 " - Winner"
+         nil "") "\n"
+       "List: " (:list player) "\n"
+       (if (get-in player [:score :assassination])
+         "Assassination\n"
+         "")
+       "Scenario: " (get-in player [:score :scenario]) "\n"
+       "Army: " (get-in player [:score :army]) "\n"))
+
+
+(defn game->title
+  [game]
+  (str "Table: " (:table game) "\n"
+       "\nPlayer 1:\n" (game-player->title (:player1 game))
+       "\nPlayer 2:\n" (game-player->title (:player2 game))))

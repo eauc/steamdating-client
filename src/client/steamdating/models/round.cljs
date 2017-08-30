@@ -39,6 +39,39 @@
   (flatten (map game/player-names games)))
 
 
+(defn game-for-player
+  [round name]
+  (first (filter #(game/player-paired? % name) (:games round))))
+
+
+(defn games-for-player
+  [name rounds]
+  (mapv #(game-for-player % name) rounds))
+
+
+(defn opponents-for-player
+  [name rounds]
+  (->> rounds
+       (games-for-player name)
+       (mapv #(game/opponent-for-player % name))))
+
+
+(defn lists-for-player
+  [name rounds]
+  (->> rounds
+       (games-for-player name)
+       (map #(game/list-for-player % name))
+       (remove nil?)
+       (set)))
+
+
+(defn results-for-player
+  [name rounds]
+  (->> rounds
+       (games-for-player name)
+       (mapv #(game/result-for-player % name))))
+
+
 (defn player-paired?
   [round name]
   (some #(game/player-paired? % name) (:games round)))

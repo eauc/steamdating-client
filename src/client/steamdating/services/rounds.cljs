@@ -54,6 +54,14 @@
 
 
   (re-frame/reg-sub
+    :steamdating.rounds/n-rounds
+    :<- [:steamdating.rounds/rounds]
+    (fn n-rounds-sub
+      [rounds _]
+      (count rounds)))
+
+
+  (re-frame/reg-sub
     :steamdating.rounds/round
     (fn round-sub
       [db [_ n]]
@@ -75,4 +83,27 @@
           (round/sort-with sort)
           (round/update-factions factions))))
 
-  )
+
+  (re-frame/reg-sub
+    :steamdating.rounds/players-results
+    :<- [:steamdating.rounds/rounds]
+    :<- [:steamdating.players/players]
+    :<- [:steamdating.filters/pattern :rounds-all]
+    (fn players-results-sub
+      [[rounds players pattern] _]
+      (->> players
+           (filter #(re-find pattern (:name %)))
+           (mapv #(assoc %
+                         :results (round/results-for-player (:name %) rounds)
+                         :played-lists (round/lists-for-player (:name %) rounds))))))
+
+
+  (re-frame/reg-sub
+    :steamdating.rounds/summary
+    :<- [:steamdating.rounds/players-results]
+    :<- [:steamdating.sorts/sort :rounds-all {:by :player}]
+    (fn summary-sub
+      [[results {:keys [by reverse]}] _]
+      (-> results
+          (->> (sort-by (fn [{:keys [name]}] (.toLowerCase name))))
+          (cond-> reverse clojure.core/reverse)))))

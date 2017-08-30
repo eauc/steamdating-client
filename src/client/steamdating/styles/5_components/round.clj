@@ -27,7 +27,7 @@
      (at-break
        :tablet
        [:& {:display "table-cell"}])]
-    [:&-win {:background-color (:valid-bckgnd colors)}]
+    [:&-win  {:background-color (:valid-bckgnd colors)}]
     [:&-loss {:background-color (:error-bckgnd colors)}]]
    [:&Header
     [:&-icon {:opacity 0}

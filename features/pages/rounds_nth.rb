@@ -46,11 +46,11 @@ module Pages
           game[:p2ap] || 0,
         ]
       end
-        .map { |r| r.join("\s*") }
-        .join("\s*")
+        .map { |r| r.join("\\s+") }
+        .join("\\s+")
 
       within(PAGE_CONTENT) do
-        expect(page).to have_content(Regexp.new(expected_content, "i"))
+        expect(find("tbody")).to have_content(Regexp.new("^\\s*#{expected_content}\\s*$", "i"))
       end
       self
     end

@@ -2,6 +2,7 @@ require "json"
 require_relative "../pages/file"
 require_relative "../pages/rounds_next"
 require_relative "../pages/rounds_nth"
+require_relative "../pages/rounds_summary"
 
 Given(/^some Rounds have been defined$/) do
   @tournament = JSON.parse(File.read("features/data/someRounds.json"))
@@ -10,6 +11,12 @@ Given(/^some Rounds have been defined$/) do
     .open("someRounds.json")
   expect_toaster("File loaded")
   validate_prompt
+end
+
+Given(/^I open Rounds\/Summary page$/) do
+  @page = Pages::RoundsSummary.new
+            .load
+  @sort_by = "Player"
 end
 
 Given(/^I open Rounds\/Next page$/) do
@@ -68,6 +75,15 @@ When(/^I create the Next Round$/) do
   @page.create_round
 end
 
+When(/^I go to Round \#(\d+)$/) do |n|
+  @page.go_to_round(n)
+end
+
+When(/^I filter the Summary with "([^"]*)"$/) do |filter_value|
+  @page.filter(filter_value)
+  @filter_value = filter_value
+end
+
 When(/^I filter the Round with "([^"]*)"$/) do |filter_value|
   @page.filter(filter_value)
   @filter_value = filter_value
@@ -76,6 +92,10 @@ end
 When(/^I sort the Round by "([^"]*)"$/) do |by|
   @page.sort_by(by)
   @sort_by = by
+end
+
+When(/^I invert the Summary sort order$/) do
+  @page.invert_sort_by(@sort_by)
 end
 
 When(/^I invert the Round sort order$/) do
@@ -145,4 +165,59 @@ end
 
 Then(/^I see the Round sorted by "([^"]*)" in reverse order$/) do |by|
   @page.expect_games(sorted_games[by].reverse)
+end
+
+summary = {
+  "full" => [
+    ["tete", "Butcher2, Koslov1 / 2", "1. teuteu", "4. Phantom"],
+    ["teuteu", "Vyros1, Helynna1 / 2", "1. tete", "1. titi"],
+    ["titi", "Amon1, Feora1 / 2", "2. toto", "1. teuteu"],
+    ["toto", "Bethayne1, Absylonia1 / 2", "2. titi", "3. toutou"],
+    ["toutou", "Lylyth2 / 2", "3. tutu", "3. toto"],
+    ["tutu", "Bartolo1, Cyphon1 / 2", "3. toutou", "2. tyty"],
+    ["tyty", "Malekus1 / 2", "4. Phantom", "2. tutu"],
+  ],
+  "filtered" => {
+    "te" => [
+      ["tete", "Butcher2, Koslov1 / 2", "1. teuteu", "4. Phantom"],
+      ["teuteu", "Vyros1, Helynna1 / 2", "1. tete", "1. titi"],
+    ],
+    "to" => [
+      ["toto", "Bethayne1, Absylonia1 / 2", "2. titi", "3. toutou"],
+      ["toutou", "Lylyth2 / 2", "3. tutu", "3. toto"],
+    ],
+  }
+}
+
+Then(/^I see the full rounds summary$/) do
+  @page.expect_rounds_summary(summary["full"])
+end
+
+
+Then(/^I see the full rounds summary in reverse order$/) do
+  @page.expect_rounds_summary(summary["full"].reverse)
+end
+
+Then(/^I see the matching Results$/) do
+  @page.expect_rounds_summary(summary["filtered"][@filter_value])
+end
+
+games = {
+  "1" => [
+    { p1ap: 52, p1cp: 5, p1: 'tete', table: 1, p2: 'teuteu', p2cp: 3, p2ap: 21 },
+    { p1ap: 32, p1cp: 3, p1: 'titi', table: 2, p2: 'toto', p2cp: 5, p2ap: 75 },
+    { p1ap: 46, p1cp: 0, p1: 'toutou', table: 3, p2: 'tutu', p2cp: 4, p2ap: 30 },
+    { p1ap: 0, p1cp: 0, p1: 'tyty', table: 4, p2: 'Phantom', p2cp: 0, p2ap: 0 },
+  ],
+  "2" => [
+    { p1ap: 105, p1cp: 4, p1: 'teuteu', table: 1, p2: 'titi', p2cp: 3, p2ap: 10 },
+    { p1ap: 56, p1cp: 4, p1: 'tutu', table: 2, p2: 'tyty', p2cp: 0, p2ap: 103 },
+    { p1ap: 45, p1cp: 5, p1: 'toto', table: 3, p2: 'toutou', p2cp: 0, p2ap: 75 },
+    { p1ap: 0, p1cp: 0, p1: 'Phantom', table: 4, p2: 'tete', p2cp: 0, p2ap: 0 },
+  ],
+}
+
+Then(/^I see the Round #(\d+) games$/) do |n|
+  Pages::RoundsNth.new(n)
+    .expect_games(games[n])
 end

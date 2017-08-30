@@ -38,7 +38,10 @@
    [:td.sd-RoundGameRow-score
     (when (get-in game [:player1 :score :assassination])
       [icon "check"])]
-   [:td
+   [:td {:class (case (get-in game [:player1 :score :tournament])
+                  0 "sd-RoundGameRow-loss"
+                  1 "sd-RoundGameRow-win"
+                  nil nil)}
     (or (get-in game [:player1 :name]) "Phantom")]
    [:td.sd-RoundGameRow-faction
     [faction-icon (get-in game [:player1 :faction])]]
@@ -46,7 +49,10 @@
     (:table game)]
    [:td.sd-RoundGameRow-faction
     [faction-icon (get-in game [:player2 :faction])]]
-   [:td
+   [:td {:class (case (get-in game [:player2 :score :tournament])
+                  0 "sd-RoundGameRow-loss"
+                  1 "sd-RoundGameRow-win"
+                  nil nil)}
     (or (get-in game [:player2 :name]) "Phantom")]
    [:td.sd-RoundGameRow-score
     (when (get-in game [:player2 :score :assassination])

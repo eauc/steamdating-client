@@ -1,5 +1,6 @@
 (ns steamdating.models.player
   (:require [cljs.spec.alpha :as spec]
+            [clojure.string :as s]
             [steamdating.models.form :as form]
             [steamdating.services.debug :as debug]))
 
@@ -118,3 +119,12 @@
 (defn validate
   [form-state]
   (form/validate form-state :steamdating.player/player))
+
+
+(defn player->title
+  [player]
+  (str "Name: " (:name player) "\n"
+       "Origin: " (:origin player) "\n"
+       "Faction: " (:faction player) "\n"
+       "Lists: " (s/join ", " (:lists player)) "\n"
+       "Notes: " (:notes player) "\n"))

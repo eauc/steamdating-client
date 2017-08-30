@@ -16,6 +16,7 @@
             [steamdating.styles.5-components.prompt :refer [prompt]]
             [steamdating.styles.5-components.round :refer [round]]
             [steamdating.styles.5-components.round-edit :refer [round-edit]]
+            [steamdating.styles.5-components.round-summary :refer [round-summary]]
             [steamdating.styles.5-components.sort-header :refer [sort-header]]
             [steamdating.styles.5-components.toaster :refer [toaster]]
             [steamdating.styles.5-components.tournament :refer [tournament]]
@@ -38,6 +39,7 @@
    prompt
    round
    round-edit
+   round-summary
    sort-header
    text-muted
    toaster

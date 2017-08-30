@@ -25,5 +25,6 @@
           :error-shadow (assoc (:error base-colors) :alpha 0.75)
           :error-bckgnd (gcolor/lighten (:error base-colors) 15)
           :warning-bckgnd (gcolor/lighten (:warning base-colors) 15)
+          :info-bckgnd (gcolor/lighten (:primary base-colors) 15)
           :valid-shadow (assoc (:valid base-colors) :alpha 0.75)
-          :valid_bckgnd (gcolor/lighten (:valid base-colors) 15)}))
+          :valid-bckgnd (gcolor/lighten (:valid base-colors) 15)}))
