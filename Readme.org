@@ -4,46 +4,54 @@ Warmachine tournament organizer.
 
 ** Features
 
-- [ ] players
+- [-] players
   - [ ] drop
-  - [ ] rename: rename refs in rounds
-  - [ ] delete: remove refs from rounds
-- [ ] game edit
-  - [ ] random
-- [-] rounds summary
-  - [X] games results
-  - [ ] rankings
-  - [X] divide&conquer
-  - [ ] edit game links
-  - [ ] sort by ranking
-  - [X] filter by name/opponent name
-  - [X] titles with games results
-- [ ] rounds next
-  - [ ] random
-  - [ ] SR pairing
-  - [ ] final rounds pairing
-  - [ ] check already played
-  - [ ] handle droped players
-  - [ ] rankings ?
-- [ ] rounds nth
-  - [ ] rankings ?
-- [ ] ranking
-  - [ ] bests
+    - [ ] ui in players ranking/list
+    - [ ] status in rounds summary
+    - [ ] handle in round pairings
+  - [X] rename
+    - [X] rename refs in rounds
+- [ ] rounds
+  - [ ] next
+    - [ ] random
+    - [ ] SR pairings
+    - [ ] final round pairings
+- [ ] game
+  - [ ] edit
+    - [ ] random
+  - [ ] ui
+    - [ ] round summary link
+- [ ] rankings
+  - [ ] list
+    - [ ] bests of
+  - [ ] ui
+    - [ ] round next/nth prefix
+    - [ ] round summary / sort
+  - [ ] final rounds
+  - [ ] settings
+    - [ ] custom formula
 - [ ] teams
-- [ ] final rounds
 - [ ] groups
-- [ ] import conflict chamber lists/players: JSON file/text/link ?
-- [ ] import T3 players: CSV file
-- [ ] settings
-  - [ ] tables groups
-  - [ ] ranking formula
-- [ ] round / ranking slideshow
-- [ ] print styles ranking / round
-- [ ] follow page / ranking, games, info
-  - [ ] filter by player/faction/origin
-- [ ] online:
+- [ ] final rounds
+- [ ] imports
+  - [ ] T3 players CSV
+  - [ ] CC list(s) JSON
+  - [ ] CC list(s) link
+- [ ] exports
+  - [ ] slideshow round/ranking
+  - [ ] print round/ranking
+- [ ] tables groups
+- [ ] online
   - [ ] create
   - [ ] upload
   - [ ] download
   - [ ] notify
-- [ ] localstorage
+- [ ] follow
+  - [ ] rankings
+  - [ ] rounds
+  - [ ] players info
+  - [ ] filter by player/faction/origin
+  - [ ] activate notifications
+- [ ] online
+- [ ] localStorage
+- [ ] round clock

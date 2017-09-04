@@ -52,6 +52,7 @@
     (fn create-current-edit
       [{:keys [db]}]
       {:dispatch-n [[:steamdating.players/edit db]
+                    [:steamdating.rounds/rename-player db]
                     [:steamdating.routes/back]]}))
 
 

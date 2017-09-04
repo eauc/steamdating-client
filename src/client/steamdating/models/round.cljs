@@ -179,6 +179,14 @@
   (update round :games #(mapv (fn [g] (game/unpair-player g name)) %)))
 
 
+(defn rename-player
+  [round old-name new-name]
+  (-> round
+      (update :players #(vec (remove (fn [name] (= name old-name)) %)))
+      (update :players conj new-name)
+      (update :games #(mapv (fn [game] (game/rename-player game old-name new-name)) %))))
+
+
 (defn pair-player
   [round field name]
   (-> round

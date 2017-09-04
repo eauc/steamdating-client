@@ -141,6 +141,15 @@
     (assoc-in [:player2 :name] nil)))
 
 
+(defn rename-player
+  [game old-name new-name]
+  (cond-> game
+    (= (get-in game [:player1 :name]) old-name)
+    (assoc-in [:player1 :name] new-name)
+    (= (get-in game [:player2 :name]) old-name)
+    (assoc-in [:player2 :name] new-name)))
+
+
 (defn update-factions
   [game factions]
   (-> game

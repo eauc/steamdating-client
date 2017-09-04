@@ -2,26 +2,28 @@
   (:require [clairvoyant.core :refer-macros [trace-forms]]
             [re-frame.core :as re-frame]
             [re-frame-tracer.core :refer [tracer]]
+            [steamdating.models.round :as round]
             [steamdating.services.db :as db]
-            [steamdating.models.round :as round]))
+            [steamdating.services.debug :as debug]))
 
 (trace-forms
   {:tracer (tracer :color "green")}
 
   (db/reg-event-fx
     :steamdating.rounds/start-next
+    [(re-frame/path [:tournament :players])]
     (fn start-next
-      [{:keys [db]} _]
-      (let [players (get-in db [:tournament :players])]
-        {:dispatch-n [[:steamdating.forms/reset :round (round/->round players)]
-                      [:steamdating.routes/navigate "/rounds/next"]]})))
+      [{players :db} _]
+      {:dispatch-n [[:steamdating.forms/reset :round (round/->round players)]
+                    [:steamdating.routes/navigate "/rounds/next"]]}))
 
 
   (db/reg-event-fx
     :steamdating.rounds/update-edit-player
+    [(re-frame/path [:forms :round :edit])]
     (fn update-edit-player
-      [{:keys [db]} [field name]]
-      {:db (update-in db [:forms :round :edit] round/pair-player field name)}))
+      [{form :db} [field name]]
+      {:db (round/pair-player form field name)}))
 
 
   (db/reg-event-fx
@@ -32,6 +34,16 @@
         {:db (update-in db [:tournament :rounds] conj new-round)
          :dispatch [:steamdating.routes/navigate
                     (str "/rounds/nth/" (count (get-in db [:tournament :rounds])))]})))
+
+
+  (db/reg-event-fx
+    :steamdating.rounds/rename-player
+    [(re-frame/path [:tournament :rounds])]
+    (fn rename-player
+      [{rounds :db} [{{old-name :name} :base
+                      {new-name :name} :edit}]]
+      {:db (mapv #(round/rename-player % old-name new-name) 
+                rounds)}))
 
 
   (re-frame/reg-sub
