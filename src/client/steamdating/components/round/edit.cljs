@@ -10,7 +10,8 @@
 (defn game-row
   [{:keys [n update-player update-table]} state]
   [:tr
-   [:td
+   [:td {:class (when (get-in state [:warn :games n :pairing])
+                  "sd-RoundGamesEdit-warning")}
     [select {:field [:games n :player1 :name]
              :form-state state
              :options (get-in state [:edit :players])
@@ -32,7 +33,8 @@
               "sd-RoundGamesEdit-warning")}
     [faction-icon (get-in state [:edit :games n :player2 :faction])]
     [:p]]
-   [:td
+   [:td {:class (when (get-in state [:warn :games n :pairing])
+                  "sd-RoundGamesEdit-warning")}
     [select {:field [:games n :player2 :name]
              :form-state state
              :options (get-in state [:edit :players])
@@ -61,6 +63,7 @@
      [:div.sd-RoundEdit
       ;; (pr-str state)
       [:table.sd-RoundEdit-gamesList
+       {:style {:border-collapse "collapse"}}
        [:thead
         [:tr
          [:th "Player1"]

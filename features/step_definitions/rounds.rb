@@ -62,6 +62,10 @@ When(/^I pair some players$/) do
   @page.set_players_names(paired_indices.map {|i| [i, players_names[i]]})
 end
 
+When("I enter games:") do |table|
+  @page.enter_games(table.symbolic_hashes)
+end
+
 When(/^I select a player who is already paired$/) do
   @changed_pairing_index = 1
   @changed_pairing_name = @paired_players_names[@changed_pairing_index]
@@ -220,4 +224,8 @@ games = {
 Then(/^I see the Round #(\d+) games$/) do |n|
   Pages::RoundsNth.new(n)
     .expect_games(games[n])
+end
+
+Then(/^I see an error with the already played pairings:$/) do |table|
+  @page.expect_already_played(table.raw)
 end

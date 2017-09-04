@@ -35,22 +35,34 @@
 
 
   (re-frame/reg-sub
-    :steamdating.rounds/edit
-    :<- [:steamdating.forms/validate :round round/validate]
-    :<- [:steamdating.players/factions]
-    (fn edit-sub
-      [[form-state factions] _]
-      (-> form-state
-          (round/validate-pairings factions)
-          (update :edit round/update-factions factions)
-          (update :edit round/update-players-options))))
-
-
-  (re-frame/reg-sub
     :steamdating.rounds/rounds
     (fn rounds-sub
       [db [_ n]]
       (get-in db [:tournament :rounds])))
+
+
+  (re-frame/reg-sub
+    :steamdating.rounds/players-opponents
+    :<- [:steamdating.rounds/rounds]
+    :<- [:steamdating.players/names]
+    (fn players-opponents-sub
+      [[rounds names] _]
+      (into {} (map (fn [name]
+                      [name (round/opponents-for-player name rounds)])
+                    names))))
+
+
+  (re-frame/reg-sub
+    :steamdating.rounds/edit
+    :<- [:steamdating.forms/validate :round round/validate]
+    :<- [:steamdating.players/factions]
+    :<- [:steamdating.rounds/players-opponents]
+    (fn edit-sub
+      [[form-state factions opponents] _]
+      (-> form-state
+          (round/validate-pairings {:factions factions :opponents opponents})
+          (update :edit round/update-factions factions)
+          (update :edit round/update-players-options))))
 
 
   (re-frame/reg-sub

@@ -10,14 +10,14 @@ Warmachine tournament organizer.
   - [ ] delete: remove refs from rounds
 - [ ] game edit
   - [ ] random
-- [ ] rounds summary
-  - [ ] games results
+- [-] rounds summary
+  - [X] games results
   - [ ] rankings
-  - [ ] divide&conquer
-  - [ ] edit game/edit player/round view links
-  - [ ] sort by name / ranking
-  - [ ] filter by name/opponent name
-  - [ ] titles with games results
+  - [X] divide&conquer
+  - [ ] edit game links
+  - [ ] sort by ranking
+  - [X] filter by name/opponent name
+  - [X] titles with games results
 - [ ] rounds next
   - [ ] random
   - [ ] SR pairing

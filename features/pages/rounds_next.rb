@@ -11,6 +11,14 @@ module Pages
         .start_next
     end
 
+    def enter_games(games)
+      games.each_with_index do |game, i|
+        set_player_name(2*i, game[:player1]) unless game[:player1].empty?
+        set_table(i, game[:table]) unless game[:table].empty?
+        set_player_name(2*i+1, game[:player2]) unless game[:player2].empty?
+      end
+    end
+
     def set_players_names(indexed_players)
       indexed_players.each do |index_name|
         index = index_name[0]
@@ -80,7 +88,15 @@ module Pages
 
     def expect_unpaired_players_error(names)
       within_fieldset(NEXT_ROUND_FORM) do
-        expect(page).to have_content(Regexp.new("#{names.join(",\s+")} are not paired"))
+        expect(page).to have_content(Regexp.new("#{names.join(",\\s+")} are not paired"))
+      end
+      self
+    end
+
+    def expect_already_played(pairings)
+      within_fieldset(NEXT_ROUND_FORM) do
+        expected = pairings.map {|p| p.join("-")}.join(",\\s+")
+        expect(page).to have_content(Regexp.new("#{expected} ha(ve|s) already been played"))
       end
       self
     end

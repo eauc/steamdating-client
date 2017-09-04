@@ -53,7 +53,8 @@
   [name rounds]
   (->> rounds
        (games-for-player name)
-       (mapv #(game/opponent-for-player % name))))
+       (map #(game/opponent-for-player % name))
+       (remove nil?)))
 
 
 (defn lists-for-player
@@ -77,6 +78,16 @@
   (some #(game/player-paired? % name) (:games round)))
 
 
+(defn already-paired
+  [{:keys [games]} opponents]
+  (->> games
+       (map game/player-names)
+       (map vector (range))
+       (filter (fn [[n [p1 p2]]]
+                 (some #{p2} (get opponents p1 '()))))
+       (into {})))
+
+
 (defn unpaired-players
   [{:keys [players] :as round}]
   (clojure.set/difference
@@ -98,6 +109,19 @@
   (form/validate form-state :steamdating.round/round))
 
 
+(defn already-paired->warns
+  [already-paired]
+  (into {} (map (fn [[n]] [n {:pairing :already}])
+                already-paired)))
+
+
+(defn already-paired->string
+  [already-paired]
+  (let [plural? (> (count already-paired) 1)]
+    (str "Pairing" (when plural? "s") " " (s/join ", " (map #(s/join "-" %) (vals already-paired)))
+         " " (if plural? "have" "has")" already been played")))
+
+
 (defn unpaired-players->string
   [unpaired-players]
   (let [plural? (> (count unpaired-players) 1)]
@@ -113,19 +137,37 @@
          " mirror game" (when plural? "s"))))
 
 
+(def merge-warns
+  (fnil
+    (fn [base extend]
+      (into base (map (fn [[k v]]
+                        (if (contains? base k)
+                          [k (merge (get base k) v)]
+                          [k v]))
+                      extend)))
+    {}))
+
+
 (defn validate-pairings
-  [form-state factions]
+  [form-state {:keys [factions opponents]}]
   (let [{:keys [edit]} form-state
+        already-paired (already-paired edit opponents)
         unpaired-players (unpaired-players edit)
         faction-mirrors (faction-mirrors edit factions)]
     (cond-> form-state
       (not-empty unpaired-players)
-      (assoc-in [:error :global :pairings]
+      (assoc-in [:error :global :unpaired]
                 (unpaired-players->string unpaired-players))
       (not-empty faction-mirrors)
       (-> (assoc-in [:warn :global :faction]
                     (faction-mirrors->string faction-mirrors))
-          (assoc-in [:warn :games] faction-mirrors)))))
+          (update-in [:warn :games]
+                     merge-warns faction-mirrors))
+      (not-empty already-paired)
+      (-> (assoc-in [:error :global :pairings]
+                    (already-paired->string already-paired))
+          (update-in [:warn :games]
+                     merge-warns (already-paired->warns already-paired))))))
 
 
 (defn unpair-player
