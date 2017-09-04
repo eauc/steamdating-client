@@ -6,7 +6,7 @@ Feature: Rounds Nth
   Scenario Outline: Filter Games
     Given I open Rounds/1 page
     When I filter the Round with "<filter>"
-    Then I see the matching Games
+    Then I see the Round's matching Games
 
     Examples:
     | filter |

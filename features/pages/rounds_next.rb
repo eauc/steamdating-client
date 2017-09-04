@@ -13,9 +13,9 @@ module Pages
 
     def enter_games(games)
       games.each_with_index do |game, i|
-        set_player_name(2*i, game[:player1]) unless game[:player1].empty?
+        set_player_name(i, :player1, game[:player1]) unless game[:player1].empty?
         set_table(i, game[:table]) unless game[:table].empty?
-        set_player_name(2*i+1, game[:player2]) unless game[:player2].empty?
+        set_player_name(i, :player2, game[:player2]) unless game[:player2].empty?
       end
     end
 
@@ -28,7 +28,12 @@ module Pages
       self
     end
 
-    def set_player_name(index, name)
+    def game_player_index(game, player)
+      game * 2 + (player === :player1 ? 0 : 1)
+    end
+
+    def set_player_name(game, player, name)
+      index = game_player_index(game, player)
       within_fieldset(NEXT_ROUND_FORM) do
         within(:xpath, "(.//select)[#{index+1}]") do
           select(name)
@@ -79,7 +84,8 @@ module Pages
       self
     end
 
-    def expect_empty_pairing(index)
+    def expect_empty_pairing(game, player)
+      index = game_player_index(game, player)
       within_fieldset(NEXT_ROUND_FORM) do
         expect(find(:xpath, "(.//select)[#{index+1}]").value).to eq("")
       end

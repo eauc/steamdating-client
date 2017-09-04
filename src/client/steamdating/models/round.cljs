@@ -24,12 +24,16 @@
   (spec/coll-of :steamdating.round/round :kind vector?))
 
 
+(defn players->ngames
+  [players]
+  (-> (count players)
+      (+ 1)
+      (/ 2)
+      js/Math.floor))
+
 (defn ->round
   [players]
-  (let [ngames (-> (count players)
-                   (/ 2)
-                   js/Math.floor
-                   (+ 1))]
+  (let [ngames (players->ngames players)]
     {:players (mapv :name players)
      :games (mapv #(game/->game {:table (inc %)}) (range ngames))}))
 
@@ -125,7 +129,7 @@
 (defn unpaired-players->string
   [unpaired-players]
   (let [plural? (> (count unpaired-players) 1)]
-    (str "Player" (when plural? "s") " " (s/join ", " unpaired-players)
+    (str "Player" (when plural? "s") " " (s/join ", " (sort-by #(.toLowerCase %) unpaired-players))
          " " (if plural? "are" "is")" not paired")))
 
 

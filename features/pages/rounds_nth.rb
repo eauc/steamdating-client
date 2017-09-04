@@ -39,9 +39,9 @@ module Pages
         [
           game[:p1ap] || 0,
           game[:p1cp] || 0,
-          game[:p1] || "Phantom",
+          game[:player1] || "Phantom",
           game[:table] || 1,
-          game[:p2] || "Phantom",
+          game[:player2] || "Phantom",
           game[:p2cp] || 0,
           game[:p2ap] || 0,
         ]
