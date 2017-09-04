@@ -25,16 +25,12 @@ module Pages
       self
     end
 
-    def expect_player_in_list player
-      values = [
-        player["name"],
-        player["origin"],
-        player["faction"],
-        player["lists"].sort,
-      ]
-      row_text = Regexp.new values.flatten.join(".*")
+    def expect_player_in_list(player)
+      row_text = Regexp.new player.join("\\s+")
       within(PAGE_CONTENT) do
-        expect(page).to have_selector("tr", text: row_text)
+        within("tbody") do
+          expect(page).to have_content(row_text)
+        end
       end
       self
     end

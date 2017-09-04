@@ -35,10 +35,17 @@ module Pages
       self
     end
 
-    def start_edit_player(player)
+    def start_edit_player(name)
       within(PAGE_CONTENT) do
-        find("tr", text: player["name"]).click
+        find("tr", text: name).click
         expect(page).to have_content("Edit player")
+      end
+      self
+    end
+
+    def submit
+      within(PAGE_CONTENT) do
+        click_button({value: "submit"})
       end
       self
     end

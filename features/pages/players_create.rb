@@ -1,7 +1,10 @@
 require_relative "./players"
+require_relative "../mixins/form"
 
 module Pages
   class PlayersCreate < Players
+    include Form
+
     def load
       super.start_create_player
     end
@@ -12,10 +15,14 @@ module Pages
 
     def create_player(player)
       fill_player_form(player)
-      within(PAGE_CONTENT) do
-        click_button({value: "submit"})
+      submit
+    end
+
+    def expect_already_exists
+      within(Pages::PAGE_CONTENT) do
+        expect_input_error("Name", "Name already exists")
+        expect_submit_disabled
       end
-      self
     end
   end
 end

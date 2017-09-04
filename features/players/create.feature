@@ -1,17 +1,30 @@
 Feature: Players Create
 
-  Scenario: Start Create
-    Given I open Players page
-    When I start to create Player
-    Then I can edit the Player information
-
   Scenario: Create Valid Player
-    Given I open Players page
-    When I create a valid Player
-    Then I see the created Player in the Players list
+    Given I open Players/List page
+    When I start to create player
+    Then I can edit the player information
+    When I enter player information:
+    """
+    {
+      "name": "Toto",
+      "origin": "Lyon",
+      "faction": "Legion",
+      "lists": ["Fyanna2", "Absylonia1"],
+      "notes": "Notes sur le joueur"
+    }
+    """
+    And I create the player
+    Then I see Players/List page with player:
+    | Toto | Lyon   | Legion  | Absylonia1, Fyanna2 |
 
   Scenario: Player name is unique
     Given some Players have been defined
-    And I open Players page
-    When I try to create a Player whose name already exists
-    Then I cannot create the invalid Player
+    And I open Players/Create page
+    When I enter player information:
+    """
+    {
+      "name": "toto"
+    }
+    """
+    Then I cannot create the player because its name already exists
