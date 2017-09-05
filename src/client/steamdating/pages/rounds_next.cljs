@@ -19,4 +19,5 @@
    [rounds-menu]
    [content
     [edit {:label "Next round"
+           :save-label "Start"
            :on-submit :steamdating.rounds/create-next}]]])

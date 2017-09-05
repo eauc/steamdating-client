@@ -40,6 +40,7 @@ module Pages
           find("tr", text: name).click
         end
       end
+      self
     end
 
     def expect_games(games)

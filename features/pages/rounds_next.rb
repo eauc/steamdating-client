@@ -58,7 +58,7 @@ module Pages
 
     def create_round
       within_fieldset(NEXT_ROUND_FORM) do
-        click_button({value: "submit"})
+        click_button("Start")
       end
       self
     end

@@ -42,12 +42,5 @@ module Pages
       end
       self
     end
-
-    def submit
-      within(PAGE_CONTENT) do
-        click_button({value: "submit"})
-      end
-      self
-    end
   end
 end

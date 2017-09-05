@@ -24,4 +24,5 @@
      [icon "x"]]]
    [content
     [edit {:label "Create player"
+           :save-label "Create"
            :on-submit :steamdating.players/create-current-edit}]]])

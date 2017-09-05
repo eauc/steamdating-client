@@ -11,6 +11,7 @@ module Pages
 
     def fill_player_form(player)
       super("Create player", player)
+      self
     end
 
     def create_player(player)
@@ -18,11 +19,19 @@ module Pages
       submit
     end
 
+    def submit
+      within(PAGE_CONTENT) do
+        click_button("Create")
+      end
+      self
+    end
+
     def expect_already_exists
       within(Pages::PAGE_CONTENT) do
         expect_input_error("Name", "Name already exists")
         expect_submit_disabled
       end
+      self
     end
   end
 end

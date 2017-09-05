@@ -6,6 +6,7 @@ module Pages
       within_fieldset("Edit game") do
         click_on("Save")
       end
+      self
     end
 
 		def fill_game_form(game_info)
@@ -37,6 +38,7 @@ module Pages
 				page.fill_in(with: game_info[:p2ap]) if game_info.key? :p2ap
 			end
 			sleep 0.5
+      self
 		end
 
 		def set_assassination(is_assa)
@@ -46,6 +48,7 @@ module Pages
 			when "false"
 				page.uncheck("assassination")
 			end
+      self
 		end
 
 		def expect_game_form(game_info)
@@ -85,6 +88,7 @@ module Pages
 			within_p2_ap do
 				expect(page).to have_field(with: game_info[:p2ap]) if game_info.key? :p2ap
       end
+      self
 		end
 
 		def expect_assassination(is_assa)
@@ -94,6 +98,7 @@ module Pages
 			when "false"
 				expect(page).to have_unchecked_field("assassination")
 			end
+      self
 		end
 
 		def win_loss_label(win_loss)
@@ -115,6 +120,7 @@ module Pages
 					end
 				end
 			end
+      self
 		end
 
 		def within_p1_name
@@ -123,6 +129,7 @@ module Pages
 					yield
 				end
 			end
+      self
 		end
 
 		def within_table
@@ -131,6 +138,7 @@ module Pages
 					yield
 				end
 			end
+      self
 		end
 
 		def within_p2_name
@@ -139,6 +147,7 @@ module Pages
 					yield
 				end
 			end
+      self
 		end
 
 		def within_win_loss
@@ -149,6 +158,7 @@ module Pages
 					end
 				end
 			end
+      self
 		end
 
 		def within_ck
@@ -159,6 +169,7 @@ module Pages
 					end
 				end
 			end
+      self
 		end
 
 		def within_p1_ck
@@ -167,6 +178,7 @@ module Pages
 					yield
 				end
 			end
+      self
 		end
 
 		def within_p2_ck
@@ -175,6 +187,7 @@ module Pages
 					yield
 				end
 			end
+      self
 		end
 
 		def within_cp
@@ -185,6 +198,7 @@ module Pages
 					end
 				end
 			end
+      self
 		end
 
 		def within_p1_cp
@@ -193,6 +207,7 @@ module Pages
 					yield
 				end
 			end
+      self
 		end
 
 		def within_p2_cp
@@ -201,6 +216,7 @@ module Pages
 					yield
 				end
 			end
+      self
 		end
 
 		def within_ap
@@ -211,6 +227,7 @@ module Pages
 					end
 				end
 			end
+      self
 		end
 
 		def within_p1_ap
@@ -219,6 +236,7 @@ module Pages
 					yield
 				end
 			end
+      self
 		end
 
 		def within_p2_ap
@@ -227,6 +245,7 @@ module Pages
 					yield
 				end
 			end
+      self
 		end
 	end
 end

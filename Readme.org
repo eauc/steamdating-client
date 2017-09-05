@@ -16,11 +16,12 @@ Warmachine tournament organizer.
     - [ ] random
     - [ ] SR pairings
     - [ ] final round pairings
-- [ ] game
-  - [ ] edit
+- [-] game
+  - [-] edit
+    - [X] page
     - [ ] random
-  - [ ] ui
-    - [ ] round summary link
+  - [X] ui
+    - [X] round summary link
 - [ ] rankings
   - [ ] list
     - [ ] bests of

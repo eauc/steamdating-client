@@ -9,13 +9,14 @@
 
 
 (defn edit
-  [{:keys [label on-submit]}]
+  [{:keys [label on-submit save-label]}]
   (let [state @(re-frame/subscribe [:steamdating.players/edit])
         factions-names @(re-frame/subscribe [:steamdating.factions/names])
         casters-names @(re-frame/subscribe [:steamdating.players/edit-casters])
         update-field #(re-frame/dispatch [:steamdating.forms/update :player %1 %2])]
     [form state
      {:label label
+      :save-label save-label
       :on-submit #(re-frame/dispatch [on-submit])}
      [:div
       [input {:type :text

@@ -6,6 +6,7 @@ module Pages
       within(PAGE_CONTENT) do
         click_on("Round ##{n}")
       end
+      self
     end
 
     def filter(value)
@@ -31,6 +32,7 @@ module Pages
         expect(page).to have_content("Rounds summary")
         expect(find("tbody")).to have_content(Regexp.new("^\\s*#{expected_content}\\s*$", "i"))
       end
+      self
     end
   end
 end

@@ -9,13 +9,18 @@ module Pages
 
     def fill_player_form(player)
       super("Edit player", player)
+      self
     end
 
     def edit_player(data)
       fill_player_form(data)
+      submit
+      self
+    end
 
+    def submit
       within(PAGE_CONTENT) do
-        click_button({value: "submit"})
+        click_button("Save")
       end
       self
     end

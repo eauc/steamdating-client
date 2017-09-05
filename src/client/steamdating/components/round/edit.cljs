@@ -54,11 +54,12 @@
 
 
 (defn edit
-  [{:keys [label on-submit]}]
+  [{:keys [label on-submit save-label]}]
   (let [state @(re-frame/subscribe [:steamdating.rounds/edit])
         update-player #(re-frame/dispatch [:steamdating.rounds/update-edit-player %1 %2])
         update-table #(re-frame/dispatch [:steamdating.forms/update :round %1 %2])]
     [form state {:label label
+                 :save-label save-label
                  :on-submit #(re-frame/dispatch [on-submit])}
      [:div.sd-RoundEdit
       ;; (pr-str state)
