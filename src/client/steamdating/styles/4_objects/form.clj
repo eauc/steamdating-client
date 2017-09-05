@@ -43,9 +43,7 @@
                         :bottom 0
                         :left group-horizontal-padding
                         :margin-bottom (gunits/em- 0 (gunits/em-div submit-size 2))
-                        :width submit-size
-                        :height submit-size
-                        :font-weight "200%"})
+                        :height submit-size})
    [:&-disabled
     :&-disabled:hover
     :&-disabled:focus {:pointer-events "none"

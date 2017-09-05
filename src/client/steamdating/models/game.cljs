@@ -1,5 +1,6 @@
 (ns steamdating.models.game
   (:require [cljs.spec.alpha :as spec]
+            [steamdating.models.form :as form]
             [steamdating.models.player]
             [steamdating.services.debug :as debug]))
 
@@ -76,6 +77,23 @@
         #(get-in % [:player2 :name])))
 
 
+(defn find-by-names
+  [names games]
+  (first (filter #(= names (player-names %)) games)))
+
+
+(defn drop-by-names
+  [names games]
+  (vec (remove (fn [game] (= names (player-names game))) games)))
+
+
+(defn update-by-names
+  [names game games]
+  (as-> games $
+    (drop-by-names names $)
+    (conj $ game)))
+
+
 (defn player-paired?
   [game name]
   (or (= name (get-in game [:player1 :name]))
@@ -150,6 +168,17 @@
     (assoc-in [:player2 :name] new-name)))
 
 
+(defn toggle-win-loss
+  [game p-key]
+  (let [other (if (= :player1 p-key) :player2 :player1)]
+    (if (= 1 (get-in game [p-key :score :tournament]))
+      (-> game
+          (assoc-in [p-key :score :tournament] 0))
+      (-> game
+          (assoc-in [p-key :score :tournament] 1)
+          (assoc-in [other :score :tournament] 0)))))
+
+
 (defn update-factions
   [game factions]
   (-> game
@@ -179,3 +208,8 @@
   (str "Table: " (:table game) "\n"
        "\nPlayer 1:\n" (game-player->title (:player1 game))
        "\nPlayer 2:\n" (game-player->title (:player2 game))))
+
+
+(defn validate
+  [form-state]
+  (form/validate form-state :steamdating.game/game))

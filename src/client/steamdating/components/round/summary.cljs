@@ -19,14 +19,15 @@
 
 
 (defn player-result
-  [n result]
+  [n result on-click]
   [:td.sd-RoundsSummary-game
    {:key n
     :title (game/game->title (:game result))
     :class (case (get-in result [:score :tournament])
              0 "sd-RoundsSummary-loss"
              1 "sd-RoundsSummary-win"
-             nil nil)}
+             nil nil)
+    :on-click #(on-click n (:game result))}
    (:table result)
    ". "
    (or (:opponent result) "Phantom")])
@@ -42,7 +43,7 @@
 
 
 (defn player-summary
-	[{:keys [n-rounds on-player-click]}
+	[{:keys [n-rounds on-player-click on-result-click]}
    {:keys [name faction lists played-lists results] :as player}]
 	[:tr.sd-RoundsSummary-results
 	 {:key name}
@@ -53,7 +54,7 @@
 		" " name]
 	 [lists-status player]
 	 (for [[n result] (map vector (range n-rounds) results)]
-		 (player-result n result))])
+		 (player-result n result on-result-click))])
 
 
 (defn summary
@@ -85,6 +86,7 @@
 			{:n-rounds n-rounds
 			 :sort sort
 			 :on-sort-by #(re-frame/dispatch [:steamdating.sorts/set :rounds-all %])
-			 :on-player-click #(re-frame/dispatch [:steamdating.players/start-edit-name %])}]
+			 :on-player-click #(re-frame/dispatch [:steamdating.players/start-edit-name %])
+			 :on-result-click #(re-frame/dispatch [:steamdating.games/start-edit %1 %2])}]
 		 ;; (pr-str state)
 		 ]))

@@ -3,7 +3,8 @@
             [steamdating.components.filter.input :refer [filter-input]]
             [steamdating.components.generics.icon :refer [icon]]
             [steamdating.components.generics.faction-icon :refer [faction-icon]]
-            [steamdating.components.sort.header :refer [sort-header]]))
+            [steamdating.components.sort.header :refer [sort-header]]
+            [steamdating.services.games]))
 
 
 (defn headers
@@ -29,8 +30,9 @@
 
 
 (defn game-row
-  [_ game]
+  [{:keys [on-click]} game]
   [:tr.sd-RoundGameRow
+   {:on-click on-click}
    [:td.sd-RoundGameRow-score
     (get-in game [:player1 :score :army] 0)]
    [:td.sd-RoundGameRow-score
@@ -64,24 +66,25 @@
 
 
 (defn round
-  [state sort props]
+  [state sort {:keys [n-round] :as props}]
   [:table.sd-Round-list
    [:thead
     [headers props sort]]
    [:tbody
-    (for [game (:games state)]
-      [game-row {:key (str (get-in game [:player1 :name])
-                           (get-in game [:player2 :name]))}
+    (for [[n game] (map vector (range) (:games state))]
+      [game-row {:key n
+                 :on-click #(re-frame/dispatch [:steamdating.games/start-edit n-round game])}
        game])]])
 
 
 (defn round-component
-  [n]
-  (let [state @(re-frame/subscribe [:steamdating.rounds/round-view n])
+  [n-round]
+  (let [state @(re-frame/subscribe [:steamdating.rounds/round-view n-round])
         sort @(re-frame/subscribe [:steamdating.sorts/sort :round {:by :table}])
         on-sort-by #(re-frame/dispatch [:steamdating.sorts/set :round %])]
     [:div.sd-Round
      ;; (pr-str n state)
-     [:h4 (str "Round #" (+ n 1))]
+     [:h4 (str "Round #" (+ n-round 1))]
      [filter-input {:name :round}]
-     [round state sort {:on-sort-by on-sort-by}]]))
+     [round state sort {:on-sort-by on-sort-by
+                        :n-round n-round}]]))

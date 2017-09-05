@@ -36,7 +36,7 @@
 
 
 (def dyn-props-keys
-	[:autofocus :label :multiple :order :options :placeholder :required :type])
+	[:autofocus :label :min :multiple :order :options :placeholder :required :type])
 
 
 (defn dynamic-props

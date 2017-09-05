@@ -12,6 +12,7 @@
             [steamdating.styles.4-objects.nav :refer [nav]]
             [steamdating.styles.4-objects.text-muted :refer [text-muted]]
             [steamdating.styles.5-components.faction-icon :refer [faction-icon]]
+            [steamdating.styles.5-components.game-edit :refer [game-edit]]
             [steamdating.styles.5-components.players-list :refer [players-list]]
             [steamdating.styles.5-components.prompt :refer [prompt]]
             [steamdating.styles.5-components.round :refer [round]]
@@ -31,6 +32,7 @@
    file-open
    file-page
    form
+   game-edit
    input
    layout
    menu

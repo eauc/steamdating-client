@@ -1,5 +1,6 @@
 require "json"
 require_relative "../pages/file"
+require_relative "../pages/games_edit"
 require_relative "../pages/rounds_next"
 require_relative "../pages/rounds_nth"
 require_relative "../pages/rounds_summary"
@@ -64,6 +65,11 @@ end
 
 When("I invert the Summary sort order") do
   @page.invert_sort_by(@sort_by)
+end
+
+When("I start to edit Game with player \"$name\"") do |name|
+  @page.start_edit_game_with_player(name)
+  @page = Pages::GamesEdit.new
 end
 
 When("I invert the Round sort order") do

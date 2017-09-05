@@ -6,7 +6,7 @@
 
 
 (defn form
-  [state {:keys [label on-submit]} children]
+  [state {:keys [label on-submit save-label]} children]
   (let [valid? (form/is-valid state)]
     [:form.sd-Form
      {:no-validate true
@@ -21,4 +21,4 @@
        {:class (when-not valid? "sd-Form-disabled")
         :type "submit"
         :value "submit"}
-       [icon "check"]]]]))
+       [icon "check"] " " (or save-label "Save")]]]))

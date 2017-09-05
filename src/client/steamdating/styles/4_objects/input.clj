@@ -21,10 +21,11 @@
                :outline "none"}]
     [:&.error {:border-color "red"}
      [:&:focus { :outline-color "red"}]]]
-   [:&-info {:font-size "0.8em"
+   [:&-info {:color "rgba(255,0,0,0.85)"
+             :font-size "0.8em"
              :font-style "italic"
              :font-weight "bold"
-             :color "transparent"
+             :display "none"
              :margin "0.25em 0 0 0"}]
    [:&.error
-    [:.sd-Input-info {:color "rgba(255,0,0,0.85)"}]]])
+    [:.sd-Input-info {:display "block"}]]])
