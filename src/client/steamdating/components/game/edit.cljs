@@ -1,11 +1,11 @@
 (ns steamdating.components.game.edit
-	(:require [re-frame.core :as re-frame]
-						[steamdating.components.generics.checkbox :refer [checkbox]]
-						[steamdating.components.generics.form :refer [form]]
-						[steamdating.components.generics.input :refer [input]]
-						[steamdating.components.generics.select :refer [select]]
-						[steamdating.models.game :as game]
-						[steamdating.services.debug :as debug]
+  (:require [re-frame.core :as re-frame]
+            [steamdating.components.generics.checkbox :refer [checkbox]]
+            [steamdating.components.generics.form :refer [form]]
+            [steamdating.components.generics.input :refer [input]]
+            [steamdating.components.generics.select :refer [select]]
+            [steamdating.models.game :as game]
+            [steamdating.services.debug :as debug :refer [debug?]]
             [steamdating.services.games]))
 
 
@@ -130,5 +130,9 @@
                   :on-update update-field
                   :order 10
                   :min 0}]]]]]]
-		 ;; [:div (pr-str state)]
+     (when debug?
+       [:button {:type "button"
+                 :on-click #(re-frame/dispatch [:steamdating.games/edit-random])}
+        "Random"])
+     ;; [:div (pr-str state)]
      ]))

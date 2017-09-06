@@ -1,38 +1,48 @@
 (ns steamdating.services.games
-	(:require [clairvoyant.core :refer-macros [trace-forms]]
-						[re-frame.core :as re-frame]
-						[re-frame-tracer.core :refer [tracer]]
-						[steamdating.models.game :as game]
-						[steamdating.services.db :as db]))
+  (:require [clairvoyant.core :refer-macros [trace-forms]]
+            [re-frame.core :as re-frame]
+            [re-frame-tracer.core :refer [tracer]]
+            [steamdating.models.game :as game]
+            [steamdating.models.player :as player]
+            [steamdating.services.db :as db]))
 
 (trace-forms
-	{:tracer (tracer :color "green")}
+  {:tracer (tracer :color "green")}
 
-	(db/reg-event-fx
-		:steamdating.games/start-edit
-		[(re-frame/path [:tournament :rounds])]
-		(fn start-edit
-			[{rounds :db} [n-round game]]
-			(let [names (game/player-names game)
-						games (get-in rounds [n-round :games])
-						game (game/find-by-names names games)]
-				(when (some? game)
-					{:dispatch-n [[:steamdating.forms/reset :game (assoc game :n-round n-round)]
-												[:steamdating.routes/navigate "/games/edit"]]}))))
+  (db/reg-event-fx
+    :steamdating.games/start-edit
+    [(re-frame/path [:tournament :rounds])]
+    (fn start-edit
+      [{rounds :db} [n-round game]]
+      (let [names (game/player-names game)
+            games (get-in rounds [n-round :games])
+            game (game/find-by-names names games)]
+        (when (some? game)
+          {:dispatch-n [[:steamdating.forms/reset :game (assoc game :n-round n-round)]
+                        [:steamdating.routes/navigate "/games/edit"]]}))))
 
 
   (db/reg-event-fx
-		:steamdating.games/edit-toggle-win-loss
-		[(re-frame/path [:forms :game :edit])]
-		(fn edit-toggle-win-loss
-			[{game :db} [p-key]]
-			{:db (game/toggle-win-loss game p-key)}))
+    :steamdating.games/edit-toggle-win-loss
+    [(re-frame/path [:forms :game :edit])]
+    (fn edit-toggle-win-loss
+      [{game :db} [p-key]]
+      {:db (game/toggle-win-loss game p-key)}))
 
 
   (db/reg-event-fx
-		:steamdating.games/update-current-edit
-		(fn update-current-edit
-			[{:keys [db]} _]
+    :steamdating.games/edit-random
+    (fn edit-random
+      [{:keys [db]} _]
+      (let [lists (player/lists (get-in db [:tournament :players]))]
+        {:db (update-in db [:forms :game :edit]
+                        game/random-score lists)})))
+
+
+  (db/reg-event-fx
+    :steamdating.games/update-current-edit
+    (fn update-current-edit
+      [{:keys [db]} _]
       (let [names (game/player-names (get-in db [:forms :game :base]))
             n-round (get-in db [:forms :game :base :n-round])
             edit (get-in db [:forms :game :edit])]

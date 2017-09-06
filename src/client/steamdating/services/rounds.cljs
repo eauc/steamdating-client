@@ -2,6 +2,7 @@
   (:require [clairvoyant.core :refer-macros [trace-forms]]
             [re-frame.core :as re-frame]
             [re-frame-tracer.core :refer [tracer]]
+            [steamdating.models.player :as player]
             [steamdating.models.round :as round]
             [steamdating.services.db :as db]
             [steamdating.services.debug :as debug]))
@@ -42,8 +43,17 @@
     (fn rename-player
       [{rounds :db} [{{old-name :name} :base
                       {new-name :name} :edit}]]
-      {:db (mapv #(round/rename-player % old-name new-name) 
-                rounds)}))
+      {:db (mapv #(round/rename-player % old-name new-name)
+                 rounds)}))
+
+
+  (db/reg-event-fx
+    :steamdating.rounds/random-score
+    (fn random-score
+      [{:keys [db]} [n-round]]
+      (let [lists (player/lists (get-in db [:tournament :players]))]
+        {:db (update-in db [:tournament :rounds n-round]
+                        round/random-score lists)})))
 
 
   (re-frame/reg-sub

@@ -6,6 +6,7 @@
                                     "target"]
   :dependencies [[org.clojure/clojure "1.9.0-alpha4"]
                  [org.clojure/clojurescript "1.9.854"]
+                 [org.clojure/test.check "0.9.0"]
                  [day8.re-frame/http-fx "0.1.4"]
                  [day8/re-frame-tracer "0.1.1-SNAPSHOT"]
                  [devcards "0.2.3" :exclusions [cljsjs/react

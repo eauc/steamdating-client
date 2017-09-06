@@ -4,6 +4,7 @@
             [steamdating.components.generics.icon :refer [icon]]
             [steamdating.components.generics.faction-icon :refer [faction-icon]]
             [steamdating.components.sort.header :refer [sort-header]]
+            [steamdating.services.debug :refer [debug?]]
             [steamdating.services.games]))
 
 
@@ -93,4 +94,9 @@
      [:h4 (str "Round #" (+ n-round 1))]
      [filter-input {:name :round}]
      [round state sort {:on-sort-by on-sort-by
-                        :n-round n-round}]]))
+                        :n-round n-round}]
+     (when debug?
+       [:p
+        [:button {:type "button"
+                  :on-click #(re-frame/dispatch [:steamdating.rounds/random-score n-round])}
+         "Random"]])]))

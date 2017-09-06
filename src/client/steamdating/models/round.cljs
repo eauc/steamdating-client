@@ -194,6 +194,14 @@
       (assoc-in field name)))
 
 
+(defn random-score
+  [round lists]
+  (update round :games
+          #(mapv (fn [game]
+                   (game/random-score game lists))
+                 %)))
+
+
 (defn filter-with
   [round pattern]
   (update round :games #(vec (filter (fn [game] (game/match-pattern? game pattern)) %))))

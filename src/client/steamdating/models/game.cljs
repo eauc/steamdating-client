@@ -1,5 +1,7 @@
 (ns steamdating.models.game
   (:require [cljs.spec.alpha :as spec]
+            [cljs.spec.gen.alpha :as sgen]
+            [clojure.test.check.generators :as gen]
             [steamdating.models.form :as form]
             [steamdating.models.player]
             [steamdating.services.debug :as debug]))
@@ -14,11 +16,13 @@
 
 
 (spec/def :steamdating.score/scenario
-  (spec/and integer? #(>= % 0)))
+  (spec/with-gen (spec/and integer? #(>= % 0))
+    #(sgen/choose 0 20)))
 
 
 (spec/def :steamdating.score/army
-  (spec/and integer? #(>= % 0)))
+  (spec/with-gen (spec/and integer? #(>= % 0))
+    #(sgen/choose 0 500)))
 
 
 (spec/def :steamdating.game/score
@@ -53,6 +57,19 @@
   (spec/keys :req-un [:steamdating.game/player1
                       :steamdating.game/player2
                       :steamdating.game/table]))
+
+
+(defn valid-score-pair?
+  [scores]
+  (as-> (map :tournament scores) $
+    (and (not-every? #(= 1 %) $)
+         (or (every? nil? $)
+             (not-any? nil? $)))))
+
+
+(spec/def :steamdating.game/score-pair
+  (spec/cat :p1 :steamdating.game/score
+            :p2 :steamdating.game/score))
 
 
 (defn ->score
@@ -179,6 +196,29 @@
       (-> game
           (assoc-in [p-key :score :tournament] 1)
           (assoc-in [other :score :tournament] 0)))))
+
+
+(defn random-score
+  [game lists]
+  (let [[s1 s2] (sgen/generate
+                  (sgen/such-that
+                    valid-score-pair?
+                    (spec/gen :steamdating.game/score-pair)))
+        l1 (debug/spy
+             "l1"
+             (sgen/generate
+               (sgen/elements
+                 (debug/spy "ls1" (get lists (debug/spy "p1" (get-in game [:player1 :name])) [nil])))))
+        l2 (debug/spy
+             "l2"
+             (sgen/generate
+               (sgen/elements
+                 (debug/spy "ls2" (get lists (debug/spy "p2" (get-in game [:player2 :name])) [nil])))))]
+    (-> game
+        (assoc-in [:player1 :list] l1)
+        (assoc-in [:player1 :score] s1)
+        (assoc-in [:player2 :list] l2)
+        (assoc-in [:player2 :score] s2))))
 
 
 (defn update-factions
