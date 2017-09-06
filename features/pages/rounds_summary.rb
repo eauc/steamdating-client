@@ -26,7 +26,7 @@ module Pages
 
     def expect_rounds_summary(rows)
       expected_content = rows
-                           .map {|row| row.join("\\s+")}
+                           .map {|row| row.reject {|c| c.empty?}.join("\\s+")}
                            .join("\\s+")
       within(PAGE_CONTENT) do
         expect(page).to have_content("Rounds summary")

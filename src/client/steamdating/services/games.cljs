@@ -45,9 +45,13 @@
     :steamdating.games/edit
     :<- [:steamdating.forms/validate :game game/validate]
     :<- [:steamdating.players/names]
+    :<- [:steamdating.players/lists]
     (fn edit-sub
-      [[form-state names] _]
+      [[form-state names lists] _]
       (-> form-state
-          (assoc :players (into {} (map vector names names))))))
+          (assoc :players (into {} (map vector names names)))
+          (assoc :lists (into {} (map (fn [[name ls]]
+                                        [name (into {} (map vector ls ls))])
+                                      lists))))))
 
-	)
+  )

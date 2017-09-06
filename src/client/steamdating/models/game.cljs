@@ -125,11 +125,13 @@
   (cond
     (= name (get-in game [:player1 :name]))
     {:table (:table game)
+     :list (get-in game [:player1 :list])
      :opponent (get-in game [:player2 :name])
      :score (get-in game [:player1 :score])
      :game game}
     (= name (get-in game [:player2 :name]))
     {:table (:table game)
+     :list (get-in game [:player2 :list])
      :opponent (get-in game [:player1 :name])
      :score (get-in game [:player2 :score])
      :game game}

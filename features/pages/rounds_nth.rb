@@ -49,14 +49,15 @@ module Pages
           game[:p1ap] || 0,
           game[:p1cp] || 0,
           game[:player1] || "Phantom",
+          game[:p1list] || "",
           game[:table] || 1,
           game[:player2] || "Phantom",
+          game[:p2list] || "",
           game[:p2cp] || 0,
           game[:p2ap] || 0,
-        ]
-      end
-        .map { |r| r.join("\\s+") }
-        .join("\\s+")
+        ].reject { |c| c.is_a?(String) and c.empty? }
+          .join("\\s+")
+      end.join("\\s+")
 
       within(PAGE_CONTENT) do
         expect(find("tbody")).to have_content(Regexp.new("^\\s*#{expected_content}\\s*$", "i"))

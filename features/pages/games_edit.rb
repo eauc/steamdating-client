@@ -19,6 +19,12 @@ module Pages
 			within_p2_name do
 				page.select(game_info[:player2]) if game_info.key? :player2
 			end
+			within_p1_list do
+				page.select(game_info[:p1list]) if game_info.key? :p1list
+			end
+			within_p2_list do
+				page.select(game_info[:p2list]) if game_info.key? :p2list
+			end
 			within_p1_ck do
 				set_assassination(game_info[:p1ck])
 			end
@@ -61,6 +67,12 @@ module Pages
 			end
 			within_p2_name do
 				expect(page).to have_select(selected: game_info[:player2]) if game_info.key? :player2
+			end
+			within_p1_list do
+				expect(page).to have_select(selected: game_info[:p1list]) if game_info.key? :p1list
+			end
+			within_p2_list do
+				expect(page).to have_select(selected: game_info[:p2list]) if game_info.key? :p2list
 			end
 			within_win_loss do
 				expected_content = [
@@ -150,7 +162,7 @@ module Pages
       self
 		end
 
-		def within_win_loss
+		def within_lists
 			within(PAGE_CONTENT) do
 				within("tbody") do
 					within(:xpath, "(.//tr)[2]") do
@@ -161,10 +173,39 @@ module Pages
       self
 		end
 
-		def within_ck
+		def within_p1_list
+			within_lists do
+				within(:xpath, "(.//td|.//th)[1]") do
+					yield
+				end
+			end
+      self
+		end
+
+		def within_p2_list
+			within_lists do
+				within(:xpath, "(.//td|.//th)[3]") do
+					yield
+				end
+			end
+      self
+		end
+
+		def within_win_loss
 			within(PAGE_CONTENT) do
 				within("tbody") do
 					within(:xpath, "(.//tr)[3]") do
+						yield
+					end
+				end
+			end
+      self
+		end
+
+		def within_ck
+			within(PAGE_CONTENT) do
+				within("tbody") do
+					within(:xpath, "(.//tr)[4]") do
 						yield
 					end
 				end
@@ -193,7 +234,7 @@ module Pages
 		def within_cp
 			within(PAGE_CONTENT) do
 				within("tbody") do
-					within(:xpath, "(.//tr)[4]") do
+					within(:xpath, "(.//tr)[5]") do
 						yield
 					end
 				end
@@ -222,7 +263,7 @@ module Pages
 		def within_ap
 			within(PAGE_CONTENT) do
 				within("tbody") do
-					within(:xpath, "(.//tr)[5]") do
+					within(:xpath, "(.//tr)[6]") do
 						yield
 					end
 				end

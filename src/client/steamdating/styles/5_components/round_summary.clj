@@ -15,7 +15,11 @@
     [:&-ok {:background-color (:info-bckgnd colors)}]
     [:&-ko {:background-color (:warning-bckgnd colors)}]]
    [:&-game
-    :&-name  {:cursor :pointer
+    :&-name  {:cursor "pointer"
+              :padding-top "0.3em !important"
+              :padding-bottom "0.3em !important"
+              :vertical-align "middle"
               :white-space "nowrap"}]
 	 [:&-win	{:background-color (:valid-bckgnd colors)}]
-	 [:&-loss {:background-color (:error-bckgnd colors)}]])
+	 [:&-loss {:background-color (:error-bckgnd colors)}]
+   [:&-list-name {:font-size "0.75em"}]])

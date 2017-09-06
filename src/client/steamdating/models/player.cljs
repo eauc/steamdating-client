@@ -60,6 +60,11 @@
   (into {} (map (juxt :name :faction) players)))
 
 
+(defn lists
+  [players]
+  (into {} (map (juxt :name :lists) players)))
+
+
 (defn delete
   [players {:keys [name] :as player}]
   (vec (remove #(= (:name %) name) players)))

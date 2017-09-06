@@ -28,9 +28,12 @@
              1 "sd-RoundsSummary-win"
              nil nil)
     :on-click #(on-click n (:game result))}
-   (:table result)
-   ". "
-   (or (:opponent result) "Phantom")])
+   [:div
+    (:table result)
+    ". "
+    (or (:opponent result) "Phantom")]
+   [:div.sd-RoundsSummary-list-name.sd-text-muted
+    (:list result)]])
 
 
 (defn lists-status

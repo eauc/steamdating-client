@@ -99,11 +99,11 @@ end
 
 matching_games = {
   "to" => [
-    { p1ap: 32, p1cp: 3, player1: 'titi', table: 2, player2: 'toto', p2cp: 5, p2ap: 75 },
-    { p1ap: 46, p1cp: 0, player1: 'toutou', table: 3, player2: 'tutu', p2cp: 4, p2ap: 30 },
+    { p1ap: 32, p1cp: 3, p1list: "Amon1", player1: 'titi', table: 2, player2: 'toto', p2list: "Bethayne1", p2cp: 5, p2ap: 75 },
+    { p1ap: 46, p1cp: 0, p1list: "Lylyth2", player1: 'toutou', table: 3, player2: 'tutu', p2list: "Bartolo1", p2cp: 4, p2ap: 30 },
   ],
   "te" => [
-    { p1ap: 52, p1cp: 5, player1: 'tete', table: 1, player2: 'teuteu', p2cp: 3, p2ap: 21 },
+    { p1ap: 52, p1cp: 5, p1list: "Butcher2", player1: 'tete', table: 1, player2: 'teuteu', p2list: "Vyros1", p2cp: 3, p2ap: 21 },
   ],
 };
 
@@ -114,14 +114,14 @@ end
 sorted_games = {
   "Player2" => [
     { p1ap: 0, p1cp: 0, player1: 'tyty', table: 4, player2: 'Phantom', p2cp: 0, p2ap: 0 },
-    { p1ap: 52, p1cp: 5, player1: 'tete', table: 1, player2: 'teuteu', p2cp: 3, p2ap: 21 },
-    { p1ap: 32, p1cp: 3, player1: 'titi', table: 2, player2: 'toto', p2cp: 5, p2ap: 75 },
-    { p1ap: 46, p1cp: 0, player1: 'toutou', table: 3, player2: 'tutu', p2cp: 4, p2ap: 30 },
+    { p1ap: 52, p1cp: 5, p1list: "Butcher2", player1: 'tete', table: 1, player2: 'teuteu', p2list: "Vyros1", p2cp: 3, p2ap: 21 },
+    { p1ap: 32, p1cp: 3, p1list: "Amon1", player1: 'titi', table: 2, player2: 'toto', p2list: "Bethayne1", p2cp: 5, p2ap: 75 },
+    { p1ap: 46, p1cp: 0, p1list: "Lylyth2", player1: 'toutou', table: 3, player2: 'tutu', p2list: "Bartolo1", p2cp: 4, p2ap: 30 },
   ],
   "Table" => [
-    { p1ap: 52, p1cp: 5, player1: 'tete', table: 1, player2: 'teuteu', p2cp: 3, p2ap: 21 },
-    { p1ap: 32, p1cp: 3, player1: 'titi', table: 2, player2: 'toto', p2cp: 5, p2ap: 75 },
-    { p1ap: 46, p1cp: 0, player1: 'toutou', table: 3, player2: 'tutu', p2cp: 4, p2ap: 30 },
+    { p1ap: 52, p1cp: 5, p1list: "Butcher2", player1: 'tete', table: 1, player2: 'teuteu', p2list: "Vyros1", p2cp: 3, p2ap: 21 },
+    { p1ap: 32, p1cp: 3, p1list: "Amon1", player1: 'titi', table: 2, player2: 'toto', p2list: "Bethayne1", p2cp: 5, p2ap: 75 },
+    { p1ap: 46, p1cp: 0, p1list: "Lylyth2", player1: 'toutou', table: 3, player2: 'tutu', p2list: "Bartolo1", p2cp: 4, p2ap: 30 },
     { p1ap: 0, p1cp: 0, player1: 'tyty', table: 4, player2: 'Phantom', p2cp: 0, p2ap: 0 },
   ],
 };
@@ -137,12 +137,12 @@ end
 summary = {
   "filtered" => {
     "te" => [
-      ["tete", "Butcher2, Koslov1 / 2", "1. teuteu", "4. Phantom"],
-      ["teuteu", "Vyros1, Helynna1 / 2", "1. tete", "1. titi"],
+      ["tete", "Butcher2, Koslov1 / 2", "1. teuteu", "Butcher2", "4. Phantom", "Koslov1"],
+      ["teuteu", "Vyros1, Helynna1 / 2", "1. tete", "Vyros1", "1. titi", "Helynna1"],
     ],
     "to" => [
-      ["toto", "Bethayne1, Absylonia1 / 2", "2. titi", "3. toutou"],
-      ["toutou", "Lylyth2 / 2", "3. tutu", "3. toto"],
+      ["toto", "Bethayne1, Absylonia1 / 2", "2. titi", "Bethayne1", "3. toutou", "Absylonia1"],
+      ["toutou", "Lylyth2 / 2", "3. tutu", "Lylyth2", "3. toto", "Lylyth2"],
     ],
   }
 }

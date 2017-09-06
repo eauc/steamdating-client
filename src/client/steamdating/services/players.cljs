@@ -105,6 +105,14 @@
 
 
   (re-frame/reg-sub
+    :steamdating.players/lists
+    :<- [:steamdating.players/players]
+    (fn players-factions-sub
+      [players _]
+      (player/lists players)))
+
+
+  (re-frame/reg-sub
     :steamdating.players/sorted
     :<- [:steamdating.players/players]
     :<- [:steamdating.sorts/sort :player {:by :name}]

@@ -27,6 +27,10 @@
      (at-break
        :tablet
        [:& {:display "table-cell"}])]
+    [:&-name {:padding-bottom "0 !important"
+              :padding-top "0 !important"
+              :vertical-align "middle"}]
+    [:&-list {:font-size "0.75em"}]
     [:&-win  {:background-color (:valid-bckgnd colors)}]
     [:&-loss {:background-color (:error-bckgnd colors)}]]
    [:&Header

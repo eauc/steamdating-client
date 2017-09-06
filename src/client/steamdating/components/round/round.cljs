@@ -40,22 +40,28 @@
    [:td.sd-RoundGameRow-score
     (when (get-in game [:player1 :score :assassination])
       [icon "check"])]
-   [:td {:class (case (get-in game [:player1 :score :tournament])
-                  0 "sd-RoundGameRow-loss"
-                  1 "sd-RoundGameRow-win"
-                  nil nil)}
-    (or (get-in game [:player1 :name]) "Phantom")]
+   [:td.sd-RoundGameRow-name
+    {:class (case (get-in game [:player1 :score :tournament])
+              0 "sd-RoundGameRow-loss"
+              1 "sd-RoundGameRow-win"
+              nil nil)}
+    [:div (or (get-in game [:player1 :name]) "Phantom")]
+    [:div.sd-RoundGameRow-list.sd-text-muted
+     (get-in game [:player1 :list])]]
    [:td.sd-RoundGameRow-faction
     [faction-icon (get-in game [:player1 :faction])]]
    [:td.sd-RoundGameRow-table
     (:table game)]
    [:td.sd-RoundGameRow-faction
     [faction-icon (get-in game [:player2 :faction])]]
-   [:td {:class (case (get-in game [:player2 :score :tournament])
-                  0 "sd-RoundGameRow-loss"
-                  1 "sd-RoundGameRow-win"
-                  nil nil)}
-    (or (get-in game [:player2 :name]) "Phantom")]
+   [:td.sd-RoundGameRow-name
+    {:class (case (get-in game [:player2 :score :tournament])
+              0 "sd-RoundGameRow-loss"
+              1 "sd-RoundGameRow-win"
+              nil nil)}
+    [:div (or (get-in game [:player2 :name]) "Phantom")]
+    [:div.sd-RoundGameRow-list.sd-text-muted
+     (get-in game [:player2 :list])]]
    [:td.sd-RoundGameRow-score
     (when (get-in game [:player2 :score :assassination])
       [icon "check"])]
