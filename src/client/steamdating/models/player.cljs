@@ -60,6 +60,11 @@
   (into {} (map (juxt :name :faction) players)))
 
 
+(defn origins
+  [players]
+  (into {} (map (juxt :name :origin) players)))
+
+
 (defn lists
   [players]
   (into {} (map (juxt :name :lists) players)))

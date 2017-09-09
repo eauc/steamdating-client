@@ -78,11 +78,14 @@
     :steamdating.rounds/edit
     :<- [:steamdating.forms/validate :round round/validate]
     :<- [:steamdating.players/factions]
+    :<- [:steamdating.players/origins]
     :<- [:steamdating.rounds/players-opponents]
     (fn edit-sub
-      [[form-state factions opponents] _]
+      [[form-state factions origins opponents] _]
       (-> form-state
-          (round/validate-pairings {:factions factions :opponents opponents})
+          (round/validate-pairings {:factions factions
+                                    :opponents opponents
+                                    :origins origins})
           (update :edit round/update-factions factions)
           (update :edit round/update-players-options))))
 

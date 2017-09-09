@@ -11,29 +11,32 @@ Warmachine tournament organizer.
     - [ ] handle in round pairings
   - [X] rename
     - [X] rename refs in rounds
-- [ ] rounds
-  - [ ] next
-    - [ ] random
+- [-] rounds
+  - [-] next
+    - [X] random
+    - [ ] warn same origin
     - [ ] SR pairings
-    - [ ] final round pairings
-- [-] game
-  - [-] edit
+      - [ ] avoid origins/faction mirrors
+  - [ ] delete
+- [X] game
+  - [X] edit
     - [X] page
-    - [ ] random
+    - [X] random
   - [X] ui
     - [X] round summary link
 - [ ] rankings
   - [ ] list
-    - [ ] bests of
+  - [ ] bests of
+  - [ ] round next warn # of under-paired
   - [ ] ui
     - [ ] round next/nth prefix
     - [ ] round summary / sort
-  - [ ] final rounds
+- [ ] final rounds
   - [ ] settings
     - [ ] custom formula
+  - [ ] final round pairings
 - [ ] teams
 - [ ] groups
-- [ ] final rounds
 - [ ] imports
   - [ ] T3 players CSV
   - [ ] CC list(s) JSON

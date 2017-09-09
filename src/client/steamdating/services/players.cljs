@@ -105,6 +105,14 @@
 
 
   (re-frame/reg-sub
+    :steamdating.players/origins
+    :<- [:steamdating.players/players]
+    (fn players-factions-sub
+      [players _]
+      (player/origins players)))
+
+
+  (re-frame/reg-sub
     :steamdating.players/lists
     :<- [:steamdating.players/players]
     (fn players-factions-sub

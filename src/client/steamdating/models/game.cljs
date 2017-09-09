@@ -163,6 +163,14 @@
          (= f1 f2))))
 
 
+(defn same-origin?
+  [game origins]
+  (let [o1 (get origins (get-in game [:player1 :name]))
+        o2 (get origins (get-in game [:player2 :name]))]
+    (and (some? o1)
+         (= o1 o2))))
+
+
 (defn match-pattern?
   [game pattern]
   (or (re-find pattern (or (get-in game [:player1 :name]) ""))
@@ -204,16 +212,12 @@
                   (sgen/such-that
                     valid-score-pair?
                     (spec/gen :steamdating.game/score-pair)))
-        l1 (debug/spy
-             "l1"
-             (sgen/generate
-               (sgen/elements
-                 (debug/spy "ls1" (get lists (debug/spy "p1" (get-in game [:player1 :name])) [nil])))))
-        l2 (debug/spy
-             "l2"
-             (sgen/generate
-               (sgen/elements
-                 (debug/spy "ls2" (get lists (debug/spy "p2" (get-in game [:player2 :name])) [nil])))))]
+        l1 (sgen/generate
+             (sgen/elements
+               (get lists (get-in game [:player1 :name]) [nil])))
+        l2 (sgen/generate
+             (sgen/elements
+               (get lists (get-in game [:player2 :name]) [nil])))]
     (-> game
         (assoc-in [:player1 :list] l1)
         (assoc-in [:player1 :score] s1)

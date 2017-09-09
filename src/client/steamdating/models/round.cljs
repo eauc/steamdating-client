@@ -108,6 +108,15 @@
           {} (map vector (range) games)))
 
 
+(defn same-origins
+  [{:keys [games] :as round} origins]
+  (reduce (fn [warns [i game]]
+            (cond-> warns
+              (game/same-origin? game origins)
+              (assoc-in [i :origin] :same)))
+          {} (map vector (range) games)))
+
+
 (defn validate
   [form-state]
   (form/validate form-state :steamdating.round/round))
@@ -141,6 +150,14 @@
          " mirror game" (when plural? "s"))))
 
 
+(defn same-origins->string
+  [same-origins]
+  (let [n-sames (count same-origins)
+        plural? (> n-sames 1)]
+    (str "There " (if plural? "are" "is") " " n-sames
+         " same-origin pairing" (when plural? "s"))))
+
+
 (def merge-warns
   (fnil
     (fn [base extend]
@@ -153,11 +170,12 @@
 
 
 (defn validate-pairings
-  [form-state {:keys [factions opponents]}]
+  [form-state {:keys [factions opponents origins]}]
   (let [{:keys [edit]} form-state
         already-paired (already-paired edit opponents)
         unpaired-players (unpaired-players edit)
-        faction-mirrors (faction-mirrors edit factions)]
+        faction-mirrors (faction-mirrors edit factions)
+        same-origins (same-origins edit origins)]
     (cond-> form-state
       (not-empty unpaired-players)
       (assoc-in [:error :global :unpaired]
@@ -167,6 +185,11 @@
                     (faction-mirrors->string faction-mirrors))
           (update-in [:warn :games]
                      merge-warns faction-mirrors))
+      (not-empty same-origins)
+      (-> (assoc-in [:warn :global :origin]
+                    (same-origins->string same-origins))
+          (update-in [:warn :games]
+                     merge-warns same-origins))
       (not-empty already-paired)
       (-> (assoc-in [:error :global :pairings]
                     (already-paired->string already-paired))
