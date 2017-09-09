@@ -3,6 +3,7 @@
             [garden.selectors :as gsel]
             [steamdating.styles.0-settings.break :refer [at-break break]]
             [steamdating.styles.0-settings.colors :refer [colors]]
+            [steamdating.styles.1-tools.button :refer [button]]
             [steamdating.styles.1-tools.table :refer [table]]))
 
 
@@ -35,4 +36,5 @@
     [:&-loss {:background-color (:error-bckgnd colors)}]]
    [:&Header
     [:&-icon {:opacity 0}
-     [:&-show {:opacity 1}]]]])
+     [:&-show {:opacity 1}]]]
+   (button [:&-delete])])

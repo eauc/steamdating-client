@@ -56,6 +56,24 @@
                         round/random-score lists)})))
 
 
+  (db/reg-event-fx
+    :steamdating.rounds/drop-nth
+    (fn drop-nth
+      [{:keys [db]} [n]]
+      (let [rounds (->> (get-in db [:tournament :rounds])
+                        (round/drop-nth n))
+            last-round-index (dec (count rounds))
+            {page :page {page-round-index :n} :params} (get db :route)
+            should-navigate? (and (= :rounds-nth page)
+                                  (> page-round-index last-round-index))
+            navigate-to (if (= 0 (count rounds))
+                          "/rounds/all"
+                          (str "/rounds/nth/" last-round-index))]
+        {:db (assoc-in db [:tournament :rounds] rounds)
+         :dispatch (when should-navigate?
+                     [:steamdating.routes/navigate navigate-to])})))
+
+
   (re-frame/reg-sub
     :steamdating.rounds/rounds
     (fn rounds-sub

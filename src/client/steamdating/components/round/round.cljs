@@ -92,11 +92,22 @@
     [:div.sd-Round
      ;; (pr-str n state)
      [:h4 (str "Round #" (+ n-round 1))]
+     [:p
+      [:button.sd-Round-delete
+       {:type "button"
+        :on-click #(re-frame/dispatch
+                     [:steamdating.prompt/set
+                      {:type :confirm
+                       :message "Are you sure you want to drop this round ?"
+                       :on-validate [:steamdating.rounds/drop-nth n-round]}])}
+       [icon "trash-2"]
+       " Delete round"]]
      [filter-input {:name :round}]
      [round state sort {:on-sort-by on-sort-by
                         :n-round n-round}]
      (when debug?
        [:p
         [:button {:type "button"
-                  :on-click #(re-frame/dispatch [:steamdating.rounds/random-score n-round])}
+                  :on-click #(re-frame/dispatch
+                               [:steamdating.rounds/random-score n-round])}
          "Random"]])]))

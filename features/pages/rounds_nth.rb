@@ -1,7 +1,10 @@
 require_relative "./rounds"
+require_relative "../mixins/prompt"
 
 module Pages
   class RoundsNth < Rounds
+    include Prompt
+
     def initialize(n)
       super()
       @n = n
@@ -31,6 +34,12 @@ module Pages
       within(PAGE_CONTENT) do
         find("th", text: by).click
       end
+      self
+    end
+
+    def delete_round
+      click_on("Delete round")
+      validate_prompt
       self
     end
 

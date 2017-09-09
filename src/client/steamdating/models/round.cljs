@@ -225,6 +225,12 @@
                  %)))
 
 
+(defn drop-nth
+  [n rounds]
+  (into (subvec rounds 0 n)
+        (subvec rounds (inc n))))
+
+
 (defn filter-with
   [round pattern]
   (update round :games #(vec (filter (fn [game] (game/match-pattern? game pattern)) %))))

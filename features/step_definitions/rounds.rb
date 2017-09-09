@@ -67,6 +67,10 @@ When("I invert the Summary sort order") do
   @page.invert_sort_by(@sort_by)
 end
 
+When(/^I delete current Round$/) do
+  @page.delete_round
+end
+
 When("I start to edit Game with player \"$name\"") do |name|
   @page.start_edit_game_with_player(name)
   @page = Pages::GamesEdit.new
@@ -152,7 +156,8 @@ Then("I see the Rounds/Summary page with rounds:") do |table|
     expect(page).to have_content("Rounds summary")
   end
   @round_summary = table.raw
-  @page.expect_rounds_summary(@round_summary)
+  @page = Pages::RoundsSummary.new
+            .expect_rounds_summary(@round_summary)
 end
 
 Then("I see the Rounds/Summary page with the same rounds in reverse order") do
