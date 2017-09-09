@@ -56,3 +56,10 @@ Feature: Rounds Next
     And I see an error with the already played pairings:
     | tete   | teuteu |
     | toutou | toto   |
+
+  Scenario: SR Pairing
+    Given some Rounds have been defined
+    Given I open Rounds/Next page
+    When I ask for a SR pairing suggestion
+    Then next Round has no error or warning
+    And I can create next Round

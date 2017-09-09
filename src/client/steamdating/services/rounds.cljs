@@ -1,5 +1,6 @@
 (ns steamdating.services.rounds
   (:require [clairvoyant.core :refer-macros [trace-forms]]
+            [clojure.test.check.generators :as gen]
             [re-frame.core :as re-frame]
             [re-frame-tracer.core :refer [tracer]]
             [steamdating.models.player :as player]
@@ -25,6 +26,18 @@
     (fn update-edit-player
       [{form :db} [field name]]
       {:db (round/pair-player form field name)}))
+
+
+  (db/reg-event-fx
+    :steamdating.rounds/edit-sr-pairing
+    (fn edit-sr-pairing
+      [{:keys [db]}]
+      (let [players (gen/generate
+                      (gen/shuffle
+                        (get-in db [:tournament :players])))
+            rounds (get-in db [:tournament :rounds])]
+        {:db (assoc-in db [:forms :round :edit :games]
+                       (round/sr-pairing players rounds))})))
 
 
   (db/reg-event-fx

@@ -9,4 +9,9 @@ module Form
   def expect_submit_disabled
     expect(page).to have_css("button[type='submit']", class: "sd-Form-disabled")
   end
+
+  def expect_submit_enabled
+    expect(page).to have_css("button[type='submit']")
+    expect(page).to have_no_css("button[type='submit']", class: "sd-Form-disabled")
+  end
 end

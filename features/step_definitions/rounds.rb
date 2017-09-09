@@ -38,6 +38,10 @@ When("I select \"$player\" name \"$name\" for game \#$game") do |player, name, g
   @page.set_player_name(game.to_i - 1, player.to_sym, name)
 end
 
+When("I ask for a SR pairing suggestion") do
+  @page.ask_sr_suggestion
+end
+
 When("I create the Next Round") do
   @new_round_index = @tournament["rounds"].length
   sleep 0.5
@@ -67,7 +71,7 @@ When("I invert the Summary sort order") do
   @page.invert_sort_by(@sort_by)
 end
 
-When(/^I delete current Round$/) do
+When("I delete current Round") do
   @page.delete_round
 end
 
@@ -91,8 +95,18 @@ Then("\"$player\" for game \#$game is empty") do |player, game|
   @page.expect_empty_pairing(game.to_i - 1, player.to_sym)
 end
 
+Then("next Round has no error or warning") do
+  @page.expect_no_error_warning
+end
+
+Then("I can create next Round") do
+  within_fieldset(Pages::RoundsNext::NEXT_ROUND_FORM) do
+    expect_submit_enabled
+  end
+end
+
 Then("I cannot create the Next Round") do
-  within(".sd-PageContent") do
+  within_fieldset(Pages::RoundsNext::NEXT_ROUND_FORM) do
     expect_submit_disabled
   end
 end

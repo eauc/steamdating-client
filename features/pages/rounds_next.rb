@@ -56,6 +56,10 @@ module Pages
       self
     end
 
+    def ask_sr_suggestion
+      click_on("Suggest SR pairing")
+    end
+
     def create_round
       within_fieldset(NEXT_ROUND_FORM) do
         click_button("Start")
@@ -105,6 +109,15 @@ module Pages
         expect(page).to have_content(Regexp.new("#{expected} ha(ve|s) already been played"))
       end
       self
+    end
+
+    def expect_no_error_warning
+      within_fieldset(NEXT_ROUND_FORM) do
+        expect(page).to have_no_content("not paired")
+        expect(page).to have_no_content("already been played")
+        expect(page).to have_no_content("mirror game")
+        expect(page).to have_no_content("same-origin pairing")
+      end
     end
   end
 end

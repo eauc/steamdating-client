@@ -81,12 +81,14 @@
 
 
 (defn ->game
-  [{:keys [table]}]
-  {:table table
-   :player1 {:name nil
-             :score (->score)}
-   :player2 {:name nil
-             :score (->score)}})
+  ([table p1 p2]
+   {:table table
+    :player1 {:name p1
+              :score (->score)}
+    :player2 {:name p2
+              :score (->score)}})
+  ([{:keys [table]}]
+   (->game table nil nil)))
 
 
 (def player-names

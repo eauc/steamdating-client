@@ -20,8 +20,8 @@
    [:td.sd-RoundGamesEdit-faction
     {:class (when (get-in state [:warn :games n :faction])
               "sd-RoundGamesEdit-warning")}
-    [faction-icon (get-in state [:edit :games n :player1 :faction])]
-    [:p]]
+    [:p
+     [faction-icon (get-in state [:edit :games n :player1 :faction])]]]
    [:td.sd-RoundGamesEdit-table
     [input {:type :number
             :field [:games n :table]
@@ -31,8 +31,8 @@
    [:td.sd-RoundGamesEdit-faction
     {:class (when (get-in state [:warn :games n :faction])
               "sd-RoundGamesEdit-warning")}
-    [faction-icon (get-in state [:edit :games n :player2 :faction])]
-    [:p]]
+    [:p
+     [faction-icon (get-in state [:edit :games n :player2 :faction])]]]
    [:td {:class (when (get-in state [:warn :games n :pairing])
                   "sd-RoundGamesEdit-warning")}
     [select {:field [:games n :player2 :name]
@@ -77,4 +77,9 @@
           [game-row {:key n :n n
                      :update-player update-player
                      :update-table update-table} state])]]
+      [:p
+       [:button.sd-RoundEdit-suggest
+        {:type "button"
+         :on-click #(re-frame/dispatch [:steamdating.rounds/edit-sr-pairing])}
+        "Suggest SR pairing"]]
       [info state]]]))

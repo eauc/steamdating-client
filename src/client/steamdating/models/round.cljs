@@ -3,7 +3,7 @@
             [clojure.string :as s]
             [steamdating.models.form :as form]
             [steamdating.models.game :as game]
-            [steamdating.models.player]
+            [steamdating.models.player :as player]
             [steamdating.services.debug :as debug]))
 
 
@@ -53,6 +53,13 @@
   (mapv #(game-for-player % name) rounds))
 
 
+(defn tables-for-player
+  [name rounds]
+  (->> rounds
+       (games-for-player name)
+       (map :table)))
+
+
 (defn opponents-for-player
   [name rounds]
   (->> rounds
@@ -75,6 +82,22 @@
   (->> rounds
        (games-for-player name)
        (mapv #(game/result-for-player % name))))
+
+
+(defn normalize-score
+  [score]
+  (-> score
+      (update :tournament #(if (nil? %) 0 %))
+      (update :assassination #(if % 1 0))))
+
+
+(defn total-score-for-player
+  [name rounds]
+  (->> rounds
+       (results-for-player name)
+       (map :score)
+       (map normalize-score)
+       (apply merge-with +)))
 
 
 (defn player-paired?
@@ -223,6 +246,86 @@
           #(mapv (fn [game]
                    (game/random-score game lists))
                  %)))
+
+
+(defn tournament-weight
+  [[p s]]
+  (- 0 (:tournament s)))
+
+
+(defn faction-weight
+  [faction [p s]]
+  (if (and (some? faction)
+           (= (:faction p) faction))
+    1 0))
+
+
+(defn origin-weight
+  [origin [p s]]
+  (if (and (some? origin)
+           (= (:origin p) origin))
+    1 0))
+
+
+(defn sort-opponents
+  [{:keys [faction origin] :as player} players-results]
+  (sort-by (juxt tournament-weight
+                 (partial origin-weight origin)
+                 (partial faction-weight faction))
+           players-results))
+
+
+(defn choose-opponent
+  [{:keys [name] :as players} old-opponents opponents]
+  (let [old-opponents (set old-opponents)
+        possible-opponents (remove (fn [[p s]]
+                                     (old-opponents (:name p)))
+                                   opponents)
+        [next-opponent] (if (empty? possible-opponents)
+                          (first opponents)
+                          (first possible-opponents))]
+    next-opponent))
+
+
+(defn choose-table
+  [old-tables tables]
+  (let [possible-tables (remove (set old-tables) tables)]
+    (if (empty? possible-tables)
+      (first tables)
+      (first possible-tables))))
+
+
+(defn player-pairing
+  [player players-results tables rounds]
+  (let [sorted-opponents (sort-opponents player players-results)
+        next-opponent (choose-opponent
+                        player
+                        (opponents-for-player (:name player) rounds)
+                        sorted-opponents)
+        old-tables (concat (tables-for-player (:name player) rounds)
+                           (tables-for-player (:name next-opponent) rounds))
+        next-table (choose-table old-tables tables)]
+    [next-table (:name player) (:name next-opponent)]))
+
+
+(defn sr-pairing
+  [players rounds]
+  (let [players-results (->> players
+                             (map (fn [p] [p (total-score-for-player (:name p) rounds)]))
+                             (sort-by tournament-weight))]
+    (loop [[[current-player] & rest-players] players-results
+           tables (range 1 (inc (players->ngames players)))
+           pairings []]
+      (let [pairing (player-pairing current-player rest-players tables rounds)
+            [table _ opponent] pairing
+            rest-players (remove (fn [[p s]]
+                                   (= (:name p) opponent))
+                                 rest-players)
+            rest-tables (remove #{table} tables)
+            pairings (conj pairings pairing)]
+        (if (empty? rest-players)
+          (mapv #(apply game/->game %) (sort-by first pairings))
+          (recur rest-players rest-tables pairings))))))
 
 
 (defn drop-nth

@@ -1,7 +1,8 @@
 (ns steamdating.styles.5-components.round-edit
   (:require [garden.def :as gdef]
             [steamdating.styles.0-settings.break :refer [at-break]]
-            [steamdating.styles.0-settings.colors :refer [colors]]))
+            [steamdating.styles.0-settings.colors :refer [colors]]
+            [steamdating.styles.1-tools.button :refer [button]]))
 
 
 (gdef/defstyles round-edit
@@ -17,7 +18,8 @@
       :select {:padding "0.3em 0"}
       (at-break
         :tablet
-        [:& {:padding "0.5em"}])]]
+        [:& {:padding "0.5em"}])]
+     (button [:&-suggest])]
    [:&GamesEdit
     [:&-table
      :&-faction {:width "1%"}]
