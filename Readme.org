@@ -11,13 +11,13 @@ Warmachine tournament organizer.
     - [ ] handle in round pairings
   - [X] rename
     - [X] rename refs in rounds
-- [-] rounds
-  - [-] next
+- [X] rounds
+  - [X] next
     - [X] random
-    - [ ] warn same origin
-    - [ ] SR pairings
-      - [ ] avoid origins/faction mirrors
-  - [ ] delete
+    - [X] warn same origin
+    - [X] SR pairings
+      - [X] avoid origins/faction mirrors
+  - [X] delete
 - [X] game
   - [X] edit
     - [X] page

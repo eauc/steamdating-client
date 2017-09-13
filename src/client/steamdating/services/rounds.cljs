@@ -167,6 +167,15 @@
 
 
   (re-frame/reg-sub
+    :steamdating.rounds/players-scores
+    :<- [:steamdating.rounds/rounds]
+    :<- [:steamdating.players/names]
+    (fn players-scores-sub
+      [[rounds names] _]
+      (round/total-scores-for-players names rounds)))
+
+
+  (re-frame/reg-sub
     :steamdating.rounds/summary
     :<- [:steamdating.rounds/players-results]
     :<- [:steamdating.sorts/sort :rounds-all {:by :player}]

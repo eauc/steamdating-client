@@ -17,4 +17,5 @@
         :tablet
         [:& {:display "table-cell"}])]]]
    [:&Row
-    [:&-faction {:white-space "nowrap"}]]])
+    [:&-faction {:white-space "nowrap"}]]]
+  (table [:&-RankingList]))

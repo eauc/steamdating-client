@@ -7,7 +7,7 @@
 
 
 (spec/def :steamdating.sort/by
-  keyword?)
+  some?)
 
 
 (spec/def :steamdating.sort/sort

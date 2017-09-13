@@ -27,6 +27,10 @@
               :on-click toggle-show}
         "Players"]
        [link {:current-hash @current-hash
+              :path "/ranking"
+              :on-click toggle-show}
+        "Ranking"]
+       [link {:current-hash @current-hash
               :path "/rounds/all"
               :active "#/rounds"
               :on-click toggle-show}

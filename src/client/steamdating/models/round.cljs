@@ -3,7 +3,7 @@
             [clojure.string :as s]
             [steamdating.models.form :as form]
             [steamdating.models.game :as game]
-            [steamdating.models.player :as player]
+            [steamdating.models.player]
             [steamdating.services.debug :as debug]))
 
 
@@ -98,6 +98,20 @@
        (map :score)
        (map normalize-score)
        (apply merge-with +)))
+
+
+(defn total-scores-for-players
+  [names rounds]
+  (let [scores (into {}
+                     (map (fn [n]
+                            [n (-> (total-score-for-player n rounds)
+                                   (assoc :opponents (set (opponents-for-player n rounds))))])
+                          names))]
+    (into {}
+          (map (fn [[n s]]
+                 [n (assoc s :sos (reduce + (map #(get-in scores [% :tournament])
+                                                 (:opponents s))))])
+               scores))))
 
 
 (defn player-paired?
