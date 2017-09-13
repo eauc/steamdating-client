@@ -19,7 +19,7 @@ module Pages
 
     def invert_sort_by(by)
       within(PAGE_CONTENT) do
-        find("th", text: by).click
+        find("th", text: Regexp.new("^#{by}")).click
       end
       self
     end

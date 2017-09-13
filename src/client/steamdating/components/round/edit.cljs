@@ -62,7 +62,7 @@
                  :save-label save-label
                  :on-submit #(re-frame/dispatch [on-submit])}
      [:div.sd-RoundEdit
-      ;; (pr-str state)
+      ;; [:pre (with-out-str (cljs.pprint/pprint state))]
       [:table.sd-RoundEdit-gamesList
        {:style {:border-collapse "collapse"}}
        [:thead

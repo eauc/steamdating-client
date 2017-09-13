@@ -1,12 +1,20 @@
 (ns steamdating.styles.5-components.round-summary
 	(:require [garden.def :as gdef]
-						[steamdating.styles.0-settings.colors :refer [colors]]
+            [garden.selectors :as gsel]
+						[steamdating.styles.0-settings.break :refer [at-break]]
+            [steamdating.styles.0-settings.colors :refer [colors]]
 						[steamdating.styles.1-tools.table :refer [table]]))
 
 
 (gdef/defstyles round-summary
 	[:&-RoundsSummary
 	 (table [:&-list])
+   [:&-list
+    [(gsel/th (gsel/first-child))
+     (gsel/td (gsel/first-child)) {:display :none}
+     (at-break
+       :tablet
+       [:& {:display :table-cell}])]]
 	 [:&-nth-header {:white-space "nowrap"}
 		[:a {:color (:text colors)
          :text-decoration "none"}]]

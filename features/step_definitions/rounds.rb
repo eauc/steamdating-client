@@ -76,6 +76,11 @@ When("I sort the Round by \"$by\"") do |by|
   @sort_by = by
 end
 
+When("I sort the Summary by \"$sort\"") do |sort|
+  @page.invert_sort_by(sort)
+  @sort_by = sort
+end
+
 When("I invert the Summary sort order") do
   @page.invert_sort_by(@sort_by)
 end
@@ -164,12 +169,12 @@ end
 summary = {
   "filtered" => {
     "te" => [
-      ["tete", "Butcher2, Koslov1 / 2", "1. teuteu", "Butcher2", "4. Phantom", "Koslov1"],
-      ["teuteu", "Vyros1, Helynna1 / 2", "1. tete", "Vyros1", "1. titi", "Helynna1"],
+      ["1", "tete", "Butcher2, Koslov1 / 2", "1. teuteu", "Butcher2", "4. Phantom", "Koslov1"],
+      ["4", "teuteu", "Vyros1, Helynna1 / 2", "1. tete", "Vyros1", "1. titi", "Helynna1"],
     ],
     "to" => [
-      ["toto", "Bethayne1, Absylonia1 / 2", "2. titi", "Bethayne1", "3. toutou", "Absylonia1"],
-      ["toutou", "Lylyth2 / 2", "3. tutu", "Lylyth2", "3. toto", "Lylyth2"],
+      ["2", "toto", "Bethayne1, Absylonia1 / 2", "2. titi", "Bethayne1", "3. toutou", "Absylonia1"],
+      ["7", "toutou", "Lylyth2 / 2", "3. tutu", "Lylyth2", "3. toto", "Lylyth2"],
     ],
   }
 }

@@ -110,15 +110,16 @@
     :<- [:steamdating.forms/validate :round round/validate]
     :<- [:steamdating.players/factions]
     :<- [:steamdating.players/origins]
+    :<- [:steamdating.rankings/players]
     :<- [:steamdating.rounds/players-opponents]
     (fn edit-sub
-      [[form-state factions origins opponents] _]
+      [[form-state factions origins rankings opponents] _]
       (-> form-state
           (round/validate-pairings {:factions factions
                                     :opponents opponents
                                     :origins origins})
           (update :edit round/update-factions factions)
-          (update :edit round/update-players-options))))
+          (update :edit round/update-players-options rankings))))
 
 
   (re-frame/reg-sub
@@ -155,7 +156,7 @@
   (re-frame/reg-sub
     :steamdating.rounds/players-results
     :<- [:steamdating.rounds/rounds]
-    :<- [:steamdating.players/players]
+    :<- [:steamdating.rankings/ranking]
     :<- [:steamdating.filters/pattern :rounds-all]
     (fn players-results-sub
       [[rounds players pattern] _]
@@ -178,9 +179,13 @@
   (re-frame/reg-sub
     :steamdating.rounds/summary
     :<- [:steamdating.rounds/players-results]
-    :<- [:steamdating.sorts/sort :rounds-all {:by :player}]
+    :<- [:steamdating.sorts/sort :rounds-all {:by [:name]}]
     (fn summary-sub
       [[results {:keys [by reverse]}] _]
-      (-> results
-          (->> (sort-by (fn [{:keys [name]}] (.toLowerCase name))))
-          (cond-> reverse clojure.core/reverse)))))
+      (as-> results $
+        (sort-by #(let [value (get-in % by)]
+                    (if (string? value)
+                      (.toLowerCase value)
+                      value)) $)
+        (cond-> $
+          reverse clojure.core/reverse)))))

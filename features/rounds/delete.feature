@@ -28,10 +28,10 @@ Feature: Delete round
     When I delete current Round
     When I delete current Round
     Then I see the Rounds/Summary page with rounds:
-    | tete   | / 2 |
-    | teuteu | / 2 |
-    | titi   | / 2 |
-    | toto   | / 2 |
-    | toutou | / 2 |
-    | tutu   | / 2 |
-    | tyty   | / 2 |
+    | 4 | tete   | / 2 |
+    | 1 | teuteu | / 2 |
+    | 6 | titi   | / 2 |
+    | 7 | toto   | / 2 |
+    | 2 | toutou | / 2 |
+    | 5 | tutu   | / 2 |
+    | 3 | tyty   | / 2 |

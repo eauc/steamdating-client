@@ -376,11 +376,15 @@
 
 
 (defn update-players-options
-  [round]
-  (update round :players
-          #(into {} (map
-                      (fn [name]
-                        (vector name (if (player-paired? round name)
-                                       name
-                                       (str "> " name))))
-                      %))))
+  [round rankings]
+  (update
+    round :players
+    #(into {} (map
+                (fn [name]
+                  (let [rank-name (str name " #" (get rankings name))]
+                    (vector
+                      name
+                      (if (player-paired? round name)
+                        rank-name
+                        (str "> " rank-name)))))
+                %))))

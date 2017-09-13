@@ -36,4 +36,12 @@
       [ranking _]
       (ranking/bests ranking)))
 
+
+  (re-frame/reg-sub
+    :steamdating.rankings/players
+    :<- [:steamdating.rankings/ranking]
+    (fn players-sub
+      [ranking _]
+      (into {} (map (juxt :name :rank) ranking))))
+
   )

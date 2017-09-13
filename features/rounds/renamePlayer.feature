@@ -15,13 +15,13 @@ Feature: Rename player in rounds
     | tonton | lyon | Legion | Absylonia1, Bethayne1 |
     When I open Rounds/Summary page
     Then I see the Rounds/Summary page with rounds:
-    | tete   | Butcher2, Koslov1 / 2     | 1. teuteu  | Butcher2  | 4. Phantom | Koslov1    |
-    | teuteu | Vyros1, Helynna1 / 2      | 1. tete    | Vyros1    | 1. titi    | Helynna1   |
-    | titi   | Amon1, Feora1 / 2         | 2. tonton  | Amon1     | 1. teuteu  | Feora1     |
-    | tonton | Bethayne1, Absylonia1 / 2 | 2. titi    | Bethayne1 | 3. toutou  | Absylonia1 |
-    | toutou | Lylyth2 / 2               | 3. tutu    | Lylyth2   | 3. tonton  | Lylyth2    |
-    | tutu   | Bartolo1, Cyphon1 / 2     | 3. toutou  | Bartolo1  | 2. tyty    | Cyphon1    |
-    | tyty   | Malekus1 / 2              | 4. Phantom |           | 2. tutu    | Malekus1   |
+    | 1 | tete   | Butcher2, Koslov1 / 2     | 1. teuteu  | Butcher2  | 4. Phantom | Koslov1    |
+    | 4 | teuteu | Vyros1, Helynna1 / 2      | 1. tete    | Vyros1    | 1. titi    | Helynna1   |
+    | 5 | titi   | Amon1, Feora1 / 2         | 2. tonton  | Amon1     | 1. teuteu  | Feora1     |
+    | 2 | tonton | Bethayne1, Absylonia1 / 2 | 2. titi    | Bethayne1 | 3. toutou  | Absylonia1 |
+    | 7 | toutou | Lylyth2 / 2               | 3. tutu    | Lylyth2   | 3. tonton  | Lylyth2    |
+    | 6 | tutu   | Bartolo1, Cyphon1 / 2     | 3. toutou  | Bartolo1  | 2. tyty    | Cyphon1    |
+    | 3 | tyty   | Malekus1 / 2              | 4. Phantom |           | 2. tutu    | Malekus1   |
     When I open Rounds/1 page
     Then I see Rounds/1 page with games:
     | p1ap | p1cp | p1list   | player1 | table | player2 | p2list    | p2cp | p2ap |

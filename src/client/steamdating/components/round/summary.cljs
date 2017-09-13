@@ -47,10 +47,11 @@
 
 (defn player-summary
 	[{:keys [n-rounds on-player-click on-result-click]}
-   {:keys [name faction lists played-lists results] :as player}]
+   {:keys [name faction lists played-lists rank results] :as player}]
 	[:tr.sd-RoundsSummary-results
 	 {:key name}
-	 [:td.sd-RoundsSummary-name
+	 [:td rank]
+   [:td.sd-RoundsSummary-name
 		{:on-click #(on-player-click name)
 		 :title (player/player->title player)}
 		[faction-icon faction]
@@ -66,8 +67,12 @@
 	 [:thead
 		[:tr
 		 [sort-header sort
+			{:label "#"
+			 :name [:rank]
+			 :on-sort-by on-sort-by}]
+     [sort-header sort
 			{:label "Player"
-			 :name :player
+			 :name [:name]
 			 :on-sort-by on-sort-by}]
 		 [:th "Lists"]
 		 (rounds-headers n-rounds)]]
@@ -80,7 +85,7 @@
 	[]
 	(let [n-rounds @(re-frame/subscribe [:steamdating.rounds/n-rounds])
 				state @(re-frame/subscribe [:steamdating.rounds/summary])
-				sort @(re-frame/subscribe [:steamdating.sorts/sort :rounds-all {:by :player}])]
+				sort @(re-frame/subscribe [:steamdating.sorts/sort :rounds-all {:by [:name]}])]
 		[:div.sd-RoundsSummary
 		 [:h4 "Rounds summary"]
 		 [filter-input
@@ -91,5 +96,5 @@
 			 :on-sort-by #(re-frame/dispatch [:steamdating.sorts/set :rounds-all %])
 			 :on-player-click #(re-frame/dispatch [:steamdating.players/start-edit-name %])
 			 :on-result-click #(re-frame/dispatch [:steamdating.games/start-edit %1 %2])}]
-		 ;; (pr-str state)
+		 ;; [:pre (with-out-str (cljs.pprint/pprint state))]
 		 ]))
