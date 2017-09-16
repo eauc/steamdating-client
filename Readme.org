@@ -7,11 +7,11 @@ Warmachine tournament organizer.
 - [ ] ui
   - [ ] phone page-title/filter on same line
   - [ ] scrollable tables with fixed headers/first column
-- [-] players
-  - [ ] drop
-    - [ ] ui in players ranking/list
-    - [ ] status in rounds summary
-    - [ ] handle in round pairings
+- [X] players
+  - [X] drop
+    - [X] ui in players ranking/list
+    - [X] status in rounds summary
+    - [X] handle in round pairings
   - [X] rename
     - [X] rename refs in rounds
 - [X] rounds
@@ -27,14 +27,14 @@ Warmachine tournament organizer.
     - [X] random
   - [X] ui
     - [X] round summary link
-- [-] rankings
+- [X] rankings
   - [X] list
   - [X] bests of
-  - [ ] round next warn # of under-paired
+  # - [ ] round next warn # of under-paired
   - [X] ui
     - [X] round next/nth prefix
     - [X] round summary / sort
-- [ ] localStorage
+- [X] localStorage
 - [ ] imports
   - [ ] T3 players CSV
   - [ ] CC list(s) JSON

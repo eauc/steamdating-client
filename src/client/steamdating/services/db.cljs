@@ -10,7 +10,8 @@
             [steamdating.models.sort]
             [steamdating.models.toaster]
             [steamdating.models.tournament :refer [->tournament]]
-            [steamdating.services.debug :refer [debug?]]))
+            [steamdating.services.debug :refer [debug?]]
+            [steamdating.services.store]))
 
 
 (spec/def ::factions
@@ -96,6 +97,14 @@
 
 (reg-event-fx
   :steamdating.db/initialize
+  [(re-frame/inject-cofx :steamdating.storage/local)]
   (fn initialize-db
-    []
-    {:db default-db}))
+    [{:keys [local-storage]}]
+    {:db (merge default-db local-storage)}))
+
+
+(reg-event-fx
+  :steamdating.storage/update
+  (fn storage-update
+    [{:keys [db]} [value]]
+    {:db (merge db value)}))
