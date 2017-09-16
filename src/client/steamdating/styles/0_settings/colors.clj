@@ -9,6 +9,7 @@
    :border (gcolor/rgba 0 0 0 0.4)
    :shadow (gcolor/rgba 0 0 0 0.6)
    :hover (gcolor/darken (gcolor/hex->rgb "#FFF") 15)
+   :disabled (gcolor/darken (gcolor/hex->rgb "#FFF") 50)
    :error (gcolor/hex->rgb "#F44336")
    :warning (gcolor/hex->rgb "#FFC107")
    :valid (gcolor/hex->rgb "#4CAF50")

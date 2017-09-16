@@ -67,7 +67,7 @@
   (db/reg-event-fx
     :steamdating.players/edit
     [(re-frame/path [:tournament :players])]
-    (fn create
+    (fn edit
       [{:keys [db]} [form]]
       {:db (player/edit db form)}))
 
@@ -79,6 +79,16 @@
       (let [player (get-in db [:forms :player :base])]
         {:db (update-in db [:tournament :players] player/delete player)
          :steamdating.routes/back nil})))
+
+
+  (db/reg-event-fx
+    :steamdating.players/toggle-drop
+    (fn toggle-drop
+      [{:keys [db]} [p]]
+      (let [n-rounds (count (get-in db [:tournament :rounds]))]
+        {:db (update-in db [:tournament :players]
+                        player/edit {:base p
+                                     :edit (player/toggle-drop p n-rounds)})})))
 
 
   (re-frame/reg-sub

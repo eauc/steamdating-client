@@ -17,6 +17,7 @@ module Pages
         set_table(i, game[:table]) unless game[:table].empty?
         set_player_name(i, :player2, game[:player2]) unless game[:player2].empty?
       end
+      self
     end
 
     def set_players_names(indexed_players)
@@ -58,6 +59,7 @@ module Pages
 
     def ask_sr_suggestion
       click_on("Suggest SR pairing")
+      self
     end
 
     def create_round
@@ -67,13 +69,16 @@ module Pages
       self
     end
 
-    def expect_games_forms_for_players(players)
-      nb_games = nb_games_for_players(players)
-
+    def expect_n_games_forms(nb_games)
       within_fieldset(NEXT_ROUND_FORM) do
-        expect(page.all(:xpath, GAME_ROW).length).to be(nb_games)
+        expect(page.all(:xpath, GAME_ROW).length).to eq(nb_games)
       end
       self
+    end
+
+    def expect_games_forms_for_players(players)
+      nb_games = nb_games_for_players(players)
+      expect_n_games_forms(nb_games)
     end
 
     def expect_games_selects_for_players(players)
@@ -83,7 +88,7 @@ module Pages
       selector = ".//tr//select[#{options.join(" and ")}]"
 
       within_fieldset(NEXT_ROUND_FORM) do
-        expect(page.all(:xpath, selector).length).to be(nb_games * 2)
+        expect(page.all(:xpath, selector).length).to eq(nb_games * 2)
       end
       self
     end
@@ -118,6 +123,21 @@ module Pages
         expect(page).to have_no_content("mirror game")
         expect(page).to have_no_content("same-origin pairing")
       end
+      self
+    end
+
+    def expect_player_paired(name)
+      within_fieldset(NEXT_ROUND_FORM) do
+        expect(page).to have_select(selected: name)
+      end
+      self
+    end
+
+    def expect_player_not_paired(name)
+      within_fieldset(NEXT_ROUND_FORM) do
+        expect(page).to have_no_select(selected: name)
+      end
+      self
     end
   end
 end

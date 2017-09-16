@@ -104,6 +104,13 @@ Then("I can edit the Next Round information") do
     .expect_games_selects_for_players(@tournament["players"])
 end
 
+Then("I can edit the Next Round information for players:") do |table|
+  @active_players = table.raw[0].map {|n| {"name" => n}}
+  @page
+    .expect_games_forms_for_players(@active_players)
+    .expect_games_selects_for_players(@active_players)
+end
+
 Then("\"$player\" for game \#$game is empty") do |player, game|
   sleep 0.5
   @page.expect_empty_pairing(game.to_i - 1, player.to_sym)
@@ -214,4 +221,16 @@ end
 
 Then("I see an error with the already played pairings:") do |table|
   @page.expect_already_played(table.raw)
+end
+
+Then("player \"$name\" is in Next Round pairings") do |name|
+  @page.expect_player_paired(name)
+end
+
+Then("player \"$name\" is not in Next Round pairings") do |name|
+  @page.expect_player_not_paired(name)
+end
+
+Then("I can edit $n pairings for Next Round") do |n|
+  @page.expect_n_games_forms(n.to_i)
 end

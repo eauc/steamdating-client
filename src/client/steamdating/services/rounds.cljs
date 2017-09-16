@@ -16,7 +16,7 @@
     [(re-frame/path [:tournament :players])]
     (fn start-next
       [{players :db} _]
-      {:dispatch-n [[:steamdating.forms/reset :round (round/->round players)]
+      {:dispatch-n [[:steamdating.forms/reset :round (round/->round (player/on-board players))]
                     [:steamdating.routes/navigate "/rounds/next"]]}))
 
 
@@ -34,7 +34,7 @@
       [{:keys [db]}]
       (let [players (gen/generate
                       (gen/shuffle
-                        (get-in db [:tournament :players])))
+                        (player/on-board (get-in db [:tournament :players]))))
             rounds (get-in db [:tournament :rounds])]
         {:db (assoc-in db [:forms :round :edit :games]
                        (round/sr-pairing players rounds))})))

@@ -28,7 +28,11 @@
 
 
 (spec/def :steamdating.player/notes
-  (spec/and string?))
+  string?)
+
+
+(spec/def :steamdating.player/droped-after
+  (spec/and integer? #(> % 0)))
 
 
 (spec/def :steamdating.player/player
@@ -36,7 +40,8 @@
              :opt-un [:steamdating.player/origin
                       :steamdating.player/faction
                       :steamdating.player/lists
-                      :steamdating.player/notes]))
+                      :steamdating.player/notes
+                      :steamdating.player/droped-after]))
 
 
 (spec/def :steamdating.player/players
@@ -70,9 +75,21 @@
   (into {} (map (juxt :name :lists) players)))
 
 
+(defn on-board
+  [players]
+  (remove #(some? (:droped-after %)) players))
+
+
 (defn delete
   [players {:keys [name] :as player}]
   (vec (remove #(= (:name %) name) players)))
+
+
+(defn toggle-drop
+  [player after]
+  (if (:droped-after player)
+    (dissoc player :droped-after)
+    (assoc player :droped-after after)))
 
 
 (defn edit

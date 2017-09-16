@@ -4,13 +4,13 @@ Feature: Ranking List
     Given more Rounds have been defined
     When I open Ranking page
     Then I see the Ranking:
-    |    1 | tyty   | Protectorate |  4 |   5 | 37 | 250 |  2 |
-    |    2 | toto   | Legion       |  2 |   7 | 41 | 872 |  2 |
-    |    3 | tete   | Khador       |  2 |   7 | 38 | 616 |  1 |
-    |    4 | teuteu | Retribution  |  2 |   6 | 25 | 793 |  1 |
-    |    5 | tutu   | Mercenaries  |  1 |   6 | 26 | 699 |  2 |
-    |    6 | titi   | Protectorate |  1 |   6 | 12 | 332 |  1 |
-    |    7 | toutou | Legion       |  0 |   4 | 19 | 639 |  3 |
+    | 1 | tyty   | Protectorate | 4 | 5 | 37 | 250 | 2 | Drop now |
+    | 2 | toto   | Legion       | 2 | 7 | 41 | 872 | 2 | Drop now |
+    | 3 | tete   | Khador       | 2 | 7 | 38 | 616 | 1 | Drop now |
+    | 4 | teuteu | Retribution  | 2 | 6 | 25 | 793 | 1 | Drop now |
+    | 5 | tutu   | Mercenaries  | 1 | 6 | 26 | 699 | 2 | Drop now |
+    | 6 | titi   | Protectorate | 1 | 6 | 12 | 332 | 1 | Drop now |
+    | 7 | toutou | Legion       | 0 | 4 | 19 | 639 | 3 | Drop now |
     And I see the Bests in faction:
     | Faction      | Rank | Players |
     | Protectorate |    1 | tyty    |

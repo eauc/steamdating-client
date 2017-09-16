@@ -44,13 +44,13 @@
 
 
   (testing "update-players-options"
-    (is (= {:players {"Toto" "Toto"
-                      "titi" "> titi"
-                      "Tutu" "> Tutu"
-                      "tete" "tete"
-                      "tyty" "tyty"
-                      "toutou" "toutou"
-                      "Teuteu" "> Teuteu"}
+    (is (= {:players {"Toto" "Toto #1"
+                      "titi" "> titi #2"
+                      "Tutu" "> Tutu #3"
+                      "tete" "tete #4"
+                      "tyty" "tyty #5"
+                      "toutou" "toutou #6"
+                      "Teuteu" "> Teuteu #7"}
             :games [{:table 1
                      :player1 {:name "tete"}
                      :player2 {:name nil}}
@@ -76,7 +76,14 @@
                        :player2 {:name nil}}
                       {:table 4
                        :player1 {:name "tyty"}
-                       :player2 {:name nil}}]}))
+                       :player2 {:name nil}}]}
+             {"Toto" 1
+              "titi" 2
+              "Tutu" 3
+              "tete" 4
+              "tyty" 5
+              "toutou" 6
+              "Teuteu" 7}))
         "Create options object for round edit's selects"))
 
 
