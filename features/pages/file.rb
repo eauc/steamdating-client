@@ -16,5 +16,13 @@ module Pages
       end
       self
     end
+
+    def open_t3_csv(file)
+      within(PAGE_CONTENT) do
+        file_path = ::File.absolute_path(::File.join(::File.dirname(__FILE__), "../data/", file))
+        attach_file("T3 CSV", file_path, visible: false)
+      end
+      self
+    end
   end
 end

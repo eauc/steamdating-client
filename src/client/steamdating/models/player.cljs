@@ -155,3 +155,34 @@
        "Faction: " (:faction player) "\n"
        "Lists: " (s/join ", " (:lists player)) "\n"
        "Notes: " (:notes player) "\n"))
+
+
+(def t3-factions->sd-factions
+  {"Cryx" "Cryx"
+   "Cygnar" "Cygnar"
+   "Khador" "Khador"
+   "Protectorat de Menoth" "Protectorate"
+   "Retribution of Scyrah" "Retribution"
+   "Convergence of Cyriss" "Convergence"
+   "Mercenaires" "Mercenaries"
+   "Trollblood" "Trollbloods"
+   "Cercle d'Orboros" "Circle"
+   "Légion d'Everblight" "Legion"
+   "Skorne" "Skorne"
+   "Grymkin" "Grymkin"
+   "Minions" "Minions"})
+
+
+(defn parse-t3-csv
+  [data]
+  (debug/spy
+    "data"
+    (->> data
+      (s/split-lines)
+      (rest)
+      (map #(s/split % #";"))
+      (map #(subvec % 3 6))
+      (map (fn [[name faction origin]]
+             {:name name
+              :faction (get t3-factions->sd-factions faction)
+              :origin origin})))))

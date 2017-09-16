@@ -3,6 +3,7 @@
             [secretary.core :as secretary :refer-macros [defroute]]
             [steamdating.components.page.page :refer [content page]]
             [steamdating.components.page.root :as page-root]
+            [steamdating.components.player.file-import :refer [file-import]]
             [steamdating.components.tournament.new-button :refer [new-button]]
             [steamdating.components.tournament.open-button :refer [open-button]]
             [steamdating.components.tournament.save-button :refer [save-button]]
@@ -22,4 +23,5 @@
     [:div.sd-FilePage-fileActions
      [new-button]
      [open-button]
-     [save-button]]]])
+     [save-button]]
+    [file-import]]])

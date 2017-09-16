@@ -20,6 +20,17 @@
       "Wurmwood1": "Wurmwood, Tree of Fate"
     }
   },
+  "Convergence": {
+    "icon": "convergence.png",
+    "name": "Convergence of Cyriss",
+    "casters": {
+      "Aurora1": "Aurora, Numen of Aerogenesis",
+      "Axis1": "Axis, the Harmonic Enforcer",
+      "Directrix1": "Iron Mother Directrix",
+      "Lucant1": "Father Lucant, Divinity Architect",
+      "Syntherion1": "Forge Master Syntherion"
+    }
+  },
   "Cryx": {
     "icon": "cryx.png",
     "name": "Cryx",
@@ -70,15 +81,15 @@
       "Sturgis1": "Commander Dalin Sturgis"
     }
   },
-  "Cyriss": {
-    "icon": "cyriss.png",
-    "name": "Convergence of Cyriss",
+  "Grymkin": {
+    "icon": "grymkin.png",
+    "name": "Grymkin",
     "casters": {
-      "Aurora1": "Aurora, Numen of Aerogenesis",
-      "Axis1": "Axis, the Harmonic Enforcer",
-      "Directrix1": "Iron Mother Directrix",
-      "Lucant1": "Father Lucant, Divinity Architect",
-      "Syntherion1": "Forge Master Syntherion"
+      "Child1": "The Child",
+      "Dreamer1": "The Dreamer & Phantasms",
+      "Heretic1": "The Heretic",
+      "King1": "The King of Nothing",
+      "Wanderer1": "The Wanderer"
     }
   },
   "Khador": {

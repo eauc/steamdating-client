@@ -116,6 +116,10 @@ Then("I cannot create the player because its name already exists") do
   @page.expect_already_exists
 end
 
+Then("I see Players\/List page with players:") do |table|
+  @page.expect_players_list(table.raw)
+end
+
 more_players_filter_matches = {
   "toto" => {
     "headers" => ['Name', 'Origin', 'Faction', 'Lists'],

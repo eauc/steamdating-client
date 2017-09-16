@@ -1,5 +1,6 @@
 (ns steamdating.services.players
   (:require [clairvoyant.core :refer-macros [trace-forms]]
+            [cljs.spec.alpha :as spec]
             [re-frame.core :as re-frame]
             [re-frame-tracer.core :refer [tracer]]
             [steamdating.models.faction :as faction]
@@ -89,6 +90,30 @@
         {:db (update-in db [:tournament :players]
                         player/edit {:base p
                                      :edit (player/toggle-drop p n-rounds)})})))
+
+
+  (db/reg-event-fx
+    :steamdating.players/import-t3
+    (fn import-t3
+      [_ [file]]
+      {:steamdating.file/open
+       {:file file
+        :parse-fn player/parse-t3-csv
+        :on-success [:steamdating.players/import-t3-success]
+        :on-failure [:steamdating.toaster/set
+                     {:type :error
+                      :message "Failed to open T3 CSV file"}]}}))
+
+
+  (db/reg-event-fx
+    :steamdating.players/import-t3-success
+    [(re-frame/path [:tournament :players])]
+    (fn import-t3-success
+      [{:keys [db]} [players]]
+      (debug/spy "players" players)
+      {:db (->> players
+                (filter #(spec/valid? :steamdating.player/player %))
+                (reduce #(player/add %1 %2) db))}))
 
 
   (re-frame/reg-sub

@@ -3,6 +3,7 @@
             [re-frame.core :as re-frame]
             [steamdating.components.generics.faction-icon :refer [faction-icon]]
             [steamdating.components.filter.input :refer [filter-input]]
+            [steamdating.components.player.file-import :refer [file-import]]
             [steamdating.components.sort.header :refer [sort-header]]))
 
 
@@ -49,8 +50,10 @@
         sort @(re-frame/subscribe [:steamdating.sorts/sort :player {:by :name}])
         on-player-edit #(re-frame/dispatch [:steamdating.players/start-edit %])
         on-sort-by #(re-frame/dispatch [:steamdating.sorts/set :player %])]
-    [:div.sd-PlayersList
-     [filter-input {:name :player}]
-     [render-list players sort
-      {:on-player-click on-player-edit
-       :on-sort-by on-sort-by}]]))
+    (if (empty? (:list players))
+      [file-import]
+      [:div.sd-PlayersList
+       [filter-input {:name :player}]
+       [render-list players sort
+        {:on-player-click on-player-edit
+         :on-sort-by on-sort-by}]])))

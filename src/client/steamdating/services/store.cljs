@@ -41,7 +41,7 @@
 
 (defn set-local-storage
   [state]
-  (println "<<< set local-storage")
+  (debug/spy "<<< set local-storage" nil)
   (->> (pr-str state)
        (.setItem js/localStorage local-storage-key)))
 
