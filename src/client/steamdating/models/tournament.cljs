@@ -12,4 +12,5 @@
 (defn ->tournament
   []
   {:players []
-   :rounds []})
+   :rounds []
+   :version 1})

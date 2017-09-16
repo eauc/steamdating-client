@@ -5,6 +5,7 @@
             [steamdating.components.page.root :as page-root]
             [steamdating.components.tournament.new-button :refer [new-button]]
             [steamdating.components.tournament.open-button :refer [open-button]]
+            [steamdating.components.tournament.save-button :refer [save-button]]
             [steamdating.services.debug :as debug]))
 
 
@@ -20,4 +21,5 @@
     [:h3.sd-FilePage-header "Files"]
     [:div.sd-FilePage-fileActions
      [new-button]
-     [open-button]]]])
+     [open-button]
+     [save-button]]]])

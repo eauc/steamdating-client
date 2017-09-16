@@ -5,6 +5,7 @@
             [steamdating.styles.2-generics.fonts :refer [fonts]]
             [steamdating.styles.3-elements.text :refer [text]]
             [steamdating.styles.4-objects.file-open :refer [file-open]]
+            [steamdating.styles.4-objects.file-save :refer [file-save]]
             [steamdating.styles.4-objects.form :refer [form]]
             [steamdating.styles.4-objects.input :refer [input]]
             [steamdating.styles.4-objects.layout :refer [layout]]
@@ -33,6 +34,7 @@
    faction-icon
    file-open
    file-page
+   file-save
    form
    game-edit
    input

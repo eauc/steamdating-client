@@ -20,7 +20,7 @@
                     :align-items "stretch"
                     :margin-bottom "1em"}
     [:.sd-TournamentNewButton
-     :.sd-FileDownloadButton
+     :.sd-FileSaveButton
      :.sd-FileOpenButton {:flex-shrink 0
                           :margin "0 0 1em"}]]
 
@@ -30,7 +30,7 @@
      [:&-fileActions {:flex-direction "row"
                       :align-items "flex-start"}
       [:.sd-TournamentNewButton
-       :.sd-FileDownloadButton
+       :.sd-FileSaveButton
        :.sd-FileOpenButton {:max-width "8em"
                             :flex-grow 1
                             :margin "0 1em 1em 1em"}]])])

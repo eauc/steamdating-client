@@ -26,17 +26,27 @@
                     :align-items "center"
                     :border 0}
     (button
-      [:.sd-FileDownloadButton
-       :.sd-AuthToggleButton]
+      [:.sd-FileSaveButton]
       {:height "1.4em"
        :width "1.4em"
-       :padding 0
+       :padding "0.1em 0"
        :font-size "2em"
-       :line-height "1.4em"
        :border 0
-       :text-align "center"})
-    [:.sd-AuthToggleButton {:color (gcolor/darken (gcolor/hex->rgb "#FFF") 40)}]
-    [:.sd-AuthToggleButton.sd-AuthToggleButton-active {:color "white"}]]
+       :background-color (:primary colors)
+       :color (:text-inverted colors)})
+    [:.sd-FileSaveButton-text {:display :none}]
+    ;; [:.sd-FileSaveButton
+    ;;  ;; :.sd-AuthToggleButton
+    ;;  {:height "1.4em"
+    ;;   :width "1.4em"
+    ;;   :padding 0
+    ;;   :font-size "2em"
+    ;;   :line-height "1.4em"
+    ;;   :border 0
+    ;;   :text-align "center"}]
+    ;; ;; [:.sd-AuthToggleButton {:color (gcolor/darken (gcolor/hex->rgb "#FFF") 40)}]
+    ;; ;; [:.sd-AuthToggleButton.sd-AuthToggleButton-active {:color "white"}]
+    ]
    (button
      [:&Toggle]
      {:height "1.4em"

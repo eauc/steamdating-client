@@ -2,7 +2,8 @@
   (:require [re-frame.core :as re-frame]
             [reagent.core :as reagent]
             [steamdating.components.nav.link :refer [link]]
-            [steamdating.components.nav.toggle :refer [toggle]]))
+            [steamdating.components.nav.toggle :refer [toggle]]
+            [steamdating.components.tournament.save-button :refer [save-button]]))
 
 
 (defn menu
@@ -36,4 +37,5 @@
               :on-click toggle-show}
         "Rounds"]
        [:div.sd-NavMenu-actions
+        [save-button]
         [toggle {:toggle-show toggle-show}]]])))

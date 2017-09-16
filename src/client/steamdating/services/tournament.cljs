@@ -51,4 +51,11 @@
        {:type :success
         :message "File loaded"}]]}))
 
+
+(re-frame/reg-sub
+  :steamdating.tournament/tournament
+  (fn tournament-sub
+    [db]
+    (get db :tournament)))
+
 ;; )
