@@ -95,10 +95,10 @@
   (db/reg-event-fx
     :steamdating.players/import-t3
     (fn import-t3
-      [_ [file]]
+      [{:keys [db]} [file]]
       {:steamdating.file/open
        {:file file
-        :parse-fn player/parse-t3-csv
+        :parse-fn (partial player/parse-t3-csv (faction/t3-factions (:factions db)))
         :on-success [:steamdating.players/import-t3-success]
         :on-failure [:steamdating.toaster/set
                      {:type :error
@@ -110,10 +110,41 @@
     [(re-frame/path [:tournament :players])]
     (fn import-t3-success
       [{:keys [db]} [players]]
-      (debug/spy "players" players)
-      {:db (->> players
-                (filter #(spec/valid? :steamdating.player/player %))
-                (reduce #(player/add %1 %2) db))}))
+      (let [valid-players (filter #(spec/valid? :steamdating.player/player %) players)
+            new-db (reduce #(player/add %1 %2) db valid-players)
+            n-new-players (- (count new-db) (count db))]
+        {:db new-db
+         :dispatch [:steamdating.toaster/set
+                    {:type :success
+                     :message (str "Imported " n-new-players " players from T3 CSV file")}]})))
+
+
+  (db/reg-event-fx
+    :steamdating.players/import-cc
+    (fn import-cc
+      [_ [file]]
+      {:steamdating.file/open
+       {:file file
+        :on-success [:steamdating.players/import-cc-success]
+        :on-failure [:steamdating.toaster/set
+                     {:type :error
+                      :message "Failed to open Conflict Chamber JSON file"}]}}))
+
+
+  (db/reg-event-fx
+    :steamdating.players/import-cc-success
+    (fn import-t3-success
+      [{:keys [db]} [data]]
+      (let [cc-factions (faction/cc-factions (:factions db))
+            players (get-in db [:tournament :players])
+            new-players (->> (player/convert-cc-json cc-factions data)
+                             (filter #(spec/valid? :steamdating.player/player %))
+                             (reduce #(player/add %1 %2) players))
+            n-new-players (- (count new-players) (count players))]
+        {:db (assoc-in db [:tournament :players] new-players)
+         :dispatch [:steamdating.toaster/set
+                    {:type :success
+                     :message (str "Imported " n-new-players " players from T3 CSV file")}]})))
 
 
   (re-frame/reg-sub

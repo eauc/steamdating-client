@@ -157,32 +157,34 @@
        "Notes: " (:notes player) "\n"))
 
 
-(def t3-factions->sd-factions
-  {"Cryx" "Cryx"
-   "Cygnar" "Cygnar"
-   "Khador" "Khador"
-   "Protectorat de Menoth" "Protectorate"
-   "Retribution of Scyrah" "Retribution"
-   "Convergence of Cyriss" "Convergence"
-   "Mercenaires" "Mercenaries"
-   "Trollblood" "Trollbloods"
-   "Cercle d'Orboros" "Circle"
-   "Légion d'Everblight" "Legion"
-   "Skorne" "Skorne"
-   "Grymkin" "Grymkin"
-   "Minions" "Minions"})
-
-
 (defn parse-t3-csv
-  [data]
-  (debug/spy
-    "data"
-    (->> data
-      (s/split-lines)
-      (rest)
-      (map #(s/split % #";"))
-      (map #(subvec % 3 6))
-      (map (fn [[name faction origin]]
-             {:name name
-              :faction (get t3-factions->sd-factions faction)
-              :origin origin})))))
+  [t3-factions data]
+  (->> data
+       (s/split-lines)
+       (rest)
+       (map #(s/split % #";"))
+       (map #(subvec % 3 6))
+       (map (fn [[name faction origin]]
+              {:name name
+               :faction (get t3-factions faction)
+               :origin origin}))))
+
+
+(defn extract-cc-lists
+  [cc-player]
+  (mapv (fn [[key value]]
+          (s/replace (first (:list value)) #"\s" ""))
+        (sort
+          (filter (fn [[key value]]
+                    (.startsWith key "list"))
+                  (map (fn [[key value]]
+                         [(cljs.core/name key) value])
+                       cc-player)))))
+
+
+(defn convert-cc-json
+  [cc-factions data]
+  (map (fn [{:keys [name faction] :as player}]
+         {:name name
+          :faction (get cc-factions faction)
+          :lists (extract-cc-lists player)}) data))

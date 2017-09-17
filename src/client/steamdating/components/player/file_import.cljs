@@ -13,5 +13,13 @@
       {:id "import-t3-csv"
        :on-open [:steamdating.players/import-t3]}
       [:span
+       {:title "Table Top Tournament CSV"}
        [icon "file-plus"]
-       " T3 CSV"]]]])
+       " T3 CSV"]]
+     [file-open/open-button
+      {:id "import-cc-json"
+       :on-open [:steamdating.players/import-cc]}
+      [:span
+       {:title "Conflict Chamber JSON"}
+       [icon "file-plus"]
+       " CC JSON"]]]])

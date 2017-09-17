@@ -36,19 +36,23 @@ module Pages
     end
 
     def expect_players_list(players)
-      list = Regexp.new(players.map {|p| p.join(".*") }.join(".*"), "i")
+      list = players.map {|p| p.join("\\s+") }.join("\\s+")
       within(PAGE_CONTENT) do
-        expect(page).to have_content(list)
+        within("tbody") do
+          expect(page).to have_content(Regexp.new("^\\s*#{list}\\s*$", "i"))
+        end
       end
       self
     end
 
     def expect_players_list_with_headers(match)
       headers = match["headers"].join(".*")
-      players = match["players"].map {|p| p.join(".*") }.join(".*")
-      list = Regexp.new("#{headers}.*#{players}", "i")
+      players = match["players"].map {|p| p.join("\\s+") }.join("\\s+")
+      list = Regexp.new("^\\s*#{headers}\\s+#{players}\\s*$", "i")
       within(PAGE_CONTENT) do
-        expect(page).to have_content(list)
+        within("table") do
+          expect(page).to have_content(list)
+        end
       end
       self
     end

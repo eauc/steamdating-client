@@ -1,7 +1,8 @@
- {
+{
   "Circle": {
     "icon": "circle.png",
     "name": "Circle Orboros",
+    "t3-fr": "Cercle d'Orboros",
     "casters": {
       "Baldur1": "Baldur the Stonecleaver",
       "Baldur2": "Baldur the Stonesoul",
@@ -119,6 +120,7 @@
   "Legion": {
     "icon": "legion.png",
     "name": "Legion of Everblight",
+    "t3-fr": "Légion d'Everblight",
     "casters": {
       "Absylonia1": "Absylonia, Terror of Everblight",
       "Absylonia2": "Absylonia, Daughter of Everblight",
@@ -141,6 +143,7 @@
   "Mercenaries": {
     "icon": "mercenaries.png",
     "name": "Mercenaries",
+    "t3-fr": "Mercenaires",
     "casters": {
       "Ashlynn1": "Ashlynn d'Elyse",
       "Bartolo1": "Captain Bartolo Montador",
@@ -177,6 +180,7 @@
   "Protectorate": {
     "icon": "protectorate.png",
     "name": "Protectorate of Menoth",
+    "t3-fr": "Protectorat de Menoth",
     "casters": {
       "Amon1": "High Allegiant Amon Ad-Raza",
       "Anson1": "Anson Durst, Rock of the Faith",
@@ -218,6 +222,8 @@
   "Skorne": {
     "icon": "skorne.png",
     "name": "Skorne Empire",
+    "t3-fr": "Skorne",
+    "conflict-chamber": "Skorne",
     "casters": {
       "Hexeris1": "Lord Tyrant Hexeris",
       "Hexeris2": "Lord Arbiter Hexeris",
@@ -239,6 +245,7 @@
   "Trollbloods": {
     "icon": "trollbloods.png",
     "name": "Trollbloods",
+    "t3-fr": "Trollblood",
     "casters": {
       "Borka1": "Borka Kegslayer",
       "Borka2": "Borka, Vengeance of the Rimeshaws",
