@@ -5,20 +5,21 @@
                                     "resources/public/js"
                                     "target"]
   :dependencies [[org.clojure/clojure "1.9.0-alpha4"]
-                 [org.clojure/clojurescript "1.9.854"]
+                 [org.clojure/clojurescript "1.9.908"]
                  [org.clojure/test.check "0.9.0"]
                  [day8.re-frame/http-fx "0.1.4"]
                  [day8/re-frame-tracer "0.1.1-SNAPSHOT"]
                  [devcards "0.2.3" :exclusions [cljsjs/react
                                                 cljsjs/react-dom]]
-                 [expound "0.1.2"]
+                 [expound "0.3.0"]
                  [garden "1.3.2"]
                  [org.clojars.stumitchell/clairvoyant "0.2.1"]
-                 [pjstadig/humane-test-output "0.8.2"]
-                 [re-frame "0.9.4" :exclusions [reagent]]
+                 [pjstadig/humane-test-output "0.8.3"]
+                 [re-frame "0.10.1" :exclusions [reagent]]
                  [reagent "0.7.0"]
                  [secretary "1.2.3"]]
-  :plugins [[lein-cljsbuild "1.1.7"]
+  :plugins [[lein-ancient "0.6.12"]
+            [lein-cljsbuild "1.1.7"]
             [lein-figwheel "0.5.12" :exclusions [org.clojure/clojure]]
             [lein-garden "0.3.0" :exclusions [org.clojure/clojure org.apache.commons/commons-compress]]
             [lein-pprint "1.1.2"]]
@@ -64,7 +65,7 @@
   {:dev
    {:dependencies [[binaryage/devtools "0.9.4"]
                    [com.cemerick/piggieback "0.2.2"]
-                   [figwheel-sidecar "0.5.12" :exclusions [commons-codec
+                   [figwheel-sidecar "0.5.13" :exclusions [commons-codec
                                                            org.clojure/tools.nrepl
                                                            org.clojure/core.async]]]
     :cljsbuild

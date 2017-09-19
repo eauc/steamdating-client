@@ -1,5 +1,6 @@
 (ns steamdating.models.round
   (:require [cljs.spec.alpha :as spec]
+            [clojure.set :as set]
             [clojure.string :as s]
             [steamdating.models.form :as form]
             [steamdating.models.game :as game]
@@ -131,7 +132,7 @@
 
 (defn unpaired-players
   [{:keys [players] :as round}]
-  (clojure.set/difference
+  (set/difference
     (set players)
     (set (paired-players round))))
 
