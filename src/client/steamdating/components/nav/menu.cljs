@@ -3,7 +3,8 @@
             [reagent.core :as reagent]
             [steamdating.components.nav.link :refer [link]]
             [steamdating.components.nav.toggle :refer [toggle]]
-            [steamdating.components.tournament.save-button :refer [save-button]]))
+            [steamdating.components.tournament.save-button :refer [save-button]]
+            [steamdating.services.debug :refer [debug?]]))
 
 
 (defn menu
@@ -14,10 +15,11 @@
     (fn menu-component
       []
       [:div.sd-NavMenu {:class (when @show "sd-NavMenu-show")}
-       [link {:current-hash @current-hash
-              :path "/home"
-              :on-click toggle-show}
-        "Home"]
+       (when debug?
+         [link {:current-hash @current-hash
+                :path "/home"
+                :on-click toggle-show}
+          "Home"])
        [link {:current-hash @current-hash
               :path "/file"
               :on-click toggle-show}

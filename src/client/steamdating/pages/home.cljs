@@ -10,8 +10,8 @@
 
 
 (defroute root "/" {}
-  (debug/log "route home")
-  (re-frame/dispatch [:steamdating.routes/page :home]))
+  (re-frame/dispatch [:steamdating.routes/navigate
+                      (if debug/debug? "/home" "/players")]))
 
 
 (defroute home "/home" {}
