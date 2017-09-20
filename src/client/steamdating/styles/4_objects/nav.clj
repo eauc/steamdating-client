@@ -26,7 +26,8 @@
                     :align-items "center"
                     :border 0}
     (button
-      [:.sd-FileSaveButton]
+      [:.sd-FileSaveButton
+       :.sd-OnlineButton]
       {:height "1.4em"
        :width "1.4em"
        :padding "0.1em 0"
@@ -34,7 +35,8 @@
        :border 0
        :background-color (:primary colors)
        :color (:text-inverted colors)})
-    [:.sd-FileSaveButton-text {:display :none}]
+    [:.sd-FileSaveButton-text
+     :.sd-OnlineButton-text {:display :none}]
     ;; [:.sd-FileSaveButton
     ;;  ;; :.sd-AuthToggleButton
     ;;  {:height "1.4em"

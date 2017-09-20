@@ -1,7 +1,7 @@
 (ns steamdating.services.store
-  (:require [re-frame.core :as re-frame]
-            [steamdating.services.debug :as debug]
-            [cljs.reader :as reader]))
+  (:require [cljs.reader :as reader]
+            [re-frame.core :as re-frame]
+            [steamdating.services.debug :as debug]))
 
 
 (defonce
@@ -48,11 +48,12 @@
 
 (re-frame/reg-sub
   :steamdating.storage/local
+  :<- [:steamdating.online/online]
   :<- [:steamdating.storage/tournament]
-  :<- [:steamdating.storage/factions]
   (fn local-storage-sub
-    [[tournament factions]]
-    (set-local-storage {:tournament tournament})))
+    [[online tournament]]
+    (set-local-storage {:online online
+                        :tournament tournament})))
 
 
 (defn on-change

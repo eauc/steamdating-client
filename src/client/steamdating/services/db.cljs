@@ -5,6 +5,7 @@
             [steamdating.models.faction]
             [steamdating.models.filter]
             [steamdating.models.form]
+            [steamdating.models.online]
             [steamdating.models.prompt]
             [steamdating.models.route :refer [->route]]
             [steamdating.models.sort]
@@ -26,12 +27,16 @@
   (spec/map-of keyword? :steamdating.form/form))
 
 
-(spec/def ::route
-  (spec/nilable :steamdating.route/route))
+(spec/def ::online
+  :steamdating.online/online)
 
 
 (spec/def ::prompt
   (spec/nilable :steamdating.prompt/prompt))
+
+
+(spec/def ::route
+  (spec/nilable :steamdating.route/route))
 
 
 (spec/def ::sorts
@@ -50,6 +55,7 @@
   (spec/keys :req-un [::factions
                       ::filters
                       ::forms
+                      ::online
                       ::prompt
                       ::route
                       ::sorts
@@ -88,6 +94,7 @@
   {:factions nil
    :filters nil
    :forms {}
+   :online {}
    :prompt nil
    :route nil
    :sorts nil
@@ -100,7 +107,9 @@
   [(re-frame/inject-cofx :steamdating.storage/local)]
   (fn initialize-db
     [{:keys [local-storage]}]
-    {:db (merge default-db local-storage)}))
+    {:db (->> local-storage
+              (remove (fn [[k v]] (nil? v)))
+              (reduce (fn [m [k v]] (assoc m k v)) default-db))}))
 
 
 (reg-event-fx
