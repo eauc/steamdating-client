@@ -16,6 +16,7 @@
             [steamdating.styles.5-components.game-edit :refer [game-edit]]
             [steamdating.styles.5-components.players-list :refer [players-list]]
             [steamdating.styles.5-components.prompt :refer [prompt]]
+            [steamdating.styles.5-components.online-tournaments :refer [online-tournaments]]
             [steamdating.styles.5-components.ranking-bests :refer [ranking-bests]]
             [steamdating.styles.5-components.ranking-list :refer [ranking-list]]
             [steamdating.styles.5-components.round :refer [round]]
@@ -43,6 +44,7 @@
    nav
    players-list
    prompt
+   online-tournaments
    ranking-bests
    ranking-list
    round

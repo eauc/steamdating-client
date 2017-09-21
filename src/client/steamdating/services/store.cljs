@@ -52,7 +52,7 @@
   :<- [:steamdating.storage/tournament]
   (fn local-storage-sub
     [[online tournament]]
-    (set-local-storage {:online online
+    (set-local-storage {:online (select-keys online [:token])
                         :tournament tournament})))
 
 

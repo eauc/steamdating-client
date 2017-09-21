@@ -4,6 +4,8 @@
             [steamdating.components.page.page :refer [content page]]
             [steamdating.components.page.root :as page-root]
             [steamdating.components.player.file-import :refer [file-import]]
+            [steamdating.components.online.online-button :refer [online-button]]
+            [steamdating.components.online.online-tournaments :refer [online-tournaments]]
             [steamdating.components.tournament.new-button :refer [new-button]]
             [steamdating.components.tournament.open-button :refer [open-button]]
             [steamdating.components.tournament.save-button :refer [save-button]]
@@ -24,4 +26,7 @@
      [new-button]
      [open-button]
      [save-button]]
-    [file-import]]])
+    [file-import]
+    [:h3.sd-FilePage-header "Online"]
+    [:div.sd-FilePage-fileActions
+     [online-tournaments]]]])
