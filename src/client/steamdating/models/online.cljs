@@ -3,31 +3,36 @@
 
 
 (spec/def :steamdating.online/token
-  string?)
+  (spec/and string? not-empty))
 
 
 (spec/def :steamdating.online.tournament/_id
-  string?)
+  (spec/and string? not-empty))
 
 
 (spec/def :steamdating.online.tournament/updatedAt
-  string?)
+  (spec/and string? not-empty))
 
 
 (spec/def :steamdating.online.tournament/name
-  string?)
+  (spec/and string? not-empty))
 
 
 (spec/def :steamdating.online.tournament/date
-  string?)
+  (spec/and string? not-empty))
 
 
 (spec/def :steamdating.online.tournament/user
-  string?)
+  (spec/and string? not-empty))
 
 
 (spec/def :steamdating.online.tournament/link
-  string?)
+  (spec/and string? not-empty))
+
+
+(spec/def :steamdating.online/edit
+  (spec/keys :req-un [:steamdating.online.tournament/name
+                      :steamdating.online.tournament/date]))
 
 
 (spec/def :steamdating.online/tournament

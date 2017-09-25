@@ -18,8 +18,8 @@
 
 
 (spec/def :steamdating.form/form
-  (spec/keys :req-un [:steamdating.form/base
-                      :steamdating.form/edit]))
+  (spec/keys :req-un [:steamdating.form/edit]
+             :opt-un [:steamdating.form/base]))
 
 
 (defn create

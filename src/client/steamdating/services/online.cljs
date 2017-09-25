@@ -1,12 +1,13 @@
 (ns steamdating.services.online
   (:require [ajax.core :as ajax]
             [clairvoyant.core :refer-macros [trace-forms]]
+            [cljs.spec.alpha :as spec]
             [cljsjs.auth0-lock]
             [re-frame.core :as re-frame]
             [re-frame-tracer.core :refer [tracer]]
+            [steamdating.models.form :as form]
             [steamdating.services.db :as db]
-            [steamdating.services.debug :as debug]
-            [cljs.spec.alpha :as spec]))
+            [steamdating.services.debug :as debug]))
 
 
 (trace-forms
@@ -132,6 +133,50 @@
                    :message "Failed to load online tournaments"}]}))
 
 
+  (db/reg-event-fx
+    :steamdating.online/upload-current
+    (fn upload-current
+      [{:keys [db]} _]
+      (let [token (get-in db [:online :token])
+            link (get-in db [:tournament :online :link])
+            update? (some? link)
+            tournament (get db :tournament)
+            data (-> (get db :online)
+                     (select-keys [:name :date])
+                     (merge (get-in db [:forms :online :edit]))
+                     (assoc :tournament (dissoc tournament :online)))]
+        {:http-xhrio {:method (if update? :put :post)
+                      :uri (if update?
+                             (str "https://steamdating-data.herokuapp.com" link)
+                             "https://steamdating-data.herokuapp.com/tournaments/mine")
+                      :headers {"Authorization" (str "Bearer " token)}
+                      :format (ajax/json-request-format)
+                      :params data
+                      :response-format (ajax/json-response-format {:keywords? true})
+                      :on-success [:steamdating.online/upload-current-success]
+                      :on-failure [:steamdating.toaster/set
+                                   {:type :error
+                                    :message "Failed to upload current tournament"}]}})))
+
+
+  (db/reg-event-fx
+    :steamdating.online/clear-current-edit
+    [(re-frame/path :forms)]
+    (fn clear-current-edit
+      [{:keys [db]} _]
+      {:db (dissoc db :online)}))
+
+
+  (db/reg-event-fx
+    :steamdating.online/upload-current-success
+    [(re-frame/path :tournament :online)]
+    (fn upload-current-success
+      [_ [info]]
+      {:db info
+       :dispatch-n [[:steamdating.online/clear-current-edit]
+                    [:steamdating.online/load-tournaments]]}))
+
+
   (re-frame/reg-sub
     :steamdating.online/online
     (fn online-sub
@@ -168,5 +213,16 @@
           {:status :offline
            :tournaments []}))))
 
+
+  (re-frame/reg-sub
+    :steamdating.online/edit-current
+    (fn edit-current-sub
+      [{:keys [forms tournament]}]
+      (let [current-online (get tournament :online {})
+            form-state {:base current-online
+                        :edit (if (contains? forms :online)
+                                (get-in forms [:online :edit])
+                                current-online)}]
+        (form/validate form-state :steamdating.online/edit))))
 
   )

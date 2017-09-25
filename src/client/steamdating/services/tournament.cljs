@@ -26,7 +26,8 @@
   [(re-frame/path :tournament)]
   (fn set
     [_ [value]]
-    {:db value}))
+    {:db value
+     :dispatch [:steamdating.online/clear-current-edit]}))
 
 
 (db/reg-event-fx
