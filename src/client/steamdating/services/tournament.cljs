@@ -59,4 +59,12 @@
     [db]
     (get db :tournament)))
 
+
+(re-frame/reg-sub
+  :steamdating.tournament/online
+  :<- [:steamdating.tournament/tournament]
+  (fn tournament-online-sub
+    [{:keys [online]}]
+    online))
+
 ;; )

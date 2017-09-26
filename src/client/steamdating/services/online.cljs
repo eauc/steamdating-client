@@ -187,11 +187,14 @@
   (re-frame/reg-sub
     :steamdating.online/status
     :<- [:steamdating.online/online]
+    :<- [:steamdating.tournament/online]
     (fn status-sub
-      [{:keys [token]}]
-      (if (some? token)
-        :online
-        :offline)))
+      [[{:keys [token]} {:keys [link]}]]
+      (case [(some? token) (some? link)]
+        [true true] :synced
+        [true false] :online
+        [false false] :offline
+        [false true] :offline)))
 
 
   (re-frame/reg-sub

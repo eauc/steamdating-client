@@ -10,7 +10,7 @@
         state @(re-frame/subscribe [:steamdating.online/edit-current])
         update-field #(re-frame/dispatch [:steamdating.forms/update :online %1 %2])]
     [:div.sd-OnlineEdit
-     (when (= :online status)
+     (when (not= :offline status)
        [form state
         {:label "Upload current tournament"
          :save-label "Upload"

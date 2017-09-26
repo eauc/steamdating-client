@@ -20,4 +20,11 @@
               :on-click #(re-frame/dispatch [:steamdating.online/logout])}
              [icon "log-out"]
              [:span.sd-OnlineButton-text
-               " Log out"]]))
+              " Log out"]]
+    :synced [:button.sd-OnlineButton
+             {:type :button
+              :title "Upload"
+              :on-click #(re-frame/dispatch [:steamdating.online/upload-current])}
+             [icon "upload-cloud"]
+             [:span.sd-OnlineButton-text
+              " Upload"]]))
