@@ -8,6 +8,7 @@
 (defn tournaments-list
   [_ tournaments]
   [:table.sd-OnlineTournaments-list
+   [:caption "Online tournaments"]
    [:thead
     [:tr
      [:th "Date"]

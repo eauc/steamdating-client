@@ -7,3 +7,5 @@ gem "selenium-webdriver"
 gem "chromedriver-helper"
 gem "geckodriver-helper"
 gem "syntax"
+gem "httpclient"
+

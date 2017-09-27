@@ -13,6 +13,7 @@
                    :width "100%"}
     (table [:&-list])
     [:&-list
+     [:caption {:display :none}]
      [:tbody [:tr {:vertical-align :middle}]]]
     [:&-item {:cursor :pointer}]
     [:&-retry {:text-align :center}]

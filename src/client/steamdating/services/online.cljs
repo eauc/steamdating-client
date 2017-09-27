@@ -6,6 +6,7 @@
             [re-frame.core :as re-frame]
             [re-frame-tracer.core :refer [tracer]]
             [steamdating.models.form :as form]
+            [steamdating.models.online :as online]
             [steamdating.services.db :as db]
             [steamdating.services.debug :as debug]))
 
@@ -14,18 +15,11 @@
   {:tracer (tracer :color "green")}
 
 
-  (def domain
-    "eauc.eu.auth0.com")
-
-
-  (def client-id
-    "vBhy4C4dLSkuoTbmldLYNxULGTyz6swK")
-
-
   (defn get-lock
     []
     (doto
-        (js/Auth0Lock. client-id domain
+        (js/Auth0Lock. online/client-id
+                       online/domain
                        (clj->js
                          {:ui {:autoClose true}
                           :auth {:loginAfterSignup true
@@ -64,6 +58,16 @@
 
 
   (db/reg-event-fx
+    :steamdating.online/error-logout
+    [(re-frame/path :online)]
+    (fn logout
+      [_ [message {:keys [status]}]]
+      {:dispatch-n [(when (= 401 status) [:steamdating.online/logout])
+                    [:steamdating.toaster/set
+                     {:type :error :message message}]]}))
+
+
+  (db/reg-event-fx
     :steamdating.online/login-success
     [(re-frame/path :online)]
     (fn login-success
@@ -71,19 +75,18 @@
       {:db (assoc db :token token)}))
 
 
+  (when debug/debug?
+    (defn test-login
+      [token]
+      (re-frame/dispatch [:steamdating.online/login-success token])))
+
+
   (db/reg-event-fx
     :steamdating.online/load-tournament
     [(re-frame/path :online)]
     (fn load-tournament
       [{:keys [db]} [link]]
-      {:http-xhrio {:method :get
-                    :uri (str "https://steamdating-data.herokuapp.com" link)
-                    :headers {"Authorization" (str "Bearer " (:token db))}
-                    :response-format (ajax/json-response-format {:keywords? true})
-                    :on-success [:steamdating.online/load-tournament-success]
-                    :on-failure [:steamdating.toaster/set
-                                 {:type :error
-                                  :message "Failed to load online tournament"}]}}))
+      {:http-xhrio (online/load-tournament-request (:token db) link)}))
 
 
   (db/reg-event-fx
@@ -94,7 +97,10 @@
       (let [new-tournament (assoc tournament :online (dissoc info :tournament))
             valid? (spec/valid? :steamdating.tournament/tournament new-tournament)]
         (if valid?
-          {:db new-tournament}
+          {:db new-tournament
+           :dispatch [:steamdating.toaster/set
+                      {:type :success
+                       :message "Online tournament loaded"}]}
           {:dispatch [:steamdating.toaster/set
                       {:type :error
                        :message "Failed to load online tournament"}]}))))
@@ -105,12 +111,7 @@
     [(re-frame/path :online)]
     (fn load-tournaments
       [{:keys [db]} _]
-      {:http-xhrio {:method :get
-                    :uri "https://steamdating-data.herokuapp.com/tournaments/mine"
-                    :headers {"Authorization" (str "Bearer " (:token db))}
-                    :response-format (ajax/json-response-format {:keywords? true})
-                    :on-success [:steamdating.online/load-tournaments-success]
-                    :on-failure [:steamdating.online/load-tournaments-error]}}))
+      {:http-xhrio (online/load-tournaments-request (:token db))}))
 
 
   (db/reg-event-fx
@@ -118,7 +119,6 @@
     [(re-frame/path :online :tournaments)]
     (fn load-tournaments-success
       [{:keys [db]} [{:keys [tournaments]}]]
-      (debug/spy "tournaments" {:tournaments tournaments})
       {:db tournaments}))
 
 
@@ -138,25 +138,9 @@
     (fn upload-current
       [{:keys [db]} _]
       (let [token (get-in db [:online :token])
-            link (get-in db [:tournament :online :link])
-            update? (some? link)
             tournament (get db :tournament)
-            data (-> (get db :online)
-                     (select-keys [:name :date])
-                     (merge (get-in db [:forms :online :edit]))
-                     (assoc :tournament (dissoc tournament :online)))]
-        {:http-xhrio {:method (if update? :put :post)
-                      :uri (if update?
-                             (str "https://steamdating-data.herokuapp.com" link)
-                             "https://steamdating-data.herokuapp.com/tournaments/mine")
-                      :headers {"Authorization" (str "Bearer " token)}
-                      :format (ajax/json-request-format)
-                      :params data
-                      :response-format (ajax/json-response-format {:keywords? true})
-                      :on-success [:steamdating.online/upload-current-success]
-                      :on-failure [:steamdating.toaster/set
-                                   {:type :error
-                                    :message "Failed to upload current tournament"}]}})))
+            online (get-in db [:forms :online :edit])]
+        {:http-xhrio (online/upload-tournament-request token online tournament)})))
 
 
   (db/reg-event-fx
@@ -174,7 +158,10 @@
       [_ [info]]
       {:db info
        :dispatch-n [[:steamdating.online/clear-current-edit]
-                    [:steamdating.online/load-tournaments]]}))
+                    [:steamdating.online/load-tournaments]
+                    [:steamdating.toaster/set
+                     {:type :success
+                      :message "Tournament uploaded"}]]}))
 
 
   (re-frame/reg-sub

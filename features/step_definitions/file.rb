@@ -3,6 +3,10 @@ Given("I open File page") do
             .load
 end
 
+When("I start a new tournament") do
+  @page.new_tournament
+end
+
 When("I import T3 CSV players file \"$file\"") do |file|
   @page.open_t3_csv(file)
 end
