@@ -18,6 +18,7 @@
        [{:width "100%"
          :text-align "left"
          :border-collapse "collapse"}
+        [:caption {:display :none}]
         [:tbody
          [:tr {:vertical-align vertical-align}
           [:&:hover {:background-color hover}]]]

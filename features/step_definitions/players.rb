@@ -117,6 +117,10 @@ Then("I cannot create the player because its name already exists") do
   @page.expect_already_exists
 end
 
+Then(/^I see Players list:$/) do |table|
+  @page.expect_players_list(table.raw)
+end
+
 Then("I see Players\/List page with players:") do |table|
   @page.expect_players_list(table.raw)
 end

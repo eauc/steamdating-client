@@ -73,6 +73,7 @@
 (defn round
   [{:keys [n-round on-game-edit] :as props} state sort]
   [:table.sd-Round-list
+   [:caption (str "Round #" (inc n-round))]
    [:thead
     [headers props sort]]
    [:tbody

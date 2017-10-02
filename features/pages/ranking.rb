@@ -7,16 +7,16 @@ module Pages
     end
 
     def within_list
-      within(PAGE_CONTENT) do
-        within(:xpath, "(.//tbody)[1]") do
+      within_table("Ranking") do
+        within("tbody") do
           yield
         end
       end
     end
 
     def within_list_header
-      within(PAGE_CONTENT) do
-        within(:xpath, "(.//thead)[1]") do
+      within_table("Ranking") do
+        within("thead") do
           yield
         end
       end

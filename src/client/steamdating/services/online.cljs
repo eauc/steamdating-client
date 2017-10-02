@@ -85,19 +85,21 @@
     :steamdating.online/load-tournament
     [(re-frame/path :online)]
     (fn load-tournament
-      [{:keys [db]} [link]]
-      {:http-xhrio (online/load-tournament-request (:token db) link)}))
+      [{:keys [db]} [link confirm?]]
+      {:http-xhrio (online/load-tournament-request (:token db) link confirm?)}))
 
 
   (db/reg-event-fx
     :steamdating.online/load-tournament-success
     [(re-frame/path :tournament)]
     (fn load-tournament-success
-      [{:keys [db]} [{:keys [tournament] :as info}]]
+      [{:keys [db]} [confirm? {:keys [tournament] :as info}]]
       (let [new-tournament (assoc tournament :online (dissoc info :tournament))
             valid? (spec/valid? :steamdating.tournament/tournament new-tournament)]
         (if valid?
-          {:dispatch-n [[:steamdating.tournament/confirm-set new-tournament]
+          {:dispatch-n [(if confirm?
+                          [:steamdating.tournament/confirm-set new-tournament]
+                          [:steamdating.tournament/set new-tournament])
                         [:steamdating.toaster/set
                           {:type :success
                            :message "Online tournament loaded"}]]}

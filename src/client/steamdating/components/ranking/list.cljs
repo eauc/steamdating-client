@@ -108,6 +108,7 @@
   [{:keys [edit? on-player-edit on-toggle-drop-player] :as props}
    ranking bests sort]
   [:table.sd-RankingList
+   [:caption "Ranking"]
    [:thead
     [list-headers props sort]]
    [:tbody

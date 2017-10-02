@@ -73,12 +73,12 @@
 
 
 (defn load-tournament-request
-  [token link]
+  [token link confirm?]
   {:method :get
    :uri (str api-url link)
    :headers {"Authorization" (str "Bearer " token)}
    :response-format (ajax/json-response-format {:keywords? true})
-   :on-success [:steamdating.online/load-tournament-success]
+   :on-success [:steamdating.online/load-tournament-success confirm?]
    :on-failure [:steamdating.online/error-logout
                 "Failed to load online tournament"]})
 

@@ -236,3 +236,7 @@ end
 Then("I can edit $n pairings for Next Round") do |n|
   @page.expect_n_games_forms(n.to_i)
 end
+
+Then("I see Round \#$nth games:") do |nth, table|
+  @page.expect_round(nth, table.symbolic_hashes)
+end

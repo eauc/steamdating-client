@@ -34,6 +34,7 @@
   [players sort {:keys [on-player-click on-sort-by]}]
   (let [columns (vec (:columns players))]
     [:table.sd-PlayersList-list
+     [:caption "Players"]
      [headers sort {:columns columns
                     :on-sort-by on-sort-by}]
      [:tbody

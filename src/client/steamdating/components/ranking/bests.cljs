@@ -8,6 +8,7 @@
 (defn bests-in-faction
   [bests]
   [:table.sd-RankingBests-factions
+   [:caption "Bests in factions"]
    [:thead
     [:tr
      [:th "Faction"]
@@ -25,6 +26,7 @@
 (defn bests-scores
   [bests]
   [:table.sd-RankingBests-scores
+   [:caption "Bests scores"]
    [:thead
     [:tr
      [:th]

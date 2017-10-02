@@ -30,6 +30,12 @@ module Pages
       self
     end
 
+    def follow_current_tournament()
+      within(PAGE_CONTENT) do
+        click_on("Follow tournament online");
+      end
+    end
+
     def expect_online_tournament(tournament)
       within_table("Online tournaments") do
         expect(page).to have_content(Regexp.new("#{tournament["date"]}\\s+#{tournament["name"]}"))

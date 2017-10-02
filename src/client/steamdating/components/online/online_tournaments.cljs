@@ -20,7 +20,7 @@
       [:tr.sd-OnlineTournaments-item
        {:key _id
         :on-click #(re-frame/dispatch
-                     [:steamdating.online/load-tournament link])}
+                     [:steamdating.online/load-tournament link true])}
        [:td date]
        [:td name]
        [:td.sd-OnlineTournaments-updatedAt.sd-text-muted
