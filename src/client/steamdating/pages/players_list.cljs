@@ -1,6 +1,7 @@
 (ns steamdating.pages.players-list
   (:require [re-frame.core :as re-frame]
             [secretary.core :as secretary :refer-macros [defroute]]
+            [steamdating.components.filter.input :refer [filter-input]]
             [steamdating.components.generics.icon :refer [icon]]
             [steamdating.components.page.menu :refer [menu menu-item]]
             [steamdating.components.page.page :refer [content page]]
@@ -23,4 +24,7 @@
      "Create Player "
      [icon "user-plus"]]]
    [content
-    [players-list]]])
+    [:div.sd-PlayersList
+     [:h4 "Players"]
+     [filter-input {:name :player}]
+     [players-list]]]])

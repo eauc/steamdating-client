@@ -1,10 +1,8 @@
 (ns steamdating.components.round.round
   (:require [re-frame.core :as re-frame]
-            [steamdating.components.filter.input :refer [filter-input]]
             [steamdating.components.generics.icon :refer [icon]]
             [steamdating.components.generics.faction-icon :refer [faction-icon]]
             [steamdating.components.sort.header :refer [sort-header]]
-            [steamdating.services.debug :refer [debug?]]
             [steamdating.services.games]))
 
 
@@ -73,41 +71,26 @@
 
 
 (defn round
-  [state sort {:keys [n-round] :as props}]
+  [{:keys [n-round on-game-edit] :as props} state sort]
   [:table.sd-Round-list
    [:thead
     [headers props sort]]
    [:tbody
     (for [[n game] (map vector (range) (:games state))]
       [game-row {:key n
-                 :on-click #(re-frame/dispatch [:steamdating.games/start-edit n-round game])}
+                 :on-click #(on-game-edit game)}
        game])]])
 
 
 (defn round-component
-  [n-round]
-  (let [state @(re-frame/subscribe [:steamdating.rounds/round-view n-round])
+  [{:keys [edit? filter n-round]
+    :or {edit? true
+         filter :round}}]
+  (let [state @(re-frame/subscribe [:steamdating.rounds/round-view n-round filter])
         sort @(re-frame/subscribe [:steamdating.sorts/sort :round {:by :table}])
+        on-game-edit #(when edit? (re-frame/dispatch [:steamdating.games/start-edit n-round %]))
         on-sort-by #(re-frame/dispatch [:steamdating.sorts/set :round %])]
-    [:div.sd-Round
-     ;; (pr-str n state)
-     [:h4 (str "Round #" (+ n-round 1))]
-     [:p
-      [:button.sd-Round-delete
-       {:type "button"
-        :on-click #(re-frame/dispatch
-                     [:steamdating.prompt/set
-                      {:type :confirm
-                       :message "Are you sure you want to drop this round ?"
-                       :on-validate [:steamdating.rounds/drop-nth n-round]}])}
-       [icon "trash-2"]
-       " Delete round"]]
-     [filter-input {:name :round}]
-     [round state sort {:on-sort-by on-sort-by
-                        :n-round n-round}]
-     (when debug?
-       [:p
-        [:button {:type "button"
-                  :on-click #(re-frame/dispatch
-                               [:steamdating.rounds/random-score n-round])}
-         "Random"]])]))
+    [round {:n-round n-round
+            :on-game-edit on-game-edit
+            :on-sort-by on-sort-by}
+     state sort]))

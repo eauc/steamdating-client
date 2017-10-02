@@ -210,9 +210,7 @@
       [{:keys [forms tournament]}]
       (let [current-online (get tournament :online {})
             form-state {:base current-online
-                        :edit (if (contains? forms :online)
-                                (get-in forms [:online :edit])
-                                current-online)}]
+                        :edit (merge current-online (get-in forms [:online :edit]))}]
         (form/validate form-state :steamdating.online/edit))))
 
   )

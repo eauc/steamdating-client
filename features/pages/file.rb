@@ -53,6 +53,7 @@ module Pages
       within_fieldset("Upload current tournament") do
         fill_in("Name", with: data["name"])
         fill_in("Date", with: data["date"])
+        sleep 0.5
         click_on("Upload")
       end
     end

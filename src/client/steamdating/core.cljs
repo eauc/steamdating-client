@@ -5,6 +5,7 @@
             [steamdating.components.page.root :as page]
             [steamdating.components.prompt.prompt :refer [prompt]]
             [steamdating.pages.file :as file]
+            [steamdating.pages.follow :as follow]
             [steamdating.pages.games-edit :as games-edit]
             [steamdating.pages.home :as home]
             [steamdating.pages.players-create :as players-create]

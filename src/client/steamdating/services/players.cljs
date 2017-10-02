@@ -197,8 +197,10 @@
 
   (re-frame/reg-sub
     :steamdating.players/list
-    :<- [:steamdating.players/sorted]
-    :<- [:steamdating.filters/pattern :player]
+    (fn players-lists-inputs
+      [[_ filter] _]
+      [(re-frame/subscribe [:steamdating.players/sorted])
+       (re-frame/subscribe [:steamdating.filters/pattern filter])])
     (fn players-list-sub
       [[players pattern] _]
       (player/filter-with players pattern)))

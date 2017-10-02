@@ -26,6 +26,7 @@ end
 Given("I open Rounds/Summary page") do
   @page = Pages::RoundsSummary.new
             .load
+            .filter(" ")
   @sort_by = "Player"
 end
 
@@ -37,6 +38,7 @@ end
 Given(/^I open Rounds\/(\d+) page$/) do |nth|
   @page = Pages::RoundsNth.new(nth)
             .load
+            .filter(" ")
 end
 
 When("I enter games:") do |table|

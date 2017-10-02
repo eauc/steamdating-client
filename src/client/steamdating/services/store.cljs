@@ -39,6 +39,13 @@
     (get db :factions)))
 
 
+(re-frame/reg-sub
+  :steamdating.storage/filters
+  (fn factions-sub
+    [db]
+    (get db :filters)))
+
+
 (defn set-local-storage
   [state]
   (debug/spy "<<< set local-storage" nil)
@@ -49,10 +56,12 @@
 (re-frame/reg-sub
   :steamdating.storage/local
   :<- [:steamdating.online/online]
+  :<- [:steamdating.storage/filters]
   :<- [:steamdating.storage/tournament]
   (fn local-storage-sub
-    [[online tournament]]
-    (set-local-storage {:online (select-keys online [:token])
+    [[online filters tournament]]
+    (set-local-storage {:filters filters
+                        :online (select-keys online [:token])
                         :tournament tournament})))
 
 

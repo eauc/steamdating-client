@@ -3,6 +3,7 @@ require_relative "../pages/ranking"
 When("I open Ranking page") do
   @page = Pages::Ranking.new
             .load
+            .filter_with(" ")
 end
 
 When("I filter the Ranking with \"$filter\"") do |filter|

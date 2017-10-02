@@ -140,9 +140,9 @@
   (re-frame/reg-sub
     :steamdating.rounds/round-view
     (fn round-view-input
-      [[_ n] _]
+      [[_ n filter] _]
       [(re-frame/subscribe [:steamdating.rounds/round n])
-       (re-frame/subscribe [:steamdating.filters/pattern :round])
+       (re-frame/subscribe [:steamdating.filters/pattern filter])
        (re-frame/subscribe [:steamdating.sorts/sort :round {:by :table}])
        (re-frame/subscribe [:steamdating.players/factions])])
     (fn round-view-sub

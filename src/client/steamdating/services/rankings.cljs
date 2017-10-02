@@ -19,9 +19,11 @@
 
   (re-frame/reg-sub
     :steamdating.rankings/list
-    :<- [:steamdating.rankings/ranking]
-    :<- [:steamdating.filters/pattern :ranking]
-    :<- [:steamdating.sorts/sort :ranking {:by [:rank]}]
+    (fn list-inputs
+      [[_ filter] _]
+      [(re-frame/subscribe [:steamdating.rankings/ranking])
+       (re-frame/subscribe [:steamdating.filters/pattern filter])
+       (re-frame/subscribe [:steamdating.sorts/sort :ranking {:by [:rank]}])])
     (fn list-sub
       [[ranking pattern sort] _]
       (->> ranking

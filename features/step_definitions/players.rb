@@ -7,6 +7,7 @@ require_relative "../pages/players_list"
 Given("I open Players/List page") do
   @page = Pages::PlayersList.new
             .load
+            .filter_with(" ")
 end
 
 Given("I open Players/Create page") do

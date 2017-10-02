@@ -1,11 +1,12 @@
 (ns steamdating.pages.rounds-nth
   (:require [re-frame.core :as re-frame]
             [secretary.core :as secretary :refer-macros [defroute]]
+            [steamdating.components.filter.input :refer [filter-input]]
             [steamdating.components.page.page :refer [content page]]
             [steamdating.components.page.root :as page-root]
             [steamdating.components.round.menu :refer [rounds-menu]]
             [steamdating.components.round.round :refer [round-component]]
-            [steamdating.services.debug :as debug]))
+            [steamdating.services.debug :as debug :refer [debug?]]))
 
 
 (defroute rounds-next "/rounds/nth/:n" {n :n}
@@ -17,6 +18,15 @@
 (defmethod page-root/render :rounds-nth
   [{{:keys [n]} :params}]
   [page
-   [rounds-menu]
+   [rounds-menu n]
    [content
-    [round-component n]]])
+    [:div.sd-Round
+     [:h4 (str "Round #" (+ n 1))]
+     [filter-input {:name :round}]
+     [round-component {:n-round n}]
+     (when debug?
+       [:p
+        [:button {:type "button"
+                  :on-click #(re-frame/dispatch
+                               [:steamdating.rounds/random-score n])}
+         "Random"]])]]])

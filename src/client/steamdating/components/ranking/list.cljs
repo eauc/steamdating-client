@@ -47,15 +47,19 @@
 
 
 (defn droped
-  [_ droped-after]
+  [{:keys [edit?]} droped-after]
   (if (some? droped-after)
-    [:button.sd-RankingList-undrop
+    [(if edit?
+       :button.sd-RankingList-undrop
+       :div)
      {:type :button}
      [:div "Droped after round #" droped-after]
-     [:div.sd-text-muted "Click to un-drop"]]
-    [:button.sd-RankingList-drop
-     {:type :button}
-     "Drop now"]))
+     (when edit?
+       [:div.sd-text-muted "Click to un-drop"])]
+    (when edit?
+      [:button.sd-RankingList-drop
+       {:type :button}
+       "Drop now"])))
 
 
 (defn list-player
@@ -101,7 +105,7 @@
 
 
 (defn ranking-list
-  [{:keys [on-player-edit on-toggle-drop-player] :as props}
+  [{:keys [edit? on-player-edit on-toggle-drop-player] :as props}
    ranking bests sort]
   [:table.sd-RankingList
    [:thead
@@ -110,16 +114,24 @@
     (doall
       (for [player ranking]
         [list-player {:key (:name player)
+                      :edit? edit?
                       :on-player-edit on-player-edit
                       :on-toggle-drop-player on-toggle-drop-player}
          player bests]))]])
 
+
 (defn ranking-list-component
-  []
-  (let [ranking @(re-frame/subscribe [:steamdating.rankings/list])
+  [{:keys [edit? filter]
+    :or {edit? true
+         filter :ranking}}]
+  (let [ranking @(re-frame/subscribe [:steamdating.rankings/list filter])
         bests @(re-frame/subscribe [:steamdating.rankings/bests])
-        sort @(re-frame/subscribe [:steamdating.sorts/sort :ranking {:by [:rank]}])]
-    [ranking-list {:on-player-edit #(re-frame/dispatch [:steamdating.players/start-edit %])
-                   :on-sort-by #(re-frame/dispatch [:steamdating.sorts/set :ranking %])
-                   :on-toggle-drop-player #(re-frame/dispatch [:steamdating.players/toggle-drop %])}
+        sort @(re-frame/subscribe [:steamdating.sorts/sort :ranking {:by [:rank]}])
+        on-player-edit #(when edit? (re-frame/dispatch [:steamdating.players/start-edit %]))
+        on-sort-by #(re-frame/dispatch [:steamdating.sorts/set :ranking %])
+        on-toggle-drop-player #(when edit? (re-frame/dispatch [:steamdating.players/toggle-drop %]))]
+    [ranking-list {:edit? edit?
+                   :on-player-edit on-player-edit
+                   :on-sort-by on-sort-by
+                   :on-toggle-drop-player on-toggle-drop-player}
      ranking bests sort]))

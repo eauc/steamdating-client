@@ -45,15 +45,15 @@
 
 
 (defn players-list
-  []
-  (let [players @(re-frame/subscribe [:steamdating.players/list])
+  [{:keys [edit? filter]
+    :or {edit? true
+         filter :player}}]
+  (let [players @(re-frame/subscribe [:steamdating.players/list filter])
         sort @(re-frame/subscribe [:steamdating.sorts/sort :player {:by :name}])
-        on-player-edit #(re-frame/dispatch [:steamdating.players/start-edit %])
+        on-player-edit #(when edit? (re-frame/dispatch [:steamdating.players/start-edit %]))
         on-sort-by #(re-frame/dispatch [:steamdating.sorts/set :player %])]
     (if (empty? (:list players))
       [file-import]
-      [:div.sd-PlayersList
-       [filter-input {:name :player}]
-       [render-list players sort
-        {:on-player-click on-player-edit
-         :on-sort-by on-sort-by}]])))
+      [render-list players sort
+       {:on-player-click on-player-edit
+        :on-sort-by on-sort-by}])))
