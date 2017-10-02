@@ -1,7 +1,10 @@
 require_relative "./page"
+require_relative "../mixins/prompt"
 
 module Pages
   class Online < Page
+    include Prompt
+
     def load
       within(NAV) do
         click_on("Online")
@@ -16,18 +19,22 @@ module Pages
         sleep 0.5
         click_on("Upload")
       end
+      self
     end
 
     def download_online_tournament(name)
       within_table("Online tournaments") do
         find("tr", text: name).click
       end
+      validate_prompt
+      self
     end
 
     def expect_online_tournament(tournament)
       within_table("Online tournaments") do
         expect(page).to have_content(Regexp.new("#{tournament["date"]}\\s+#{tournament["name"]}"))
       end
+      self
     end
   end
 end

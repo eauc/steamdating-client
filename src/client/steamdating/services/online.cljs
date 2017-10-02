@@ -97,10 +97,10 @@
       (let [new-tournament (assoc tournament :online (dissoc info :tournament))
             valid? (spec/valid? :steamdating.tournament/tournament new-tournament)]
         (if valid?
-          {:db new-tournament
-           :dispatch [:steamdating.toaster/set
-                      {:type :success
-                       :message "Online tournament loaded"}]}
+          {:dispatch-n [[:steamdating.tournament/confirm-set new-tournament]
+                        [:steamdating.toaster/set
+                          {:type :success
+                           :message "Online tournament loaded"}]]}
           {:dispatch [:steamdating.toaster/set
                       {:type :error
                        :message "Failed to load online tournament"}]}))))
