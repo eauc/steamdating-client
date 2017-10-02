@@ -1,3 +1,5 @@
+require_relative "../pages/file"
+
 Given("I open File page") do
   @page = Pages::File.new
             .load

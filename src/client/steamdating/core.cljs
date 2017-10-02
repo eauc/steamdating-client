@@ -8,6 +8,7 @@
             [steamdating.pages.follow :as follow]
             [steamdating.pages.games-edit :as games-edit]
             [steamdating.pages.home :as home]
+            [steamdating.pages.online :as online]
             [steamdating.pages.players-create :as players-create]
             [steamdating.pages.players-edit :as players-edit]
             [steamdating.pages.players-list :as players-list]

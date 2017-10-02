@@ -28,6 +28,10 @@
                   :on-click toggle-show}
             "File"]
            [link {:current-hash hash
+                  :path "/online"
+                  :on-click toggle-show}
+            "Online"]
+           [link {:current-hash hash
                   :path "/players"
                   :active "#/players"
                   :on-click toggle-show}

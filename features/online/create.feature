@@ -4,14 +4,16 @@ Feature: Create online tournament
   Scenario: Create online tournament
     Given I am logged in
     And some Rounds have been defined
-    And I open File page
+    And I open Online page
     When I upload current tournament:
     | name         |       date |
     | MyTournament | 09/25/2017 |
     Then I can see the online tournament in the list:
     | name         |       date |
     | MyTournament | 2017-09-25 |
-    When I start a new tournament
+    When I open File page
+    And I start a new tournament
+    And I open Online page
     And I download the online tournament "MyTournament"
     And I open Rounds/Summary page
     Then I see the Rounds/Summary page with rounds:

@@ -4,7 +4,7 @@ Feature: Update online tournament
   Scenario: Update online tournament
     Given I am logged in
     And some Rounds have been defined
-    And I open File page
+    And I open Online page
     When I upload current tournament:
     | name         |       date |
     | MyTournament | 09/25/2017 |
@@ -17,14 +17,16 @@ Feature: Update online tournament
     }
     """
     And I save the player
-    When I open File page
+    When I open Online page
     And I upload current tournament:
     | name                | date       |
     | MyUpdatedTournament | 09/26/2017 |
     Then I can see the online tournament in the list:
     | name                |       date |
     | MyUpdatedTournament | 2017-09-26 |
-    When I start a new tournament
+    When I open File page
+    And I start a new tournament
+    When I open Online page
     And I download the online tournament "MyUpdatedTournament"
     And I open Rounds/Summary page
     Then I see the Rounds/Summary page with rounds:

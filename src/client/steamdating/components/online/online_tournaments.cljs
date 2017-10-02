@@ -44,4 +44,8 @@
                  [icon "refresh-cw"]
                  [:span
                   " Retry"]]]
-       :loaded [tournaments-list {} tournaments])]))
+       :loaded [:div.sd-OnlineTournaments-loaded
+                [:h3 "My online tournaments"]
+                [:p.sd-text-muted
+                 [:i "Click on tournament to download."]]
+                [tournaments-list {} tournaments]])]))

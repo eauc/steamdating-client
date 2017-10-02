@@ -1,8 +1,14 @@
 require "httpclient"
+require_relative "../pages/online"
 
 Before('@online') do
   client = HTTPClient.new
-  client.delete("http://localhost:4000/test/tournaments/all")
+  client.delete("http://localhost:4001/test/tournaments/all")
+end
+
+Given("I open Online page") do
+  @page = Pages::Online.new
+            .load
 end
 
 Given("I am logged in") do

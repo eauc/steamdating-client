@@ -68,7 +68,7 @@
 
 (def api-url
   (if debug?
-    "http://localhost:4000"
+    "http://localhost:4001"
     "https://steamdating-data.herokuapp.com"))
 
 

@@ -11,6 +11,7 @@
                    :flex-direction :row
                    :justify-content :center
                    :width "100%"}
+    [:&-loaded {:width "100%"}]
     (table [:&-list])
     [:&-list
      [:caption {:display :none}]
