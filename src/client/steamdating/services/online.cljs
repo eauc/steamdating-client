@@ -82,11 +82,19 @@
 
 
   (db/reg-event-fx
+    :steamdating.online/toggle-show-follow
+    [(re-frame/path :online :show-follow)]
+    (fn clear-current-edit
+      [{:keys [db]} _]
+      {:db (not db)}))
+
+
+  (db/reg-event-fx
     :steamdating.online/load-tournament
     [(re-frame/path :online)]
     (fn load-tournament
       [{:keys [db]} [link confirm?]]
-      {:http-xhrio (online/load-tournament-request (:token db) link confirm?)}))
+      {:http-xhrio (online/load-tournament-request link confirm?)}))
 
 
   (db/reg-event-fx
@@ -101,8 +109,8 @@
                           [:steamdating.tournament/confirm-set new-tournament]
                           [:steamdating.tournament/set new-tournament])
                         [:steamdating.toaster/set
-                          {:type :success
-                           :message "Online tournament loaded"}]]}
+                         {:type :success
+                          :message "Online tournament loaded"}]]}
           {:dispatch [:steamdating.toaster/set
                       {:type :error
                        :message "Failed to load online tournament"}]}))))
@@ -214,5 +222,28 @@
             form-state {:base current-online
                         :edit (merge current-online (get-in forms [:online :edit]))}]
         (form/validate form-state :steamdating.online/edit))))
+
+
+  (re-frame/reg-sub
+    :steamdating.online/show-follow
+    :<- [:steamdating.online/online]
+    (fn follow-sub
+      [{:keys [show-follow]}]
+      show-follow))
+
+
+  (re-frame/reg-sub
+    :steamdating.online/follow-status
+    :<- [:steamdating.online/status]
+    :<- [:steamdating.online/show-follow]
+    :<- [:steamdating.tournament/online]
+    (fn follow-status-sub
+      [[status show-follow {:keys [_id name]}]]
+      (let [url (str (.-origin js/location) "/#/follow/" _id)
+            show? (and (= :synced status) show-follow)]
+        {:show? show?
+         :status status
+         :name name
+         :url url})))
 
   )

@@ -2,6 +2,7 @@
   (:require [reagent.core :as reagent]
             [re-frame.core :as re-frame]
             [steamdating.components.nav.menu :as nav]
+            [steamdating.components.online.online-follow :refer [online-follow]]
             [steamdating.components.page.root :as page]
             [steamdating.components.prompt.prompt :refer [prompt]]
             [steamdating.pages.file :as file]
@@ -33,7 +34,9 @@
   (reagent/render [page/root]
                   (.querySelector js/document ".sd-Page-container"))
   (reagent/render [prompt]
-                  (.querySelector js/document ".sd-Prompt-container")))
+                  (.querySelector js/document ".sd-Prompt-container"))
+  (reagent/render [online-follow]
+                  (.querySelector js/document ".sd-OnlineFollow-container")))
 
 
 (defn ^:export init

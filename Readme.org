@@ -36,23 +36,23 @@ Warmachine tournament organizer.
     - [X] round next/nth prefix
     - [X] round summary / sort
 - [X] localStorage
-- [ ] imports
-  - [ ] T3 players CSV
-  - [ ] CC list(s) JSON
+- [-] imports
+  - [X] T3 players CSV
+  - [X] CC list(s) JSON
   - [ ] CC list(s) link
 - [ ] exports
   - [ ] slideshow round/ranking
   - [ ] print round/ranking
-- [ ] online
-  - [ ] create
-  - [ ] upload
-  - [ ] download
+- [-] online
+  - [X] create
+  - [X] upload
+  - [X] download
   - [ ] notify
-- [ ] follow
-  - [ ] rankings
-  - [ ] rounds
-  - [ ] players info
-  - [ ] filter by player/faction/origin
+- [-] follow
+  - [X] rankings
+  - [X] rounds
+  - [X] players info
+  - [X] filter by player/faction/origin
   - [ ] activate notifications
 - [ ] tables groups
 - [ ] teams

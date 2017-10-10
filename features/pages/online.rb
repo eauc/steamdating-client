@@ -32,8 +32,9 @@ module Pages
 
     def follow_current_tournament()
       within(PAGE_CONTENT) do
-        click_on("Follow tournament online");
+        click_on("Follow");
       end
+      click_on("http")
     end
 
     def expect_online_tournament(tournament)

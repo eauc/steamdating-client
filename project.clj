@@ -8,6 +8,7 @@
                  [org.clojure/clojurescript "1.9.908"]
                  [org.clojure/test.check "0.9.0"]
                  [cljsjs/auth0-lock "10.16.0-0"]
+                 [cljsjs/kjua "0.1.1-1"]
                  [day8.re-frame/http-fx "0.1.4"]
                  [day8/re-frame-tracer "0.1.1-SNAPSHOT"]
                  [devcards "0.2.3" :exclusions [cljsjs/react

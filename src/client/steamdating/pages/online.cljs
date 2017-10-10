@@ -3,7 +3,7 @@
             [secretary.core :as secretary :refer-macros [defroute]]
             [steamdating.components.page.page :refer [content page]]
             [steamdating.components.page.root :as page-root]
-            [steamdating.components.online.follow :refer [follow]]
+            [steamdating.components.online.online-follow :refer [online-follow-toggle]]
             [steamdating.components.online.online-button :refer [online-button]]
             [steamdating.components.online.online-edit :refer [online-edit]]
             [steamdating.components.online.online-tournaments :refer [online-tournaments]]
@@ -19,6 +19,6 @@
   []
   [page {:class "sd-OnlinePage"}
    [content
-    [follow]
+    [:p [online-follow-toggle]]
     [online-edit]
     [online-tournaments]]])

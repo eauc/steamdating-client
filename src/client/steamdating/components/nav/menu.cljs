@@ -4,6 +4,7 @@
             [steamdating.components.nav.link :refer [link]]
             [steamdating.components.nav.toggle :refer [toggle]]
             [steamdating.components.online.online-button :refer [online-button]]
+            [steamdating.components.online.online-follow :refer [online-follow-toggle]]
             [steamdating.components.tournament.save-button :refer [save-button]]
             [steamdating.services.debug :refer [debug?]]))
 
@@ -46,6 +47,7 @@
                   :on-click toggle-show}
             "Rounds"]
            [:div.sd-NavMenu-actions
+            [online-follow-toggle]
             [online-button]
             [save-button]
             [toggle {:toggle-show toggle-show}]]])))))

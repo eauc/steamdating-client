@@ -35,20 +35,13 @@
        :border 0
        :background-color (:primary colors)
        :color (:text-inverted colors)})
+    [:.sd-OnlineFollow-toggle {:background-color :transparent
+                               :border :none
+                               :width :auto}
+     [:img {:filter "invert(1)"}]]
     [:.sd-FileSaveButton-text
-     :.sd-OnlineButton-text {:display :none}]
-    ;; [:.sd-FileSaveButton
-    ;;  ;; :.sd-AuthToggleButton
-    ;;  {:height "1.4em"
-    ;;   :width "1.4em"
-    ;;   :padding 0
-    ;;   :font-size "2em"
-    ;;   :line-height "1.4em"
-    ;;   :border 0
-    ;;   :text-align "center"}]
-    ;; ;; [:.sd-AuthToggleButton {:color (gcolor/darken (gcolor/hex->rgb "#FFF") 40)}]
-    ;; ;; [:.sd-AuthToggleButton.sd-AuthToggleButton-active {:color "white"}]
-    ]
+     :.sd-OnlineButton-text
+     :.sd-OnlineFollow-toggle-text {:display :none}]]
    (button
      [:&Toggle]
      {:height "1.4em"

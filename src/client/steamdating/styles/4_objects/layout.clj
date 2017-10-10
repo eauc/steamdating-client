@@ -25,14 +25,15 @@
                  :height "100%"
                  :overflow "auto"
                  :padding "3px"}]]
-   [:&-Prompt-container {:z-index 2000
-                         :position "absolute"
-                         :top 0
-                         :bottom 0
-                         :left 0
-                         :right 0
-                         :background-color "transparent"
-                         :pointer-events "none"}]
+   [:&-Prompt-container
+    :&-OnlineFollow-container {:z-index 2000
+                               :position "absolute"
+                               :top 0
+                               :bottom 0
+                               :left 0
+                               :right 0
+                               :background-color "transparent"
+                               :pointer-events "none"}]
    (at-break
      :tablet
      [:&-Page {:flex-direction "row"}]

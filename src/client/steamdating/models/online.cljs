@@ -8,6 +8,10 @@
   (spec/and string? not-empty))
 
 
+(spec/def :steamdating.online/show-follow
+  boolean?)
+
+
 (spec/def :steamdating.online.tournament/_id
   (spec/and string? not-empty))
 
@@ -53,6 +57,7 @@
 
 (spec/def :steamdating.online/online
   (spec/keys :opt-un [:steamdating.online/token
+                      :steamdating.online/show-follow
                       :steamdating.online/tournaments]))
 
 
@@ -68,15 +73,14 @@
 
 (def api-url
   (if debug?
-    "http://localhost:4001"
+    (str "http://" (.-hostname js/location) ":4001")
     "https://steamdating-data.herokuapp.com"))
 
 
 (defn load-tournament-request
-  [token link confirm?]
+  [link confirm?]
   {:method :get
    :uri (str api-url link)
-   :headers {"Authorization" (str "Bearer " token)}
    :response-format (ajax/json-response-format {:keywords? true})
    :on-success [:steamdating.online/load-tournament-success confirm?]
    :on-failure [:steamdating.online/error-logout
