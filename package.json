@@ -1,5 +1,6 @@
 {
 	"scripts": {
+		"appcache": "node ./scripts/appcache.js",
 		"sw-precache": "sw-precache --config=\"sw_precache_config.json\" --verbose"
 	}
 }

@@ -7,3 +7,4 @@ resources/public/js/test*
 resources/public/css
 features/report/
 resources/public/service-worker.js
+resources/public/appcache.manifest

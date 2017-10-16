@@ -30,6 +30,7 @@
   :aliases {"compile" ["do"
                        ["garden" "once"]
                        ["compile" ":all"]
+                       ["shell" "npm" "run" "appcache"]
                        ["shell" "npm" "run" "sw-precache"]]}
   :hooks [leiningen.cljsbuild]
   :cljsbuild
