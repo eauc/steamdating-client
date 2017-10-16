@@ -24,9 +24,13 @@
             [lein-cljsbuild "1.1.7"]
             [lein-figwheel "0.5.12" :exclusions [org.clojure/clojure]]
             [lein-garden "0.3.0" :exclusions [org.clojure/clojure org.apache.commons/commons-compress]]
-            [lein-pprint "1.1.2"]]
+            [lein-pprint "1.1.2"]
+            [lein-shell "0.5.0"]]
   :source-paths []
-  :aliases {"compile" ["do" ["garden" "once"] ["compile" ":all"]]}
+  :aliases {"compile" ["do"
+                       ["garden" "once"]
+                       ["compile" ":all"]
+                       ["shell" "npm" "run" "sw-precache"]]}
   :hooks [leiningen.cljsbuild]
   :cljsbuild
   {:builds
@@ -34,7 +38,8 @@
              :compiler {:main "steamdating.core"
                         :optimizations :none
                         :output-to "resources/public/js/client.js"
-                        :npm-deps {:feather-icons "3.2.2"}
+                        :npm-deps {:feather-icons "3.2.2"
+                                   :sw-precache "5.2.0"}
                         :install-deps true}}
     :test {:source-paths ["src/client" "test/client"]
            :compiler {:main "steamdating.core-test"

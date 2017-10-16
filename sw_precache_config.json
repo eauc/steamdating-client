@@ -1,0 +1,18 @@
+{
+  "verbose": true,
+  "root": "resources/public",
+  "cacheId": "steamdating",
+  "ignoreUrlParametersMatching": [ "/./" ],
+  "dynamicUrlToDependencies": {
+    "/": ["resources/public/index.html"]
+  },
+  "staticFileGlobs": [
+    "resources/public/index.html",
+    "resources/public/css/**.css",
+    "resources/public/data/**",
+    "resources/public/fonts/**",
+    "resources/public/icons/**",
+    "resources/public/js/client.js",
+    "resources/public/vendor/**"
+  ]
+}

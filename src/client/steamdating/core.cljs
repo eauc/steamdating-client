@@ -21,6 +21,7 @@
             [steamdating.services.db :as db]
             [steamdating.services.factions :as factions]
             [steamdating.services.forms :as forms]
+            [steamdating.services.offline :as offline]
             [steamdating.services.routes :as routes]
             [steamdating.services.players :as players]
             [steamdating.services.tournament :as tournament]))
@@ -45,4 +46,5 @@
   (re-frame/dispatch-sync [:steamdating.db/initialize])
   (re-frame/dispatch [:steamdating.factions/initialize])
   (routes/init)
-  (mount-root))
+  (mount-root)
+  (offline/init))
