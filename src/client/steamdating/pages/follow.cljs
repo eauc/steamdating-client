@@ -5,6 +5,7 @@
             [steamdating.components.page.page :refer [content page]]
             [steamdating.components.page.root :as page-root]
             [steamdating.components.player.list :refer [players-list]]
+            [steamdating.components.online.subscribe-button :refer [online-subscribe-button]]
             [steamdating.components.ranking.list :refer [ranking-list-component]]
             [steamdating.components.round.round :refer [round-component]]
             [steamdating.services.debug :as debug]))
@@ -22,6 +23,7 @@
    [content
     (let [online @(re-frame/subscribe [:steamdating.tournament/online])]
       [:h3 "Follow " (:name online)])
+    [online-subscribe-button]
     [filter-input {:name :follow}]
     [:h4 "Ranking"]
     [ranking-list-component {:edit? false

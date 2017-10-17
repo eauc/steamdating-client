@@ -174,6 +174,63 @@
                       :message "Tournament uploaded"}]]}))
 
 
+  (db/reg-event-fx
+    :steamdating.online.push/set-manager
+    [(re-frame/path :online :push :manager)]
+    (fn push-set-manager
+      [_ [manager]]
+      {:db manager
+       :steamdating.online.push/check-subscription manager}))
+
+
+  (re-frame/reg-fx
+    :steamdating.online.push/check-subscription
+    (fn push-check-subscription-fx
+      [manager]
+      (online/check-push-subscription manager)))
+
+
+  (db/reg-event-fx
+    :steamdating.online.push/set-subscription
+    [(re-frame/path :online :push :subscription)]
+    (fn push-set-subscription
+      [_ [subscription]]
+      {:db subscription}))
+
+
+  (db/reg-event-fx
+    :steamdating.online.push/create-subscription
+    [(re-frame/path :online :push :manager)]
+    (fn push-create-subscription
+      [{manager :db} _]
+      {:steamdating.online.push/create-subscription manager}))
+
+
+  (re-frame/reg-fx
+    :steamdating.online.push/create-subscription
+    (fn push-create-subscription-fx
+      [manager]
+      (online/create-push-subscription manager)))
+
+
+  (db/reg-event-fx
+    :steamdating.online.push/upload-subscription
+    (fn upload-subscription
+      [{:keys [db]} [subscription]]
+      (let [id (get-in db [:tournament :online :_id])]
+        {:http-xhrio (online/upload-subscription id subscription)})))
+
+
+  (db/reg-event-fx
+    :steamdating.online.push/upload-subscription-success
+    (fn upload-subscription
+      [{:keys [db]} [subscription]]
+      {:dispatch-n [[:steamdating.online.push/set-subscription subscription]
+                    [:steamdating.toaster/set
+                     {:type :success
+                      :message "Online subscription success"}]]}))
+
+
   (re-frame/reg-sub
     :steamdating.online/online
     (fn online-sub
@@ -245,5 +302,18 @@
          :status status
          :name name
          :url url})))
+
+
+  (re-frame/reg-sub
+    :steamdating.online/push
+    :<- [:steamdating.online/online]
+    :<- [:steamdating.tournament/online]
+    (fn push-sub [[{:keys [push]} {:keys [name]}]]
+      (let [{:keys [manager subscription]} push
+            can-subscribe? (some? manager)
+            has-subscribed? (some? subscription)]
+        {:name name
+         :can-subscribe? can-subscribe?
+         :has-subscribed? has-subscribed?})))
 
   )

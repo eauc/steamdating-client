@@ -42,4 +42,5 @@
    [:&-qr-code-icon {:width "2em"}]
    [:&-toggle-text {:margin-left "0.5em"}]
    [:&-show {:opacity 1
-             :pointer-events "all"}]])
+             :pointer-events "all"}]]
+  (button [:&-OnlineSubscribe]))

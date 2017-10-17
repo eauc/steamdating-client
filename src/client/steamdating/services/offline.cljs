@@ -8,8 +8,8 @@
 
 (defn on-worker-state-change
   [worker]
+  ;; (js/console.info "Serviceworker state change" (aget worker "state"))
   (when (= (aget worker "state") "installed")
-    ;; (js/console.log "change")
     (if (some? (aget js/navigator "serviceWorker" "controller"))
       (re-frame/dispatch [:steamdating.prompt/set
                           {:type :confirm
@@ -22,12 +22,16 @@
 
 (defn on-worker-installing
   [registration]
+  ;; (js/console.info "Serviceworker installing")
   (when-let [worker (aget registration "installing")]
     (aset worker "onstatechange" #(on-worker-state-change worker))))
 
 
 (defn on-worker-registration
   [registration]
+  ;; (js/console.info "Serviceworker registered")
+  (when-let [push-manager (aget registration "pushManager")]
+    (re-frame/dispatch [:steamdating.online.push/set-manager push-manager]))
   (aset registration "onupdatefound" #(on-worker-installing registration)))
 
 
@@ -40,18 +44,16 @@
 
 (defn init
   []
-  (if-not debug?
-    (when-let [serviceWorker (aget js/navigator "serviceWorker")]
-      (-> serviceWorker
-          (.register "service-worker.js")
-          (.then on-worker-registration
-                 on-worker-failed)))))
+  (when-let [serviceWorker (aget js/navigator "serviceWorker")]
+    (-> serviceWorker
+        (.register "service-worker.js")
+        (.then on-worker-registration
+               on-worker-failed))))
 
 
 (db/reg-event-fx
   :steamdating.offline/reload
   (fn reload
     []
-    ;; (js/console.log "reload")
     (.reload js/location)
     {}))
