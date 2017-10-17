@@ -47,13 +47,15 @@ Warmachine tournament organizer.
   - [X] create
   - [X] upload
   - [X] download
-  - [ ] notify
+  - [X] notify
+  - [ ] clear notifications after 1d
 - [-] follow
   - [X] rankings
   - [X] rounds
   - [X] players info
   - [X] filter by player/faction/origin
-  - [ ] activate notifications
+  - [X] activate notifications
+  - [ ] refresh data nav-button on follow page
 - [ ] tables groups
 - [ ] teams
 - [ ] final rounds

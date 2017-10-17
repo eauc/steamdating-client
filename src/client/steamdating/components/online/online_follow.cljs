@@ -7,15 +7,16 @@
 
 (defn render-qr-code
   [url ref]
-  (let [qr-element (js/kjua (clj->js {:text url
-                                      :ecLevel "M"
-                                      :size 280}))]
-    (debug/spy
-      "render-qr-code"
-      {:ref ref
-       :qr-element qr-element})
-    (when ref
-      (aset ref "innerHTML" "")
+  (when ref
+    (aset ref "innerHTML" "")
+    (let [rect (.getBoundingClientRect ref)
+          width (aget rect "width")
+          qr-element (js/kjua (clj->js {:text url
+                                        :ecLevel "M"
+                                        :size (- width 10)}))]
+      ;; (js/console.log
+      ;;   "render-qr-code"
+      ;;   ref rect qr-element)
       (.appendChild ref qr-element))))
 
 
@@ -31,7 +32,8 @@
        [:p
         [:a.sd-OnlineFollow-link
          {:href url} url]]
-       [:div {:ref #(render-qr-code url %)}]
+       [:div.sd-OnlineFollow-qrCode
+        {:ref #(render-qr-code url (when show? %))}]
        [:button.sd-OnlineFollow-close
         {:type :button}
         [icon "x"] " Close"]]]]))

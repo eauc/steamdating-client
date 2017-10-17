@@ -29,6 +29,7 @@
                 :border (:border box-model)
                 :text-align "center"}]
    [:&-link {:word-wrap :break-word}]
+   [:&-qrCode {:flex-grow 1}]
    (button [:&-close])
    [:&-close {:border :none}]
    (button [:&-toggle])
