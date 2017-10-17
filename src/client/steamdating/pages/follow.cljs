@@ -14,7 +14,7 @@
 (defroute follow "/follow/:id" {id :id}
   (debug/log "route followw")
   (re-frame/dispatch [:steamdating.routes/page :follow {:id id}])
-  (re-frame/dispatch [:steamdating.online/load-tournament (str "/tournaments/" id) false]))
+  (re-frame/dispatch [:steamdating.online.follow/refresh]))
 
 
 (defmethod page-root/render :follow

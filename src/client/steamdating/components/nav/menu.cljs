@@ -1,6 +1,7 @@
 (ns steamdating.components.nav.menu
   (:require [re-frame.core :as re-frame]
             [reagent.core :as reagent]
+            [steamdating.components.generics.icon :refer [icon]]
             [steamdating.components.nav.link :refer [link]]
             [steamdating.components.nav.toggle :refer [toggle]]
             [steamdating.components.online.online-button :refer [online-button]]
@@ -17,7 +18,13 @@
       []
       (let [{:keys [hash page] :or {hash ""}} @(re-frame/subscribe [:steamdating.routes/route])]
         (if (= :follow page)
-          [:div.sd-NavMenu]
+          [:div.sd-NavMenu
+           [:div.sd-NavMenu-actions
+            [:button.sd-OnlineFollowRefresh
+             {:type :button
+              :on-click #(re-frame/dispatch
+                          [:steamdating.online.follow/refresh])}
+             [icon "refresh-cw"]]]]
           [:div.sd-NavMenu {:class (when @show "sd-NavMenu-show")}
            (when debug?
              [link {:current-hash hash

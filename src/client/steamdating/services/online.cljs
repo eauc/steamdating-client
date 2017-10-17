@@ -175,6 +175,14 @@
 
 
   (db/reg-event-fx
+    :steamdating.online.follow/refresh
+    [(re-frame/path [:route :params :id])]
+    (fn follow-refresh
+      [{id :db}]
+      {:dispatch [:steamdating.online/load-tournament (str "/tournaments/" id) false]}))
+
+
+  (db/reg-event-fx
     :steamdating.online.push/set-manager
     [(re-frame/path :online :push :manager)]
     (fn push-set-manager

@@ -16,7 +16,16 @@ self.addEventListener("notificationclick", (event) => {
   const url = `/#/follow/${event.notification.data}`;
   event.waitUntil(
     Promise.all([
-      self.clients.openWindow(url),
+      self.clients.matchAll().then((clientsList) => {
+				const client = clientsList.find((c) => {
+					return c.url === `${self.location.origin}${url}`;
+				});
+				if (client) {
+					client.postMessage("follow-refresh");
+					return client.focus();
+				}
+				return self.clients.openWindow(url);
+			}),
       event.notification.close(),
     ])
   );

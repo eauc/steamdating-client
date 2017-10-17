@@ -27,7 +27,8 @@
                     :border 0}
     (button
       [:.sd-FileSaveButton
-       :.sd-OnlineButton]
+       :.sd-OnlineButton
+       :.sd-OnlineFollowRefresh]
       {:height "1.4em"
        :width "1.4em"
        :padding "0.1em 0"

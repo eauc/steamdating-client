@@ -42,13 +42,22 @@
                       {:type :error
                        :message "Offline installation failed"}]))
 
+
+(defn on-worker-message
+  [event]
+  ;; (js/console.log "serviceWorker message" event)
+  (when (= "follow-refresh" (aget event "data"))
+    (re-frame/dispatch [:steamdating.online.follow/refresh])))
+
+
 (defn init
   []
   (when-let [serviceWorker (aget js/navigator "serviceWorker")]
-    (-> serviceWorker
-        (.register "service-worker.js")
-        (.then on-worker-registration
-               on-worker-failed))))
+    (doto serviceWorker
+      (.addEventListener "message" on-worker-message)
+      (-> (.register "service-worker.js")
+          (.then on-worker-registration
+                 on-worker-failed)))))
 
 
 (db/reg-event-fx
