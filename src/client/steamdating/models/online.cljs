@@ -174,19 +174,22 @@
   [push-manager]
   ;; (js/console.log "create-push-subscription")
   (-> (.getSubscription push-manager)
-      (.then #(if (some? %)
-                %
-                (.subscribe push-manager #js {:userVisibleOnly true
-                                              :applicationServerKey converted-vapid-key})))
-      (.then (fn [subscription]
-               ;; (js/console.log "create-push-subscription ok" (js/JSON.stringify subscription))
-               (when (some? subscription)
-                 (re-frame/dispatch [:steamdating.online.push/upload-subscription subscription]))))
-      (.catch (fn [error]
-                (js/console.error "create-push-subscription error" error)
-                (re-frame/dispatch [:steamdating.toaster/set
-                                    {:type :error
-                                     :message "Create subscription failed"}])))))
+      (.then
+        #(when (some? %) (.unsubscribe %)))
+      (.then
+        #(.subscribe push-manager #js {:userVisibleOnly true
+                                       :applicationServerKey converted-vapid-key}))
+      (.then
+        (fn [subscription]
+          ;; (js/console.log "create-push-subscription ok" (js/JSON.stringify subscription))
+          (when (some? subscription)
+            (re-frame/dispatch [:steamdating.online.push/upload-subscription subscription]))))
+      (.catch
+        (fn [error]
+          (js/console.error "create-push-subscription error" error)
+          (re-frame/dispatch [:steamdating.toaster/set
+                              {:type :error
+                               :message "Create subscription failed"}])))))
 
 
 (defn upload-subscription
