@@ -1,41 +1,55 @@
-(ns steamdating.models.ranking)
+(ns steamdating.models.ranking
+  (:require [steamdating.services.debug :as debug]))
+
+
+(defn score-empty?
+ [score]
+ (= 0
+    (reduce (fn [sum [k v]] (if (number? v) (+ sum v) sum))
+            0 score)))
 
 
 (defn ->ranking
 	[scores players]
-	(->> players
-			 (map (fn [p]
-							(assoc p :score (get scores (:name p)))))
-			 (sort-by (juxt #(get-in % [:score :tournament])
-											#(get-in % [:score :sos])
-											#(get-in % [:score :scenario])
-											#(get-in % [:score :army])))
-			 (reverse)
-			 (map (fn [n p] (assoc p :rank (inc n))) (range))))
+  (->> players
+       (map (fn [p]
+              (assoc p :score (get scores (:name p)))))
+       (sort-by (juxt #(get-in % [:score :tournament])
+                      #(get-in % [:score :sos])
+                      #(get-in % [:score :scenario])
+                      #(get-in % [:score :army])))
+       (reverse)
+       (map (fn [n p] (assoc p :rank (inc n))) (range))))
 
 
 (defn best-by
 	[score ranking]
 	(let [score-max (->> (mapv #(get-in % [:score score]) ranking)
 											 (apply max))]
-		{:value score-max
-		 :names (mapv :name (filter #(= score-max (get-in % [:score score])) ranking))}))
+    (if (= 0 score-max)
+      nil
+      {:value score-max
+       :names (mapv :name (filter #(= score-max (get-in % [:score score])) ranking))})))
 
 
 (defn best-in-factions
 	[ranking]
 	(->> ranking
 			 (group-by :faction)
-			 (mapv (fn [[f ps]] [f (select-keys (first (sort-by :rank ps)) [:name :rank])]))
-			 (sort-by (fn [[f p]] (:rank p)))
-			 (into {})))
+			 (map (fn [[f ps]] [f (first (sort-by :rank ps))]))
+       (map (fn [[f p]] [f (if (score-empty? (:score p))
+                             nil
+                             (select-keys p [:name :rank]))]))
+       (filter (fn [[f p]] (some? p)))
+       (into {})))
 
 
 (defn bests
 	[ranking]
 	(into {:faction (best-in-factions ranking)}
-				(map (fn [score] [score (best-by score ranking)])
-						 [:sos :scenario :army :assassination])))
+				(remove nil?
+                (map (fn [score] [score (best-by score ranking)])
+                     [:sos :scenario :army :assassination]))))
 
 
 (defn normalize

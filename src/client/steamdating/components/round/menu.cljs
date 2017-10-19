@@ -7,7 +7,8 @@
 
 (defn rounds-menu
   [n-round]
-  (let [rounds @(re-frame/subscribe [:steamdating.rounds/rounds])]
+  (let [players-exist? @(re-frame/subscribe [:steamdating.players/exist?])
+        rounds @(re-frame/subscribe [:steamdating.rounds/rounds])]
     [menu
      [menu-item
       {:key "all"
@@ -18,11 +19,12 @@
         {:key n
          :href (str "#/rounds/nth/" n)}
         (str "Round #" (+ n 1))])
-     [menu-item
-      {:key "next"
-       :active "#/rounds/next"
-       :on-click #(re-frame/dispatch [:steamdating.rounds/start-next])}
-      "Next round"]
+     (when players-exist?
+       [menu-item
+        {:key "next"
+         :active "#/rounds/next"
+         :on-click #(re-frame/dispatch [:steamdating.rounds/start-next])}
+        "Next round"])
      (when (some? n-round)
        [menu-item
         {:key "delete"

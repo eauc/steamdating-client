@@ -81,20 +81,20 @@
      " " (:faction player)]]
    [:td
     (get-in player [:score :tournament] 0)]
-   [:td {:class (when (= (get-in player [:score :sos])
-                         (get-in bests [:sos :value]))
+   [:td {:class (when (= (get-in player [:score :sos] 0)
+                         (get-in bests [:sos :value] -1))
                   "sd-RankingList-best")}
     (get-in player [:score :sos] 0)]
-   [:td {:class (when (= (get-in player [:score :scenario])
-                         (get-in bests [:scenario :value]))
+   [:td {:class (when (= (get-in player [:score :scenario] 0)
+                         (get-in bests [:scenario :value] -1))
                   "sd-RankingList-best")}
     (get-in player [:score :scenario] 0)]
-   [:td {:class (when (= (get-in player [:score :army])
-                         (get-in bests [:army :value]))
+   [:td {:class (when (= (get-in player [:score :army] 0)
+                         (get-in bests [:army :value] -1))
                   "sd-RankingList-best")}
     (get-in player [:score :army] 0)]
-   [:td {:class (when (= (get-in player [:score :assassination])
-                         (get-in bests [:assassination :value]))
+   [:td {:class (when (= (get-in player [:score :assassination] 0)
+                         (get-in bests [:assassination :value] -1))
                   "sd-RankingList-best")}
     (get-in player [:score :assassination] 0)]
    [:td.sd-RankingList-drop-col
@@ -107,18 +107,19 @@
 (defn ranking-list
   [{:keys [edit? on-player-edit on-toggle-drop-player] :as props}
    ranking bests sort]
-  [:table.sd-RankingList
-   [:caption "Ranking"]
-   [:thead
-    [list-headers props sort]]
-   [:tbody
-    (doall
-      (for [player ranking]
-        [list-player {:key (:name player)
-                      :edit? edit?
-                      :on-player-edit on-player-edit
-                      :on-toggle-drop-player on-toggle-drop-player}
-         player bests]))]])
+  (when (not-empty ranking)
+    [:table.sd-RankingList
+     [:caption "Ranking"]
+     [:thead
+      [list-headers props sort]]
+     [:tbody
+      (doall
+        (for [player ranking]
+          [list-player {:key (:name player)
+                        :edit? edit?
+                        :on-player-edit on-player-edit
+                        :on-toggle-drop-player on-toggle-drop-player}
+           player bests]))]]))
 
 
 (defn ranking-list-component

@@ -155,6 +155,14 @@
 
 
   (re-frame/reg-sub
+    :steamdating.players/exist?
+    :<- [:steamdating.players/players]
+    (fn players-names-sub
+      [players _]
+      (not-empty players)))
+
+
+  (re-frame/reg-sub
     :steamdating.players/names
     :<- [:steamdating.players/players]
     (fn players-names-sub

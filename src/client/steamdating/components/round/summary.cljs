@@ -70,22 +70,23 @@
 
 (defn summary
   [state {:keys [n-rounds sort on-sort-by] :as props}]
-  [:table.sd-RoundsSummary-list
-   [:thead
-    [:tr
-     [sort-header sort
-      {:label "#"
-       :name [:rank]
-       :on-sort-by on-sort-by}]
-     [sort-header sort
-      {:label "Player"
-       :name [:name]
-       :on-sort-by on-sort-by}]
-     [:th "Lists"]
-     (rounds-headers n-rounds)]]
-   [:tbody
-    (for [player state]
-      (player-summary props player))]])
+  (when (not-empty state)
+    [:table.sd-RoundsSummary-list
+     [:thead
+      [:tr
+       [sort-header sort
+        {:label "#"
+         :name [:rank]
+         :on-sort-by on-sort-by}]
+       [sort-header sort
+        {:label "Player"
+         :name [:name]
+         :on-sort-by on-sort-by}]
+       [:th "Lists"]
+       (rounds-headers n-rounds)]]
+     [:tbody
+      (for [player state]
+        (player-summary props player))]]))
 
 
 (defn summary-component
