@@ -168,16 +168,24 @@
 
 (defn already-paired->string
   [already-paired]
-  (let [plural? (> (count already-paired) 1)]
-    (str "Pairing" (when plural? "s") " " (s/join ", " (map #(s/join "-" %) (vals already-paired)))
-         " " (if plural? "have" "has")" already been played")))
+  (let [n-already (count already-paired)
+        plural? (> n-already 1)
+        many? (> n-already 3)]
+    (if many?
+      (str n-already " pairings have already been played.")
+      (str "Pairing" (when plural? "s") " " (s/join ", " (map #(s/join "-" %) (vals already-paired)))
+           " " (if plural? "have" "has")" already been played."))))
 
 
 (defn unpaired-players->string
   [unpaired-players]
-  (let [plural? (> (count unpaired-players) 1)]
-    (str "Player" (when plural? "s") " " (s/join ", " (sort-by #(.toLowerCase %) unpaired-players))
-         " " (if plural? "are" "is")" not paired")))
+  (let [n-unpaired (count unpaired-players)
+        plural? (> n-unpaired 1)
+        many? (> n-unpaired 3)]
+    (if many?
+      (str n-unpaired " players are not paired")
+      (str "Player" (when plural? "s") " " (s/join ", " (sort-by #(.toLowerCase %) unpaired-players))
+           " " (if plural? "are" "is")" not paired"))))
 
 
 (defn faction-mirrors->string
