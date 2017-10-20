@@ -65,5 +65,8 @@
     }
   ],
   "rounds": [],
+	"settings": {
+		"tables-groups-size": 1
+	},
   "version": 1
 }

@@ -17,6 +17,7 @@
             [steamdating.pages.rounds-next :as rounds-next]
             [steamdating.pages.rounds-nth :as rounds-nth]
             [steamdating.pages.rounds-summary :as rounds-summary]
+            [steamdating.pages.settings :as settings]
             [steamdating.services.debug :as debug]
             [steamdating.services.db :as db]
             [steamdating.services.factions :as factions]

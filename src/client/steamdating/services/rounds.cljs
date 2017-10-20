@@ -35,9 +35,10 @@
       (let [players (gen/generate
                       (gen/shuffle
                         (player/on-board (get-in db [:tournament :players]))))
-            rounds (get-in db [:tournament :rounds])]
+            rounds (get-in db [:tournament :rounds])
+            settings (get-in db [:tournament :settings])]
         {:db (assoc-in db [:forms :round :edit :games]
-                       (round/sr-pairing players rounds))})))
+                       (round/sr-pairing players rounds settings))})))
 
 
   (db/reg-event-fx

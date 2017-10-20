@@ -310,16 +310,28 @@
     next-opponent))
 
 
+(defn table->group
+  [table tables-groups-size]
+  (inc (mod table tables-groups-size)))
+
+
 (defn choose-table
-  [old-tables tables]
-  (let [possible-tables (remove (set old-tables) tables)]
-    (if (empty? possible-tables)
-      (first tables)
-      (first possible-tables))))
+  [old-tables tables tables-groups-size]
+  (let [old-groups (set (map #(table->group % tables-groups-size) old-tables))
+        possible-tables-without-groups (remove (set old-tables) tables)
+        possible-tables (remove #(old-groups (table->group % tables-groups-size))
+                                possible-tables-without-groups)]
+    (if-not (empty? possible-tables)
+      (first possible-tables)
+      (if-not (empty? possible-tables-without-groups)
+        (first possible-tables-without-groups)
+        (first tables)))))
 
 
 (defn player-pairing
-  [player players-results tables rounds]
+  [player players-results tables rounds
+   {:keys [tables-groups-size]
+    :or {tables-groups-size 1}}]
   (let [sorted-opponents (sort-opponents player players-results)
         next-opponent (choose-opponent
                         player
@@ -327,19 +339,19 @@
                         sorted-opponents)
         old-tables (concat (tables-for-player (:name player) rounds)
                            (tables-for-player (:name next-opponent) rounds))
-        next-table (choose-table old-tables tables)]
+        next-table (choose-table old-tables tables tables-groups-size)]
     [next-table (:name player) (:name next-opponent)]))
 
 
 (defn sr-pairing
-  [players rounds]
+  [players rounds settings]
   (let [players-results (->> players
                              (map (fn [p] [p (total-score-for-player (:name p) rounds)]))
                              (sort-by tournament-weight))]
     (loop [[[current-player] & rest-players] players-results
            tables (range 1 (inc (players->ngames players)))
            pairings []]
-      (let [pairing (player-pairing current-player rest-players tables rounds)
+      (let [pairing (player-pairing current-player rest-players tables rounds settings)
             [table _ opponent] pairing
             rest-players (remove (fn [[p s]]
                                    (= (:name p) opponent))

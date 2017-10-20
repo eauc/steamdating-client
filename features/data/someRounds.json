@@ -64,7 +64,6 @@
       ]
     }
   ],
-  "version": 1,
   "rounds": [
     {
 			"players": [ "toto", "titi", "tutu", "tete", "tyty", "toutou", "teuteu"],
@@ -276,5 +275,9 @@
         }
       ]
     }
-  ]
+  ],
+	"settings": {
+		"tables-groups-size": 1
+	},
+  "version": 1
 }

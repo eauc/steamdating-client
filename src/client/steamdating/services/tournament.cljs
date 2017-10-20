@@ -53,6 +53,23 @@
         :message "File loaded"}]]}))
 
 
+(db/reg-event-fx
+  :steamdating.tournament/settings-start-edit
+  [(re-frame/path :tournament :settings)]
+  (fn settings-start-edit
+    [{settings :db} _]
+    {:dispatch
+     [:steamdating.forms/reset :settings settings]}))
+
+
+(db/reg-event-fx
+  :steamdating.tournament/settings-save
+  (fn settings-save
+    [{:keys [db]} _]
+    (let [settings (get-in db [:forms :settings :edit])]
+      {:db (assoc-in db [:tournament :settings] settings)})))
+
+
 (re-frame/reg-sub
   :steamdating.tournament/tournament
   (fn tournament-sub

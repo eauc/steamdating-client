@@ -64,7 +64,6 @@
       ]
     }
   ],
-  "version": 1,
   "rounds": [
     {
       "players": [
@@ -502,5 +501,9 @@
         }
       ]
     }
-  ]
+  ],
+	"settings": {
+		"tables-groups-size": 1
+	},
+	"version": 1
 }

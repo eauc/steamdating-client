@@ -53,6 +53,11 @@
                   :active "#/rounds"
                   :on-click toggle-show}
             "Rounds"]
+           [link {:current-hash hash
+                  :path "/settings"
+                  :active "#/settings"
+                  :on-click toggle-show}
+            "Settings"]
            [:div.sd-NavMenu-actions
             [online-follow-toggle]
             [online-button]
