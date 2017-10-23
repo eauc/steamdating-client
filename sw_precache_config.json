@@ -1,21 +1,14 @@
 {
-	"verbose": true,
-	"root": "resources/public",
-	"cacheId": "steamdating",
-	"ignoreUrlParametersMatching": [ "/./" ],
-	"dynamicUrlToDependencies": {
-		"/": ["resources/public/index.html"]
-	},
-	"importScripts": [
-		"sw-push-handler.js"
-	],
-	"staticFileGlobs": [
-		"resources/public/index.html",
-		"resources/public/css/**.css",
-		"resources/public/data/**",
-		"resources/public/fonts/**",
-		"resources/public/icons/**",
-		"resources/public/js/client.js",
-		"resources/public/vendor/**"
-	]
+  "verbose": true,
+  "root": "resources/public",
+  "cacheId": "steamdating",
+  "ignoreUrlParametersMatching": [ "/./" ],
+  "dynamicUrlToDependencies": {
+    "/": ["resources/public/index.html"]
+  },
+  "importScripts": [
+    "sw-push-handler.js"
+  ],
+  "staticFileGlobs": [
+  ]
 }

@@ -12,7 +12,7 @@
 (defn get-local-storage
   []
   (debug/spy
-    "get local-storage"
+    ">>> get local-storage"
     (-> js/localStorage
         (.getItem local-storage-key)
         (reader/read-string))))
@@ -25,44 +25,22 @@
     (assoc coeffects :local-storage (get-local-storage))))
 
 
-(re-frame/reg-sub
-  :steamdating.storage/tournament
-  (fn tournament-sub
-    [db]
-    (get db :tournament)))
-
-
-(re-frame/reg-sub
-  :steamdating.storage/factions
-  (fn factions-sub
-    [db]
-    (get db :factions)))
-
-
-(re-frame/reg-sub
-  :steamdating.storage/filters
-  (fn factions-sub
-    [db]
-    (get db :filters)))
-
-
 (defn set-local-storage
   [state]
-  (debug/spy "<<< set local-storage" nil)
+  (debug/log "<<< set local-storage" state)
   (->> (pr-str state)
        (.setItem js/localStorage local-storage-key)))
 
 
-(re-frame/reg-sub
-  :steamdating.storage/local
-  :<- [:steamdating.online/online]
-  :<- [:steamdating.storage/filters]
-  :<- [:steamdating.storage/tournament]
-  (fn local-storage-sub
-    [[online filters tournament]]
-    (set-local-storage {:filters filters
-                        :online (select-keys online [:token])
-                        :tournament tournament})))
+(defn store-db
+  [{:keys [online filters tournament]}]
+  (set-local-storage {:filters filters
+                      :online (select-keys online [:token])
+                      :tournament tournament}))
+
+
+(def store-db-interceptor
+  (re-frame/after store-db))
 
 
 (defn on-change

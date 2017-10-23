@@ -6,17 +6,8 @@
                                     "target"]
   :dependencies [[org.clojure/clojure "1.9.0-alpha4"]
                  [org.clojure/clojurescript "1.9.946"]
-                 [org.clojure/test.check "0.9.0"]
-                 [cljsjs/auth0-lock "10.21.1-0"]
-                 [cljsjs/kjua "0.1.1-1"]
-                 [day8.re-frame/http-fx "0.1.4"]
-                 [day8/re-frame-tracer "0.1.1-SNAPSHOT"]
-                 [devcards "0.2.4" :exclusions [cljsjs/react
-                                                cljsjs/react-dom]]
                  [expound "0.3.1"]
                  [garden "1.3.3"]
-                 [org.clojars.stumitchell/clairvoyant "0.2.1"]
-                 [pjstadig/humane-test-output "0.8.3"]
                  [re-frame "0.10.2" :exclusions [reagent]]
                  [reagent "0.7.0"]
                  [secretary "1.2.3"]]
@@ -29,10 +20,9 @@
   :source-paths []
   :aliases {"compile" ["do"
                        ["garden" "once"]
-                       ["compile" ":all"]
+                       ["cljsbuild" "once"]
                        ["shell" "npm" "run" "appcache"]
                        ["shell" "npm" "run" "sw-precache"]]}
-  :hooks [leiningen.cljsbuild]
   :cljsbuild
   {:builds
    {:client {:source-paths ["src/client"]
@@ -65,6 +55,8 @@
   {:dev
    {:dependencies [[binaryage/devtools "0.9.7"]
                    [com.cemerick/piggieback "0.2.2"]
+                   [devcards "0.2.4" :exclusions [cljsjs/react
+                                                  cljsjs/react-dom]]
                    [figwheel-sidecar "0.5.14" :exclusions [commons-codec
                                                            org.clojure/tools.nrepl
                                                            org.clojure/core.async]]]

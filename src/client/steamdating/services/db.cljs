@@ -2,65 +2,12 @@
   (:require [cljs.spec.alpha :as spec]
             [expound.alpha :refer [expound-str]]
             [re-frame.core :as re-frame]
-            [steamdating.models.faction]
-            [steamdating.models.filter]
-            [steamdating.models.form]
-            [steamdating.models.online]
-            [steamdating.models.prompt]
-            [steamdating.models.route :refer [->route]]
-            [steamdating.models.sort]
-            [steamdating.models.toaster]
-            [steamdating.models.tournament :refer [->tournament]]
             [steamdating.services.debug :refer [debug?]]
-            [steamdating.services.store]))
-
-
-(spec/def ::factions
-  (spec/nilable :steamdating.faction/factions))
-
-
-(spec/def ::filters
-  (spec/nilable :steamdating.filter/filters))
-
-
-(spec/def ::forms
-  (spec/map-of keyword? :steamdating.form/form))
-
-
-(spec/def ::online
-  :steamdating.online/online)
-
-
-(spec/def ::prompt
-  (spec/nilable :steamdating.prompt/prompt))
-
-
-(spec/def ::route
-  (spec/nilable :steamdating.route/route))
-
-
-(spec/def ::sorts
-  (spec/nilable :steamdating.sort/sorts))
-
-
-(spec/def ::toaster
-  (spec/nilable :steamdating.toaster/toaster))
-
-
-(spec/def ::tournament
-  :steamdating.tournament/tournament)
+            [steamdating.services.store :refer [store-db-interceptor]]))
 
 
 (spec/def ::db
-  (spec/keys :req-un [::factions
-                      ::filters
-                      ::forms
-                      ::online
-                      ::prompt
-                      ::route
-                      ::sorts
-                      ::toaster
-                      ::tournament]))
+  map?)
 
 
 (defn check-db-schema
@@ -75,7 +22,8 @@
 
 
 (def default-interceptors
-  [check-spec-interceptor
+  [store-db-interceptor
+   check-spec-interceptor
    (when debug? re-frame/debug)
    re-frame/trim-v])
 
@@ -91,15 +39,7 @@
 
 
 (def default-db
-  {:factions nil
-   :filters nil
-   :forms {}
-   :online {}
-   :prompt nil
-   :route nil
-   :sorts nil
-   :toaster nil
-   :tournament (->tournament)})
+  {})
 
 
 (reg-event-fx
@@ -107,9 +47,12 @@
   [(re-frame/inject-cofx :steamdating.storage/local)]
   (fn initialize-db
     [{:keys [local-storage]}]
-    {:db (->> local-storage
-              (remove (fn [[k v]] (nil? v)))
-              (reduce (fn [m [k v]] (assoc m k v)) default-db))}))
+    (let [stored-db (->> local-storage
+                         (remove (fn [[k v]] (nil? v)))
+                         (reduce (fn [m [k v]] (assoc m k v)) default-db))]
+      (if (spec/valid? ::db stored-db)
+        {:db stored-db}
+        {:db default-db}))))
 
 
 (reg-event-fx
