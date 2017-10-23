@@ -5,19 +5,19 @@
                                     "resources/public/js"
                                     "target"]
   :dependencies [[org.clojure/clojure "1.9.0-alpha4"]
-                 [org.clojure/clojurescript "1.9.908"]
+                 [org.clojure/clojurescript "1.9.946"]
                  [org.clojure/test.check "0.9.0"]
-                 [cljsjs/auth0-lock "10.16.0-0"]
+                 [cljsjs/auth0-lock "10.21.1-0"]
                  [cljsjs/kjua "0.1.1-1"]
                  [day8.re-frame/http-fx "0.1.4"]
                  [day8/re-frame-tracer "0.1.1-SNAPSHOT"]
-                 [devcards "0.2.3" :exclusions [cljsjs/react
+                 [devcards "0.2.4" :exclusions [cljsjs/react
                                                 cljsjs/react-dom]]
-                 [expound "0.3.0"]
-                 [garden "1.3.2"]
+                 [expound "0.3.1"]
+                 [garden "1.3.3"]
                  [org.clojars.stumitchell/clairvoyant "0.2.1"]
                  [pjstadig/humane-test-output "0.8.3"]
-                 [re-frame "0.10.1" :exclusions [reagent]]
+                 [re-frame "0.10.2" :exclusions [reagent]]
                  [reagent "0.7.0"]
                  [secretary "1.2.3"]]
   :plugins [[lein-ancient "0.6.12"]
@@ -63,9 +63,9 @@
                 :pretty-print? true}}]}
   :profiles
   {:dev
-   {:dependencies [[binaryage/devtools "0.9.4"]
+   {:dependencies [[binaryage/devtools "0.9.7"]
                    [com.cemerick/piggieback "0.2.2"]
-                   [figwheel-sidecar "0.5.13" :exclusions [commons-codec
+                   [figwheel-sidecar "0.5.14" :exclusions [commons-codec
                                                            org.clojure/tools.nrepl
                                                            org.clojure/core.async]]]
     :cljsbuild
