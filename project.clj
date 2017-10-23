@@ -42,14 +42,6 @@
                         :npm-deps {:feather-icons "3.2.2"
                                    :sw-precache "5.2.0"}
                         :install-deps true}}
-    :test {:source-paths ["src/client" "test/client"]
-           :compiler {:main "steamdating.core-test"
-                      :devcards true
-                      :optimizations :none
-                      :pretty-print true
-                      :output-to "resources/public/js/test.js"
-                      :output-dir "resources/public/js/test"
-                      :asset-path "js/test"}}
     :server {:source-paths ["src/server"]
              :compiler {:main "steamdating.core"
                         :target :nodejs
@@ -86,7 +78,15 @@
                           :preloads [devtools.preload]
                           :tooling-config {:devtools/config {:features-to-install :all}}}}
       :test {:figwheel {:devcards true}
-             :compiler {:preloads [devtools.preload]}}}}}
+             :source-paths ["src/client" "test/client"]
+             :compiler {:main "steamdating.core-test"
+                        :devcards true
+                        :optimizations :none
+                        :preloads [devtools.preload]
+                        :pretty-print true
+                        :output-to "resources/public/js/test.js"
+                        :output-dir "resources/public/js/test"
+                        :asset-path "js/test"}}}}}
    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
    :production
    {:cljsbuild
