@@ -2,19 +2,22 @@
   (:require [cljs.spec.alpha :as spec]
             [expound.alpha :refer [expound-str]]
             [re-frame.core :as re-frame]
+            [steamdating.models.route :refer [->route]]
+            [steamdating.models.ui :refer [->ui]]
             [steamdating.services.debug :refer [debug?]]
             [steamdating.services.store :refer [store-db-interceptor]]))
 
 
-(spec/def ::db
-  map?)
+(spec/def :sd.db/db
+  (spec/keys :req-un [:sd.route/route
+                      :sd.ui/ui]))
 
 
 (defn check-db-schema
   [db]
-  (when (not (spec/valid? ::db db))
+  (when (not (spec/valid? :sd.db/db db))
     (throw (ex-info "db spec check failed"
-                    (expound-str ::db db)))))
+                    (expound-str :sd.db/db db)))))
 
 
 (def check-spec-interceptor
@@ -39,7 +42,8 @@
 
 
 (def default-db
-  {})
+  {:route (->route)
+   :ui (->ui)})
 
 
 (reg-event-fx
@@ -50,7 +54,7 @@
     (let [stored-db (->> local-storage
                          (remove (fn [[k v]] (nil? v)))
                          (reduce (fn [m [k v]] (assoc m k v)) default-db))]
-      (if (spec/valid? ::db stored-db)
+      (if (spec/valid? :sd.db/db stored-db)
         {:db stored-db}
         {:db default-db}))))
 

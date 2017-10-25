@@ -4,17 +4,18 @@
                                     "resources/public/css"
                                     "resources/public/js"
                                     "target"]
-  :dependencies [[org.clojure/clojure "1.9.0-alpha4"]
-                 [org.clojure/clojurescript "1.9.946"]
+  :dependencies [[org.clojure/clojure "1.9.0-alpha16"]
+                 [org.clojure/clojurescript "1.9.908"]
                  [expound "0.3.1"]
                  [garden "1.3.3"]
                  [re-frame "0.10.2" :exclusions [reagent]]
                  [reagent "0.7.0"]
                  [secretary "1.2.3"]]
   :plugins [[lein-ancient "0.6.12"]
-            [lein-cljsbuild "1.1.7"]
-            [lein-figwheel "0.5.12" :exclusions [org.clojure/clojure]]
-            [lein-garden "0.3.0" :exclusions [org.clojure/clojure org.apache.commons/commons-compress]]
+            [lein-cljsbuild "1.1.7" :exclusions [org.clojure/clojure
+                                                 org.apache.commons/commons-compress]]
+            [lein-figwheel "0.5.14"]
+            [lein-garden "0.3.0" :exclusions [org.clojure/clojure]]
             [lein-pprint "1.1.2"]
             [lein-shell "0.5.0"]]
   :source-paths []
@@ -53,13 +54,13 @@
                 :pretty-print? true}}]}
   :profiles
   {:dev
-   {:dependencies [[binaryage/devtools "0.9.7"]
-                   [com.cemerick/piggieback "0.2.2"]
+   {:dependencies [[org.clojars.stumitchell/clairvoyant "0.2.1"]
                    [devcards "0.2.4" :exclusions [cljsjs/react
-                                                  cljsjs/react-dom]]
-                   [figwheel-sidecar "0.5.14" :exclusions [commons-codec
-                                                           org.clojure/tools.nrepl
-                                                           org.clojure/core.async]]]
+                                                  cljsjs/react-dom
+                                                  commons-codec]]
+                   [binaryage/devtools "0.9.7"]
+                   [figwheel-sidecar "0.5.14" :exclusions [org.clojure/tools.nrepl]]
+                   [com.cemerick/piggieback "0.2.2"]]
     :cljsbuild
     {:builds
      {:client {:figwheel {:on-jsload "steamdating.core/mount-root"}
@@ -78,7 +79,9 @@
                         :pretty-print true
                         :output-to "resources/public/js/test.js"
                         :output-dir "resources/public/js/test"
-                        :asset-path "js/test"}}}}}
+                        :asset-path "js/test"
+                        :npm-deps {:feather-icons "3.2.2"}
+                        :install-deps true}}}}}
    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
    :production
    {:cljsbuild
