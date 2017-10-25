@@ -1,6 +1,7 @@
 (ns steamdating.services.ui
-  (:require [steamdating.services.db :as db]
-            [re-frame.core :as re-frame]))
+  (:require [cljs.spec.alpha :as spec]
+            [re-frame.core :as re-frame]
+            [steamdating.services.db :as db]))
 
 
 (defn ui-init
@@ -18,18 +19,27 @@
     {:db menu}))
 
 
+(defn menu-sub
+  [db]
+  {:pre [(spec/valid? :sd.db/db db)]
+   :post [(spec/valid? :sd.ui/menu %)]}
+  (get-in db [:ui :menu]))
+
 (re-frame/reg-sub
   :sd.ui/menu
-  (fn menu-sub
-    [db]
-    (get-in db [:ui :menu])))
+  menu-sub)
 
+
+(defn nav-menu-sub
+  [[menu route]]
+  {:pre [(spec/valid? :sd.ui/menu menu)
+         (spec/valid? :sd.route/route route)]
+   :post [(spec/valid? :sd.ui.nav/menu %)]}
+  {:menu menu
+   :route route})
 
 (re-frame/reg-sub
   :sd.ui.nav/menu
   :<- [:sd.ui/menu]
   :<- [:sd.routes/route]
-  (fn nav-menu-sub
-    [[menu route]]
-    {:menu menu
-     :route route}))
+  nav-menu-sub)

@@ -1,12 +1,12 @@
 (ns steamdating.services.routes
   (:import goog.History)
-  (:require [goog.events :as events]
+  (:require [cljs.spec.alpha :as spec]
+            [goog.events :as events]
             [goog.history.EventType :as EventType]
             [re-frame.core :as re-frame]
             [secretary.core :as secretary]
             [steamdating.services.db :as db]
-            [steamdating.services.debug :refer [debug?]]
-            [cljs.spec.alpha :as spec]))
+            [steamdating.services.debug :refer [debug?]]))
 
 
 (defonce history (History.))
@@ -80,6 +80,8 @@
 
 (defn page-sub
   [db]
+  {:pre [(spec/valid? :sd.db/db db)]
+   :post [(spec/valid? :sd.route/route %)]}
   (:route db))
 
 (re-frame/reg-sub
@@ -89,6 +91,8 @@
 
 (defn hash-sub
   [route]
+  {:pre [(spec/valid? :sd.route/route route)]
+   :post [(spec/valid? :sd.route/hash %)]}
   (get route :hash ""))
 
 (re-frame/reg-sub
