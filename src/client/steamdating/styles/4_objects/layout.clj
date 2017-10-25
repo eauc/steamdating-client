@@ -7,8 +7,7 @@
   [:& {:display :flex
        :flex-direction :column
        :height "100vh"}
-   [:.page {:display :flex
-            :flex-direction :column
-            :flex-grow 1
-            :justify-content :space-around}
-    [:.loading {:text-align :center}]]])
+   [:.nav {:flex-grow 0
+           :flex-shrink 0}]
+   [:.page {:flex-grow 1
+            :flex-shrink 1}]])

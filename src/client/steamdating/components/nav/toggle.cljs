@@ -6,5 +6,5 @@
 (defn nav-toggle
   [{:keys [menu]}]
   [:button.toggle
-   {:on-click #(re-frame/dispatch [:sd.ui.menu/set (if-not (= :nav menu) :nav nil)])}
+   {:on-click #(when-not (= :nav menu) (re-frame/dispatch [:sd.ui.menu/set :nav]))}
    [icon {:name "more-vertical"}]])

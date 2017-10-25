@@ -30,16 +30,16 @@
   menu-sub)
 
 
-(defn nav-menu-sub
+(defn menu-route-sub
   [[menu route]]
   {:pre [(spec/valid? :sd.ui/menu menu)
          (spec/valid? :sd.route/route route)]
-   :post [(spec/valid? :sd.ui.nav/menu %)]}
+   :post [(spec/valid? :sd.ui/menu-route %)]}
   {:menu menu
    :route route})
 
 (re-frame/reg-sub
-  :sd.ui.nav/menu
+  :sd.ui/menu-route
   :<- [:sd.ui/menu]
   :<- [:sd.routes/route]
-  nav-menu-sub)
+  menu-route-sub)

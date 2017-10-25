@@ -7,7 +7,7 @@
             [steamdating.services.ui]))
 
 
-(defmulti nav-menu-content :page)
+(defmulti nav-menu-content #(get-in % [:route :page]))
 
 
 (defn content-height
@@ -23,7 +23,7 @@
 
 (defn nav-menu
 	[{:keys [show?]}]
-	(let [state (re-frame/subscribe [:sd.ui.nav/menu])
+	(let [state (re-frame/subscribe [:sd.ui/menu-route])
         local-state (reagent/atom {})]
 		(fn nav-menu-render
 			[]
@@ -34,7 +34,7 @@
 
 
 (defmethod nav-menu-content :default
-	[{{:keys [hash]} :route}]
+	[{ {:keys [hash]} :route}]
 	[:div.content
 	 (when debug?
 		 [nav-link {:hash hash

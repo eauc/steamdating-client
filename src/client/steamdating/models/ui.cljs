@@ -11,7 +11,7 @@
   (spec/keys :req-un [:sd.ui/menu]))
 
 
-(spec/def :sd.ui.nav/menu
+(spec/def :sd.ui/menu-route
   (spec/keys :req-un [:sd.ui/menu
                       :sd.route/route]))
 

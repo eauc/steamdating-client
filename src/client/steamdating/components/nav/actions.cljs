@@ -6,12 +6,12 @@
             [steamdating.services.ui]))
 
 
-(defmulti nav-actions-content :page)
+(defmulti nav-actions-content #(get-in % [:route :page]))
 
 
 (defn nav-actions
 	[]
-	(let [state (re-frame/subscribe [:sd.ui.nav/menu])]
+	(let [state (re-frame/subscribe [:sd.ui/menu-route])]
 		(fn nav-actions-render
 			[]
 			(nav-actions-content @state))))

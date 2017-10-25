@@ -5,7 +5,10 @@
             [steamdating.styles.3-elements.text :refer [text]]
             [steamdating.styles.4-objects.icon :refer [icon]]
             [steamdating.styles.4-objects.layout :refer [layout]]
-            [steamdating.styles.4-objects.nav :refer [nav]]))
+            [steamdating.styles.4-objects.nav :refer [nav]]
+            [steamdating.styles.4-objects.page :refer [page]]
+            [steamdating.styles.6-pages.loading :refer [page-loading]]
+            [steamdating.styles.6-pages.unknown :refer [page-unknown]]))
 
 
 (gdef/defstyles screen
@@ -14,4 +17,7 @@
   [:.sd
    icon
    layout
-   nav])
+   nav
+   page
+   page-loading
+   page-unknown])

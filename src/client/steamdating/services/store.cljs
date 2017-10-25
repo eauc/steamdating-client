@@ -11,11 +11,9 @@
 
 (defn get-local-storage
   []
-  (debug/spy
-    ">>> get local-storage"
-    (-> js/localStorage
-        (.getItem local-storage-key)
-        (reader/read-string))))
+  (-> js/localStorage
+      (.getItem local-storage-key)
+      (reader/read-string)))
 
 
 (re-frame/reg-cofx
@@ -27,7 +25,6 @@
 
 (defn set-local-storage
   [state]
-  (debug/log "<<< set local-storage" state)
   (->> (pr-str state)
        (.setItem js/localStorage local-storage-key)))
 
