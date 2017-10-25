@@ -3,6 +3,7 @@
             [expound.alpha :refer [expound-str]]
             [re-frame.core :as re-frame]
             [steamdating.models.route :refer [->route]]
+            [steamdating.models.toaster]
             [steamdating.models.ui :refer [->ui]]
             [steamdating.services.debug :refer [debug?]]
             [steamdating.services.store :refer [store-db-interceptor]]))
@@ -10,7 +11,8 @@
 
 (spec/def :sd.db/db
   (spec/keys :req-un [:sd.route/route
-                      :sd.ui/ui]))
+                      :sd.ui/ui]
+             :opt-un [:sd.db/toaster]))
 
 
 (defn check-db-schema

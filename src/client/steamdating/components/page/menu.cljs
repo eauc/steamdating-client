@@ -31,8 +31,7 @@
           [:div]
           [:div.menu {:style {:right (if show? "0px" (str "-" width))}
                       :ref #(when %
-                              (swap! local-state assoc :width
-                                     (debug/spy "menu-width" (menu-width %))))}
+                              (swap! local-state assoc :width (menu-width %)))}
            [page-menu-toggle {:menu-width width
                               :show? show?}]
            items])))))

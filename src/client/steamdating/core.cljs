@@ -5,6 +5,7 @@
             [steamdating.components.nav.actions :refer [nav-actions]]
             [steamdating.components.nav.menu :refer [nav-menu]]
             [steamdating.components.page.content :refer [page]]
+            [steamdating.components.toaster.toaster :refer [toaster]]
             [steamdating.services.debug :as debug]
             [steamdating.services.db :as db]
             [steamdating.services.routes :refer [routes-init]]
@@ -19,7 +20,9 @@
   (reagent/render [nav-menu]
                   (.querySelector js/document ".sd .nav .menu"))
   (reagent/render [page]
-                  (.querySelector js/document ".sd .page")))
+                  (.querySelector js/document ".sd .page"))
+  (reagent/render [toaster]
+                  (.querySelector js/document ".sd .toaster")))
 
 
 (defn ^:export init
