@@ -2,6 +2,7 @@
   (:require [garden.def :as gdef]
             [garden.stylesheet :as gstyle]
             [steamdating.styles.0-settings.box-model :refer [box-model]]
+            [steamdating.styles.0-settings.break :refer [at-break]]
             [steamdating.styles.0-settings.colors :refer [colors]]))
 
 
@@ -9,16 +10,22 @@
   [:.page {:display :flex
            :flex-direction :column
            :position :relative}
+
+
    [:.container {:align-items :stretch
                  :display :flex
                  :flex-direction :row
                  :flex-grow 1
                  :overflow :auto}
+
+
     [:.content {:display :flex
                 :flex-direction :column
                 :flex-grow 1
                 :padding-left (:padding box-model)
                 :padding-right (:padding box-model)}]
+
+
     [:.menu {:background-color "white"
              :box-shadow (:box-shadow box-model)
              :box-sizing :border-box
@@ -32,6 +39,8 @@
              :right 0
              :transition "right 0.25s"
              :top 0}
+
+
      [:.toggle {:align-items "center"
                 :background-color "white"
                 :bottom "1.75em"
@@ -48,7 +57,12 @@
                 :height "2em"
                 :right 0
                 :transition "right 0.25s"
-                :width "2em"}]
+                :width "2em"}
+      (at-break
+        :tablet
+        [:& {:display :none}])]
+
+
      [:.item {:background-color :transparent
               :border 0
               :padding (:padding box-model)
@@ -56,4 +70,18 @@
       [:&.active
        :&:hover
        :&:focus {:background-color (:hover colors)
-                 :outline :none}]]]]])
+                 :outline :none}]]
+
+
+     (at-break
+       :tablet
+       [:& {:box-shadow :none
+            :min-width 0
+            :position :initial}
+        [:.item {:text-align :right}]])
+
+
+     (at-break
+       :pc
+       [:& {:padding (:padding-large box-model)}
+        [:.item {:padding (:padding-large box-model)}]])]]])

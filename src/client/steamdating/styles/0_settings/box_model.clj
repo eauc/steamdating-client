@@ -7,4 +7,5 @@
    :border-radius "3px"
    :box-shadow (str "0px 1px 3px 0px " (gcomp/render-css (:shadow colors)))
    :padding "0.5em"
+   :padding-large "1em"
    :margin "0.5em"})

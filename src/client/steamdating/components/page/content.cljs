@@ -11,9 +11,9 @@
 (defn page
   []
   [:div.container
+   [page-menu]
    [:div.content
-    (page-content @(re-frame/subscribe [:sd.ui/menu-route]))]
-   [page-menu]])
+    (page-content @(re-frame/subscribe [:sd.ui/menu-route]))]])
 
 
 (defmethod page-content :default
