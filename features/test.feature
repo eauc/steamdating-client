@@ -1,10 +1,10 @@
-Feature: Home Page Tests
+Feature: Basic UI Tests
 
   Background:
     Given I open Home page
 
   Scenario: Test Toaster
-    When I test the "Toaster"
+    When I test the "Toaster Success"
     Then the Toaster appears with a test message
 
   Scenario: Test Alert

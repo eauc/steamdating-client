@@ -18,10 +18,11 @@
                     (on-validate))}
       [:div.message message]
       (when (= type :prompt)
-        [form-input {:type (if (number? value) :number :text)
-                     :value value
+        [form-input {:autofocus? true
                      :on-update on-update
-                     :autofocus? true}])
+                     :name "value"
+                     :type (if (number? value) :number :text)
+                     :value value}])
       [:div.controls
        [:button.sd-button.success
         [:span "Ok "]

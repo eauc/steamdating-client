@@ -10,7 +10,9 @@ module Pages
     end
 
     def test(feature)
-      click_on("Test #{feature}")
+      within(PAGE_MENU) do
+        click_on("Test #{feature}")
+      end
       self
     end
   end
