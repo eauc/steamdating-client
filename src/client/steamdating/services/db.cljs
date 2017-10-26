@@ -2,6 +2,7 @@
   (:require [cljs.spec.alpha :as spec]
             [expound.alpha :refer [expound-str]]
             [re-frame.core :as re-frame]
+            [steamdating.models.prompt]
             [steamdating.models.route :refer [->route]]
             [steamdating.models.toaster]
             [steamdating.models.ui :refer [->ui]]
@@ -12,7 +13,8 @@
 (spec/def :sd.db/db
   (spec/keys :req-un [:sd.route/route
                       :sd.ui/ui]
-             :opt-un [:sd.db/toaster]))
+             :opt-un [:sd.prompt/prompt
+                      :sd.toaster/toaster]))
 
 
 (defn check-db-schema

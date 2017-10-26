@@ -3,7 +3,8 @@
 						[secretary.core :refer [defroute]]
 						[steamdating.components.page.content :refer [page-content]]
 						[steamdating.components.page.menu :refer [page-menu-items]]
-						[steamdating.services.debug :as debug]))
+						[steamdating.services.db :as db]
+            [steamdating.services.debug :as debug]))
 
 
 (defroute home "/home" {}
@@ -104,3 +105,11 @@
 										 :on-validate [::test-prompt "prompt-ok"]
 										 :on-cancel [::test-prompt "prompt-cancel"]}])}
 		 "Test Prompt"]))
+
+
+(db/reg-event-fx
+  ::test-prompt
+  (fn test-prompt
+    [_ [msg value]]
+    {:dispatch [:sd.toaster/set {:type :info
+                                 :message (str msg (when (some? value) (str " : " value)))}]}))

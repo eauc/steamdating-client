@@ -34,12 +34,12 @@
              :top 0}
      [:.toggle {:align-items "center"
                 :background-color "white"
-                :bottom "15px"
+                :bottom "1.75em"
+                :border-bottom-left-radius "1em"
                 :border-color "#CCC"
                 :border-right-color :white
                 :border-style "solid"
-                :border-bottom-left-radius "0.5em"
-                :border-top-left-radius "0.5em"
+                :border-top-left-radius "1em"
                 :border-width "1px 0 1px 1px"
                 :display :flex
                 :font-size "1.4em"

@@ -18,7 +18,8 @@
               :color (:text-inverted colors)
               :font-weight "bold"}
    [:.content {:opacity 0
-               :padding (:padding box-model)}
+               :padding (:padding box-model)
+               :transition "opacity 0.2s, background-color 0.2s"}
     [:&.success
      :&.warn
      :&.error

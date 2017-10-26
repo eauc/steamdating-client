@@ -11,7 +11,8 @@
            :box-shadow (:box-shadow box-model)
            :display :flex
            :flex-direction :row
-           :flex-wrap :wrap}
+           :flex-wrap :wrap
+           :z-index 1000}
     [:.brand {:color (:text-inverted colors)
               :flex-grow 1
               :font-family :Cookie

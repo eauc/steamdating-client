@@ -5,6 +5,7 @@
             [steamdating.components.nav.actions :refer [nav-actions]]
             [steamdating.components.nav.menu :refer [nav-menu]]
             [steamdating.components.page.content :refer [page]]
+            [steamdating.components.prompt.prompt :refer [prompt]]
             [steamdating.components.toaster.toaster :refer [toaster]]
             [steamdating.services.debug :as debug]
             [steamdating.services.db :as db]
@@ -21,6 +22,8 @@
                   (.querySelector js/document ".sd .nav .menu"))
   (reagent/render [page]
                   (.querySelector js/document ".sd .page"))
+  (reagent/render [prompt]
+                  (.querySelector js/document ".sd .overlay"))
   (reagent/render [toaster]
                   (.querySelector js/document ".sd .toaster")))
 
