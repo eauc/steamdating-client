@@ -7,7 +7,7 @@
 
 
 (spec/def :sd.toaster/message
-  (spec/and string? not-empty?))
+  (spec/and string? not-empty))
 
 
 (spec/def :sd.toaster/toaster

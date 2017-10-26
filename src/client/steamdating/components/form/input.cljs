@@ -31,8 +31,13 @@
        [:input.value
         (-> props
             (dissoc :autofocus? :on-update)
+            (assoc :type (if (some? type)
+                           type
+                           (if (number? (:value @state))
+                             :number
+                             :text)))
             (assoc :on-change #(let [raw-value (-> % .-target .-value)
-                                     new-value (if (= type :number)
+                                     new-value (if (number? (:value @state))
                                                  (int raw-value)
                                                  raw-value)]
                                  (swap! state assoc :value new-value)
