@@ -1,4 +1,4 @@
-(ns steamdating.styles.4-objects.nav
+(ns steamdating.styles.5-components.nav
   (:require [garden.def :as gdef]
             [garden.stylesheet :as gstyle]
             [steamdating.styles.0-settings.box-model :refer [box-model]]

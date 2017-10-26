@@ -1,4 +1,4 @@
-(ns steamdating.styles.4-objects.layout
+(ns steamdating.styles.5-components.layout
   (:require [garden.def :as gdef]
             [garden.stylesheet :as gstyle]))
 
