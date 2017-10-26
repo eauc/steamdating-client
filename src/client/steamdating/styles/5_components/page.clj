@@ -23,7 +23,10 @@
                 :flex-direction :column
                 :flex-grow 1
                 :padding-left (:padding box-model)
-                :padding-right (:padding box-model)}]
+                :padding-right (:padding box-model)} 
+     (at-break
+       :pc
+       [:& {:padding (:padding-large box-model)}])]
 
 
     [:.menu {:background-color "white"

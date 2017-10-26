@@ -1,0 +1,536 @@
+[
+  {
+    "name": "Aaron Jones",
+    "faction": "Retribution of Scyrah",
+    "cccode": "c55b1bg01g0v0v0v9v3y3y3yfW2V313u2V3ugs___-0hb-4G2w2w2w2w2wgjd_3y3y3y4Lgv",
+    "list1": {
+      "list": [
+        "Helynna 1",
+        "Chimera",
+        "Manticore",
+        "Manticore",
+        "Manticore",
+        "Sylys Wyshnalyrr, The Seeker",
+        "Arcanist Mechanik",
+        "Arcanist Mechanik",
+        "Arcanist Mechanik",
+        "Lys Healer",
+        "Dawnguard Sentinels (max)",
+        "Dawnguard Sentinel Officer & Standard",
+        "Soulless Escort (1)",
+        "Dawnguard Sentinels (max)",
+        "Soulless Escort (1)",
+        "Bunker (Objective)"
+      ]
+    },
+    "list2": {
+      "theme": "Forges of War",
+      "list": [
+        "Vyros 2",
+        "Aspis",
+        "Griffon",
+        "Griffon",
+        "Griffon",
+        "Griffon",
+        "Griffon",
+        "Helios",
+        "Imperatus",
+        "Arcanist Mechanik",
+        "Arcanist Mechanik",
+        "Arcanist Mechanik",
+        "House Shyeel Artificer",
+        "Stockpile (Objective)"
+      ]
+    }
+  },
+  {
+    "name": "Adam Tricola",
+    "faction": "Circle Orboros",
+    "cccode": "c85b1b5v4BgZ4M4H4H4H5e5e5f5f4Zgu__4m4OgZcng45e5e5f4Zgu",
+    "list1": {
+      "list": [
+        "Wurmwood 1",
+        "Gorax Rager",
+        "Loki",
+        "Pureblood Warpwolf",
+        "Woldwyrd",
+        "Woldwyrd",
+        "Woldwyrd",
+        "Sentry Stone & Mannikins",
+        "Sentry Stone & Mannikins",
+        "Shifting Stones",
+        "Shifting Stones",
+        "Tharn Bloodtrackers (max)",
+        "Fuel Cache (Objective)"
+      ]
+    },
+    "list2": {
+      "list": [
+        "Baldur 1",
+        "Feral Warpwolf",
+        "Loki",
+        "Woldwrath",
+        "Blackclad Stoneshaper",
+        "Sentry Stone & Mannikins",
+        "Sentry Stone & Mannikins",
+        "Shifting Stones",
+        "Tharn Bloodtrackers (max)",
+        "Fuel Cache (Objective)"
+      ]
+    }
+  },
+  {
+    "name": "Alex Clark",
+    "faction": "Protectorate of Menoth",
+    "cccode": "c25b1b_-0E1l1r223U3t3B2s2mbQ2jfV2jfV3jgt___-0c3K3N1S1S223S3z3B3B302M2MdSgv",
+    "list1": {
+      "theme": "Exemplar Interdiction",
+      "list": [
+        "Vindictus 1",
+        "Devout",
+        "Reckoner",
+        "Sanctifier",
+        "Vassal Mechanik",
+        "Wrack",
+        "Exemplar Cinerators (max)",
+        "Exemplar Errants (max)",
+        "Exemplar Errant Officer & Standard",
+        "Knights Exemplar",
+        "Knights Exemplar Officer",
+        "Knights Exemplar",
+        "Knights Exemplar Officer",
+        "Visgoth Juviah Rhoven & Honor Guard",
+        "Effigy of Valor (Objective)"
+      ]
+    },
+    "list2": {
+      "theme": "Guardians of the Temple",
+      "list": [
+        "Thyra 1",
+        "Blood of Martyrs",
+        "Castigator",
+        "Castigator",
+        "Reckoner",
+        "Nicia, Tear of Vengeance",
+        "Vassal of Menoth",
+        "Wrack",
+        "Wrack",
+        "Choir of Menoth (max)",
+        "Daughters of the Flame",
+        "Daughters of the Flame",
+        "Flame Bringers (max)",
+        "Stockpile (Objective)"
+      ]
+    }
+  },
+  {
+    "name": "Andrew King",
+    "faction": "Convergence of Cyriss",
+    "cccode": "cc5b1b_-0id3_Ydmd7dBd6_Ydadadb_YdCdedgdgdg_YdzdFgr___-0id8_Ydmd7dndndBd4d5d9d9d9dddCdedfdgdg_YdFgs",
+    "list1": {
+      "theme": "Destruction Initiative",
+      "list": [
+        "Syntherion 1",
+        "(S) Assimilator",
+        "Cipher",
+        "Corollary",
+        "Mitigator",
+        "(S) Monitor",
+        "Monitor",
+        "Prime Axiom",
+        "(S) Algorithmic Dispersion Optifex",
+        "Attunement Servitors",
+        "Reflex Servitors",
+        "Reflex Servitors",
+        "Reflex Servitors",
+        "(S) Optifex Directive",
+        "Transfinite Emergence Projector",
+        "Armory (Objective)"
+      ]
+    },
+    "list2": {
+      "theme": "Destruction Initiative",
+      "list": [
+        "Axis 1",
+        "(S) Assimilator",
+        "Cipher",
+        "Conservator",
+        "Conservator",
+        "Corollary",
+        "Diffuser",
+        "Galvanizer",
+        "Inverter",
+        "Inverter",
+        "Inverter",
+        "Accretion Servitors",
+        "Algorithmic Dispersion Optifex",
+        "Attunement Servitors",
+        "Elimination Servitors",
+        "Reflex Servitors",
+        "Reflex Servitors",
+        "(S) Transfinite Emergence Projector",
+        "Bunker (Objective)"
+      ]
+    }
+  },
+  {
+    "name": "Andy Shellenbarger",
+    "faction": "Khador",
+    "cccode": "c35b1b_-0x790d0d7s7shF7whF7p8r8G8egq___-0f76c2c2867Z7Z7-aFgr",
+    "list1": {
+      "theme": "Jaws of the Wolf",
+      "list": [
+        "Irusk 2",
+        "Juggernaut",
+        "Juggernaut",
+        "Kodiak",
+        "Kodiak",
+        "Greylord Forge Seer",
+        "Behemoth",
+        "Greylord Forge Seer",
+        "Destroyer",
+        "Widowmaker Marksman",
+        "Kayazy Eliminators",
+        "Widowmaker Scouts",
+        "Arcane Wonder (Objective)"
+      ]
+    },
+    "list2": {
+      "theme": "Winter Guard Kommand",
+      "list": [
+        "Vladimir 1",
+        "Conquest",
+        "Conquest",
+        "Battle Mechaniks (min)",
+        "Winter Guard Field Gun Crew",
+        "Winter Guard Field Gun Crew",
+        "Winter Guard Mortar Crew",
+        "Winter Guard Gun Carriage",
+        "Armory (Objective)"
+      ]
+    }
+  },
+  {
+    "name": "Anthony Williams",
+    "faction": "Legion of Everblight",
+    "cccode": "ca5b1beweJbwbgaOaRbubbcococob9b9gq___-0tgNaPaPbveJeJaMaObubeb9bkgv",
+    "list1": {
+      "list": [
+        "Absylonia 2",
+        "Neraph",
+        "Proteus",
+        "Scythean",
+        "Seraph",
+        "Typhon",
+        "Succubus",
+        "Blighted Nyss Shepherd",
+        "Spell Martyr",
+        "Spell Martyr",
+        "Spell Martyr",
+        "The Forsaken",
+        "The Forsaken",
+        "Arcane Wonder (Objective)"
+      ]
+    },
+    "list2": {
+      "theme": "Oracles of Annihilation",
+      "list": [
+        "Fyanna 2",
+        "Angelius",
+        "Angelius",
+        "Naga Nightlurker",
+        "Neraph",
+        "Neraph",
+        "Raek",
+        "Seraph",
+        "Succubus",
+        "Blighted Nyss Sorceress & Hellion",
+        "The Forsaken",
+        "Blighted Nyss Hex Hunters (max)",
+        "Stockpile (Objective)"
+      ]
+    }
+  },
+  {
+    "name": "Austin Mills",
+    "faction": "Trollbloods",
+    "cccode": "c75b1b_-0b020r0resc67dfJfJ0k0mgu___-0bfLfmc6cz0h7dfJfJfp0k0mgu",
+    "list1": {
+      "theme": "The Power of Dhunia",
+      "list": [
+        "Gunnbjorn 1",
+        "Dire Troll Bomber",
+        "Dire Troll Bomber",
+        "Dozer & Smigg",
+        "Mountain King",
+        "Janissa Stonetide",
+        "Northkin Shaman",
+        "Northkin Shaman",
+        "Krielstone Bearer & Stone Scribes (min)",
+        "Stone Scribe Elder",
+        "Fuel Cache (Objective)"
+      ]
+    },
+    "list2": {
+      "theme": "The Power of Dhunia",
+      "list": [
+        "Ragnor 1",
+        "Glacier King",
+        "Mountain King",
+        "Night Troll",
+        "Troll Axer",
+        "Janissa Stonetide",
+        "Northkin Shaman",
+        "Northkin Shaman",
+        "Dhunian Knot",
+        "Krielstone Bearer & Stone Scribes (min)",
+        "Stone Scribe Elder",
+        "Fuel Cache (Objective)"
+      ]
+    }
+  },
+  {
+    "name": "Chris Gilligan",
+    "faction": "Cygnar",
+    "cccode": "c15b1beSav9A9vazanaj9baparad9T9Wgs__9a9E9g9k9k7i2T7jan3Wag7_a49T9Wgr",
+    "list1": {
+      "list": [
+        "Haley 3",
+        "Gallant",
+        "Thorn",
+        "Sylys Wyshnalyrr, The Seeker",
+        "Archduke Alain Runewood, Lord of Fharin",
+        "Captain Arlan Strangewayes",
+        "Journeyman Warcaster",
+        "Charger",
+        "Precursor Knights (min)",
+        "Precursor Knight Officer & Standard Bearer",
+        "Storm Lances (max)",
+        "Trencher Infantry (min)",
+        "Trencher Infantry Rifle Grenadier (1)",
+        "Bunker (Objective)"
+      ]
+    },
+    "list2": {
+      "list": [
+        "Sloan 1",
+        "Defender",
+        "Grenadier",
+        "Hunter",
+        "Hunter",
+        "Reinholdt, Gobber Speculator",
+        "Alten Ashley",
+        "Anastasia di Bray",
+        "Captain Arlan Strangewayes",
+        "Eiryss, Mage Hunter of Ios",
+        "Gun Mage Captain Adept",
+        "Taryn di la Rovissi, Llaelese Gun Mage",
+        "Rangers",
+        "Trencher Infantry (min)",
+        "Trencher Infantry Rifle Grenadier (1)",
+        "Armory (Objective)"
+      ]
+    }
+  },
+  {
+    "name": "Chris Parker",
+    "faction": "Skorne",
+    "cccode": "c95b1b3Z6U4x4y5J5G6N6vfC7y6w6w5U6Xgt__6P6r6U6U4D4y5G6A6A5U5Ugv",
+    "list1": {
+      "list": [
+        "Morghoul 2",
+        "Archidon",
+        "Basilisk Krea",
+        "Cyclops Brute",
+        "Molik Karn",
+        "Titan Gladiator",
+        "Aptimus Marketh",
+        "Extoller Soulward",
+        "Hutchuck, Ogrun Bounty Hunter",
+        "Orin Midwinter, Rogue Inquisitor",
+        "Paingiver Bloodrunner Master Tormentor",
+        "Paingiver Bloodrunner Master Tormentor",
+        "Paingiver Beast Handlers (min)",
+        "Venator Slingers (max)",
+        "Effigy of Valor (Objective)"
+      ]
+    },
+    "list2": {
+      "list": [
+        "Naaresh 1",
+        "Agonizer",
+        "Archidon",
+        "Archidon",
+        "Bronzeback Titan",
+        "Cyclops Brute",
+        "Titan Gladiator",
+        "Titan Sentry",
+        "Titan Sentry",
+        "Paingiver Beast Handlers (min)",
+        "Paingiver Beast Handlers (min)",
+        "Stockpile (Objective)"
+      ]
+    }
+  },
+  {
+    "name": "Egan Metzger",
+    "faction": "Mercenaries",
+    "cccode": "c65b1bb_9o94dO7i8P7z9egmgr__8-9o94dO929l7z9egmgr",
+    "list1": {
+      "list": [
+        "Ossrum 1",
+        "Ghordson Basher",
+        "Ghordson Driller",
+        "Ghordson Earthbreaker",
+        "Reinholdt, Gobber Speculator",
+        "Dirty Meg",
+        "Rhupert Carvolo, Piper of Ord",
+        "Horgenhold Forge Guard (max)",
+        "Hammerfall Siege Crawler",
+        "Armory (Objective)"
+      ]
+    },
+    "list2": {
+      "list": [
+        "Gorten 1",
+        "Ghordson Basher",
+        "Ghordson Driller",
+        "Ghordson Earthbreaker",
+        "Grundback Blaster",
+        "Madelyn Corbeau, Ordic Courtesan",
+        "Rhupert Carvolo, Piper of Ord",
+        "Horgenhold Forge Guard (max)",
+        "Hammerfall Siege Crawler",
+        "Armory (Objective)"
+      ]
+    }
+  },
+  {
+    "name": "James Laird",
+    "faction": "Protectorate of Menoth",
+    "cccode": "c25b1b_-0deU1rc124241L3q3C3t3z3z303jgr___-0d0yc1221Ge41G1G3C3z3z3B303jgr",
+    "list1": {
+      "theme": "The Creator's Might",
+      "list": [
+        "Durst 1",
+        "Devout",
+        "Judicator",
+        "Templar",
+        "Templar",
+        "Vigilant",
+        "Hierophant",
+        "The Covenant of Menoth",
+        "Vassal Mechanik",
+        "Vassal of Menoth",
+        "Vassal of Menoth",
+        "Choir of Menoth (max)",
+        "Visgoth Juviah Rhoven & Honor Guard",
+        "Armory (Objective)"
+      ]
+    },
+    "list2": {
+      "theme": "The Creator's Might",
+      "list": [
+        "Kreoss 1",
+        "Judicator",
+        "Reckoner",
+        "Redeemer",
+        "Initiate Tristan Durant",
+        "Redeemer",
+        "Redeemer",
+        "The Covenant of Menoth",
+        "Vassal of Menoth",
+        "Vassal of Menoth",
+        "Wrack",
+        "Choir of Menoth (max)",
+        "Visgoth Juviah Rhoven & Honor Guard",
+        "Armory (Objective)"
+      ]
+    }
+  },
+  {
+    "name": "Jason Shrum",
+    "faction": "Cryx",
+    "cccode": "c45b1b_-0w0Z1w191u1u2AhC3hd-2B26gu___-0g0x19191h1h2DhC2t2b203g203g203fbBgs",
+    "list1": {
+      "theme": "Infernal Machines",
+      "list": [
+        "Coven 1",
+        "Deathjack",
+        "Deathripper",
+        "Seether",
+        "Seether",
+        "Skarlock Thrall",
+        "Hellslinger Phantom",
+        "Iron Lich Overseer",
+        "Inflictor",
+        "Warwitch Siren",
+        "Soulhunters (max)",
+        "Fuel Cache (Objective)"
+      ]
+    },
+    "list2": {
+      "theme": "The Ghost Fleet",
+      "list": [
+        "Deneghra 1",
+        "Deathripper",
+        "Deathripper",
+        "Stalker",
+        "Stalker",
+        "Captain Rengrave",
+        "Hellslinger Phantom",
+        "Pistol Wraith",
+        "Blackbane's Ghost Raiders (max)",
+        "Revenant Crew of the Atramentous (min)",
+        "Revenant Crew Rifleman (3)",
+        "Revenant Crew of the Atramentous (min)",
+        "Revenant Crew Rifleman (3)",
+        "Revenant Crew of the Atramentous (min)",
+        "Revenant Crew Rifleman (2)",
+        "Wraith Engine",
+        "Bunker (Objective)"
+      ]
+    }
+  },
+  {
+    "name": "Matt La Croix",
+    "faction": "Minions",
+    "cccode": "cb5b1b454c4cfAeN0Ofl0Ofleqgs___-09bZfycwcw0L0L2TeMeMfF4j0Ofl0S0Sgs",
+    "list1": {
+      "list": [
+        "Calaban 1",
+        "Blackhide Wrastler",
+        "Blackhide Wrastler",
+        "Blind Walker",
+        "Maximus",
+        "Farrow Brigands (max)",
+        "Farrow Brigand Warlord",
+        "Farrow Brigands (max)",
+        "Farrow Brigand Warlord",
+        "Sacral Vault",
+        "Bunker (Objective)"
+      ]
+    },
+    "list2": {
+      "theme": "The Thornfall Alliance",
+      "list": [
+        "Sturm 1 & Drang 1",
+        "Battle Boar",
+        "Razor Boar (2)",
+        "Razor Boar (2)",
+        "War Hog",
+        "War Hog",
+        "Alten Ashley",
+        "Efaarit Scouts",
+        "Efaarit Scouts",
+        "Swamp Gobber Chef",
+        "Viktor Pendrake",
+        "Farrow Brigands (max)",
+        "Farrow Brigand Warlord",
+        "Farrow Slaughterhousers",
+        "Farrow Slaughterhousers",
+        "Bunker (Objective)"
+      ]
+    }
+  }
+]

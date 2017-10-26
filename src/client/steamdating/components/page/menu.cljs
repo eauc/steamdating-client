@@ -30,7 +30,7 @@
         (if (empty? items)
           [:div]
           [:div.menu {:style {:right (if show? "0px" (str "-" width))}
-                      :ref #(when %
+                      :ref #(when (some? %)
                               (swap! local-state assoc :width (menu-width %)))}
            [page-menu-toggle {:menu-width width
                               :show? show?}]

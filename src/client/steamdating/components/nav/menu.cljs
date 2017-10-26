@@ -28,7 +28,7 @@
 		(fn nav-menu-render
 			[]
       [:div.container {:style {:height (if (= :nav (:menu @state)) (:height @local-state) 0)}
-                       :ref #(when (and (some? %) (nil? (:height @local-state)))
+                       :ref #(when (some? %)
                                (swap! local-state assoc :height (content-height %)))}
        (nav-menu-content @state)])))
 
@@ -41,8 +41,8 @@
 								:target "#/home"}
 			"Home"])
 	 [nav-link {:hash hash
-							:target "#/file"}
-		"File"]
+							:target "#/data"}
+		"Data"]
 	 [nav-link {:hash hash
 							:target "#/online"}
 		"Online"]

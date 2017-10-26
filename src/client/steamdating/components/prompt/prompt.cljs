@@ -1,7 +1,7 @@
 (ns steamdating.components.prompt.prompt
   (:require [re-frame.core :as re-frame]
             [steamdating.components.form.input :refer [form-input]]
-            [steamdating.components.generics.icon :refer [icon]]
+            [steamdating.components.generics.button :refer [button]]
             [steamdating.services.prompt]))
 
 
@@ -24,15 +24,14 @@
                      :type (if (number? value) :number :text)
                      :value value}])
       [:div.controls
-       [:button.sd-button.success
-        [:span "Ok "]
-        [icon {:name "check"}]]
+       [button {:class "success"
+                :icon "check"
+                :label "Ok"
+                :type :submit}]
        (when (not= type :alert)
-         [:button.sd-button
-          {:type "button"
-           :on-click on-cancel}
-          [:span "No "]
-          [icon {:name "x"}]])]]]))
+         [button {:icon "x"
+                  :label "No"
+                  :on-click on-cancel}])]]]))
 
 
 (defn prompt

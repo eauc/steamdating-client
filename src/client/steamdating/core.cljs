@@ -1,6 +1,7 @@
 (ns steamdating.core
   (:require [reagent.core :as reagent]
             [re-frame.core :as re-frame]
+            [steamdating.pages.data]
             [steamdating.pages.home]
             [steamdating.components.nav.actions :refer [nav-actions]]
             [steamdating.components.nav.menu :refer [nav-menu]]

@@ -5,6 +5,7 @@
             [steamdating.models.prompt]
             [steamdating.models.route :refer [->route]]
             [steamdating.models.toaster]
+            [steamdating.models.tournament :refer [->tournament]]
             [steamdating.models.ui :refer [->ui]]
             [steamdating.services.debug :refer [debug?]]
             [steamdating.services.store :refer [store-db-interceptor]]))
@@ -12,6 +13,7 @@
 
 (spec/def :sd.db/db
   (spec/keys :req-un [:sd.route/route
+                      :sd.tournament/tournament
                       :sd.ui/ui]
              :opt-un [:sd.prompt/prompt
                       :sd.toaster/toaster]))
@@ -47,6 +49,7 @@
 
 (def default-db
   {:route (->route)
+   :tournament (->tournament)
    :ui (->ui)})
 
 

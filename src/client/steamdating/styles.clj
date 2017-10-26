@@ -4,6 +4,8 @@
             [steamdating.styles.2-generics.fonts :refer [fonts]]
             [steamdating.styles.3-elements.text :refer [text]]
             [steamdating.styles.4-objects.button :refer [button]]
+            [steamdating.styles.4-objects.file-open-button :refer [file-open-button]]
+            [steamdating.styles.4-objects.section-header :refer [section-header]]
             [steamdating.styles.5-components.icon :refer [icon]]
             [steamdating.styles.5-components.input :refer [input]]
             [steamdating.styles.5-components.layout :refer [layout]]
@@ -11,6 +13,8 @@
             [steamdating.styles.5-components.page :refer [page]]
             [steamdating.styles.5-components.prompt :refer [prompt]]
             [steamdating.styles.5-components.toaster :refer [toaster]]
+            [steamdating.styles.5-components.tournament-file-actions :refer [tournament-file-actions]]
+            [steamdating.styles.6-pages.data :refer [page-data]]
             [steamdating.styles.6-pages.loading :refer [page-loading]]
             [steamdating.styles.6-pages.unknown :refer [page-unknown]]))
 
@@ -20,12 +24,16 @@
   text
   [:.sd
    button
+   file-open-button
    icon
    input
    layout
    nav
    page
+   page-data
    page-loading
    page-unknown
    prompt
-   toaster])
+   section-header
+   toaster
+   tournament-file-actions])

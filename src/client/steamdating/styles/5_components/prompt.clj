@@ -29,7 +29,8 @@
                :padding (:padding box-model)}
 
     [:.message {:padding (:padding box-model)
-                :text-align :center}]
+                :text-align :center
+                :white-space :pre-line}]
 
     [:.controls {:display :flex
                  :flex-direction :row
