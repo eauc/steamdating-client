@@ -4,10 +4,11 @@
             [steamdating.styles.2-generics.fonts :refer [fonts]]
             [steamdating.styles.3-elements.text :refer [text]]
             [steamdating.styles.4-objects.button :refer [button]]
-            [steamdating.styles.4-objects.file-open-button :refer [file-open-button]]
             [steamdating.styles.4-objects.section-header :refer [section-header]]
             [steamdating.styles.5-components.icon :refer [icon]]
-            [steamdating.styles.5-components.input :refer [input]]
+            [steamdating.styles.5-components.file-open-button :refer [file-open-button]]
+            [steamdating.styles.5-components.form :refer [form]]
+            [steamdating.styles.5-components.form-input :refer [form-input]]
             [steamdating.styles.5-components.layout :refer [layout]]
             [steamdating.styles.5-components.nav :refer [nav]]
             [steamdating.styles.5-components.page :refer [page]]
@@ -25,8 +26,9 @@
   [:.sd
    button
    file-open-button
+   form
+   form-input
    icon
-   input
    layout
    nav
    page

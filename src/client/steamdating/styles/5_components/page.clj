@@ -23,7 +23,7 @@
                 :flex-direction :column
                 :flex-grow 1
                 :padding-left (:padding box-model)
-                :padding-right (:padding box-model)} 
+                :padding-right (:padding box-model)}
      (at-break
        :pc
        [:& {:padding (:padding-large box-model)}])]
@@ -69,7 +69,13 @@
      [:.item {:background-color :transparent
               :border 0
               :padding (:padding box-model)
+              :padding-bottom (:padding-large box-model)
+              :padding-top (:padding-large box-model)
+              :white-space :nowrap
               :text-align :left}
+      [:&.disabled {:color (:text-muted colors)
+                    :font-style :italic
+                    :pointer-events :none}]
       [:&.active
        :&:hover
        :&:focus {:background-color (:hover colors)
@@ -79,6 +85,7 @@
      (at-break
        :tablet
        [:& {:box-shadow :none
+            :flex-shrink 0
             :min-width 0
             :position :initial}
         [:.item {:text-align :right}]])

@@ -2,6 +2,8 @@
   (:require [cljs.spec.alpha :as spec]
             [expound.alpha :refer [expound-str]]
             [re-frame.core :as re-frame]
+            [steamdating.models.faction]
+            [steamdating.models.form]
             [steamdating.models.prompt]
             [steamdating.models.route :refer [->route]]
             [steamdating.models.toaster]
@@ -12,7 +14,9 @@
 
 
 (spec/def :sd.db/db
-  (spec/keys :req-un [:sd.route/route
+  (spec/keys :req-un [:sd.faction/factions
+                      :sd.form/forms
+                      :sd.route/route
                       :sd.tournament/tournament
                       :sd.ui/ui]
              :opt-un [:sd.prompt/prompt
@@ -48,7 +52,9 @@
 
 
 (def default-db
-  {:route (->route)
+  {:factions {}
+   :forms {}
+   :route (->route)
    :tournament (->tournament)
    :ui (->ui)})
 
@@ -61,9 +67,10 @@
     (let [stored-db (->> local-storage
                          (remove (fn [[k v]] (nil? v)))
                          (reduce (fn [m [k v]] (assoc m k v)) default-db))]
-      (if (spec/valid? :sd.db/db stored-db)
-        {:db stored-db}
-        {:db default-db}))))
+      {:db (if (spec/valid? :sd.db/db stored-db)
+             stored-db
+             default-db)
+       :dispatch-n [[:sd.factions/initialize]]})))
 
 
 (reg-event-fx

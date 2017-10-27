@@ -8,6 +8,8 @@
                  [org.clojure/clojurescript "1.9.908"]
                  [expound "0.3.1"]
                  [garden "1.3.3"]
+                 [day8.re-frame/http-fx "0.1.4"]
+                 [phrase "0.1-alpha1"]
                  [re-frame "0.10.2" :exclusions [reagent]]
                  [reagent "0.7.0"]
                  [secretary "1.2.3"]]

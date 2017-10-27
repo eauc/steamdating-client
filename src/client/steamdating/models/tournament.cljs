@@ -1,5 +1,6 @@
 (ns steamdating.models.tournament
-  (:require [cljs.spec.alpha :as spec]))
+  (:require [cljs.spec.alpha :as spec]
+            [steamdating.models.player]))
 
 
 (spec/def :sd.tournament/version
@@ -7,9 +8,11 @@
 
 
 (spec/def :sd.tournament/tournament
-  (spec/keys :req-un [:sd.tournament/version]))
+  (spec/keys :req-un [:sd.player/players
+                      :sd.tournament/version]))
 
 
 (defn ->tournament
   []
-  {:version 1})
+  {:players []
+   :version 1})

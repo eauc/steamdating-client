@@ -30,8 +30,9 @@
 
 
 (defn store-db
-  [{:keys [online filters tournament]}]
+  [{:keys [online filters forms tournament]}]
   (set-local-storage {:filters filters
+                      :forms forms
                       :online (select-keys online [:token])
                       :tournament tournament}))
 

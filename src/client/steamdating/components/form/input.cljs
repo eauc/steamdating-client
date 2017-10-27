@@ -16,31 +16,45 @@
 
 
 (defn form-input
-  [{:keys [autofocus? on-update value]}]
+  [{:keys [autofocus? element on-update value]
+    :or {element :input}}]
   (let [state (reagent/atom {:value value
+                             :initial-value value
                              :last-value value})
         on-change (debounce on-update 250)
         on-ref #(when (and (some? %) (nil? (:input @state)))
                   (swap! state assoc :input %)
                   (when autofocus? (.focus %)))]
     (fn form-input-render
-      [{:keys [type value] :as props}]
+      [{:keys [error label name type value] :as props}]
       (when-not (= value (:last-value @state))
         (swap! state merge {:value value :last-value value}))
-      [:div.sd-input
-       [:input.value
-        (-> props
-            (dissoc :autofocus? :on-update)
-            (assoc :type (if (some? type)
-                           type
-                           (if (number? (:value @state))
-                             :number
-                             :text)))
-            (assoc :on-change #(let [raw-value (-> % .-target .-value)
-                                     new-value (if (number? (:value @state))
-                                                 (int raw-value)
-                                                 raw-value)]
-                                 (swap! state assoc :value new-value)
-                                 (on-change new-value)))
-            (assoc :ref on-ref)
-            (assoc :value (:value @state)))]])))
+      (let [pristine? (= (:value @state) (:initial-value @state))
+            show-error? (and (not pristine?) (some? error))]
+        [:div.sd-input
+         ;; [:p (with-out-str (cljs.pprint/pprint {:props props
+         ;;                                        :state @state
+         ;;                                        :pristine? pristine?
+         ;;                                        :show-error? show-error?}))]
+         (when (some? label)
+           [:label {:for name} label])
+         [element
+          (-> props
+              (dissoc :autofocus? :element :error :label :on-update :value)
+              (assoc :class (str "value" (if show-error? " error" "")))
+              (assoc :id name)
+              (assoc :on-change #(let [raw-value (-> % .-target .-value)
+                                       new-value (if (number? (:value @state))
+                                                   (int raw-value)
+                                                   raw-value)]
+                                   (swap! state assoc :value new-value)
+                                   (on-change new-value)))
+              (assoc :ref on-ref)
+              (assoc :type (if (some? type)
+                             type
+                             (if (number? (:value @state))
+                               :number
+                               :text)))
+              (assoc :value (:value @state)))]
+         (when show-error?
+           [:p.input-info.error error])]))))

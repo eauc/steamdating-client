@@ -3,6 +3,8 @@
             [re-frame.core :as re-frame]
             [steamdating.pages.data]
             [steamdating.pages.home]
+            [steamdating.pages.players-create]
+            [steamdating.pages.players-list]
             [steamdating.components.nav.actions :refer [nav-actions]]
             [steamdating.components.nav.menu :refer [nav-menu]]
             [steamdating.components.page.content :refer [page]]
@@ -10,6 +12,7 @@
             [steamdating.components.toaster.toaster :refer [toaster]]
             [steamdating.services.debug :as debug]
             [steamdating.services.db :as db]
+            [steamdating.services.factions]
             [steamdating.services.routes :refer [routes-init]]
             [steamdating.services.ui :refer [ui-init]]))
 
