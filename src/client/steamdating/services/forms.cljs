@@ -18,7 +18,7 @@
   [(re-frame/path :forms)]
   (fn update
     [{:keys [db]} [name field value]]
-    {:db (assoc-in db (into [name :edit] field) value)}))
+    {:db (update-in db [name] form/assoc-field field value)}))
 
 
 (defn form-sub

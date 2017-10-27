@@ -56,10 +56,11 @@
 
 (db/reg-event-fx
   :sd.players/create
-  [(re-frame/path [:tournament :players])]
   (fn create
-    [{:keys [db]} [player]]
-    {:db (player/add db player)}))
+    [{:keys [db]} [data]]
+    (let [factions (:factions db)]
+      {:db (update-in db [:tournament :players]
+                      player/add (player/->player data factions))})))
 
 
 ;; (db/reg-event-fx

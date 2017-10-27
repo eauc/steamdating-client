@@ -41,6 +41,11 @@
    :edit value})
 
 
+(defn assoc-field
+  [form field value]
+  (assoc-in form (into [:edit] field) value))
+
+
 (defn field-value
   ([form field default-value]
    (get-in form (into [:edit] field) default-value))

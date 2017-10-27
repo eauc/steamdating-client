@@ -50,6 +50,21 @@
   (spec/coll-of :sd.player/name :kind set?))
 
 
+(defn ->player
+  [data factions]
+  (let [faction (get data :faction)
+        casters (as-> factions $
+                  (get-in $ [(keyword faction) :casters])
+                  (keys $)
+                  (map name $)
+                  (set $))
+        lists (->> (get data :lists [])
+                   (filter casters)
+                   (into []))]
+    (merge data {:faction faction
+                 :lists lists})))
+
+
 (defn names
   [players]
   (set (map :name players)))

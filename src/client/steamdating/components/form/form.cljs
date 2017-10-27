@@ -20,4 +20,6 @@
       [:legend.legend label]
       children
       (when (and (not pristine?) (some? form-error))
-        [:p.form-info.error form-error])]]))
+        [:p.form-info.error form-error])
+      [:button.submit {:type :submit}
+       "submit"]]]))

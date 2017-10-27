@@ -16,8 +16,8 @@
              :max-width (:pc break)
              :padding (:padding box-model)}
     (at-break
-     :pc
-     [:& {:padding (:padding-large box-model)}])]
+      :pc
+      [:& {:padding (:padding-large box-model)}])]
 
 
    [:.legend {:background-color "white"
@@ -32,4 +32,7 @@
                        :font-style "italic"
                        :margin-bottom (:padding-large box-model)
                        :margin-left (:padding box-model)
-                       :margin-top "2em"}]])
+                       :margin-top "2em"}]
+
+
+   [:.submit {:display :none}]])
