@@ -11,10 +11,10 @@
 
 
 (defn content-height
-  [content]
+  [container]
   (or
-    (some-> content
-            (.getElementsByClassName "content")
+    (some-> container
+            (.-children)
             (aget 0)
             (.getBoundingClientRect)
             (aget "height")
@@ -27,15 +27,16 @@
         local-state (reagent/atom {})]
     (fn nav-menu-render
       []
-      [:div.container {:style {:height (if (= :nav (:menu @state)) (:height @local-state) 0)}
-                       :ref #(when (some? %)
-                               (swap! local-state assoc :height (content-height %)))}
+      [:div.sd-nav-menu-container
+       {:style {:height (if (= :nav (:menu @state)) (:height @local-state) 0)}
+        :ref #(when (some? %)
+                (swap! local-state assoc :height (content-height %)))}
        (nav-menu-content @state)])))
 
 
 (defmethod nav-menu-content :default
   [{ {:keys [hash]} :route}]
-  [:div.content
+  [:div.sd-nav-menu-content
    (when debug?
      [nav-link {:hash hash
                 :target "#/home"}

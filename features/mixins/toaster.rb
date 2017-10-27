@@ -1,7 +1,7 @@
 module Toaster
   include Capybara::DSL
 
-  TOASTER = ".sd .toaster"
+  TOASTER = ".sd-toaster"
   def expect_toaster(message)
     within(TOASTER) do
       expect(page).to have_content(message)

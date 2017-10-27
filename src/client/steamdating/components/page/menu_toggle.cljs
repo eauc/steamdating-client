@@ -6,6 +6,7 @@
 
 (defn page-menu-toggle
   [{:keys [menu-width show?]}]
-  [:div.toggle {:style {:right (if show? menu-width "0px")}
-                :on-click #(when-not show? (re-frame/dispatch [:sd.ui.menu/set :page]))}
+  [:div.sd-page-menu-toggle
+   {:style {:right (if show? menu-width "0px")}
+    :on-click #(when-not show? (re-frame/dispatch [:sd.ui.menu/set :page]))}
    [icon {:name "more-horizontal"}]])

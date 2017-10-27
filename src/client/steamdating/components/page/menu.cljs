@@ -29,9 +29,10 @@
             {:keys [width] :or {width "0px"}} @local-state]
         (if (empty? items)
           [:div]
-          [:div.menu {:style {:right (if show? "0px" (str "-" width))}
-                      :ref #(when (some? %)
-                              (swap! local-state assoc :width (menu-width %)))}
+          [:div.sd-page-menu
+           {:style {:right (if show? "0px" (str "-" width))}
+            :ref #(when (some? %)
+                    (swap! local-state assoc :width (menu-width %)))}
            [page-menu-toggle {:menu-width width
                               :show? show?}]
            items])))))

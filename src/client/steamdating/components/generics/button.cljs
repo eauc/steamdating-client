@@ -14,4 +14,4 @@
    (when (some? icon)
      [icon/icon {:name icon}])
    (when (some? label)
-     [:span.label label])])
+     [:span.sd-button-label label])])

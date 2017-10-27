@@ -61,8 +61,7 @@
         lists (->> (get data :lists [])
                    (filter casters)
                    (into []))]
-    (merge data {:faction faction
-                 :lists lists})))
+    (assoc data :lists lists)))
 
 
 (defn names

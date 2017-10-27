@@ -37,11 +37,13 @@
          ;;                                        :pristine? pristine?
          ;;                                        :show-error? show-error?}))]
          (when (some? label)
-           [:label {:for name} label])
+           [:label.sd-input-label {:for name}
+            label])
          [element
           (-> props
               (dissoc :autofocus? :element :error :label :on-update :value)
-              (assoc :class (str "value" (if show-error? " error" "")))
+              (assoc :class (str "sd-input-value"
+                                 (if show-error? " error" "")))
               (assoc :id name)
               (assoc :on-change #(let [raw-value (-> % .-target .-value)
                                        new-value (if (number? (:value @state))
@@ -57,4 +59,4 @@
                                :text)))
               (assoc :value (:value @state)))]
          (when show-error?
-           [:p.input-info.error error])]))))
+           [:p.sd-input-error error])]))))

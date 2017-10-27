@@ -25,7 +25,7 @@
 
 (gdef/defstyles nav
 	[:&
-	 [:.nav {:background-color (:primary colors)
+	 [:&-nav {:background-color (:primary colors)
 					 :box-shadow (:box-shadow box-model)
 					 :display :flex
 					 :flex-direction :row
@@ -33,7 +33,7 @@
 					 :z-index 1000}
 
 
-		[:.brand {:color (:text-inverted colors)
+		[:&-brand {:color (:text-inverted colors)
 							:flex-grow 1
 							:font-family :Cookie
 							:font-size "1.8em"
@@ -41,33 +41,33 @@
 							:padding "0.2em"}]
 
 
-		[:.menu {:flex-shrink 0
+		[:&-menu {:flex-shrink 0
 						 :order 3
 						 :width "100%"}
 
 
-		 [:.container {:height 0
+		 [:&-container {:height 0
 									 :overflow "hidden"
 									 :transition "height 0.25s"}]
 
 
-		 [:.content {:display :flex
-								 :flex-direction :column}
+		 [:&-content {:display :flex
+                  :flex-direction :column}]
 
 
-			[:.item {:color (:text-inverted colors)
+     [:&-item {:color (:text-inverted colors)
 							 :padding (:padding box-model)
 							 :padding-bottom "0.75em"
 							 :padding-top "0.75em"
 							 :text-decoration :none}
-			 [:&.active
-				:&:hover {:background-color (:primary-dark colors)}]]]]
+      [:&.active
+       :&:hover {:background-color (:primary-dark colors)}]]]
 
 
-		[:.actions {:order 2}
+		[:&-actions {:order 2}
 
 
-		 [:.content {:display :flex
+		 [:&-content {:display :flex
 								 :flex-direction :row
 								 :align-item :stretch}
 
@@ -77,25 +77,25 @@
                                     :margin 0
                                     :padding 0})
 			[:.sd-button
-			 [:.label {:display :none}]]
+			 [:&-label {:display :none}]]]
 
 
-      (action-button [:.toggle])]]]
+     (action-button [:&-toggle])]]
 
 	 (at-break
 		 :tablet
-		 [:.nav {:flex-direction :row}
+		 [:&-nav {:flex-direction :row}
 
-			[:.brand {:flex-grow 0}]
+			[:&-brand {:flex-grow 0}]
 
-			[:.menu {:flex-grow 1
+			[:&-menu {:flex-grow 1
 							 :order 2
 							 :width :auto}
-			 [:.container {:height "100% !important"}]
-			 [:.content {:flex-direction :row
+			 [:&-container {:height "100% !important"}]
+			 [:&-content {:flex-direction :row
 									 :height "100%"
 									 :align-items :flex-end
 									 :line-height "1.35em"}]]
 
-			[:.actions {:order 3}
-			 [:.toggle {:display :none}]]])])
+			[:&-actions {:order 3}
+			 [:&-toggle {:display :none}]]])])

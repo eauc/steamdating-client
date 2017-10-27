@@ -20,6 +20,6 @@
 
 (defmethod nav-actions-content :default
 	[{:keys [menu]}]
-	[:div.content
+	[:div.sd-nav-actions-content
    [tournament-save-button]
    [nav-toggle {:menu menu}]])

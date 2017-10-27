@@ -16,10 +16,10 @@
                    (.preventDefault event)
                    (when valid? (on-submit))
                    false)}
-     [:fieldset.group
-      [:legend.legend label]
+     [:fieldset.sd-form-group
+      [:legend.sd-form-legend label]
       children
       (when (and (not pristine?) (some? form-error))
         [:p.form-info.error form-error])
-      [:button.submit {:type :submit}
+      [:button.sd-form-submit {:type :submit}
        "submit"]]]))

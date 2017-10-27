@@ -7,5 +7,5 @@
 (defn toaster
   []
   (let [{:keys [type message]} @(re-frame/subscribe [:sd.toaster/toaster])]
-    [:div.content {:class type}
+    [:div.sd-toaster-content {:class type}
      message]))

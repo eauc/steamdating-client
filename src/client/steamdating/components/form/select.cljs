@@ -27,7 +27,7 @@
         [:div.sd-input
          (when (some? label)
            [:label {:for name} label])
-         [:select.value
+         [:select.sd-input-value
           (-> props
               (dissoc :autofocus? :error :label :on-update :options :value)
               (assoc :class (if show-error? "error"))
@@ -42,4 +42,4 @@
             [:option {:key value
                       :value value} name])]
          (when show-error?
-           [:p.input-info.error error])]))))
+           [:p.sd-input-error error])]))))

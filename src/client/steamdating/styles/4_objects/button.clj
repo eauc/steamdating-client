@@ -25,4 +25,4 @@
      :&:focus {:background-color (:valid colors)}]]
 
 
-   [:.label {:margin "0 0.25em"}]])
+   [:&-label {:margin "0 0.25em"}]])

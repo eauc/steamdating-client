@@ -22,7 +22,7 @@
 (defmethod page-menu-items :players-list
   []
   (list
-    [:button.item
+    [:button.sd-page-menu-item
      {:key :create
       :on-click #(re-frame/dispatch [:sd.players/start-create])}
      [:span "Create player "]

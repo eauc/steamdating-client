@@ -6,7 +6,7 @@
 (defn file-open-button
   [{:keys [id on-open]} children]
   [:div.sd-file-open-button
-   [:input.input
+   [:input.sd-file-open-button-input
     {:id id
      :type "file"
      :on-change #(let [value (-> % .-target .-files (aget 0))]

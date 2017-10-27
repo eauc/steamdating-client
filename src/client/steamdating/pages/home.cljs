@@ -50,35 +50,35 @@
 (defmethod page-menu-items :home
   []
   (list
-    [:button.item
+    [:button.sd-page-menu-item
      {:key :toater-success
       :on-click #(re-frame/dispatch
                    [:sd.toaster/set
                     {:type :success
                      :message "Ouuuuups1!"}])}
      "Test Toaster Success"]
-    [:button.item
+    [:button.sd-page-menu-item
      {:key :toater-info
       :on-click #(re-frame/dispatch
                    [:sd.toaster/set
                     {:type :info
                      :message "Ouuuuups2!"}])}
      "Test Toaster Info"]
-    [:button.item
+    [:button.sd-page-menu-item
      {:key :toater-warn
       :on-click #(re-frame/dispatch
                    [:sd.toaster/set
                     {:type :warn
                      :message "Ouuuuups3!"}])}
      "Test Toaster Warn"]
-    [:button.item
+    [:button.sd-page-menu-item
      {:key :toater-error
       :on-click #(re-frame/dispatch
                    [:sd.toaster/set
                     {:type :error
                      :message "Ouuuuups4!"}])}
      "Test Toaster Error"]
-    [:button.item
+    [:button.sd-page-menu-item
      {:key :prompt-alert
       :on-click #(re-frame/dispatch
                    [:sd.prompt/set
@@ -86,7 +86,7 @@
                      :message "This is an alert"
                      :on-validate [::test-prompt "alert-ok"]}])}
      "Test Alert"]
-    [:button.item
+    [:button.sd-page-menu-item
      {:key :prompt-confirm
       :on-click #(re-frame/dispatch
                    [:sd.prompt/set
@@ -95,7 +95,7 @@
                      :on-validate [::test-prompt "confirm-ok"]
                      :on-cancel [::test-prompt "confirm-cancel"]}])}
      "Test Confirm"]
-    [:button.item
+    [:button.sd-page-menu-item
      {:key :prompt-prompt
       :on-click #(re-frame/dispatch
                    [:sd.prompt/set

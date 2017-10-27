@@ -11,7 +11,7 @@
                         :position :relative}
 
 
-   [:.input {:height "0.1px"
+   [:&-input {:height "0.1px"
              :left 0
              :opacity 0
              :overflow :hidden

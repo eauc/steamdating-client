@@ -14,7 +14,7 @@
             [steamdating.styles.5-components.page :refer [page]]
             [steamdating.styles.5-components.prompt :refer [prompt]]
             [steamdating.styles.5-components.toaster :refer [toaster]]
-            [steamdating.styles.5-components.tournament-file-actions :refer [tournament-file-actions]]
+            [steamdating.styles.5-components.tournament-file :refer [tournament-file]]
             [steamdating.styles.6-pages.data :refer [page-data]]
             [steamdating.styles.6-pages.loading :refer [page-loading]]
             [steamdating.styles.6-pages.unknown :refer [page-unknown]]))
@@ -38,4 +38,4 @@
    prompt
    section-header
    toaster
-   tournament-file-actions])
+   tournament-file])

@@ -2,10 +2,6 @@ require_relative "./page"
 
 module Pages
   class Players < Page
-    def initialize
-      @route = "players"
-    end
-
     def load
       within(NAV) do
         click_on("Players")

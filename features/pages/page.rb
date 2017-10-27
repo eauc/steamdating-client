@@ -1,9 +1,9 @@
 require "rspec/expectations"
 
 module Pages
-  NAV = ".sd .nav"
-  PAGE_MENU = ".sd .page .menu"
-  PAGE_CONTENT = ".sd .page .content"
+  NAV = ".sd-nav"
+  PAGE_MENU = ".sd-page-menu"
+  PAGE_CONTENT = ".sd-page-content"
 
   class Page
     include RSpec::Matchers

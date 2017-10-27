@@ -6,9 +6,9 @@
 
 (defn tournament-file-actions
   []
-  [:div.sd-tournament-file-actions
+  [:div.sd-tournament-file
    [:h3.sd-section-header "Files"]
-   [:div.actions
+   [:div.sd-tournament-file-actions
     [tournament-new-button]
     [tournament-open-button]
     [tournament-save-button]]])

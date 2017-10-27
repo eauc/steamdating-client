@@ -8,22 +8,22 @@
 (defn prompt-render
   [{:keys [state on-cancel on-update on-validate]}]
   (let [{:keys [message type value]} state]
-    [:div.prompt {:class (when state "show")}
-     [:form.content
+    [:div.sd-prompt {:class (when state "show")}
+     [:form.sd-prompt-content
       {:on-click #(-> % .stopPropagation)
        :on-submit (fn [event]
                     (doto event
                       (.preventDefault)
                       (.stopPropagation))
                     (on-validate))}
-      [:div.message message]
+      [:div.sd-prompt-message message]
       (when (= type :prompt)
         [form-input {:autofocus? true
                      :on-update on-update
                      :name "value"
                      :type (if (number? value) :number :text)
                      :value value}])
-      [:div.controls
+      [:div.sd-prompt-controls
        [button {:class "success"
                 :icon "check"
                 :label "Ok"

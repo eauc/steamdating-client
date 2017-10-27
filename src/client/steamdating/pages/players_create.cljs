@@ -25,13 +25,13 @@
   (let [state @(re-frame/subscribe [:sd.players/edit])
         valid? (form/valid? state)]
     (list
-      [:button.item
+      [:button.sd-page-menu-item
        {:key :create
         :class (when-not valid? "disabled")
         :on-click #(re-frame/dispatch [:sd.players.edit/create])}
        [:span "Create "]
        [icon {:name "check"}]]
-      [:button.item
+      [:button.sd-page-menu-item
        {:key :cancel
         :on-click #(re-frame/dispatch [:sd.routes/back])}
        [:span "Cancel "]

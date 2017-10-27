@@ -9,7 +9,7 @@
 
 
 (gdef/defstyles toaster
-  [:.toaster {:pointer-events "none"
+  [:&-toaster {:pointer-events "none"
               :position "fixed"
               :left 0
               :right 0
@@ -17,7 +17,7 @@
               :text-align "center"
               :color (:text-inverted colors)
               :font-weight "bold"}
-   [:.content {:opacity 0
+   [:&-content {:opacity 0
                :padding (:padding box-model)
                :transition "opacity 0.2s, background-color 0.2s"}
     [:&.success

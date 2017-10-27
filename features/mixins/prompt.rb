@@ -1,7 +1,7 @@
 module Prompt
   include Capybara::DSL
 
-  PROMPT = ".sd .prompt"
+  PROMPT = ".sd-prompt"
   PROMPT_VALIDATE = "Ok"
   PROMPT_CANCEL = "No"
 

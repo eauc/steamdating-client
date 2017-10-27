@@ -21,15 +21,15 @@
   []
   (re-frame/clear-subscription-cache!)
   (reagent/render [nav-actions]
-                  (.querySelector js/document ".sd .nav .actions"))
+                  (.querySelector js/document ".sd-nav-actions"))
   (reagent/render [nav-menu]
-                  (.querySelector js/document ".sd .nav .menu"))
+                  (.querySelector js/document ".sd-nav-menu"))
   (reagent/render [page]
-                  (.querySelector js/document ".sd .page"))
+                  (.querySelector js/document ".sd-page"))
   (reagent/render [prompt]
-                  (.querySelector js/document ".sd .overlay"))
+                  (.querySelector js/document ".sd-overlay"))
   (reagent/render [toaster]
-                  (.querySelector js/document ".sd .toaster")))
+                  (.querySelector js/document ".sd-toaster")))
 
 
 (defn ^:export init

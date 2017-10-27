@@ -10,9 +10,9 @@
 
 (defn page
   []
-  [:div.container
+  [:div.sd-page-container
    [page-menu]
-   [:div.content
+   [:div.sd-page-content
     (page-content @(re-frame/subscribe [:sd.ui/menu-route]))]])
 
 
