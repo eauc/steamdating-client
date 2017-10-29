@@ -4,7 +4,9 @@
 
 
 (defn file-open-button
-  [{:keys [id on-open]} children]
+  [{:keys [icon id label on-open]
+    :or {icon "file-text"
+         label "Open"}}]
   [:div.sd-file-open-button
    [:input.sd-file-open-button-input
     {:id id
@@ -13,5 +15,5 @@
                   (re-frame/dispatch (conj on-open value)))}]
    [button {:element :label
             :for id
-            :icon "file-text"
-            :label "Open"}]])
+            :icon icon
+            :label label}]])

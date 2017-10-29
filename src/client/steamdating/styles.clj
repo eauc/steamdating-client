@@ -14,6 +14,7 @@
             [steamdating.styles.5-components.layout :refer [layout]]
             [steamdating.styles.5-components.nav :refer [nav]]
             [steamdating.styles.5-components.page :refer [page]]
+            [steamdating.styles.5-components.player-file-imports :refer [player-file-imports]]
             [steamdating.styles.5-components.player-list :refer [player-list]]
             [steamdating.styles.5-components.prompt :refer [prompt]]
             [steamdating.styles.5-components.sort-header :refer [sort-header]]
@@ -40,6 +41,7 @@
    page-data
    page-loading
    page-unknown
+   player-file-imports
    player-list
    prompt
    section-header

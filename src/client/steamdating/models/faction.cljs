@@ -58,17 +58,17 @@
   (into {} (map (fn [[k v]] [k (:icon v)]) factions)))
 
 
-;; (defn cc-factions
-;;   [factions]
-;;   (into
-;;     {}
-;;     (map (fn [[key {:keys [name conflict-chamber]}]]
-;;            [(or conflict-chamber name) (cljs.core/name key)]) factions)))
+(defn cc-factions
+  [factions]
+  (into
+    {}
+    (map (fn [[key {:keys [name conflict-chamber]}]]
+           [(or conflict-chamber name) (cljs.core/name key)]) factions)))
 
 
-;; (defn t3-factions
-;;   [factions]
-;;   (into
-;;     {}
-;;     (map (fn [[key {:keys [name t3-fr]}]]
-;;            [(or t3-fr name) (cljs.core/name key)]) factions)))
+(defn t3-factions
+  [factions]
+  (into
+    {}
+    (map (fn [[key {:keys [name t3-fr]}]]
+           [(or t3-fr name) (cljs.core/name key)]) factions)))

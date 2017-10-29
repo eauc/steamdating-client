@@ -99,9 +99,9 @@ end
 #   @page.expect_players_list(table.raw)
 # end
 
-# Then("I see Players\/List page with players:") do |table|
-#   @page.expect_players_list(table.raw)
-# end
+Then("I see Players\/List page with players:") do |table|
+  @page.expect_players_list(table.raw)
+end
 
 more_players_filter_matches = {
   "toto" => [

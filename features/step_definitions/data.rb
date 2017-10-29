@@ -1,5 +1,10 @@
 require_relative "../pages/data"
 
+Given("I open Data page") do
+  @page = Pages::Data.new
+            .load
+end
+
 Given("I start a new tournament") do
   @page = Pages::Data.new
             .load

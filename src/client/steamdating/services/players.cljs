@@ -93,59 +93,59 @@
 ;;                                    :edit (player/toggle-drop p n-rounds)})})))
 
 
-;; (db/reg-event-fx
-;;   :sd.players/import-t3
-;;   (fn import-t3
-;;     [{:keys [db]} [file]]
-;;     {:sd.file/open
-;;      {:file file
-;;       :parse-fn (partial player/parse-t3-csv (faction/t3-factions (:factions db)))
-;;       :on-success [:sd.players/import-t3-success]
-;;       :on-failure [:sd.toaster/set
-;;                    {:type :error
-;;                     :message "Failed to open T3 CSV file"}]}}))
+(db/reg-event-fx
+  :sd.players.import/t3
+  (fn import-t3
+    [{:keys [db]} [file]]
+    {:sd.file/open
+     {:file file
+      :parse-fn (partial player/parse-t3-csv (faction/t3-factions (:factions db)))
+      :on-success [:sd.players.import/t3-success]
+      :on-failure [:sd.toaster/set
+                   {:type :error
+                    :message "Failed to open T3 CSV file"}]}}))
 
 
-;; (db/reg-event-fx
-;;   :sd.players/import-t3-success
-;;   [(re-frame/path [:tournament :players])]
-;;   (fn import-t3-success
-;;     [{:keys [db]} [players]]
-;;     (let [valid-players (filter #(spec/valid? :sd.player/player %) players)
-;;           new-db (reduce #(player/add %1 %2) db valid-players)
-;;           n-new-players (- (count new-db) (count db))]
-;;       {:db new-db
-;;        :dispatch [:sd.toaster/set
-;;                   {:type :success
-;;                    :message (str "Imported " n-new-players " players from T3 CSV file")}]})))
+(db/reg-event-fx
+  :sd.players.import/t3-success
+  [(re-frame/path [:tournament :players])]
+  (fn import-t3-success
+    [{:keys [db]} [players]]
+    (let [valid-players (filter #(spec/valid? :sd.player/player %) players)
+          new-db (reduce #(player/add %1 %2) db valid-players)
+          n-new-players (- (count new-db) (count db))]
+      {:db new-db
+       :dispatch [:sd.toaster/set
+                  {:type :success
+                   :message (str "Imported " n-new-players " players from T3 CSV file")}]})))
 
 
-;; (db/reg-event-fx
-;;   :sd.players/import-cc
-;;   (fn import-cc
-;;     [_ [file]]
-;;     {:sd.file/open
-;;      {:file file
-;;       :on-success [:sd.players/import-cc-success]
-;;       :on-failure [:sd.toaster/set
-;;                    {:type :error
-;;                     :message "Failed to open Conflict Chamber JSON file"}]}}))
+(db/reg-event-fx
+  :sd.players.import/cc
+  (fn import-cc
+    [_ [file]]
+    {:sd.file/open
+     {:file file
+      :on-success [:sd.players.import/cc-success]
+      :on-failure [:sd.toaster/set
+                   {:type :error
+                    :message "Failed to open Conflict Chamber JSON file"}]}}))
 
 
-;; (db/reg-event-fx
-;;   :sd.players/import-cc-success
-;;   (fn import-t3-success
-;;     [{:keys [db]} [data]]
-;;     (let [cc-factions (faction/cc-factions (:factions db))
-;;           players (get-in db [:tournament :players])
-;;           new-players (->> (player/convert-cc-json cc-factions data)
-;;                            (filter #(spec/valid? :sd.player/player %))
-;;                            (reduce #(player/add %1 %2) players))
-;;           n-new-players (- (count new-players) (count players))]
-;;       {:db (assoc-in db [:tournament :players] new-players)
-;;        :dispatch [:sd.toaster/set
-;;                   {:type :success
-;;                    :message (str "Imported " n-new-players " players from T3 CSV file")}]})))
+(db/reg-event-fx
+  :sd.players.import/cc-success
+  (fn import-t3-success
+    [{:keys [db]} [data]]
+    (let [cc-factions (faction/cc-factions (:factions db))
+          players (get-in db [:tournament :players])
+          new-players (->> (player/convert-cc-json cc-factions data)
+                           (filter #(spec/valid? :sd.player/player %))
+                           (reduce #(player/add %1 %2) players))
+          n-new-players (- (count new-players) (count players))]
+      {:db (assoc-in db [:tournament :players] new-players)
+       :dispatch [:sd.toaster/set
+                  {:type :success
+                   :message (str "Imported " n-new-players " players from T3 CSV file")}]})))
 
 
 (defn players-sub
@@ -157,14 +157,6 @@
 (re-frame/reg-sub
   :sd.players/players
   players-sub)
-
-
-;; (re-frame/reg-sub
-;;   :sd.players/exist?
-;;   :<- [:sd.players/players]
-;;   (fn players-names-sub
-;;     [players _]
-;;     (not-empty players)))
 
 
 (defn players-names-sub

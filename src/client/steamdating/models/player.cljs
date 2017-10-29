@@ -180,34 +180,34 @@
 ;;        "Notes: " (:notes player) "\n"))
 
 
-;; (defn parse-t3-csv
-;;   [t3-factions data]
-;;   (->> data
-;;        (s/split-lines)
-;;        (rest)
-;;        (map #(s/split % #";"))
-;;        (map #(subvec % 3 6))
-;;        (map (fn [[name faction origin]]
-;;               {:name name
-;;                :faction (get t3-factions faction)
-;;                :origin origin}))))
+(defn parse-t3-csv
+  [t3-factions data]
+  (->> data
+       (s/split-lines)
+       (rest)
+       (map #(s/split % #";"))
+       (map #(subvec % 3 6))
+       (map (fn [[name faction origin]]
+              {:name name
+               :faction (get t3-factions faction)
+               :origin origin}))))
 
 
-;; (defn extract-cc-lists
-;;   [cc-player]
-;;   (mapv (fn [[key value]]
-;;           (s/replace (first (:list value)) #"\s" ""))
-;;         (sort
-;;           (filter (fn [[key value]]
-;;                     (.startsWith key "list"))
-;;                   (map (fn [[key value]]
-;;                          [(cljs.core/name key) value])
-;;                        cc-player)))))
+(defn extract-cc-lists
+  [cc-player]
+  (mapv (fn [[key value]]
+          (s/replace (first (:list value)) #"\s" ""))
+        (sort
+          (filter (fn [[key value]]
+                    (.startsWith key "list"))
+                  (map (fn [[key value]]
+                         [(cljs.core/name key) value])
+                       cc-player)))))
 
 
-;; (defn convert-cc-json
-;;   [cc-factions data]
-;;   (map (fn [{:keys [name faction] :as player}]
-;;          {:name name
-;;           :faction (get cc-factions faction)
-;;           :lists (extract-cc-lists player)}) data))
+(defn convert-cc-json
+  [cc-factions data]
+  (map (fn [{:keys [name faction] :as player}]
+         {:name name
+          :faction (get cc-factions faction)
+          :lists (extract-cc-lists player)}) data))
