@@ -13,19 +13,19 @@
 
 
 (db/reg-event-fx
-  :sd.players/start-create
+  :sd.players.edit/start-create
   (fn start-create
     []
     {:dispatch-n [[:sd.forms/reset :player {}]
                   [:sd.routes/navigate "/players/create"]]}))
 
 
-;; (db/reg-event-fx
-;;   :sd.players/start-edit
-;;   (fn start-edit
-;;     [_ [player]]
-;;     {:dispatch-n [[:sd.forms/reset :player player]
-;;                   [:sd.routes/navigate "/players/edit"]]}))
+(db/reg-event-fx
+  :sd.players.edit/start-edit
+  (fn start-edit
+    [_ [player]]
+    {:dispatch-n [[:sd.forms/reset :player player]
+                  [:sd.routes/navigate "/players/edit"]]}))
 
 
 ;; (db/reg-event-fx
@@ -47,14 +47,14 @@
                   [:sd.routes/back]]}))
 
 
-;; (db/reg-event-fx
-;;   :sd.players/update-current-edit
-;;   [(re-frame/path [:forms :player])]
-;;   (fn create-current-edit
-;;     [{:keys [db]}]
-;;     {:dispatch-n [[:sd.players/edit db]
-;;                   [:sd.rounds/rename-player db]
-;;                   [:sd.routes/back]]}))
+(db/reg-event-fx
+  :sd.players.edit/save
+  [(re-frame/path [:forms :player])]
+  (fn create-current-edit
+    [{:keys [db]}]
+    {:dispatch-n [[:sd.players/save db]
+                  ;; [:sd.rounds/rename-player db]
+                  [:sd.routes/back]]}))
 
 
 (db/reg-event-fx
@@ -66,21 +66,21 @@
                       player/add (player/->player data factions))})))
 
 
-;; (db/reg-event-fx
-;;   :sd.players/edit
-;;   [(re-frame/path [:tournament :players])]
-;;   (fn edit
-;;     [{:keys [db]} [form]]
-;;     {:db (player/edit db form)}))
+(db/reg-event-fx
+  :sd.players/save
+  [(re-frame/path [:tournament :players])]
+  (fn edit
+    [{:keys [db]} [form]]
+    {:db (player/save db form)}))
 
 
-;; (db/reg-event-fx
-;;   :sd.players/delete-current-edit
-;;   (fn delete-current-edit
-;;     [{:keys [db]} _]
-;;     (let [player (get-in db [:forms :player :base])]
-;;       {:db (update-in db [:tournament :players] player/delete player)
-;;        :sd.routes/back nil})))
+(db/reg-event-fx
+  :sd.players.edit/delete
+  (fn delete-current-edit
+    [{:keys [db]} _]
+    (let [player (get-in db [:forms :player :base])]
+      {:db (update-in db [:tournament :players] player/delete player)
+       :sd.routes/back nil})))
 
 
 ;; (db/reg-event-fx

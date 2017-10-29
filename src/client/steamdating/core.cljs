@@ -4,6 +4,7 @@
             [steamdating.pages.data]
             [steamdating.pages.home]
             [steamdating.pages.players-create]
+            [steamdating.pages.players-edit]
             [steamdating.pages.players-list]
             [steamdating.components.nav.actions :refer [nav-actions]]
             [steamdating.components.nav.menu :refer [nav-menu]]

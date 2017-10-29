@@ -97,9 +97,9 @@
 ;;   (remove #(some? (:droped-after %)) players))
 
 
-;; (defn delete
-;;   [players {:keys [name] :as player}]
-;;   (vec (remove #(= (:name %) name) players)))
+(defn delete
+  [players {:keys [name] :as player}]
+  (vec (remove #(= (:name %) name) players)))
 
 
 ;; (defn toggle-drop
@@ -109,11 +109,11 @@
 ;;     (assoc player :droped-after after)))
 
 
-;; (defn edit
-;;   [players {:keys [base edit]}]
-;;   (-> players
-;;       (delete base)
-;;       (add edit)))
+(defn save
+  [players {:keys [base edit]}]
+  (-> players
+      (delete base)
+      (add edit)))
 
 
 ;; (def player->columns

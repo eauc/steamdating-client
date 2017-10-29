@@ -36,12 +36,14 @@ module Pages
       self
     end
 
-    # def start_edit_player(name)
-    #   within(PAGE_CONTENT) do
-    #     find("tr", text: name).click
-    #     expect(page).to have_content("Edit player")
-    #   end
-    #   self
-    # end
+    def start_edit_player(name)
+      within_table("Players") do
+        find("tr", text: name).click
+      end
+      within(PAGE_CONTENT) do
+        expect(page).to have_content("Edit player")
+      end
+      self
+    end
   end
 end

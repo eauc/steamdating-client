@@ -1,6 +1,6 @@
 require "json"
 require_relative "../pages/players_create"
-# require_relative "../pages/players_edit"
+require_relative "../pages/players_edit"
 require_relative "../pages/players_list"
 
 Given("I open Players/List page") do
@@ -19,10 +19,10 @@ When("I start to create player") do
   @page = Pages::PlayersCreate.new
 end
 
-# When("I start to edit player \"$name\"") do |name|
-#   @page.start_edit_player(name)
-#   @page = Pages::PlayersEdit.new
-# end
+When("I start to edit player \"$name\"") do |name|
+  @page.start_edit_player(name)
+  @page = Pages::PlayersEdit.new
+end
 
 When("I filter the Players list with \"$filter\"") do |filter|
   @filter_value = filter
@@ -46,16 +46,16 @@ When("I create the player") do
   @page.submit
 end
 
-# When("I save the player") do
-#   @page.submit
-# end
+When("I save the player") do
+  @page.submit
+end
 
-# When("I delete player \"$name\"") do |name|
-#   @page = Pages::PlayersEdit.new
-#             .load(name)
-#             .delete_player
-#   validate_prompt
-# end
+When("I delete player \"$name\"") do |name|
+  @page = Pages::PlayersEdit.new
+            .load(name)
+            .delete_player
+  validate_prompt
+end
 
 Then("I can edit the player information") do
   within(Pages::PAGE_CONTENT) do
@@ -67,17 +67,17 @@ Then("I can edit the player information") do
   end
 end
 
-# Then("I can edit the player information with:") do |json_info|
-#   info = JSON.parse(json_info)
-#   within(Pages::PAGE_CONTENT) do
-#     expect(page).to have_field("Name", with: info.fetch("name", ""))
-#     expect(page).to have_field("Origin", with: info.fetch("origin", ""))
-#     expect(page).to have_field("Faction", with: info.fetch("faction", ""))
-#     expect(page).to have_field("Lists")
-#     expect(page.find_field("Lists").value).to eq(info.fetch("lists", []))
-#     expect(page).to have_field("Notes", with: info.fetch("notes", ""))
-#   end
-# end
+Then("I can edit the player information with:") do |json_info|
+  info = JSON.parse(json_info)
+  within_fieldset("Edit player") do
+    expect(page).to have_field("Name", with: info.fetch("name", ""))
+    expect(page).to have_field("Origin", with: info.fetch("origin", ""))
+    expect(page).to have_field("Faction", with: info.fetch("faction", ""))
+    expect(page).to have_field("Lists")
+    expect(page.find_field("Lists").value).to eq(info.fetch("lists", []))
+    expect(page).to have_field("Notes", with: info.fetch("notes", ""))
+  end
+end
 
 Then("I see Players/List page with player:") do |table|
   expect(Pages::Players.new).to be_loaded
@@ -85,14 +85,11 @@ Then("I see Players/List page with player:") do |table|
     .expect_player_in_list(table.raw[0])
 end
 
-# Then("I see Players/List page without player \"$name\"") do |name|
-#   expect(Pages::Players.new).to be_loaded
-#   within(Pages::PAGE_CONTENT) do
-#     within("tbody") do
-#       expect(page).to have_no_content(name)
-#     end
-#   end
-# end
+Then("I see Players/List page without player \"$name\"") do |name|
+  expect(Pages::Players.new).to be_loaded
+  Pages::PlayersList.new
+    .expect_player_not_in_list(name)
+end
 
 Then("I cannot create the player because its name already exists") do
   @page.expect_already_exists

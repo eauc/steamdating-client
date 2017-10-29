@@ -33,6 +33,14 @@ module Pages
       self
     end
 
+    def expect_player_not_in_list(name)
+      within_table("Players") do
+        within("tbody") do
+          expect(page).to have_no_content(name)
+        end
+      end
+    end
+
     def expect_players_list(players)
       list = players.map {|p| p.join("\\s+") }.join("\\s+")
       within_table("Players") do

@@ -25,6 +25,6 @@
   (list
     [:button.sd-page-menu-item
      {:key :create
-      :on-click #(re-frame/dispatch [:sd.players/start-create])}
+      :on-click #(re-frame/dispatch [:sd.players.edit/start-create])}
      [:span "Create player "]
      [icon {:name "user-plus"}]]))
