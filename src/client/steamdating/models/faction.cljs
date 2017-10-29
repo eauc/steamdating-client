@@ -47,10 +47,15 @@
             {} casters)))
 
 
-;; (defn icon
-;;   [factions key]
-;;   (let [{:keys [icon]} (get factions (keyword key))]
-;;     (when icon (str "/data/icons/" icon))))
+(defn icon
+  [factions key]
+  (let [{:keys [icon]} (get factions (keyword key))]
+    (when icon (str "/data/icons/" icon))))
+
+
+(defn icons
+  [factions]
+  (into {} (map (fn [[k v]] [k (:icon v)]) factions)))
 
 
 ;; (defn cc-factions

@@ -36,11 +36,11 @@ end
 #   validate_prompt
 # end
 
-# Given("more Players have been defined") do
-#   @tournament = JSON.parse(File.read("features/data/morePlayers.json"))
-#   Pages::File.new
-#     .load
-#     .open("morePlayers.json")
-#   expect_toaster("File loaded")
-#   validate_prompt
-# end
+Given("more Players have been defined") do
+  @tournament = JSON.parse(File.read("features/data/morePlayers.json"))
+  Pages::Data.new
+    .load
+    .open("morePlayers.json")
+  expect_toaster("File loaded")
+  validate_prompt
+end

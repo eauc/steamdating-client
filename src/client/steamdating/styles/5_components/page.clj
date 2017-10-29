@@ -19,9 +19,11 @@
                   :overflow :auto}]
 
 
-   [:&-content {:display :flex
+   [:&-content {:box-sizing :border-box
+                :display :flex
                 :flex-direction :column
                 :flex-grow 1
+                :max-width "100%"
                 :padding-left (:padding box-model)
                 :padding-right (:padding box-model)}
     (at-break
@@ -30,18 +32,19 @@
 
 
    [:&-menu {:background-color "white"
-            :box-shadow (:box-shadow box-model)
-            :box-sizing :border-box
-            :display :flex
-            :flex-direction :column
-            :height "100%"
-            :min-width "40vw"
-            :max-width "80vw"
-            :padding-top (:padding box-model)
-            :position :absolute
-            :right 0
-            :transition "right 0.25s"
-            :top 0}
+             :box-shadow (:box-shadow box-model)
+             :box-sizing :border-box
+             :display :flex
+             :flex-direction :column
+             :height "100%"
+             :min-width "40vw"
+             :max-width "80vw"
+             :padding-top (:padding box-model)
+             :position :absolute
+             :right 0
+             :transition "right 0.25s"
+             :top 0
+             :z-index 500}
 
 
     [:&-toggle {:align-items "center"

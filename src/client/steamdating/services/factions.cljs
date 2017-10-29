@@ -51,9 +51,11 @@
   names-sub)
 
 
-;; (re-frame/reg-sub
-;;   :sd.factions/icon
-;;   :<- [:sd.factions/factions]
-;;   (fn names-sub
-;;     [factions [_ name]]
-;;     (faction/icon factions name)))
+(defn icons-sub
+  [factions]
+  (faction/icons factions))
+
+(re-frame/reg-sub
+  :sd.factions/icons
+  :<- [:sd.factions/factions]
+  icons-sub)

@@ -4,6 +4,7 @@
             [steamdating.components.generics.icon :refer [icon]]
             [steamdating.components.page.content :refer [page-content]]
             [steamdating.components.page.menu :refer [page-menu-items]]
+            [steamdating.components.player.list :refer [player-list]]
             [steamdating.services.db :as db]
             [steamdating.services.debug :as debug]
             [steamdating.services.players]))
@@ -16,7 +17,7 @@
 (defmethod page-content :players-list
   []
   [:div.sd-page-players-list
-   [:h4 "Players"]])
+   [player-list]])
 
 
 (defmethod page-menu-items :players-list

@@ -5,8 +5,11 @@
             [steamdating.models.player :as player]
             [steamdating.services.db :as db]
             [steamdating.services.debug :as debug]
+            [steamdating.services.filters]
             [steamdating.services.forms]
-            [steamdating.services.routes]))
+            [steamdating.services.routes]
+            [steamdating.services.sorts]
+            [steamdating.models.filter :as filter]))
 
 
 (db/reg-event-fx
@@ -200,24 +203,34 @@
 ;;     (player/lists players)))
 
 
-;; (re-frame/reg-sub
-;;   :sd.players/sorted
-;;   :<- [:sd.players/players]
-;;   :<- [:sd.sorts/sort :player {:by :name}]
-;;   (fn players-sorted-sub
-;;     [[players sort] _]
-;;     (player/sort-with players sort)))
+(defn sorted-sub
+  [[players sort]]
+  {:list (player/sort-with sort players)
+   :sort sort})
+
+(re-frame/reg-sub
+  :sd.players/sorted
+  :<- [:sd.players/players]
+  :<- [:sd.sorts/sort :players {:by :name}]
+  sorted-sub)
 
 
-;; (re-frame/reg-sub
-;;   :sd.players/list
-;;   (fn players-lists-inputs
-;;     [[_ filter] _]
-;;     [(re-frame/subscribe [:sd.players/sorted])
-;;      (re-frame/subscribe [:sd.filters/pattern filter])])
-;;   (fn players-list-sub
-;;     [[players pattern] _]
-;;     (player/filter-with players pattern)))
+(defn list-sub
+  [[{:keys [list sort]} filter icons]]
+  {:columns [:name :origin :faction :lists]
+   :filter filter
+   :icons icons
+   :list (player/filter-with (filter/->pattern filter) list)
+   :sort sort})
+
+(re-frame/reg-sub
+  :sd.players/list
+  (fn players-lists-inputs
+    [[_ {:keys [filter]}] _]
+    [(re-frame/subscribe [:sd.players/sorted])
+     (re-frame/subscribe [:sd.filters/filter filter])
+     (re-frame/subscribe [:sd.factions/icons])])
+  list-sub)
 
 
 (defn edit-casters-sub

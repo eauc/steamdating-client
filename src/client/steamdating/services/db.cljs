@@ -3,9 +3,11 @@
             [expound.alpha :refer [expound-str]]
             [re-frame.core :as re-frame]
             [steamdating.models.faction]
+            [steamdating.models.filter]
             [steamdating.models.form]
             [steamdating.models.prompt]
             [steamdating.models.route :refer [->route]]
+            [steamdating.models.sort]
             [steamdating.models.toaster]
             [steamdating.models.tournament :refer [->tournament]]
             [steamdating.models.ui :refer [->ui]]
@@ -15,8 +17,10 @@
 
 (spec/def :sd.db/db
   (spec/keys :req-un [:sd.faction/factions
+                      :sd.filter/filters
                       :sd.form/forms
                       :sd.route/route
+                      :sd.sort/sorts
                       :sd.tournament/tournament
                       :sd.ui/ui]
              :opt-un [:sd.prompt/prompt
@@ -53,8 +57,10 @@
 
 (def default-db
   {:factions {}
+   :filters {}
    :forms {}
    :route (->route)
+   :sorts {}
    :tournament (->tournament)
    :ui (->ui)})
 

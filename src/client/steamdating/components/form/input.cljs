@@ -21,7 +21,7 @@
   (let [state (reagent/atom {:value value
                              :initial-value value
                              :last-value value})
-        on-change (debounce on-update 250)
+        on-change (debounce on-update 350)
         on-ref #(when (and (some? %) (nil? (:input @state)))
                   (swap! state assoc :input %)
                   (when autofocus? (.focus %)))]

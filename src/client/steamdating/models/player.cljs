@@ -1,6 +1,7 @@
 (ns steamdating.models.player
   (:require [cljs.spec.alpha :as spec]
             [clojure.string :as s]
+            [steamdating.models.faction]
             [steamdating.models.form :as form]
             [steamdating.services.debug :as debug]))
 
@@ -115,48 +116,44 @@
 ;;       (add edit)))
 
 
-;; (def list-columns
-;;   [:name :origin :faction :lists])
-
-
 ;; (def player->columns
 ;;   (apply juxt list-columns))
 
 
-;; (defn filter-with
-;;   [players pattern]
-;;   (let [matches (->> players
-;;                      (map (fn [p] [p, (select-keys p list-columns)]))
-;;                      (map (fn [[p cs]] [p, (filter (fn [[key value]]
-;;                                                      (->> value
-;;                                                           clj->js
-;;                                                           (.stringify js/JSON)
-;;                                                           (re-find pattern)))
-;;                                                    cs)]))
-;;                      (remove (fn [[p cs]] (empty? cs))))]
-;;     {:list (mapv first matches)
-;;      :columns (vec (set (apply conj (->> matches
-;;                                          (map #(nth % 1))
-;;                                          (map #(map first %))
-;;                                          (flatten)
-;;                                          (apply conj [:name]))
-;;                                list-columns)))}))
+(defn prop->string
+  [player-prop]
+  (-> player-prop
+      (#(cond->> % (array? %) (s/join ",")))
+      str
+      (.toLowerCase)))
 
 
-;; (defn sort-prop
-;;   [by]
-;;   (fn [player]
-;;     (let [prop (by player)]
-;;       (if (string? prop)
-;;         (.toLowerCase prop)
-;;         prop))))
+(defn match-pattern
+  [player pattern]
+  (some?
+    (first
+      (filter
+        (fn [[k v]]
+          (re-find pattern (prop->string v)))
+        player))))
 
 
-;; (defn sort-with
-;;   [players {:keys [by reverse]}]
-;;   (-> players
-;;       (->> (sort-by (juxt (sort-prop by) (sort-prop :name))))
-;;       (cond-> reverse (cljs.core/reverse))))
+(defn filter-with
+  [pattern players]
+  (filter #(match-pattern % pattern) players))
+
+
+(defn sort-prop
+  [by]
+  (fn [player]
+    (prop->string (by player))))
+
+
+(defn sort-with
+  [{:keys [by reverse?]} players]
+  (-> players
+      (->> (sort-by (juxt (sort-prop by) (sort-prop :name))))
+      (cond-> reverse? (cljs.core/reverse))))
 
 
 (spec/def :sd.player.form/factions
