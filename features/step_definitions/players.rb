@@ -6,7 +6,6 @@ require_relative "../pages/players_list"
 Given("I open Players/List page") do
   @page = Pages::PlayersList.new
             .load
-            .filter_with(" ")
 end
 
 Given("I open Players/Create page") do
@@ -31,7 +30,9 @@ end
 
 When("I sort the Players list by \"$by\"") do |sort|
   @sort_value = sort
-  @page.sort_by(sort)
+  @page
+    .filter_with(" ")
+    .sort_by(sort)
 end
 
 When("I invert the sort order") do
@@ -79,6 +80,10 @@ Then("I can edit the player information with:") do |json_info|
   end
 end
 
+Then("I see Players\/List page with players:") do |table|
+  @page.expect_players_list(table.raw)
+end
+
 Then("I see Players/List page with player:") do |table|
   expect(Pages::Players.new).to be_loaded
   Pages::PlayersList.new
@@ -93,14 +98,6 @@ end
 
 Then("I cannot create the player because its name already exists") do
   @page.expect_already_exists
-end
-
-# Then(/^I see Players list:$/) do |table|
-#   @page.expect_players_list(table.raw)
-# end
-
-Then("I see Players\/List page with players:") do |table|
-  @page.expect_players_list(table.raw)
 end
 
 more_players_filter_matches = {

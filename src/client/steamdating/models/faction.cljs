@@ -53,6 +53,10 @@
     (when icon (str "/data/icons/" icon))))
 
 
+(spec/def :sd.faction/icons
+  (spec/map-of keyword? :sd.faction/icon))
+
+
 (defn icons
   [factions]
   (into {} (map (fn [[k v]] [k (:icon v)]) factions)))

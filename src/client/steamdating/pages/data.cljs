@@ -2,7 +2,7 @@
   (:require [re-frame.core :as re-frame]
             [secretary.core :as secretary :refer-macros [defroute]]
             [steamdating.components.page.content :refer [page-content]]
-            [steamdating.components.player.file_imports :refer [player-file-imports]]
+            [steamdating.components.player.file-imports :refer [player-file-imports]]
             [steamdating.components.tournament.file-actions :refer [tournament-file-actions]]
             [steamdating.services.debug :as debug]))
 

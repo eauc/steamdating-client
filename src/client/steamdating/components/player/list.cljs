@@ -3,7 +3,8 @@
             [re-frame.core :as re-frame]
             [steamdating.components.form.input :refer [form-input]]
             [steamdating.components.generics.faction-icon :refer [faction-icon]]
-            [steamdating.components.generics.sort-header :refer [sort-header]]))
+            [steamdating.components.generics.sort-header :refer [sort-header]]
+            [steamdating.components.player.file-imports :refer [player-file-imports]]))
 
 
 (defn player-row
@@ -24,8 +25,9 @@
 
 (defn player-list-render
   [{:keys [caption on-filter-update on-player-click on-sort-by state] :as props}]
-  (let [{:keys [columns filter list icons sort]} state]
-    [:table.sd-table
+  (let [{:keys [columns filter list icons sort]} state
+        columns [:name :origin :faction :lists]]
+    [:table.sd-table.sd-player-list
      (-> props
          (dissoc :caption :on-filter-update :on-player-click :on-sort-by :state))
      [:caption
@@ -56,7 +58,9 @@
         on-filter-update #(re-frame/dispatch [:sd.filters/set :players %])
         on-player-click #(re-frame/dispatch [:sd.players.edit/start-edit %])
         on-sort-by #(re-frame/dispatch [:sd.sorts/toggle :players %])]
-    [player-list-render {:on-filter-update on-filter-update
-                         :on-player-click on-player-click
-                         :on-sort-by on-sort-by
-                         :state state}]))
+    (if (:render-list? state)
+      [player-list-render {:on-filter-update on-filter-update
+                           :on-player-click on-player-click
+                           :on-sort-by on-sort-by
+                           :state state}]
+      [player-file-imports])))

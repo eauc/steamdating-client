@@ -53,6 +53,8 @@
 
 (defn icons-sub
   [factions]
+  {:pre [(spec/valid? :sd.faction/factions factions)]
+   :post [(spec/valid? :sd.faction/icons %)]}
   (faction/icons factions))
 
 (re-frame/reg-sub

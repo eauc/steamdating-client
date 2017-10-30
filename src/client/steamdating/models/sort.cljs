@@ -11,8 +11,8 @@
 
 
 (spec/def :sd.sort/sort
-  (spec/keys :req-un[:sd.sort/by
-                     :sd.sort/reverse?]))
+  (spec/keys :opt-un [:sd.sort/by
+                      :sd.sort/reverse?]))
 
 
 (spec/def :sd.sort/sorts

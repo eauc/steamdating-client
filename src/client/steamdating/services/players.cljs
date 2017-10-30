@@ -2,14 +2,14 @@
   (:require [cljs.spec.alpha :as spec]
             [re-frame.core :as re-frame]
             [steamdating.models.faction :as faction]
+            [steamdating.models.filter :as filter]
             [steamdating.models.player :as player]
             [steamdating.services.db :as db]
             [steamdating.services.debug :as debug]
             [steamdating.services.filters]
             [steamdating.services.forms]
             [steamdating.services.routes]
-            [steamdating.services.sorts]
-            [steamdating.models.filter :as filter]))
+            [steamdating.services.sorts]))
 
 
 (db/reg-event-fx
@@ -197,7 +197,11 @@
 
 (defn sorted-sub
   [[players sort]]
+  {:pre [(spec/valid? :sd.player/players players)
+         (spec/valid? :sd.sort/sort (debug/spy "sort" sort))]
+   :post [(spec/valid? :sd.player/sorted %)]}
   {:list (player/sort-with sort players)
+   :players players
    :sort sort})
 
 (re-frame/reg-sub
@@ -208,11 +212,15 @@
 
 
 (defn list-sub
-  [[{:keys [list sort]} filter icons]]
-  {:columns [:name :origin :faction :lists]
-   :filter filter
+  [[{:keys [list players sort] :as sorted} filter icons]]
+  {:pre [(spec/valid? :sd.player/sorted sorted)
+         (spec/valid? (spec/nilable :sd.filter/value) filter)
+         (spec/valid? :sd.faction/icons icons)]
+   :post [(spec/valid? :sd.player/list-sub %)]}
+  {:filter (or filter "")
    :icons icons
    :list (player/filter-with (filter/->pattern filter) list)
+   :render-list? (boolean (not-empty players))
    :sort sort})
 
 (re-frame/reg-sub

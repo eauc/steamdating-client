@@ -1,5 +1,6 @@
 (ns steamdating.services.filters
-  (:require [re-frame.core :as re-frame]
+  (:require [cljs.spec.alpha :as spec]
+            [re-frame.core :as re-frame]
             [steamdating.models.filter :as filter]
             [steamdating.services.db :as db]))
 
@@ -13,19 +14,10 @@
 
 (defn filter-sub
   [db [_ field]]
+  {:pre [(spec/valid? :sd.db/db db)]
+   :post [(spec/valid? :sd.filter/name field)]}
   (get-in db [:filters field]))
 
 (re-frame/reg-sub
   :sd.filters/filter
   filter-sub)
-
-(defn pattern-sub
-  [state]
-  (filter/->pattern state))
-
-(re-frame/reg-sub
-  :sd.filters/pattern
-  (fn regexp-sub-inputs
-    [[_ field] _]
-    (re-frame/subscribe [:sd.filters/filter field]))
-  pattern-sub)

@@ -2,7 +2,9 @@
   (:require [cljs.spec.alpha :as spec]
             [clojure.string :as s]
             [steamdating.models.faction]
+            [steamdating.models.filter]
             [steamdating.models.form :as form]
+            [steamdating.models.sort]
             [steamdating.services.debug :as debug]))
 
 
@@ -49,6 +51,32 @@
 
 (spec/def :sd.player/names
   (spec/coll-of :sd.player/name :kind set?))
+
+
+(spec/def :sd.player.sorted/list
+  (spec/coll-of :sd.player/player))
+
+
+(spec/def :sd.player/sorted
+  (spec/keys :req-un [:sd.player/players
+                      :sd.player.sorted/list
+                      :sd.sort/sort]))
+
+
+(spec/def :sd.player.list/filter
+  :sd.filter/value)
+
+
+(spec/def :sd.player.list/render-list?
+  boolean?)
+
+
+(spec/def :sd.player/list-sub
+  (spec/keys :req-un [:sd.player.list/filter
+                      :sd.faction/icons
+                      :sd.player.sorted/list
+                      :sd.player.list/render-list?
+                      :sd.sort/sort]))
 
 
 (defn ->player

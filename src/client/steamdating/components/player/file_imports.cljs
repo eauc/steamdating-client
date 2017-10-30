@@ -1,4 +1,4 @@
-(ns steamdating.components.player.file_imports
+(ns steamdating.components.player.file-imports
   (:require [steamdating.components.file.open-button :refer [file-open-button]]
             [steamdating.components.generics.icon :refer [icon]]
             [steamdating.services.players]))
