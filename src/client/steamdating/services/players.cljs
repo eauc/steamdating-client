@@ -159,7 +159,19 @@
   players-sub)
 
 
-(defn players-names-sub
+(defn count-sub
+  [players]
+  {:pre [(spec/valid? :sd.player/players players)]
+   :post [(nat-int? %)]}
+  (count players))
+
+(re-frame/reg-sub
+  :sd.players/count
+  :<- [:sd.players/players]
+  count-sub)
+
+
+(defn names-sub
   [players]
   {:pre [(spec/valid? :sd.player/players players)]
    :post [(spec/valid? :sd.player/names %)]}
@@ -168,23 +180,31 @@
 (re-frame/reg-sub
   :sd.players/names
   :<- [:sd.players/players]
-  players-names-sub)
+  names-sub)
 
 
-;; (re-frame/reg-sub
-;;   :sd.players/factions
-;;   :<- [:sd.players/players]
-;;   (fn players-factions-sub
-;;     [players _]
-;;     (player/factions players)))
+(defn factions-sub
+  [players]
+  {:pre [(spec/valid? :sd.player/players players)]
+   :post [(spec/valid? :sd.player/factions %)]}
+  (player/factions players))
+
+(re-frame/reg-sub
+  :sd.players/factions
+  :<- [:sd.players/players]
+  factions-sub)
 
 
-;; (re-frame/reg-sub
-;;   :sd.players/origins
-;;   :<- [:sd.players/players]
-;;   (fn players-factions-sub
-;;     [players _]
-;;     (player/origins players)))
+(defn origins-sub
+  [players]
+  {:pre [(spec/valid? :sd.player/players players)]
+   :post [(spec/valid? :sd.player/origins %)]}
+  (player/origins players))
+
+(re-frame/reg-sub
+  :sd.players/origins
+  :<- [:sd.players/players]
+  origins-sub)
 
 
 ;; (re-frame/reg-sub
@@ -198,7 +218,7 @@
 (defn sorted-sub
   [[players sort]]
   {:pre [(spec/valid? :sd.player/players players)
-         (spec/valid? :sd.sort/sort (debug/spy "sort" sort))]
+         (spec/valid? :sd.sort/sort sort)]
    :post [(spec/valid? :sd.player/sorted %)]}
   {:list (player/sort-with sort players)
    :players players

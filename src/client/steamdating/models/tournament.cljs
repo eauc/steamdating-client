@@ -9,10 +9,12 @@
 
 (spec/def :sd.tournament/tournament
   (spec/keys :req-un [:sd.player/players
+                      :sd.rounds/rounds
                       :sd.tournament/version]))
 
 
 (defn ->tournament
   []
   {:players []
+   :rounds []
    :version 1})

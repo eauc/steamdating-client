@@ -3,7 +3,8 @@
             [devcards.core :as dc]
             [steamdating.components.form.input-test]
             [steamdating.components.player.edit-test]
-            [steamdating.components.player.list-test]))
+            [steamdating.components.player.list-test]
+            [steamdating.components.round.next-test]))
 
 
 (enable-console-print!)

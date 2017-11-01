@@ -48,42 +48,49 @@
 
 
     [:&-toggle {:align-items "center"
-               :background-color "white"
-               :bottom "1.75em"
-               :border-bottom-left-radius "1em"
-               :border-color "#CCC"
-               :border-right-color :white
-               :border-style "solid"
-               :border-top-left-radius "1em"
-               :border-width "1px 0 1px 1px"
-               :display :flex
-               :font-size "1.4em"
-               :justify-content "space-around"
-               :position :fixed
-               :height "2em"
-               :right 0
-               :transition "right 0.25s"
-               :width "2em"}
+                :background-color "white"
+                :bottom "1.75em"
+                :border-bottom-left-radius "1em"
+                :border-color "#CCC"
+                :border-right-color :white
+                :border-style "solid"
+                :border-top-left-radius "1em"
+                :border-width "1px 0 1px 1px"
+                :display :flex
+                :font-size "1.4em"
+                :justify-content "space-around"
+                :position :fixed
+                :height "2em"
+                :right 0
+                :transition "right 0.25s"
+                :width "2em"}
      (at-break
        :tablet
        [:& {:display :none}])]
 
 
     [:&-item {:background-color :transparent
-             :border 0
-             :padding (:padding box-model)
-             :padding-bottom (:padding-large box-model)
-             :padding-top (:padding-large box-model)
-             :white-space :nowrap
-             :text-align :left}
+              :border 0
+              :cursor :pointer
+              :padding (:padding box-model)
+              :padding-bottom (:padding-large box-model)
+              :padding-top (:padding-large box-model)
+              :white-space :nowrap
+              :text-align :left}
      [:&.disabled {:color (:text-muted colors)
                    :font-style :italic
                    :pointer-events :none}]
      [:&.active
       :&:hover
       :&:focus {:background-color (:hover colors)
-                :outline :none}]]
+                :outline :none}]
 
+     [:&-label {:padding-right (:padding box-model)}]]
+
+
+    [:hr {:border (:border box-model)
+          :margin 0
+          :width "100%"}]
 
     (at-break
       :tablet

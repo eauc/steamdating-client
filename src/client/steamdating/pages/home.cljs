@@ -3,6 +3,7 @@
             [secretary.core :refer [defroute]]
             [steamdating.components.page.content :refer [page-content]]
             [steamdating.components.page.menu :refer [page-menu-items]]
+            [steamdating.components.page.menu-item :refer [page-menu-item]]
             [steamdating.services.db :as db]
             [steamdating.services.debug :as debug]))
 
@@ -50,61 +51,61 @@
 (defmethod page-menu-items :home
   []
   (list
-    [:button.sd-page-menu-item
+    [page-menu-item
      {:key :toater-success
+      :label "Test Toaster Success"
       :on-click #(re-frame/dispatch
                    [:sd.toaster/set
                     {:type :success
-                     :message "Ouuuuups1!"}])}
-     "Test Toaster Success"]
-    [:button.sd-page-menu-item
+                     :message "Ouuuuups1!"}])}]
+    [page-menu-item
      {:key :toater-info
+      :label "Test Toaster Info"
       :on-click #(re-frame/dispatch
                    [:sd.toaster/set
                     {:type :info
-                     :message "Ouuuuups2!"}])}
-     "Test Toaster Info"]
-    [:button.sd-page-menu-item
+                     :message "Ouuuuups2!"}])}]
+    [page-menu-item
      {:key :toater-warn
+      :label "Test Toaster Warn"
       :on-click #(re-frame/dispatch
                    [:sd.toaster/set
                     {:type :warn
-                     :message "Ouuuuups3!"}])}
-     "Test Toaster Warn"]
-    [:button.sd-page-menu-item
+                     :message "Ouuuuups3!"}])}]
+    [page-menu-item
      {:key :toater-error
+      :label "Test Toaster Error"
       :on-click #(re-frame/dispatch
                    [:sd.toaster/set
                     {:type :error
-                     :message "Ouuuuups4!"}])}
-     "Test Toaster Error"]
-    [:button.sd-page-menu-item
+                     :message "Ouuuuups4!"}])}]
+    [page-menu-item
      {:key :prompt-alert
+      :label "Test Alert"
       :on-click #(re-frame/dispatch
                    [:sd.prompt/set
                     {:type :alert
                      :message "This is an alert"
-                     :on-validate [::test-prompt "alert-ok"]}])}
-     "Test Alert"]
-    [:button.sd-page-menu-item
+                     :on-validate [::test-prompt "alert-ok"]}])}]
+    [page-menu-item
      {:key :prompt-confirm
+      :label "Test Confirm"
       :on-click #(re-frame/dispatch
                    [:sd.prompt/set
                     {:type :confirm
                      :message "This is a confirm"
                      :on-validate [::test-prompt "confirm-ok"]
-                     :on-cancel [::test-prompt "confirm-cancel"]}])}
-     "Test Confirm"]
-    [:button.sd-page-menu-item
+                     :on-cancel [::test-prompt "confirm-cancel"]}])}]
+    [page-menu-item
      {:key :prompt-prompt
+      :label "Test Prompt"
       :on-click #(re-frame/dispatch
                    [:sd.prompt/set
                     {:type :prompt
                      :message "This is a prompt:"
                      :value 42
                      :on-validate [::test-prompt "prompt-ok"]
-                     :on-cancel [::test-prompt "prompt-cancel"]}])}
-     "Test Prompt"]))
+                     :on-cancel [::test-prompt "prompt-cancel"]}])}]))
 
 
 (db/reg-event-fx

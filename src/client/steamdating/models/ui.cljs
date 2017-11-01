@@ -1,6 +1,7 @@
 (ns steamdating.models.ui
   (:require [cljs.spec.alpha :as spec]
-            [steamdating.models.route]))
+            [steamdating.models.route]
+            [clojure.string :as s]))
 
 
 (spec/def :sd.ui/menu
@@ -19,3 +20,8 @@
 (defn ->ui
   []
   {:menu nil})
+
+
+(defn classes
+  [& cs]
+  (s/join " " (filter identity cs)))

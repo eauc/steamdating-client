@@ -17,6 +17,7 @@
             [steamdating.styles.5-components.player-file-imports :refer [player-file-imports]]
             [steamdating.styles.5-components.player-list :refer [player-list]]
             [steamdating.styles.5-components.prompt :refer [prompt]]
+            [steamdating.styles.5-components.round-next :refer [round-next]]
             [steamdating.styles.5-components.sort-header :refer [sort-header]]
             [steamdating.styles.5-components.toaster :refer [toaster]]
             [steamdating.styles.5-components.tournament-file :refer [tournament-file]]
@@ -44,6 +45,7 @@
    player-file-imports
    player-list
    prompt
+   round-next
    section-header
    sort-header
    table

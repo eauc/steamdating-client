@@ -4,6 +4,7 @@
             [steamdating.components.generics.icon :refer [icon]]
             [steamdating.components.page.content :refer [page-content]]
             [steamdating.components.page.menu :refer [page-menu-items]]
+            [steamdating.components.page.menu-item :refer [page-menu-item]]
             [steamdating.components.player.list :refer [player-list]]
             [steamdating.services.db :as db]
             [steamdating.services.debug :as debug]
@@ -23,8 +24,8 @@
 (defmethod page-menu-items :players-list
   []
   (list
-    [:button.sd-page-menu-item
+    [page-menu-item
      {:key :create
-      :on-click #(re-frame/dispatch [:sd.players.edit/start-create])}
-     [:span "Create player "]
-     [icon {:name "user-plus"}]]))
+      :icon "user-plus"
+      :label "Create player"
+      :on-click #(re-frame/dispatch [:sd.players.edit/start-create])}]))

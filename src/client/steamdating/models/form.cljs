@@ -13,6 +13,10 @@
   (spec/nilable map?))
 
 
+(spec/def :sd.form/warn
+  (spec/nilable map?))
+
+
 (spec/def :sd.form/base
   :sd.form/value)
 
@@ -28,7 +32,8 @@
 
 (spec/def :sd.form/validated
   (spec/and :sd.form/form
-            (spec/keys :req-un [:sd.form/error])))
+            (spec/keys :req-un [:sd.form/error]
+                       :opt-un [:sd.form/warn])))
 
 
 (spec/def :sd.form/forms

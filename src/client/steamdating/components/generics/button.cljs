@@ -1,5 +1,6 @@
 (ns steamdating.components.generics.button
-  (:require [steamdating.components.generics.icon :as icon]))
+  (:require [steamdating.components.generics.icon :as icon]
+            [steamdating.models.ui :as ui]))
 
 
 (defn button
@@ -8,7 +9,7 @@
          type :button}}]
   [element (-> props
                (dissoc :element :icon :label)
-               (assoc :class (str "sd-button " class))
+               (assoc :class (ui/classes "sd-button" class))
                (cond-> (= element :button)
                  (assoc :type type)))
    (when (some? icon)

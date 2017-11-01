@@ -4,6 +4,7 @@
             [steamdating.components.generics.icon :refer [icon]]
             [steamdating.components.page.content :refer [page-content]]
             [steamdating.components.page.menu :refer [page-menu-items]]
+            [steamdating.components.page.menu-item :refer [page-menu-item]]
             [steamdating.components.player.edit :refer [player-edit]]
             [steamdating.models.form :as form]
             [steamdating.services.debug :as debug]))
@@ -24,23 +25,23 @@
   (let [state @(re-frame/subscribe [:sd.players/edit])
         valid? (form/valid? state)]
     (list
-      [:button.sd-page-menu-item
+      [page-menu-item
        {:key :create
-        :class (when-not valid? "disabled")
-        :on-click #(re-frame/dispatch [:sd.players.edit/save])}
-       [:span "Save "]
-       [icon {:name "save"}]]
-      [:button.sd-page-menu-item
+        :disabled (not valid?)
+        :icon "save"
+        :label "Save"
+        :on-click #(re-frame/dispatch [:sd.players.edit/save])}]
+      [page-menu-item
        {:key :delete
+        :icon "trash-2"
+        :label "Delete"
         :on-click #(re-frame/dispatch
                      [:sd.prompt/set
                       {:type :confirm
                        :message "Delete player.\nYou sure ?"
-                       :on-validate [:sd.players.edit/delete]}])}
-       [:span "Delete "]
-       [icon {:name "trash-2"}]]
-      [:button.sd-page-menu-item
+                       :on-validate [:sd.players.edit/delete]}])}]
+      [page-menu-item
        {:key :cancel
-        :on-click #(re-frame/dispatch [:sd.routes/back])}
-       [:span "Cancel "]
-       [icon {:name "x"}]])))
+        :icon "x"
+        :label "Cancel"
+        :on-click #(re-frame/dispatch [:sd.routes/back])}])))

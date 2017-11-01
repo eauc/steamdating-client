@@ -14,6 +14,12 @@
         (js->clj))))
 
 
+(defn sort-prop
+  [prop]
+  (cond-> prop
+    (string? prop) (.toLowerCase)))
+
+
 (defn form-select
   [{:keys [autofocus? on-update value]}]
   (let [state (reagent/atom {:initial-value value})
@@ -29,17 +35,17 @@
            [:label {:for name} label])
          [:select.sd-input-value
           (-> props
-              (dissoc :autofocus? :error :label :on-update :options :value)
+              (dissoc :autofocus? :error :label :on-update :options)
               (assoc :class (if show-error? "error"))
               (assoc :id name)
               (assoc :on-change #(let [new-value (get-value props (.-target %))]
                                    (on-update new-value)))
               (assoc :ref on-ref)
-              (assoc :value value))
+              (update :value #(if (some? %) % "")))
           (when-not multiple
             [:option {:value nil} ""])
-          (for [[value name] options]
-            [:option {:key value
-                      :value value} name])]
+          (for [[opt-value opt-name] (sort-by #(sort-prop (nth % 1)) options)]
+            [:option {:key opt-value
+                      :value opt-value} opt-name])]
          (when show-error?
            [:p.sd-input-error error])]))))

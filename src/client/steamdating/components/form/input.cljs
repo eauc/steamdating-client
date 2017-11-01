@@ -1,5 +1,6 @@
 (ns steamdating.components.form.input
   (:require [reagent.core :as reagent]
+            [steamdating.models.ui :as ui]
             [steamdating.services.debug :as debug]))
 
 
@@ -42,8 +43,8 @@
          [element
           (-> props
               (dissoc :autofocus? :element :error :label :on-update :value)
-              (assoc :class (str "sd-input-value"
-                                 (if show-error? " error" "")))
+              (assoc :class (ui/classes "sd-input-value"
+                                        (when show-error? "error")))
               (assoc :id name)
               (assoc :on-change #(let [raw-value (-> % .-target .-value)
                                        new-value (if (number? (:value @state))

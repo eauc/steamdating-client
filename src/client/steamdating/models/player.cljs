@@ -49,10 +49,6 @@
   (spec/coll-of :sd.player/player :kind vector?))
 
 
-(spec/def :sd.player/names
-  (spec/coll-of :sd.player/name :kind set?))
-
-
 (spec/def :sd.player.sorted/list
   (spec/coll-of :sd.player/player))
 
@@ -93,6 +89,11 @@
     (assoc data :lists lists)))
 
 
+
+(spec/def :sd.player/names
+  (spec/coll-of :sd.player/name :kind set?))
+
+
 (defn names
   [players]
   (set (map :name players)))
@@ -105,36 +106,9 @@
     (conj players player)))
 
 
-;; (defn factions
-;;   [players]
-;;   (into {} (map (juxt :name :faction) players)))
-
-
-;; (defn origins
-;;   [players]
-;;   (into {} (map (juxt :name :origin) players)))
-
-
-;; (defn lists
-;;   [players]
-;;   (into {} (map (juxt :name :lists) players)))
-
-
-;; (defn on-board
-;;   [players]
-;;   (remove #(some? (:droped-after %)) players))
-
-
 (defn delete
   [players {:keys [name] :as player}]
   (vec (remove #(= (:name %) name) players)))
-
-
-;; (defn toggle-drop
-;;   [player after]
-;;   (if (:droped-after player)
-;;     (dissoc player :droped-after)
-;;     (assoc player :droped-after after)))
 
 
 (defn save
@@ -142,6 +116,41 @@
   (-> players
       (delete base)
       (add edit)))
+
+
+(spec/def :sd.player/factions
+  (spec/map-of :sd.player/name :sd.player/faction))
+
+
+(defn factions
+  [players]
+  (into {} (map (juxt :name :faction) players)))
+
+
+(spec/def :sd.player/origins
+  (spec/map-of :sd.player/name :sd.player/origin))
+
+
+(defn origins
+  [players]
+  (into {} (map (juxt :name :origin) players)))
+
+
+;; (defn lists
+;;   [players]
+;;   (into {} (map (juxt :name :lists) players)))
+
+
+(defn on-board
+  [players]
+  (remove #(some? (:droped-after %)) players))
+
+
+;; (defn toggle-drop
+;;   [player after]
+;;   (if (:droped-after player)
+;;     (dissoc player :droped-after)
+;;     (assoc player :droped-after after)))
 
 
 ;; (def player->columns
