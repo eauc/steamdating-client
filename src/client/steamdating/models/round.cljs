@@ -3,8 +3,10 @@
             [clojure.set :as set]
             [clojure.string :as s]
             [steamdating.models.faction]
+            [steamdating.models.filter]
             [steamdating.models.form :as form]
             [steamdating.models.game :as game]
+            [steamdating.models.sort]
             [steamdating.models.player]
             [steamdating.services.debug :as debug]))
 
@@ -24,6 +26,31 @@
 
 (spec/def :sd.round/rounds
   (spec/coll-of :sd.round/round :kind vector?))
+
+
+(spec/def :sd.round/filter
+  :sd.filter/value)
+
+
+(spec/def :sd.round.nth/filter
+  (spec/keys :req-un [:sd.round/round
+                      :sd.round/filter]))
+
+
+(spec/def :sd.round.nth/sort
+  (spec/and :sd.round.nth/filter
+            (spec/keys :req-un [:sd.sort/sort])))
+
+
+(spec/def :sd.round.nth/n
+  nat-int?)
+
+
+(spec/def :sd.round/nth
+  (spec/and :sd.round.nth/sort
+            (spec/keys :req-un [:sd.round.nth/n
+                                :sd.player/factions
+                                :sd.faction/icons])))
 
 
 (defn players->ngames
@@ -303,12 +330,12 @@
 ;;       (update :games #(mapv (fn [game] (game/rename-player game old-name new-name)) %))))
 
 
-;; (defn random-score
-;;   [round lists]
-;;   (update round :games
-;;           #(mapv (fn [game]
-;;                    (game/random-score game lists))
-;;                  %)))
+(defn random-score
+  [round lists]
+  (update round :games
+          #(mapv (fn [game]
+                   (game/random-score game lists))
+                 %)))
 
 
 (defn tournament-weight
@@ -407,22 +434,25 @@
         (subvec rounds (inc n))))
 
 
-;; (defn filter-with
-;;   [round pattern]
-;;   (update round :games #(vec (filter (fn [game] (game/match-pattern? game pattern)) %))))
+(defn filter-with
+  [round pattern]
+  (update round :games #(vec (filter (fn [game] (game/match-pattern? game pattern)) %))))
 
 
-;; (def sort-props
-;;   {:table :table
-;;    :player1 #(.toLowerCase (or (get-in % [:player1 :name]) ""))
-;;    :player2 #(.toLowerCase (or (get-in % [:player2 :name]) ""))})
+(def sort-props
+  {:table :table
+   :player1 #(.toLowerCase (or (get-in % [:player1 :name]) ""))
+   :player2 #(.toLowerCase (or (get-in % [:player2 :name]) ""))})
 
 
-;; (defn sort-with
-;;   [round {:keys [by reverse]}]
-;;   (update round :games #(-> %
-;;                             (->> (sort-by (by sort-props)))
-;;                             (cond-> reverse (cljs.core/reverse)))))
+(defn sort-with
+  [round {:keys [by reverse?]}]
+  (let [games (as-> (:games round) $
+                (sort-by (by sort-props) $)
+                (cond-> $
+                  reverse? (cljs.core/reverse))
+                (vec $))]
+    (assoc round :games games)))
 
 
 ;; (defn add-factions

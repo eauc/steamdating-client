@@ -5,7 +5,8 @@
             [steamdating.models.player :as player]
             [steamdating.models.round :as round]
             [steamdating.services.db :as db]
-            [steamdating.services.debug :as debug]))
+            [steamdating.services.debug :as debug]
+            [steamdating.models.filter :as filter]))
 
 
 (db/reg-event-fx
@@ -58,13 +59,13 @@
 ;;                rounds)}))
 
 
-;; (db/reg-event-fx
-;;   :sd.rounds/random-score
-;;   (fn random-score
-;;     [{:keys [db]} [n-round]]
-;;     (let [lists (player/lists (get-in db [:tournament :players]))]
-;;       {:db (update-in db [:tournament :rounds n-round]
-;;                       round/random-score lists)})))
+(db/reg-event-fx
+  :sd.rounds.nth/random-score
+  (fn random-score
+    [{:keys [db]} [n-round]]
+    (let [lists (player/lists (get-in db [:tournament :players]))]
+      {:db (update-in db [:tournament :rounds n-round]
+                      round/random-score lists)})))
 
 
 (db/reg-event-fx
@@ -151,27 +152,73 @@
   next-sub)
 
 
-;; (re-frame/reg-sub
-;;   :sd.rounds/round
-;;   (fn round-sub
-;;     [db [_ n]]
-;;     (get-in db [:tournament :rounds n])))
+(defn nth-raw-sub
+  [db [_ n]]
+  {:pre [(spec/valid? :sd.db/db db)
+         (nat-int? n)]
+   :post [(spec/valid? :sd.round/round %)]}
+  (get-in db [:tournament :rounds n]))
+
+(re-frame/reg-sub
+  :sd.rounds/nth-raw
+  nth-raw-sub)
 
 
-;; (re-frame/reg-sub
-;;   :sd.rounds/round-view
-;;   (fn round-view-input
-;;     [[_ n filter] _]
-;;     [(re-frame/subscribe [:sd.rounds/round n])
-;;      (re-frame/subscribe [:sd.filters/pattern filter])
-;;      (re-frame/subscribe [:sd.sorts/sort :round {:by :table}])
-;;      (re-frame/subscribe [:sd.players/factions])])
-;;   (fn round-view-sub
-;;     [[round pattern sort factions] _]
-;;     (-> round
-;;         (round/filter-with pattern)
-;;         (round/sort-with sort)
-;;         (round/update-factions factions))))
+(defn nth-filter-sub
+  [[r f]]
+  {:pre [(spec/valid? :sd.round/round r)
+         (spec/valid? :sd.filter/value f)]
+   :post [(spec/valid? :sd.round.nth/filter %)]}
+  {:round (round/filter-with r (filter/->pattern f))
+   :filter f})
+
+(re-frame/reg-sub
+  :sd.rounds/nth-filter
+  (fn nth-filter-sub-input
+    [[_ n filter]]
+    [(re-frame/subscribe [:sd.rounds/nth-raw n])
+     (re-frame/subscribe [:sd.filters/filter filter])])
+  nth-filter-sub)
+
+
+(defn nth-sort-sub
+  [[{r :round :as input} s]]
+  {:pre [(spec/valid? :sd.round.nth/filter input)
+         (spec/valid? :sd.sort/sort s)]
+   :post [(spec/valid? :sd.round.nth/sort %)]}
+  (assoc input
+         :round (round/sort-with r s)
+         :sort s))
+
+(re-frame/reg-sub
+  :sd.rounds/nth-sort
+  (fn nth-sort-sub-input
+    [[_ n filter]]
+    [(re-frame/subscribe [:sd.rounds/nth-filter n filter])
+     (re-frame/subscribe [:sd.sorts/sort :round {:by :table}])])
+  nth-sort-sub)
+
+
+(defn nth-sub
+  [[input factions icons] [_ n]]
+  {:pre [(spec/valid? :sd.round.nth/sort input)
+         (spec/valid? :sd.player/factions factions)
+         (spec/valid? :sd.faction/icons icons)
+         (nat-int? n)]
+   :post [(spec/valid? :sd.round/nth %)]}
+  (assoc input
+         :n n
+         :factions factions
+         :icons icons))
+
+(re-frame/reg-sub
+  :sd.rounds/nth
+  (fn nth-sub-input
+    [[_ n filter]]
+    [(re-frame/subscribe [:sd.rounds/nth-sort n filter])
+     (re-frame/subscribe [:sd.players/factions])
+     (re-frame/subscribe [:sd.factions/icons])])
+  nth-sub)
 
 
 ;; (re-frame/reg-sub

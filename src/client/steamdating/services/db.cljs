@@ -40,7 +40,7 @@
 
 (def default-interceptors
   [store-db-interceptor
-   check-spec-interceptor
+   (when debug? check-spec-interceptor)
    (when debug? re-frame/debug)
    re-frame/trim-v])
 

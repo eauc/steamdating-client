@@ -59,19 +59,6 @@
                       :sd.game/table]))
 
 
-;; (defn valid-score-pair?
-;;   [scores]
-;;   (as-> (map :tournament scores) $
-;;     (and (not-every? #(= 1 %) $)
-;;          (or (every? nil? $)
-;;              (not-any? nil? $)))))
-
-
-;; (spec/def :sd.game/score-pair
-;;   (spec/cat :p1 :sd.game/score
-;;             :p2 :sd.game/score))
-
-
 (defn ->score
   []
   {:tournament nil
@@ -182,10 +169,10 @@
          (= o1 o2))))
 
 
-;; (defn match-pattern?
-;;   [game pattern]
-;;   (or (re-find pattern (or (get-in game [:player1 :name]) ""))
-;;       (re-find pattern (or (get-in game [:player2 :name]) ""))))
+(defn match-pattern?
+  [game pattern]
+  (or (re-find pattern (or (get-in game [:player1 :name]) ""))
+      (re-find pattern (or (get-in game [:player2 :name]) ""))))
 
 
 ;; (defn rename-player
@@ -208,23 +195,36 @@
 ;;           (assoc-in [other :score :tournament] 0)))))
 
 
-;; (defn random-score
-;;   [game lists]
-;;   (let [[s1 s2] (sgen/generate
-;;                   (sgen/such-that
-;;                     valid-score-pair?
-;;                     (spec/gen :sd.game/score-pair)))
-;;         l1 (sgen/generate
-;;              (sgen/elements
-;;                (get lists (get-in game [:player1 :name]) [nil])))
-;;         l2 (sgen/generate
-;;              (sgen/elements
-;;                (get lists (get-in game [:player2 :name]) [nil])))]
-;;     (-> game
-;;         (assoc-in [:player1 :list] l1)
-;;         (assoc-in [:player1 :score] s1)
-;;         (assoc-in [:player2 :list] l2)
-;;         (assoc-in [:player2 :score] s2))))
+(defn valid-score-pair?
+  [scores]
+  (as-> (map :tournament scores) $
+    (and (not-every? #(= 1 %) $)
+         (or (every? nil? $)
+             (not-any? nil? $)))))
+
+
+(spec/def :sd.game/score-pair
+  (spec/cat :p1 :sd.game/score
+            :p2 :sd.game/score))
+
+
+(defn random-score
+  [game lists]
+  (let [[s1 s2] (sgen/generate
+                  (sgen/such-that
+                    valid-score-pair?
+                    (spec/gen :sd.game/score-pair)))
+        l1 (sgen/generate
+             (sgen/elements
+               (get lists (get-in game [:player1 :name]) [nil])))
+        l2 (sgen/generate
+             (sgen/elements
+               (get lists (get-in game [:player2 :name]) [nil])))]
+    (-> game
+        (assoc-in [:player1 :list] l1)
+        (assoc-in [:player1 :score] s1)
+        (assoc-in [:player2 :list] l2)
+        (assoc-in [:player2 :score] s2))))
 
 
 ;; (defn update-factions

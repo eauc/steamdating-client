@@ -138,7 +138,7 @@ module Pages
         expect(page).to have_no_content("not paired")
         expect(page).to have_no_content("already been played")
         expect(page).to have_no_content("mirror game")
-        expect(page).to have_no_content("same-origin pairing")
+        # expect(page).to have_no_content("same-origin pairing")
       end
       self
     end

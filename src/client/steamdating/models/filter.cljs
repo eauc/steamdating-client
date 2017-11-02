@@ -4,7 +4,7 @@
 
 
 (spec/def :sd.filter/value
-  string?)
+  (spec/nilable string?))
 
 
 (spec/def :sd.filter/name

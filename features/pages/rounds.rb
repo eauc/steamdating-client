@@ -16,12 +16,12 @@ module Pages
       self
     end
 
-    # def start_nth(n)
-    #   within(PAGE_MENU) do
-    #     click_on("Round ##{n}")
-    #   end
-    #   self
-    # end
+    def start_nth(n)
+      within(PAGE_MENU) do
+        click_on("Round ##{n}")
+      end
+      self
+    end
 
     def nb_games_for_players(players)
       ((players.length + 1) / 2).floor

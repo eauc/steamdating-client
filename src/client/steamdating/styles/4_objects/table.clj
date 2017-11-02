@@ -21,7 +21,8 @@
                 :flex-direction :row}
 
     [:&-label {:font-weight :bold
-               :padding (:padding box-model)}]
+               :padding (:padding box-model)
+               :white-space :nowrap}]
 
     [:.sd-input {:flex-grow 1
                  :padding (:padding box-model)

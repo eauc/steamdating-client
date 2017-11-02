@@ -1,7 +1,7 @@
 require "json"
 # require_relative "../pages/games_edit"
 require_relative "../pages/rounds_next"
-# require_relative "../pages/rounds_nth"
+require_relative "../pages/rounds_nth"
 # require_relative "../pages/rounds_summary"
 
 # Given("I open Rounds/Summary page") do
@@ -16,11 +16,11 @@ Given("I open Rounds/Next page") do
             .load
 end
 
-# Given(/^I open Rounds\/(\d+) page$/) do |nth|
-#   @page = Pages::RoundsNth.new(nth)
-#             .load
-#             .filter(" ")
-# end
+Given(/^I open Rounds\/(\d+) page$/) do |nth|
+  @page = Pages::RoundsNth.new(nth)
+            .load
+            .filter_with(" ")
+end
 
 When("I enter games:") do |table|
   @page.enter_games(table.symbolic_hashes)
@@ -49,15 +49,18 @@ end
 #   @filter_value = filter_value
 # end
 
-# When("I filter the Round with \"$filter\"") do |filter_value|
-#   @page.filter(filter_value)
-#   @filter_value = filter_value
-# end
+When("I filter the Round with \"$filter\"") do |filter_value|
+  @page.filter_with(filter_value)
+end
 
-# When("I sort the Round by \"$by\"") do |by|
-#   @page.sort_by(by)
-#   @sort_by = by
-# end
+When("I sort the Round by \"$by\"") do |by|
+  @page.sort_by(by)
+  @sort_by = by
+end
+
+When("I invert the Round sort order") do
+  @page.invert_sort_by(@sort_by)
+end
 
 # When("I sort the Summary by \"$sort\"") do |sort|
 #   @page.invert_sort_by(sort)
@@ -68,17 +71,13 @@ end
 #   @page.invert_sort_by(@sort_by)
 # end
 
-# When("I delete current Round") do
-#   @page.delete_round
-# end
+When("I delete current Round") do
+  @page.delete_round
+end
 
 # When("I start to edit Game with player \"$name\"") do |name|
 #   @page.start_edit_game_with_player(name)
 #   @page = Pages::GamesEdit.new
-# end
-
-# When("I invert the Round sort order") do
-#   @page.invert_sort_by(@sort_by)
 # end
 
 Then("I can edit the Next Round information") do
@@ -119,42 +118,42 @@ Then("next Round has no error or warning") do
   @page.expect_no_error_warning
 end
 
-# matching_games = {
-#   "to" => [
-#     { p1ap: 32, p1cp: 3, p1list: "Amon1", player1: 'titi', table: 2, player2: 'toto', p2list: "Bethayne1", p2cp: 5, p2ap: 75 },
-#     { p1ap: 46, p1cp: 0, p1list: "Lylyth2", player1: 'toutou', table: 3, player2: 'tutu', p2list: "Bartolo1", p2cp: 4, p2ap: 30 },
-#   ],
-#   "te" => [
-#     { p1ap: 52, p1cp: 5, p1list: "Butcher2", player1: 'tete', table: 1, player2: 'teuteu', p2list: "Vyros1", p2cp: 3, p2ap: 21 },
-#   ],
-# };
+matching_games = {
+  "to" => [
+    { p1ap: 32, p1cp: 3, p1list: "Amon1", player1: 'titi', table: 2, player2: 'toto', p2list: "Bethayne1", p2cp: 5, p2ap: 75 },
+    { p1ap: 46, p1cp: 0, p1list: "Lylyth2", player1: 'toutou', table: 3, player2: 'tutu', p2list: "Bartolo1", p2cp: 4, p2ap: 30 },
+  ],
+  "te" => [
+    { p1ap: 52, p1cp: 5, p1list: "Butcher2", player1: 'tete', table: 1, player2: 'teuteu', p2list: "Vyros1", p2cp: 3, p2ap: 21 },
+  ],
+};
 
-# Then("I see the Round's matching Games") do
-#   @page.expect_games(matching_games[@filter_value])
-# end
+Then("I see the Round filtered with \"$filter\"") do |filter|
+  @page.expect_games(matching_games[filter])
+end
 
-# sorted_games = {
-#   "Player2" => [
-#     { p1ap: 0, p1cp: 0, player1: 'tyty', table: 4, player2: 'Phantom', p2cp: 0, p2ap: 0 },
-#     { p1ap: 52, p1cp: 5, p1list: "Butcher2", player1: 'tete', table: 1, player2: 'teuteu', p2list: "Vyros1", p2cp: 3, p2ap: 21 },
-#     { p1ap: 32, p1cp: 3, p1list: "Amon1", player1: 'titi', table: 2, player2: 'toto', p2list: "Bethayne1", p2cp: 5, p2ap: 75 },
-#     { p1ap: 46, p1cp: 0, p1list: "Lylyth2", player1: 'toutou', table: 3, player2: 'tutu', p2list: "Bartolo1", p2cp: 4, p2ap: 30 },
-#   ],
-#   "Table" => [
-#     { p1ap: 52, p1cp: 5, p1list: "Butcher2", player1: 'tete', table: 1, player2: 'teuteu', p2list: "Vyros1", p2cp: 3, p2ap: 21 },
-#     { p1ap: 32, p1cp: 3, p1list: "Amon1", player1: 'titi', table: 2, player2: 'toto', p2list: "Bethayne1", p2cp: 5, p2ap: 75 },
-#     { p1ap: 46, p1cp: 0, p1list: "Lylyth2", player1: 'toutou', table: 3, player2: 'tutu', p2list: "Bartolo1", p2cp: 4, p2ap: 30 },
-#     { p1ap: 0, p1cp: 0, player1: 'tyty', table: 4, player2: 'Phantom', p2cp: 0, p2ap: 0 },
-#   ],
-# };
+sorted_games = {
+  "Player2" => [
+    { p1ap: 0, p1cp: 0, player1: 'tyty', table: 4, player2: 'Phantom', p2cp: 0, p2ap: 0 },
+    { p1ap: 52, p1cp: 5, p1list: "Butcher2", player1: 'tete', table: 1, player2: 'teuteu', p2list: "Vyros1", p2cp: 3, p2ap: 21 },
+    { p1ap: 32, p1cp: 3, p1list: "Amon1", player1: 'titi', table: 2, player2: 'toto', p2list: "Bethayne1", p2cp: 5, p2ap: 75 },
+    { p1ap: 46, p1cp: 0, p1list: "Lylyth2", player1: 'toutou', table: 3, player2: 'tutu', p2list: "Bartolo1", p2cp: 4, p2ap: 30 },
+  ],
+  "Table" => [
+    { p1ap: 52, p1cp: 5, p1list: "Butcher2", player1: 'tete', table: 1, player2: 'teuteu', p2list: "Vyros1", p2cp: 3, p2ap: 21 },
+    { p1ap: 32, p1cp: 3, p1list: "Amon1", player1: 'titi', table: 2, player2: 'toto', p2list: "Bethayne1", p2cp: 5, p2ap: 75 },
+    { p1ap: 46, p1cp: 0, p1list: "Lylyth2", player1: 'toutou', table: 3, player2: 'tutu', p2list: "Bartolo1", p2cp: 4, p2ap: 30 },
+    { p1ap: 0, p1cp: 0, player1: 'tyty', table: 4, player2: 'Phantom', p2cp: 0, p2ap: 0 },
+  ],
+};
 
-# Then("I see the Round sorted by \"$by\"") do |by|
-#   @page.expect_games(sorted_games[by])
-# end
+Then("I see the Round sorted by \"$by\"") do |by|
+  @page.expect_games(sorted_games[by])
+end
 
-# Then("I see the Round sorted by \"$by\" in reverse order") do |by|
-#   @page.expect_games(sorted_games[by].reverse)
-# end
+Then("I see the Round sorted by \"$by\" in reverse order") do |by|
+  @page.expect_games(sorted_games[by].reverse)
+end
 
 # summary = {
 #   "filtered" => {
@@ -193,8 +192,8 @@ Then("I see Rounds/$nth page with games:") do |nth, table|
   within(Pages::PAGE_CONTENT) do
     expect(page).to have_content("Round ##{nth}")
   end
-  # Pages::RoundsNth.new(nth)
-  #   .expect_games(table.symbolic_hashes)
+  Pages::RoundsNth.new(nth)
+    .expect_games(table.symbolic_hashes)
 end
 
 # Then("I see the Round \#$n games") do |n|

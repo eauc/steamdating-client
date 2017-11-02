@@ -1,5 +1,6 @@
 Feature: Rounds Next
 
+  @wip
   Scenario: Valid Pairing
     Given more Players have been defined
     Given I open Rounds/Next page

@@ -136,9 +136,9 @@
   (into {} (map (juxt :name :origin) players)))
 
 
-;; (defn lists
-;;   [players]
-;;   (into {} (map (juxt :name :lists) players)))
+(defn lists
+  [players]
+  (into {} (map (juxt :name :lists) players)))
 
 
 (defn on-board

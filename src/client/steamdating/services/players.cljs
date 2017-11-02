@@ -234,7 +234,7 @@
 (defn list-sub
   [[{:keys [list players sort] :as sorted} filter icons]]
   {:pre [(spec/valid? :sd.player/sorted sorted)
-         (spec/valid? (spec/nilable :sd.filter/value) filter)
+         (spec/valid? :sd.filter/value filter)
          (spec/valid? :sd.faction/icons icons)]
    :post [(spec/valid? :sd.player/list-sub %)]}
   {:filter (or filter "")
