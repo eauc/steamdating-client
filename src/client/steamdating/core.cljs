@@ -2,6 +2,7 @@
   (:require [reagent.core :as reagent]
             [re-frame.core :as re-frame]
             [steamdating.pages.data]
+            [steamdating.pages.games-edit]
             [steamdating.pages.home]
             [steamdating.pages.players-create]
             [steamdating.pages.players-edit]

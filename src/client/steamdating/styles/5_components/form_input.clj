@@ -35,4 +35,16 @@
               :font-style "italic"
               :margin-bottom (:padding box-model)
               :margin-left (:padding box-model)
-              :margin-top (:padding box-model)}]])
+              :margin-top (:padding box-model)}]
+
+   [:&-checkbox
+    [:label {:align-items :center
+             :cursor :pointer
+             :display :flex
+             :flex-direction :row
+             :flex-wrap :nowrap
+             :justify-content :center}]
+    [:input {:cursor :pointer}]
+    [:.sd-input-label {:font-weight :normal
+                       :margin-left (:padding box-model)
+                       :user-select :none}]]])

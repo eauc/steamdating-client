@@ -44,14 +44,14 @@ module Pages
       self
     end
 
-    # def start_edit_game_with_player(name)
-    #   within(Pages::PAGE_CONTENT) do
-    #     within("tbody") do
-    #       find("tr", text: name).click
-    #     end
-    #   end
-    #   self
-    # end
+    def start_edit_game_with_player(name)
+      within_table("Round ##{@n}") do
+        within("tbody") do
+          find("tr", text: name).click
+        end
+      end
+      self
+    end
 
     def expect_games(games)
       expected_content = games.map do |game|

@@ -136,6 +136,10 @@
   (into {} (map (juxt :name :origin) players)))
 
 
+(spec/def :sd.player.lists/sub
+  (spec/map-of :sd.player/name :sd.player/lists))
+
+
 (defn lists
   [players]
   (into {} (map (juxt :name :lists) players)))

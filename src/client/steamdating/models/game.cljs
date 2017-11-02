@@ -98,21 +98,21 @@
         #(get-in % [:player2 :name])))
 
 
-;; (defn find-by-names
-;;   [names games]
-;;   (first (filter #(= names (player-names %)) games)))
+(defn find-by-names
+  [names games]
+  (first (filter #(= names (player-names %)) games)))
 
 
-;; (defn drop-by-names
-;;   [names games]
-;;   (vec (remove (fn [game] (= names (player-names game))) games)))
+(defn drop-by-names
+  [names games]
+  (vec (remove (fn [game] (= names (player-names game))) games)))
 
 
-;; (defn update-by-names
-;;   [names game games]
-;;   (as-> games $
-;;     (drop-by-names names $)
-;;     (conj $ game)))
+(defn update-by-names
+  [names game games]
+  (as-> games $
+    (drop-by-names names $)
+    (conj $ game)))
 
 
 ;; (defn list-for-player
@@ -184,15 +184,15 @@
 ;;     (assoc-in [:player2 :name] new-name)))
 
 
-;; (defn toggle-win-loss
-;;   [game p-key]
-;;   (let [other (if (= :player1 p-key) :player2 :player1)]
-;;     (if (= 1 (get-in game [p-key :score :tournament]))
-;;       (-> game
-;;           (assoc-in [p-key :score :tournament] 0))
-;;       (-> game
-;;           (assoc-in [p-key :score :tournament] 1)
-;;           (assoc-in [other :score :tournament] 0)))))
+(defn toggle-win-loss
+  [game p-key]
+  (let [other (if (= :player1 p-key) :player2 :player1)]
+    (if (= 1 (get-in game [p-key :score :tournament]))
+      (-> game
+          (assoc-in [p-key :score :tournament] 0))
+      (-> game
+          (assoc-in [p-key :score :tournament] 1)
+          (assoc-in [other :score :tournament] 0)))))
 
 
 (defn valid-score-pair?
@@ -258,6 +258,20 @@
 ;;        "\nPlayer 2:\n" (game-player->title (:player2 game))))
 
 
-;; (defn validate
-;;   [form-state]
-;;   (form/validate form-state :sd.game/game))
+(spec/def :sd.game.edit/lists
+  :sd.player.lists/sub)
+
+
+(spec/def :sd.game.edit/options
+  (spec/map-of :sd.player/name :sd.player/name))
+
+
+(spec/def :sd.game/edit
+  (spec/and :sd.form/validated
+            (spec/keys :req-un [:sd.game.edit/options
+                                :sd.game.edit/lists])))
+
+
+(defn validate
+  [form-state]
+  (form/validate :sd.game/game form-state))

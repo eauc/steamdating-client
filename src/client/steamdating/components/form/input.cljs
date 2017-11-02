@@ -47,7 +47,7 @@
                                         (when show-error? "error")))
               (assoc :id name)
               (assoc :on-change #(let [raw-value (-> % .-target .-value)
-                                       new-value (if (number? (:value @state))
+                                       new-value (if (or (= :number type) (number? (:value @state)))
                                                    (int raw-value)
                                                    raw-value)]
                                    (swap! state assoc :value new-value)

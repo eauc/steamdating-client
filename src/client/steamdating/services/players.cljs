@@ -207,12 +207,16 @@
   origins-sub)
 
 
-;; (re-frame/reg-sub
-;;   :sd.players/lists
-;;   :<- [:sd.players/players]
-;;   (fn players-factions-sub
-;;     [players _]
-;;     (player/lists players)))
+(defn lists-sub
+  [players]
+  {:pre [(spec/valid? :sd.player/players players)]
+   :post [(spec/valid? :sd.player.lists/sub %)]}
+  (player/lists players))
+
+(re-frame/reg-sub
+  :sd.players/lists
+  :<- [:sd.players/players]
+  lists-sub)
 
 
 (defn sorted-sub

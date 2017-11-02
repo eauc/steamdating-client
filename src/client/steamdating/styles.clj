@@ -11,6 +11,7 @@
             [steamdating.styles.5-components.file-open-button :refer [file-open-button]]
             [steamdating.styles.5-components.form :refer [form]]
             [steamdating.styles.5-components.form-input :refer [form-input]]
+            [steamdating.styles.5-components.game-edit :refer [game-edit]]
             [steamdating.styles.5-components.layout :refer [layout]]
             [steamdating.styles.5-components.nav :refer [nav]]
             [steamdating.styles.5-components.page :refer [page]]
@@ -36,6 +37,7 @@
    file-open-button
    form
    form-input
+   game-edit
    icon
    layout
    nav

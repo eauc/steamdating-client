@@ -1,18 +1,19 @@
 (ns steamdating.components.round.nth
-	(:require [re-frame.core :as re-frame]
-						[steamdating.components.form.input :refer [form-input]]
-						[steamdating.components.generics.faction-icon :refer [faction-icon]]
-						[steamdating.components.generics.icon :refer [icon]]
-						[steamdating.components.generics.sort-header :refer [sort-header]]
-						[steamdating.models.ui :as ui]
-						[steamdating.services.debug :as debug]
-						[steamdating.services.rounds]))
+  (:require [re-frame.core :as re-frame]
+            [steamdating.components.form.input :refer [form-input]]
+            [steamdating.components.generics.faction-icon :refer [faction-icon]]
+            [steamdating.components.generics.icon :refer [icon]]
+            [steamdating.components.generics.sort-header :refer [sort-header]]
+            [steamdating.models.ui :as ui]
+            [steamdating.services.debug :as debug]
+            [steamdating.services.games]
+            [steamdating.services.rounds]))
 
 
 (defn ck-cell
   [{:keys [game player]}]
   [:td.sd-round-nth-score
-   [:span {:style	{:opacity (if (get-in game [player :score :assassination]) 1 0)}}
+   [:span {:style       {:opacity (if (get-in game [player :score :assassination]) 1 0)}}
     [icon {:name "check"}]]])
 
 
@@ -38,30 +39,30 @@
 
 
 (defn game-row
-	[{:keys [factions game icons] :as props}]
-	[:tr (dissoc props :factions :game :icons)
-	 [:td.sd-round-nth-score
-		(get-in game [:player1 :score :army] 0)]
-	 [:td.sd-round-nth-score
-		(get-in game [:player1 :score :scenario] 0)]
+  [{:keys [factions game icons] :as props}]
+  [:tr (dissoc props :factions :game :icons)
+   [:td.sd-round-nth-score
+    (get-in game [:player1 :score :army] 0)]
+   [:td.sd-round-nth-score
+    (get-in game [:player1 :score :scenario] 0)]
    [ck-cell {:game game :player :player1}]
    [player-cell {:game game :player :player1}]
    [faction-cell {:factions factions :game game :icons icons :player :player1}]
-	 [:td.sd-round-nth-table
-		(get-in game [:table] "")]
-	 [faction-cell {:factions factions :game game :icons icons :player :player2}]
-	 [player-cell {:game game :player :player2}]
-	 [ck-cell {:game game :player :player2}]
-	 [:td.sd-round-nth-score
-		(get-in game [:player2 :score :scenario])]
-	 [:td.sd-round-nth-score
-		(get-in game [:player2 :score :army])]])
+   [:td.sd-round-nth-table
+    (get-in game [:table] "")]
+   [faction-cell {:factions factions :game game :icons icons :player :player2}]
+   [player-cell {:game game :player :player2}]
+   [ck-cell {:game game :player :player2}]
+   [:td.sd-round-nth-score
+    (get-in game [:player2 :score :scenario])]
+   [:td.sd-round-nth-score
+    (get-in game [:player2 :score :army])]])
 
 
 (defn round-nth-render
-	[{:keys [on-filter-update on-game-click on-sort-by state]}]
-	(let [{:keys [filter icons factions n round sort]} state
-				{:keys [games]} round]
+  [{:keys [on-filter-update on-game-click on-sort-by state]}]
+  (let [{:keys [filter icons factions n round sort]} state
+        {:keys [games]} round]
     [:div.sd-round-nth
      ;; [:p (with-out-str (cljs.pprint/pprint state))]
      [:table.sd-table
@@ -100,13 +101,13 @@
 
 
 (defn round-nth
-	[{:keys [n]}]
-	(let [state @(re-frame/subscribe [:sd.rounds/nth n :round])
-				on-filter-update #(re-frame/dispatch [:sd.filters/set :round %])
-				on-game-click #(re-frame/dispatch [:sd.games.edit/start n %1])
-				on-sort-by #(re-frame/dispatch [:sd.sorts/toggle :round %])]
-		[round-nth-render
-		 {:on-filter-update on-filter-update
-			:on-game-click on-game-click
-			:on-sort-by on-sort-by
-			:state state}]))
+  [{:keys [n]}]
+  (let [state @(re-frame/subscribe [:sd.rounds/nth n :round])
+        on-filter-update #(re-frame/dispatch [:sd.filters/set :round %])
+        on-game-click #(re-frame/dispatch [:sd.games.edit/start n %2])
+        on-sort-by #(re-frame/dispatch [:sd.sorts/toggle :round %])]
+    [round-nth-render
+     {:on-filter-update on-filter-update
+      :on-game-click on-game-click
+      :on-sort-by on-sort-by
+      :state state}]))
