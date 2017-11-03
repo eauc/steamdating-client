@@ -11,7 +11,7 @@
             [steamdating.models.toaster]
             [steamdating.models.tournament :refer [->tournament]]
             [steamdating.models.ui :refer [->ui]]
-            [steamdating.services.debug :refer [debug?]]
+            [steamdating.services.debug :as debug :refer [debug?]]
             [steamdating.services.store :refer [store-db-interceptor]]))
 
 
@@ -29,7 +29,7 @@
 
 (defn check-db-schema
   [db]
-  (when (not (spec/valid? :sd.db/db db))
+  (when (not (debug/spec-valid? :sd.db/db db))
     (throw (ex-info "db spec check failed"
                     (expound-str :sd.db/db db)))))
 

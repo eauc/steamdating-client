@@ -6,7 +6,7 @@
             [re-frame.core :as re-frame]
             [secretary.core :as secretary]
             [steamdating.services.db :as db]
-            [steamdating.services.debug :refer [debug?]]))
+            [steamdating.services.debug :as debug :refer [debug?]]))
 
 
 (defonce history (History.))
@@ -76,8 +76,8 @@
 
 (defn page-sub
   [db]
-  {:pre [(spec/valid? :sd.db/db db)]
-   :post [(spec/valid? :sd.route/route %)]}
+  {:pre [(debug/spec-valid? :sd.db/db db)]
+   :post [(debug/spec-valid? :sd.route/route %)]}
   (:route db))
 
 (re-frame/reg-sub
@@ -87,8 +87,8 @@
 
 (defn hash-sub
   [route]
-  {:pre [(spec/valid? :sd.route/route route)]
-   :post [(spec/valid? :sd.route/hash %)]}
+  {:pre [(debug/spec-valid? :sd.route/route route)]
+   :post [(debug/spec-valid? :sd.route/hash %)]}
   (get route :hash ""))
 
 (re-frame/reg-sub

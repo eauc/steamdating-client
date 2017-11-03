@@ -1,7 +1,8 @@
 (ns steamdating.services.ui
   (:require [cljs.spec.alpha :as spec]
             [re-frame.core :as re-frame]
-            [steamdating.services.db :as db]))
+            [steamdating.services.db :as db]
+            [steamdating.services.debug :as debug]))
 
 
 (defn ui-init
@@ -21,8 +22,8 @@
 
 (defn menu-sub
   [db]
-  {:pre [(spec/valid? :sd.db/db db)]
-   :post [(spec/valid? :sd.ui/menu %)]}
+  {:pre [(debug/spec-valid? :sd.db/db db)]
+   :post [(debug/spec-valid? :sd.ui/menu %)]}
   (get-in db [:ui :menu]))
 
 (re-frame/reg-sub
@@ -32,9 +33,9 @@
 
 (defn menu-route-sub
   [[menu route]]
-  {:pre [(spec/valid? :sd.ui/menu menu)
-         (spec/valid? :sd.route/route route)]
-   :post [(spec/valid? :sd.ui/menu-route %)]}
+  {:pre [(debug/spec-valid? :sd.ui/menu menu)
+         (debug/spec-valid? :sd.route/route route)]
+   :post [(debug/spec-valid? :sd.ui/menu-route %)]}
   {:menu menu
    :route route})
 

@@ -2,7 +2,8 @@
   (:require [cljs.spec.alpha :as spec]
             [re-frame.core :as re-frame]
             [steamdating.models.form :as form]
-            [steamdating.services.db :as db]))
+            [steamdating.services.db :as db]
+            [steamdating.services.debug :as debug]))
 
 
 (db/reg-event-fx
@@ -23,9 +24,9 @@
 
 (defn form-sub
   [db [_ name]]
-  {:pre [(spec/valid? :sd.db/db db)
-         (spec/valid? keyword? name)]
-   :post [(spec/valid? :sd.form/form %)]}
+  {:pre [(debug/spec-valid? :sd.db/db db)
+         (debug/spec-valid? keyword? name)]
+   :post [(debug/spec-valid? :sd.form/form %)]}
   (get-in db [:forms name]))
 
 (re-frame/reg-sub
@@ -35,9 +36,9 @@
 
 (defn validate-sub
   [state [_ _ validation-fn]]
-  {:pre [(spec/valid? :sd.form/form state)
-         (spec/valid? fn? validation-fn)]
-   :post [(spec/valid? :sd.form/validated %)]}
+  {:pre [(debug/spec-valid? :sd.form/form state)
+         (debug/spec-valid? fn? validation-fn)]
+   :post [(debug/spec-valid? :sd.form/validated %)]}
   (validation-fn state))
 
 (re-frame/reg-sub

@@ -1,8 +1,9 @@
 (ns steamdating.services.sorts
-  (:require [re-frame.core :as re-frame]
-            [steamdating.services.db :as db]
+  (:require [cljs.spec.alpha :as spec]
+            [re-frame.core :as re-frame]
             [steamdating.models.sort :as sort]
-            [cljs.spec.alpha :as spec]))
+            [steamdating.services.db :as db]
+            [steamdating.services.debug :as debug]))
 
 
 (db/reg-event-fx
@@ -15,10 +16,10 @@
 
 (defn sort-sub
   [db [_ field def]]
-  {:pre [(spec/valid? :sd.db/db db)
-         (spec/valid? keyword? field)
-         (spec/valid? :sd.sort/sort def)]
-   :post [(spec/valid? :sd.sort/sort %)]}
+  {:pre [(debug/spec-valid? :sd.db/db db)
+         (debug/spec-valid? keyword? field)
+         (debug/spec-valid? :sd.sort/sort def)]
+   :post [(debug/spec-valid? :sd.sort/sort %)]}
   (get-in db [:sorts field] def))
 
 (re-frame/reg-sub

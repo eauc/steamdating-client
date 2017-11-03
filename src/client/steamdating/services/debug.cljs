@@ -1,4 +1,5 @@
-(ns steamdating.services.debug)
+(ns steamdating.services.debug
+  (:require [cljs.spec.alpha :as spec]))
 
 
 (defonce debug?
@@ -23,3 +24,9 @@
   [& args]
   (when debug?
     (apply println args)))
+
+
+(defn spec-valid?
+  [s v]
+  (or (not debug?)
+      (spec/valid? s v)))

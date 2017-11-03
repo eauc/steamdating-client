@@ -150,8 +150,8 @@
 
 (defn players-sub
   [db]
-  {:pre [(spec/valid? :sd.db/db db)]
-   :post [(spec/valid? :sd.player/players %)]}
+  {:pre [(debug/spec-valid? :sd.db/db db)]
+   :post [(debug/spec-valid? :sd.player/players %)]}
   (get-in db [:tournament :players]))
 
 (re-frame/reg-sub
@@ -161,7 +161,7 @@
 
 (defn count-sub
   [players]
-  {:pre [(spec/valid? :sd.player/players players)]
+  {:pre [(debug/spec-valid? :sd.player/players players)]
    :post [(nat-int? %)]}
   (count players))
 
@@ -173,8 +173,8 @@
 
 (defn names-sub
   [players]
-  {:pre [(spec/valid? :sd.player/players players)]
-   :post [(spec/valid? :sd.player/names %)]}
+  {:pre [(debug/spec-valid? :sd.player/players players)]
+   :post [(debug/spec-valid? :sd.player/names %)]}
   (player/names players))
 
 (re-frame/reg-sub
@@ -185,8 +185,8 @@
 
 (defn factions-sub
   [players]
-  {:pre [(spec/valid? :sd.player/players players)]
-   :post [(spec/valid? :sd.player/factions %)]}
+  {:pre [(debug/spec-valid? :sd.player/players players)]
+   :post [(debug/spec-valid? :sd.player/factions %)]}
   (player/factions players))
 
 (re-frame/reg-sub
@@ -197,8 +197,8 @@
 
 (defn origins-sub
   [players]
-  {:pre [(spec/valid? :sd.player/players players)]
-   :post [(spec/valid? :sd.player/origins %)]}
+  {:pre [(debug/spec-valid? :sd.player/players players)]
+   :post [(debug/spec-valid? :sd.player/origins %)]}
   (player/origins players))
 
 (re-frame/reg-sub
@@ -209,8 +209,8 @@
 
 (defn lists-sub
   [players]
-  {:pre [(spec/valid? :sd.player/players players)]
-   :post [(spec/valid? :sd.player.lists/sub %)]}
+  {:pre [(debug/spec-valid? :sd.player/players players)]
+   :post [(debug/spec-valid? :sd.player.lists/sub %)]}
   (player/lists players))
 
 (re-frame/reg-sub
@@ -221,9 +221,9 @@
 
 (defn sorted-sub
   [[players sort]]
-  {:pre [(spec/valid? :sd.player/players players)
-         (spec/valid? :sd.sort/sort sort)]
-   :post [(spec/valid? :sd.player/sorted %)]}
+  {:pre [(debug/spec-valid? :sd.player/players players)
+         (debug/spec-valid? :sd.sort/sort sort)]
+   :post [(debug/spec-valid? :sd.player/sorted %)]}
   {:list (player/sort-with sort players)
    :players players
    :sort sort})
@@ -237,10 +237,10 @@
 
 (defn list-sub
   [[{:keys [list players sort] :as sorted} filter icons]]
-  {:pre [(spec/valid? :sd.player/sorted sorted)
-         (spec/valid? :sd.filter/value filter)
-         (spec/valid? :sd.faction/icons icons)]
-   :post [(spec/valid? :sd.player/list-sub %)]}
+  {:pre [(debug/spec-valid? :sd.player/sorted sorted)
+         (debug/spec-valid? :sd.filter/value filter)
+         (debug/spec-valid? :sd.faction/icons icons)]
+   :post [(debug/spec-valid? :sd.player/list-sub %)]}
   {:filter (or filter "")
    :icons icons
    :list (player/filter-with (filter/->pattern filter) list)
@@ -259,9 +259,9 @@
 
 (defn edit-casters-sub
   [[factions {:keys [edit] :as form}]]
-  {:pre [(spec/valid? :sd.faction/factions factions)
-         (spec/valid? :sd.form/form form)]
-   :post [(spec/valid? :sd.faction/casters %)]}
+  {:pre [(debug/spec-valid? :sd.faction/factions factions)
+         (debug/spec-valid? :sd.form/form form)]
+   :post [(debug/spec-valid? :sd.faction/casters %)]}
   (let [edit-faction (:faction edit)]
     (faction/casters factions edit-faction)))
 
@@ -276,11 +276,11 @@
   [[{:as form-state
      {base-name :name} :base
      {edit-name :name} :edit} names factions casters]]
-  {:pre [(spec/valid? :sd.form/form form-state)
-         (spec/valid? :sd.player/names names)
-         (spec/valid? :sd.faction/names factions)
-         (spec/valid? :sd.faction/casters casters)]
-   :post [(spec/valid? :sd.player/form %)]}
+  {:pre [(debug/spec-valid? :sd.form/form form-state)
+         (debug/spec-valid? :sd.player/names names)
+         (debug/spec-valid? :sd.faction/names factions)
+         (debug/spec-valid? :sd.faction/casters casters)]
+   :post [(debug/spec-valid? :sd.player/form %)]}
   (let [restricted-names (disj names base-name)]
     (-> form-state
         (assoc :factions factions :casters casters)

@@ -1,9 +1,10 @@
 (ns steamdating.services.games
-  (:require [re-frame.core :as re-frame]
+  (:require [cljs.spec.alpha :as spec]
+            [re-frame.core :as re-frame]
             [steamdating.models.game :as game]
             [steamdating.models.player :as player]
             [steamdating.services.db :as db]
-            [cljs.spec.alpha :as spec]))
+            [steamdating.services.debug :as debug]))
 
 
 (db/reg-event-fx
@@ -50,10 +51,10 @@
 
 (defn edit-sub
   [[state names lists]]
-  {:pre [(spec/valid? :sd.form/validated state)
-         (spec/valid? :sd.player/names names)
-         (spec/valid? :sd.player.lists/sub lists)]
-   :post [(spec/valid? :sd.game/edit %)]}
+  {:pre [(debug/spec-valid? :sd.form/validated state)
+         (debug/spec-valid? :sd.player/names names)
+         (debug/spec-valid? :sd.player.lists/sub lists)]
+   :post [(debug/spec-valid? :sd.game/edit %)]}
   (assoc state
          :options (into {} (map vector names names))
          :lists lists))

@@ -2,6 +2,7 @@
   (:require [cljs.spec.alpha :as spec]
             [re-frame.core :as re-frame]
             [steamdating.services.db :as db]
+            [steamdating.services.debug :as debug]
             [steamdating.services.file]))
 
 
@@ -66,8 +67,8 @@
 
 (defn tournament-sub
   [db]
-  {:pre [(spec/valid? :sd.db/db db)]
-   :post [(spec/valid? :sd.tournament/tournament %)]}
+  {:pre [(debug/spec-valid? :sd.db/db db)]
+   :post [(debug/spec-valid? :sd.tournament/tournament %)]}
   (get db :tournament))
 
 (re-frame/reg-sub

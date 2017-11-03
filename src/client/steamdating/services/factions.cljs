@@ -1,10 +1,11 @@
 (ns steamdating.services.factions
   (:require [ajax.core :as ajax]
+            [cljs.spec.alpha :as spec]
             [day8.re-frame.http-fx]
             [re-frame.core :as re-frame]
             [steamdating.models.faction :as faction]
             [steamdating.services.db :as db]
-            [cljs.spec.alpha :as spec]))
+            [steamdating.services.debug :as debug]))
 
 
 (db/reg-event-fx
@@ -30,8 +31,8 @@
 
 (defn factions-sub
   [db]
-  {:pre [(spec/valid? :sd.db/db db)]
-   :post [(spec/valid? :sd.faction/factions %)]}
+  {:pre [(debug/spec-valid? :sd.db/db db)]
+   :post [(debug/spec-valid? :sd.faction/factions %)]}
   (:factions db))
 
 (re-frame/reg-sub
@@ -41,8 +42,8 @@
 
 (defn names-sub
   [factions]
-  {:pre [(spec/valid? :sd.faction/factions factions)]
-   :post [(spec/valid? :sd.faction/names %)]}
+  {:pre [(debug/spec-valid? :sd.faction/factions factions)]
+   :post [(debug/spec-valid? :sd.faction/names %)]}
   (faction/names factions))
 
 (re-frame/reg-sub
@@ -53,8 +54,8 @@
 
 (defn icons-sub
   [factions]
-  {:pre [(spec/valid? :sd.faction/factions factions)]
-   :post [(spec/valid? :sd.faction/icons %)]}
+  {:pre [(debug/spec-valid? :sd.faction/factions factions)]
+   :post [(debug/spec-valid? :sd.faction/icons %)]}
   (faction/icons factions))
 
 (re-frame/reg-sub

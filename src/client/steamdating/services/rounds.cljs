@@ -2,11 +2,11 @@
   (:require [cljs.spec.alpha :as spec]
             [clojure.test.check.generators :as gen]
             [re-frame.core :as re-frame]
+            [steamdating.models.filter :as filter]
             [steamdating.models.player :as player]
             [steamdating.models.round :as round]
             [steamdating.services.db :as db]
-            [steamdating.services.debug :as debug]
-            [steamdating.models.filter :as filter]))
+            [steamdating.services.debug :as debug]))
 
 
 (db/reg-event-fx
@@ -88,8 +88,8 @@
 
 (defn rounds-sub
   [db [_ n]]
-  {:pre [(spec/valid? :sd.db/db db)]
-   :post [(spec/valid? :sd.round/rounds %)]}
+  {:pre [(debug/spec-valid? :sd.db/db db)]
+   :post [(debug/spec-valid? :sd.round/rounds %)]}
   (get-in db [:tournament :rounds]))
 
 (re-frame/reg-sub
@@ -99,7 +99,7 @@
 
 (defn count-sub
   [rounds _]
-  {:pre [(spec/valid? :sd.round/rounds rounds)]
+  {:pre [(debug/spec-valid? :sd.round/rounds rounds)]
    :post [(nat-int? %)]}
   (count rounds))
 
@@ -111,9 +111,9 @@
 
 (defn opponents-sub
   [[rounds names]]
-  {:pre [(spec/valid? :sd.round/rounds rounds)
-         (spec/valid? :sd.player/names names)]
-   :post [(spec/valid? :sd.round/opponents %)]}
+  {:pre [(debug/spec-valid? :sd.round/rounds rounds)
+         (debug/spec-valid? :sd.player/names names)]
+   :post [(debug/spec-valid? :sd.round/opponents %)]}
   (round/opponents names rounds))
 
 (re-frame/reg-sub
@@ -126,12 +126,12 @@
 (defn next-sub
   [[form-state factions origins ;; rankings
     opponents icons]]
-  {:pre [(spec/valid? :sd.form/form form-state)
-         (spec/valid? :sd.player/factions factions)
-         (spec/valid? :sd.player/origins origins)
-         (spec/valid? :sd.round/opponents opponents)
-         (spec/valid? :sd.faction/icons icons)]
-   :post [(spec/valid? :sd.round/next %)]}
+  {:pre [(debug/spec-valid? :sd.form/form form-state)
+         (debug/spec-valid? :sd.player/factions factions)
+         (debug/spec-valid? :sd.player/origins origins)
+         (debug/spec-valid? :sd.round/opponents opponents)
+         (debug/spec-valid? :sd.faction/icons icons)]
+   :post [(debug/spec-valid? :sd.round/next %)]}
   (let [options (round/players-options (:edit form-state))]
     (-> form-state
         (round/validate-pairings {:factions factions
@@ -154,9 +154,9 @@
 
 (defn nth-raw-sub
   [db [_ n]]
-  {:pre [(spec/valid? :sd.db/db db)
+  {:pre [(debug/spec-valid? :sd.db/db db)
          (nat-int? n)]
-   :post [(spec/valid? :sd.round/round %)]}
+   :post [(debug/spec-valid? :sd.round/round %)]}
   (get-in db [:tournament :rounds n]))
 
 (re-frame/reg-sub
@@ -166,9 +166,9 @@
 
 (defn nth-filter-sub
   [[r f]]
-  {:pre [(spec/valid? :sd.round/round r)
-         (spec/valid? :sd.filter/value f)]
-   :post [(spec/valid? :sd.round.nth/filter %)]}
+  {:pre [(debug/spec-valid? :sd.round/round r)
+         (debug/spec-valid? :sd.filter/value f)]
+   :post [(debug/spec-valid? :sd.round.nth/filter %)]}
   {:round (round/filter-with r (filter/->pattern f))
    :filter f})
 
@@ -183,9 +183,9 @@
 
 (defn nth-sort-sub
   [[{r :round :as input} s]]
-  {:pre [(spec/valid? :sd.round.nth/filter input)
-         (spec/valid? :sd.sort/sort s)]
-   :post [(spec/valid? :sd.round.nth/sort %)]}
+  {:pre [(debug/spec-valid? :sd.round.nth/filter input)
+         (debug/spec-valid? :sd.sort/sort s)]
+   :post [(debug/spec-valid? :sd.round.nth/sort %)]}
   (assoc input
          :round (round/sort-with r s)
          :sort s))
@@ -201,11 +201,11 @@
 
 (defn nth-sub
   [[input factions icons] [_ {:keys [n]}]]
-  {:pre [(spec/valid? :sd.round.nth/sort input)
-         (spec/valid? :sd.player/factions factions)
-         (spec/valid? :sd.faction/icons icons)
+  {:pre [(debug/spec-valid? :sd.round.nth/sort input)
+         (debug/spec-valid? :sd.player/factions factions)
+         (debug/spec-valid? :sd.faction/icons icons)
          (nat-int? n)]
-   :post [(spec/valid? :sd.round/nth %)]}
+   :post [(debug/spec-valid? :sd.round/nth %)]}
   (assoc input
          :n n
          :factions factions
@@ -223,9 +223,9 @@
 
 (defn players-results-sub
   [[rounds players]]
-  {:pre [(spec/valid? :sd.round/rounds rounds)
-         (spec/valid? :sd.player/players players)]
-   :post [(spec/valid? :sd.round/players-results %)]}
+  {:pre [(debug/spec-valid? :sd.round/rounds rounds)
+         (debug/spec-valid? :sd.player/players players)]
+   :post [(debug/spec-valid? :sd.round/players-results %)]}
   (let [names (map :name players)]
     {:players (mapv #(assoc % :results (round/results-for-player (:name %) rounds)) players)
      :lists (into {} (map #(vector % (round/lists-for-player % rounds)) names))
@@ -241,9 +241,9 @@
 
 (defn summary-filter-sub
   [[{:keys [players] :as input} f]]
-  {:pre [(spec/valid? :sd.round/players-results input)
-         (spec/valid? :sd.filter/value f)]
-   :post [(spec/valid? :sd.round/summary-filter %)]}
+  {:pre [(debug/spec-valid? :sd.round/players-results input)
+         (debug/spec-valid? :sd.filter/value f)]
+   :post [(debug/spec-valid? :sd.round/summary-filter %)]}
   (assoc input
          :players (player/filter-with (filter/->pattern f) players)
          :filter f))
@@ -259,9 +259,9 @@
 
 (defn summary-sort-sub
   [[{:keys [players] :as input} s]]
-  {:pre [(spec/valid? :sd.round/summary-filter input)
-         (spec/valid? :sd.sort/sort s)]
-   :post [(spec/valid? :sd.round/summary-sort %)]}
+  {:pre [(debug/spec-valid? :sd.round/summary-filter input)
+         (debug/spec-valid? :sd.sort/sort s)]
+   :post [(debug/spec-valid? :sd.round/summary-sort %)]}
   (assoc input
          :players (player/sort-with s players)
          :sort s))
@@ -286,9 +286,9 @@
 
 (defn summary-sub
   [[input icons]]
-  {:pre [(spec/valid? :sd.round/summary-sort input)
-         (spec/valid? :sd.faction/icons icons)]
-   :post [(spec/valid? :sd.round/summary %)]}
+  {:pre [(debug/spec-valid? :sd.round/summary-sort input)
+         (debug/spec-valid? :sd.faction/icons icons)]
+   :post [(debug/spec-valid? :sd.round/summary %)]}
   (assoc input :icons icons))
 
 (re-frame/reg-sub

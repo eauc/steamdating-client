@@ -2,7 +2,8 @@
   (:require [cljs.spec.alpha :as spec]
             [re-frame.core :as re-frame]
             [steamdating.models.filter :as filter]
-            [steamdating.services.db :as db]))
+            [steamdating.services.db :as db]
+            [steamdating.services.debug :as debug]))
 
 (db/reg-event-fx
   :sd.filters/set
@@ -14,8 +15,8 @@
 
 (defn filter-sub
   [db [_ field]]
-  {:pre [(spec/valid? :sd.db/db db)]
-   :post [(spec/valid? :sd.filter/name field)]}
+  {:pre [(debug/spec-valid? :sd.db/db db)]
+   :post [(debug/spec-valid? :sd.filter/name field)]}
   (get-in db [:filters field]))
 
 (re-frame/reg-sub

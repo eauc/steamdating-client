@@ -2,7 +2,8 @@
   (:require [cljs.spec.alpha :as spec]
             [re-frame.core :as re-frame]
             [steamdating.models.toaster]
-            [steamdating.services.db :as db]))
+            [steamdating.services.db :as db]
+            [steamdating.services.debug :as debug :refer [debug?]]))
 
 
 (defonce timeout
@@ -36,10 +37,19 @@
 
 (defn toaster-sub
   [db]
-  {:pre [(spec/valid? :sd.db/db db)]
-   :post [(spec/valid? (spec/nilable :sd.toaster/toaster) %)]}
+  {:pre [(debug/spec-valid? :sd.db/db db)]
+   :post [(debug/spec-valid? (spec/nilable :sd.toaster/toaster) %)]}
   (:toaster db))
 
 (re-frame/reg-sub
   :sd.toaster/toaster
   toaster-sub)
+
+
+(when debug?
+  (.addEventListener
+    js/window "error"
+    #(re-frame/dispatch
+       [:sd.toaster/set
+        {:type :error
+         :message (-> % .-error .-message)}])))
