@@ -1,14 +1,14 @@
 require "json"
 require_relative "../pages/rounds_next"
 require_relative "../pages/rounds_nth"
-# require_relative "../pages/rounds_summary"
+require_relative "../pages/rounds_summary"
 
-# Given("I open Rounds/Summary page") do
-#   @page = Pages::RoundsSummary.new
-#             .load
-#             .filter(" ")
-#   @sort_by = "Player"
-# end
+Given("I open Rounds/Summary page") do
+  @page = Pages::RoundsSummary.new
+            .load
+            .filter(" ")
+  @sort_by = "Player"
+end
 
 Given("I open Rounds/Next page") do
   @page = Pages::RoundsNext.new
@@ -43,10 +43,9 @@ end
 #   @page.go_to_round(n)
 # end
 
-# When("I filter the Summary with \"$filter\"") do |filter_value|
-#   @page.filter(filter_value)
-#   @filter_value = filter_value
-# end
+When("I filter the Summary with \"$filter\"") do |filter_value|
+  @page.filter(filter_value)
+end
 
 When("I filter the Round with \"$filter\"") do |filter_value|
   @page.filter_with(filter_value)
@@ -61,14 +60,14 @@ When("I invert the Round sort order") do
   @page.invert_sort_by(@sort_by)
 end
 
-# When("I sort the Summary by \"$sort\"") do |sort|
-#   @page.invert_sort_by(sort)
-#   @sort_by = sort
-# end
+When("I sort the Summary by \"$sort\"") do |sort|
+  @page.invert_sort_by(sort)
+  @sort_by = sort
+end
 
-# When("I invert the Summary sort order") do
-#   @page.invert_sort_by(@sort_by)
-# end
+When("I invert the Summary sort order") do
+  @page.invert_sort_by(@sort_by)
+end
 
 When("I delete current Round") do
   @page.delete_round
@@ -149,38 +148,15 @@ Then("I see the Round sorted by \"$by\" in reverse order") do |by|
   @page.expect_games(sorted_games[by].reverse)
 end
 
-# summary = {
-#   "filtered" => {
-#     "te" => [
-#       ["1", "tete", "Butcher2, Koslov1 / 2", "1. teuteu", "Butcher2", "4. Phantom", "Koslov1"],
-#       ["4", "teuteu", "Vyros1, Helynna1 / 2", "1. tete", "Vyros1", "1. titi", "Helynna1"],
-#     ],
-#     "to" => [
-#       ["2", "toto", "Bethayne1, Absylonia1 / 2", "2. titi", "Bethayne1", "3. toutou", "Absylonia1"],
-#       ["7", "toutou", "Lylyth2 / 2", "3. tutu", "Lylyth2", "3. toto", "Lylyth2"],
-#     ],
-#   }
-# }
+Then("I see the Rounds/Summary page with rounds:") do |table|
+  @round_summary = table.raw
+  @page = Pages::RoundsSummary.new
+            .expect_rounds_summary(@round_summary)
+end
 
-# Then("I see the Rounds/Summary page with rounds:") do |table|
-#   within(Pages::PAGE_CONTENT) do
-#     expect(page).to have_content("Rounds summary")
-#   end
-#   @round_summary = table.raw
-#   @page = Pages::RoundsSummary.new
-#             .expect_rounds_summary(@round_summary)
-# end
-
-# Then("I see the Rounds/Summary page with the same rounds in reverse order") do
-#   within(Pages::PAGE_CONTENT) do
-#     expect(page).to have_content("Rounds summary")
-#   end
-#   @page.expect_rounds_summary(@round_summary.reverse)
-# end
-
-# Then("I see the Summary's matching results") do
-#   @page.expect_rounds_summary(summary["filtered"][@filter_value])
-# end
+Then("I see the Rounds/Summary page with the same rounds in reverse order") do
+  @page.expect_rounds_summary(@round_summary.reverse)
+end
 
 Then("I see Rounds/$nth page with games:") do |nth, table|
   within(Pages::PAGE_CONTENT) do

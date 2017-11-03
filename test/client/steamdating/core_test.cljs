@@ -6,7 +6,8 @@
             [steamdating.components.player.edit-test]
             [steamdating.components.player.list-test]
             [steamdating.components.round.next-test]
-            [steamdating.components.round.nth-test]))
+            [steamdating.components.round.nth-test]
+            [steamdating.components.round.summary-test]))
 
 
 (enable-console-print!)

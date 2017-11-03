@@ -20,6 +20,6 @@
 
 
 (defn toggle-by
-  [{:keys [by reverse?]} new-by]
+  [{:keys [by reverse?]} new-by defaut]
   {:by new-by
-   :reverse? (if (= by new-by) (not reverse?) false)})
+   :reverse? (if (= (or by defaut) new-by) (not reverse?) false)})

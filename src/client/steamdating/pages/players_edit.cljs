@@ -28,7 +28,7 @@
       [page-menu-item
        {:key :create
         :disabled (not valid?)
-        :icon "save"
+        :icon "check"
         :label "Save"
         :on-click #(re-frame/dispatch [:sd.players.edit/save])}]
       [page-menu-item

@@ -4,6 +4,7 @@
             [steamdating.components.page.content :refer [page-content]]
             [steamdating.components.page.menu :refer [page-menu-items]]
             [steamdating.components.round.page-menu :refer [round-page-menu]]
+            [steamdating.components.round.summary :refer [round-summary]]
             [steamdating.services.db :as db]
             [steamdating.services.debug :as debug]
             [steamdating.services.rounds]))
@@ -16,7 +17,7 @@
 (defmethod page-content :rounds-all
   []
   [:div.sd-page-rounds-all
-   [:h4 "Rounds summary"]])
+   [round-summary]])
 
 
 (defmethod page-menu-items :rounds-all

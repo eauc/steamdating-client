@@ -212,13 +212,13 @@
   (form/validate :sd.player/player form-state))
 
 
-;; (defn player->title
-;;   [player]
-;;   (str "Name: " (:name player) "\n"
-;;        "Origin: " (:origin player) "\n"
-;;        "Faction: " (:faction player) "\n"
-;;        "Lists: " (s/join ", " (:lists player)) "\n"
-;;        "Notes: " (:notes player) "\n"))
+(defn ->title
+  [player]
+  (str "Name: " (:name player) "\n"
+       "Origin: " (:origin player) "\n"
+       "Faction: " (:faction player) "\n"
+       "Lists: " (s/join ", " (:lists player)) "\n"
+       "Notes: " (:notes player) "\n"))
 
 
 (defn parse-t3-csv

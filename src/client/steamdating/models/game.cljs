@@ -115,14 +115,14 @@
     (conj $ game)))
 
 
-;; (defn list-for-player
-;;   [game name]
-;;   (cond
-;;     (= name (get-in game [:player1 :name]))
-;;     (get-in game [:player1 :list])
-;;     (= name (get-in game [:player2 :name]))
-;;     (get-in game [:player2 :list])
-;;     :else nil))
+(defn list-for-player
+  [game name]
+  (cond
+    (= name (get-in game [:player1 :name]))
+    (get-in game [:player1 :list])
+    (= name (get-in game [:player2 :name]))
+    (get-in game [:player2 :list])
+    :else nil))
 
 
 (defn opponent-for-player
@@ -133,6 +133,23 @@
     (= name (get-in game [:player2 :name]))
     (get-in game [:player1 :name])
     :else nil))
+
+
+(spec/def :sd.game.result/list
+  (spec/nilable :sd.player/list))
+
+
+(spec/def :sd.game.result/opponent
+  (spec/nilable :sd.player/name))
+
+
+(spec/def :sd.game/result
+  (spec/nilable
+    (spec/keys :req-un [:sd.game/table
+                        :sd.game.result/list
+                        :sd.game.result/opponent
+                        :sd.game/score
+                        :sd.game/game])))
 
 
 (defn result-for-player
@@ -236,26 +253,26 @@
 ;;                 (get factions (get-in game [:player2 :name])))))
 
 
-;; (defn game-player->title
-;;   [player]
-;;   (str (or (:name player) "Phantom")
-;;        (case (get-in player [:score :tournament])
-;;          0 " - Loser"
-;;          1 " - Winner"
-;;          nil "") "\n"
-;;        "List: " (:list player) "\n"
-;;        (if (get-in player [:score :assassination])
-;;          "Assassination\n"
-;;          "")
-;;        "Scenario: " (get-in player [:score :scenario]) "\n"
-;;        "Army: " (get-in player [:score :army]) "\n"))
+(defn game-player->title
+  [player]
+  (str (or (:name player) "Phantom")
+       (case (get-in player [:score :tournament])
+         0 " - Loser"
+         1 " - Winner"
+         nil "") "\n"
+       "List: " (:list player) "\n"
+       (if (get-in player [:score :assassination])
+         "Assassination\n"
+         "")
+       "Scenario: " (get-in player [:score :scenario]) "\n"
+       "Army: " (get-in player [:score :army]) "\n"))
 
 
-;; (defn game->title
-;;   [game]
-;;   (str "Table: " (:table game) "\n"
-;;        "\nPlayer 1:\n" (game-player->title (:player1 game))
-;;        "\nPlayer 2:\n" (game-player->title (:player2 game))))
+(defn ->title
+  [game]
+  (str "Table: " (:table game) "\n"
+       "\nPlayer 1:\n" (game-player->title (:player1 game))
+       "\nPlayer 2:\n" (game-player->title (:player2 game))))
 
 
 (spec/def :sd.game.edit/lists

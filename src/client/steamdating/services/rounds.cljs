@@ -175,7 +175,7 @@
 (re-frame/reg-sub
   :sd.rounds/nth-filter
   (fn nth-filter-sub-input
-    [[_ n filter]]
+    [[_ {:keys [n filter]}]]
     [(re-frame/subscribe [:sd.rounds/nth-raw n])
      (re-frame/subscribe [:sd.filters/filter filter])])
   nth-filter-sub)
@@ -193,14 +193,14 @@
 (re-frame/reg-sub
   :sd.rounds/nth-sort
   (fn nth-sort-sub-input
-    [[_ n filter]]
-    [(re-frame/subscribe [:sd.rounds/nth-filter n filter])
+    [[_ params]]
+    [(re-frame/subscribe [:sd.rounds/nth-filter params])
      (re-frame/subscribe [:sd.sorts/sort :round {:by :table}])])
   nth-sort-sub)
 
 
 (defn nth-sub
-  [[input factions icons] [_ n]]
+  [[input factions icons] [_ {:keys [n]}]]
   {:pre [(spec/valid? :sd.round.nth/sort input)
          (spec/valid? :sd.player/factions factions)
          (spec/valid? :sd.faction/icons icons)
@@ -214,25 +214,65 @@
 (re-frame/reg-sub
   :sd.rounds/nth
   (fn nth-sub-input
-    [[_ n filter]]
-    [(re-frame/subscribe [:sd.rounds/nth-sort n filter])
+    [[_ params]]
+    [(re-frame/subscribe [:sd.rounds/nth-sort params])
      (re-frame/subscribe [:sd.players/factions])
      (re-frame/subscribe [:sd.factions/icons])])
   nth-sub)
 
 
-;; (re-frame/reg-sub
-;;   :sd.rounds/players-results
-;;   :<- [:sd.rounds/rounds]
-;;   :<- [:sd.rankings/ranking]
-;;   :<- [:sd.filters/pattern :rounds-all]
-;;   (fn players-results-sub
-;;     [[rounds players pattern] _]
-;;     (->> players
-;;          (filter #(re-find pattern (:name %)))
-;;          (mapv #(assoc %
-;;                        :results (round/results-for-player (:name %) rounds)
-;;                        :played-lists (round/lists-for-player (:name %) rounds))))))
+(defn players-results-sub
+  [[rounds players]]
+  {:pre [(spec/valid? :sd.round/rounds rounds)
+         (spec/valid? :sd.player/players players)]
+   :post [(spec/valid? :sd.round/players-results %)]}
+  (let [names (map :name players)]
+    {:players (mapv #(assoc % :results (round/results-for-player (:name %) rounds)) players)
+     :lists (into {} (map #(vector % (round/lists-for-player % rounds)) names))
+     :n-rounds (count rounds)}))
+
+(re-frame/reg-sub
+  :sd.rounds/players-results
+  :<- [:sd.rounds/rounds]
+  :<- [:sd.players/players]
+  ;; :<- [:sd.rankings/ranking]
+  players-results-sub)
+
+
+(defn summary-filter-sub
+  [[{:keys [players] :as input} f]]
+  {:pre [(spec/valid? :sd.round/players-results input)
+         (spec/valid? :sd.filter/value f)]
+   :post [(spec/valid? :sd.round/summary-filter %)]}
+  (assoc input
+         :players (player/filter-with (filter/->pattern f) players)
+         :filter f))
+
+(re-frame/reg-sub
+  :sd.rounds/summary-filter
+  (fn summary-filter-sub-input
+    [[_ {:keys [filter]}]]
+    [(re-frame/subscribe [:sd.rounds/players-results])
+     (re-frame/subscribe [:sd.filters/filter filter])])
+  summary-filter-sub)
+
+
+(defn summary-sort-sub
+  [[{:keys [players] :as input} s]]
+  {:pre [(spec/valid? :sd.round/summary-filter input)
+         (spec/valid? :sd.sort/sort s)]
+   :post [(spec/valid? :sd.round/summary-sort %)]}
+  (assoc input
+         :players (player/sort-with s players)
+         :sort s))
+
+(re-frame/reg-sub
+  :sd.rounds/summary-sort
+  (fn summary-sort-sub-input
+    [[_ params]]
+    [(re-frame/subscribe [:sd.rounds/summary-filter params])
+     (re-frame/subscribe [:sd.sorts/sort :rounds-all {:by :name}])])
+  summary-sort-sub)
 
 
 ;; (re-frame/reg-sub
@@ -244,16 +284,17 @@
 ;;     (round/total-scores-for-players names rounds)))
 
 
-;; (re-frame/reg-sub
-;;   :sd.rounds/summary
-;;   :<- [:sd.rounds/players-results]
-;;   :<- [:sd.sorts/sort :rounds-all {:by [:name]}]
-;;   (fn summary-sub
-;;     [[results {:keys [by reverse]}] _]
-;;     (as-> results $
-;;       (sort-by #(let [value (get-in % by)]
-;;                   (if (string? value)
-;;                     (.toLowerCase value)
-;;                     value)) $)
-;;       (cond-> $
-;;         reverse clojure.core/reverse))))
+(defn summary-sub
+  [[input icons]]
+  {:pre [(spec/valid? :sd.round/summary-sort input)
+         (spec/valid? :sd.faction/icons icons)]
+   :post [(spec/valid? :sd.round/summary %)]}
+  (assoc input :icons icons))
+
+(re-frame/reg-sub
+  :sd.rounds/summary
+  (fn summary-sub-input
+    [[_ params]]
+    [(re-frame/subscribe [:sd.rounds/summary-sort params])
+     (re-frame/subscribe [:sd.factions/icons])])
+  summary-sub)

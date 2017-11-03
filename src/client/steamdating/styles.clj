@@ -20,6 +20,7 @@
             [steamdating.styles.5-components.prompt :refer [prompt]]
             [steamdating.styles.5-components.round-next :refer [round-next]]
             [steamdating.styles.5-components.round-nth :refer [round-nth]]
+            [steamdating.styles.5-components.round-summary :refer [round-summary]]
             [steamdating.styles.5-components.sort-header :refer [sort-header]]
             [steamdating.styles.5-components.toaster :refer [toaster]]
             [steamdating.styles.5-components.tournament-file :refer [tournament-file]]
@@ -50,6 +51,7 @@
    prompt
    round-next
    round-nth
+   round-summary
    section-header
    sort-header
    table

@@ -102,10 +102,10 @@
 
 (defn round-nth
   [{:keys [n]}]
-  (let [state @(re-frame/subscribe [:sd.rounds/nth n :round])
+  (let [state @(re-frame/subscribe [:sd.rounds/nth {:n n :filter :round}])
         on-filter-update #(re-frame/dispatch [:sd.filters/set :round %])
         on-game-click #(re-frame/dispatch [:sd.games.edit/start n %2])
-        on-sort-by #(re-frame/dispatch [:sd.sorts/toggle :round %])]
+        on-sort-by #(re-frame/dispatch [:sd.sorts/toggle :round % :table])]
     [round-nth-render
      {:on-filter-update on-filter-update
       :on-game-click on-game-click

@@ -9,8 +9,8 @@
   :sd.sorts/toggle
   [(re-frame/path :sorts)]
   (fn set
-    [{:keys [db]} [key by]]
-    {:db (update db key sort/toggle-by by)}))
+    [{:keys [db]} [key by defaut]]
+    {:db (update db key sort/toggle-by by defaut)}))
 
 
 (defn sort-sub

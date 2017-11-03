@@ -144,13 +144,60 @@
        (into {})))
 
 
-;; (defn lists-for-player
-;;   [name rounds]
-;;   (->> rounds
-;;        (games-for-player name)
-;;        (map #(game/list-for-player % name))
-;;        (remove nil?)
-;;        (set)))
+(spec/def :sd.round.players-results/results
+  (spec/coll-of :sd.game/result :kind vector?))
+
+
+(spec/def :sd.round.players-results/player
+  (spec/and :sd.player/player
+            (spec/keys :req-un [:sd.round.players-results/results])))
+
+
+(spec/def :sd.round.players-results/players
+  (spec/coll-of :sd.round.players-results/player))
+
+
+(spec/def :sd.round.players-results/lists
+  :sd.player.lists/sub)
+
+
+(spec/def :sd.round.players-results/n-rounds
+  nat-int?)
+
+
+(spec/def :sd.round/players-results
+  (spec/keys :req-un [:sd.round.players-results/players
+                      :sd.round.players-results/lists
+                      :sd.round.players-results/n-rounds]))
+
+
+(spec/def :sd.round.summary/filter
+  :sd.filter/value)
+
+
+(spec/def :sd.round/summary-filter
+  (spec/and :sd.round/players-results
+            (spec/keys :req-un [:sd.round.summary/filter])))
+
+
+(spec/def :sd.round/summary-sort
+  (spec/and :sd.round/summary-filter
+            (spec/keys :req-un [:sd.sort/sort])))
+
+
+(spec/def :sd.round/summary
+  (spec/and :sd.round/summary-sort
+            (spec/keys :req-un [:sd.faction/icons])))
+
+
+(defn lists-for-player
+  [name rounds]
+  (->> rounds
+       (games-for-player name)
+       (map #(game/list-for-player % name))
+       (remove nil?)
+       (set)
+       (vec)))
 
 
 (defn results-for-player

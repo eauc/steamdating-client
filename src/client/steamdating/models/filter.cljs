@@ -1,6 +1,7 @@
 (ns steamdating.models.filter
   (:require [cljs.spec.alpha :as spec]
-            [clojure.string :as s]))
+            [clojure.string :as s]
+            [steamdating.services.debug :as debug]))
 
 
 (spec/def :sd.filter/value

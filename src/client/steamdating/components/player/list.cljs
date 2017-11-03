@@ -57,7 +57,7 @@
   (let [state @(re-frame/subscribe [:sd.players/list {:filter :players}])
         on-filter-update #(re-frame/dispatch [:sd.filters/set :players %])
         on-player-click #(re-frame/dispatch [:sd.players.edit/start-edit %])
-        on-sort-by #(re-frame/dispatch [:sd.sorts/toggle :players %])]
+        on-sort-by #(re-frame/dispatch [:sd.sorts/toggle :players % :name])]
     (if (:render-list? state)
       [player-list-render {:on-filter-update on-filter-update
                            :on-player-click on-player-click
