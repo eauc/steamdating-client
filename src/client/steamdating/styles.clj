@@ -18,6 +18,7 @@
             [steamdating.styles.5-components.player-file-imports :refer [player-file-imports]]
             [steamdating.styles.5-components.player-list :refer [player-list]]
             [steamdating.styles.5-components.prompt :refer [prompt]]
+            [steamdating.styles.5-components.ranking-bests :refer [ranking-bests]]
             [steamdating.styles.5-components.ranking-list :refer [ranking-list]]
             [steamdating.styles.5-components.round-next :refer [round-next]]
             [steamdating.styles.5-components.round-nth :refer [round-nth]]
@@ -50,6 +51,7 @@
    player-file-imports
    player-list
    prompt
+   ranking-bests
    ranking-list
    round-next
    round-nth

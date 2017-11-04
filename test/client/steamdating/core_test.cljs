@@ -5,6 +5,7 @@
             [steamdating.components.game.edit-test]
             [steamdating.components.player.edit-test]
             [steamdating.components.player.list-test]
+            [steamdating.components.ranking.bests-test]
             [steamdating.components.ranking.list-test]
             [steamdating.components.round.next-test]
             [steamdating.components.round.nth-test]

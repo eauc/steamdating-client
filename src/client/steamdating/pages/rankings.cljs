@@ -4,6 +4,7 @@
             [steamdating.components.page.content :refer [page-content]]
             [steamdating.components.page.menu :refer [page-menu-items]]
             [steamdating.components.page.menu-item :refer [page-menu-item]]
+            [steamdating.components.ranking.bests :refer [ranking-bests]]
             [steamdating.components.ranking.list :refer [ranking-list]]
             [steamdating.services.db :as db]
             [steamdating.services.debug :as debug]
@@ -17,4 +18,5 @@
 (defmethod page-content :rankings
   []
   [:div.sd-page-rankings
-   [ranking-list]])
+   [ranking-list]
+   [ranking-bests]])

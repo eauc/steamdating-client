@@ -63,15 +63,17 @@
   [{:keys [droped-after n result] :as props}]
   (let [{:keys [game list opponent score table]} result
         {:keys [tournament]} score
-        droped? (and (some? droped-after) (>= n droped-after))]
+        droped? (or (nil? result)
+                    (and (some? droped-after) (>= n droped-after)))]
     [:td.sd-round-summary-round
      (-> props
-         (dissoc :result)
+         (dissoc :droped-after :n :result)
          (assoc :class (ui/classes (when droped? "droped")
                                    (when (= 0 tournament) "loss")
                                    (when (= 1 tournament) "win"))
                 :title (game/->title game)))
      (cond
+       (nil? result) [:div.sd-round-summary-opponent "N/A"]
        droped? [:div.sd-round-summary-opponent "Droped"]
        :else (cljs.core/list
                [:div.sd-round-summary-opponent

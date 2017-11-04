@@ -1,5 +1,6 @@
 (ns steamdating.services.debug
-  (:require [cljs.spec.alpha :as spec]))
+  (:require [cljs.spec.alpha :as spec]
+            [expound.alpha :refer [expound-str]]))
 
 
 (defonce debug?
@@ -29,4 +30,6 @@
 (defn spec-valid?
   [s v]
   (or (not debug?)
-      (spec/valid? s v)))
+      (let [valid? (spec/valid? s v)]
+        (when-not valid? (log "pre/post failed" (expound-str s v)))
+        valid?)))

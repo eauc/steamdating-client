@@ -11,7 +11,8 @@
 
 
   (fn [state]
-    (let [options (round/players-options (get-in @state [:form :edit]))]
+    (let [options (round/players-options (get-in @state [:form :edit])
+                                         (get-in @state [:form :edit :rankings]))]
       [round-next-render
        {:on-player-update #(swap! state update-in [:form :edit] round/pair-player %1 %2)
         :on-table-update #(swap! state assoc-in (concat [:form :edit] %1) %2)
@@ -43,6 +44,13 @@
                                :score {:tournament nil, :assassination false, :scenario 0, :army 0}},
                      :player2 {:name nil,
                                :score {:tournament nil, :assassination false, :scenario 0, :army 0}}}]}
+            :rankings [{:name "Toto" :rank 1}
+                       {:name "titi" :rank 2}
+                       {:name "Tutu" :rank 3}
+                       {:name "tete" :rank 4}
+                       {:name "tyty" :rank 5}
+                       {:name "toutou" :rank 6}
+                       {:name "Teuteu" :rank 7}]
             :factions {"Toto" :Cygnar
                        "titi" :Khador
                        "Tutu" :Protectorate

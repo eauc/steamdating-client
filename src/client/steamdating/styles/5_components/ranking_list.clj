@@ -24,7 +24,8 @@
    [:&-drop {:background-color :transparent
              :border 0
              :cursor :pointer
-             :height "2.8em"}
+             :height "2.8em"
+             :text-align :left}
     [:&:active
      :&:focus {:outline 0}]
 

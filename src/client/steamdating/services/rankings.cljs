@@ -57,27 +57,35 @@
 
 
 (defn list-sub
-  [[input icons] _]
+  [[input {:keys [bests]} icons] _]
   {:pre [(debug/spec-valid? :sd.ranking/list-sort input)
+         (debug/spec-valid? :sd.ranking/bests bests)
          (debug/spec-valid? :sd.faction/icons icons)]
    :post [(debug/spec-valid? :sd.ranking/list %)]}
-  (assoc input :icons icons))
+  (assoc input :bests bests :icons icons))
 
 (re-frame/reg-sub
   :sd.rankings/list
   (fn list-sub-inputs
     [[_ params] _]
     [(re-frame/subscribe [:sd.rankings/list-sort params])
+     (re-frame/subscribe [:sd.rankings/bests])
      (re-frame/subscribe [:sd.factions/icons])])
   list-sub)
 
 
-;; (re-frame/reg-sub
-;;   :sd.rankings/bests
-;;   :<- [:sd.rankings/ranking]
-;;   (fn bests-sub
-;;     [ranking _]
-;;     (ranking/bests ranking)))
+(defn bests-sub
+  [[rankings icons]]
+  {:pre [(debug/spec-valid? :sd.ranking/rankings rankings)]
+   :post [(debug/spec-valid? :sd.ranking/bests-sub %)]}
+  {:bests (ranking/bests rankings)
+   :icons icons})
+
+(re-frame/reg-sub
+  :sd.rankings/bests
+  :<- [:sd.rankings/rankings]
+  :<- [:sd.factions/icons]
+  bests-sub)
 
 
 ;; (re-frame/reg-sub
