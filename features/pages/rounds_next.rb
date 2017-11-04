@@ -143,18 +143,18 @@ module Pages
       self
     end
 
-    # def expect_player_paired(name)
-    #   within_fieldset(NEXT_ROUND_FORM) do
-    #     expect(page).to have_select(selected: name)
-    #   end
-    #   self
-    # end
+    def expect_player_paired(name)
+      within_fieldset(NEXT_ROUND_FORM) do
+        expect(page).to have_select(selected: name)
+      end
+      self
+    end
 
-    # def expect_player_not_paired(name)
-    #   within_fieldset(NEXT_ROUND_FORM) do
-    #     expect(page).to have_no_select(selected: name)
-    #   end
-    #   self
-    # end
+    def expect_player_not_paired(name)
+      within_fieldset(NEXT_ROUND_FORM) do
+        expect(page).to have_no_select(selected: name)
+      end
+      self
+    end
   end
 end

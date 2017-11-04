@@ -192,13 +192,13 @@
       (re-find pattern (or (get-in game [:player2 :name]) ""))))
 
 
-;; (defn rename-player
-;;   [game old-name new-name]
-;;   (cond-> game
-;;     (= (get-in game [:player1 :name]) old-name)
-;;     (assoc-in [:player1 :name] new-name)
-;;     (= (get-in game [:player2 :name]) old-name)
-;;     (assoc-in [:player2 :name] new-name)))
+(defn rename-player
+  [game old-name new-name]
+  (cond-> game
+    (= (get-in game [:player1 :name]) old-name)
+    (assoc-in [:player1 :name] new-name)
+    (= (get-in game [:player2 :name]) old-name)
+    (assoc-in [:player2 :name] new-name)))
 
 
 (defn toggle-win-loss

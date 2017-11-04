@@ -33,7 +33,7 @@
 
 
 (spec/def :sd.player/droped-after
-  (spec/and integer? #(> % 0)))
+  nat-int?)
 
 
 (spec/def :sd.player/player
@@ -150,11 +150,11 @@
   (remove #(some? (:droped-after %)) players))
 
 
-;; (defn toggle-drop
-;;   [player after]
-;;   (if (:droped-after player)
-;;     (dissoc player :droped-after)
-;;     (assoc player :droped-after after)))
+(defn toggle-drop
+  [player after]
+  (if (:droped-after player)
+    (dissoc player :droped-after)
+    (assoc player :droped-after after)))
 
 
 ;; (def player->columns

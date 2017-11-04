@@ -26,7 +26,8 @@
 
    [:&-round {:cursor :pointer}
     [:&.win {:background-color (:valid-bckgnd colors)}]
-    [:&.loss {:background-color (:error-bckgnd colors)}]]
+    [:&.loss {:background-color (:error-bckgnd colors)}]
+    [:&.droped {:background-color (:disabled colors)}]]
 
 
    [:&-opponent {:white-space :nowrap}]

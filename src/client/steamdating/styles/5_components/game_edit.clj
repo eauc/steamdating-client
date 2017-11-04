@@ -9,12 +9,16 @@
   [:&-game-edit
 
 
-   [:&-result {:cursor :pointer}
+   [:&-result {:cursor :pointer
+               :display :flex
+               :flex-direction :column
+               :justify-content :center
+               :height "3em"}
 
     [:&-status {:opacity 0}]
 
-    [:&-hint {:font-size "0.8em"
-              :color (:text-muted colors)}
+    [:&-hint {:color (:text-muted colors)
+              :font-size "0.8em"}
      (at-break
        :tablet
        [:& {:font-size :inherit}])]

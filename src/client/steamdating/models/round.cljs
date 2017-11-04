@@ -89,17 +89,16 @@
 
 
 (defn players-options
-  [round ;; rankings
-   ]
-  (->> (:players round)
-       (map (fn [name]
-              (let [rank-name (str name ;; " #" (get rankings name)
-                                   )]
-                [name
-                 (if (player-paired? round name)
-                   rank-name
-                   (str "> " rank-name))])))
-       (into {})))
+  [round rankings]
+  (let [rankings (into {} (map (juxt :name :rank) rankings))]
+    (->> (:players round)
+         (map (fn [name]
+                (let [rank-name (str name " #" (get rankings name))]
+                  [name
+                   (if (player-paired? round name)
+                     rank-name
+                     (str "> " rank-name))])))
+         (into {}))))
 
 
 (defn paired-players
@@ -149,7 +148,7 @@
 
 
 (spec/def :sd.round.players-results/player
-  (spec/and :sd.player/player
+  (spec/and :sd.ranking/ranking
             (spec/keys :req-un [:sd.round.players-results/results])))
 
 
@@ -223,18 +222,48 @@
        (apply merge-with +)))
 
 
-;; (defn total-scores-for-players
-;;   [names rounds]
-;;   (let [scores (into {}
-;;                      (map (fn [n]
-;;                             [n (-> (total-score-for-player n rounds)
-;;                                    (assoc :opponents (set (opponents-for-player n rounds))))])
-;;                           names))]
-;;     (into {}
-;;           (map (fn [[n s]]
-;;                  [n (assoc s :sos (reduce + (map #(get-in scores [% :tournament])
-;;                                                  (:opponents s))))])
-;;                scores))))
+(spec/def :sd.round.players-scores/opponents
+  (spec/coll-of :sd.player/name :kind set?))
+
+
+(spec/def :sd.round.players-scores/assassination
+  nat-int?)
+
+
+(spec/def :sd.round.players-scores/sos
+  nat-int?)
+
+
+(spec/def :sd.round.players-scores/tournament
+  nat-int?)
+
+
+(spec/def :sd.round.players-scores/score
+  (spec/keys :req-un [:sd.round.players-scores/opponents
+                      :sd.round.players-scores/sos]
+             :opt-un [:sd.round.players-scores/tournament
+                      :sd.round.players-scores/assassination
+                      :sd.score/scenario
+                      :sd.score/army]))
+
+
+(spec/def :sd.round/players-scores
+  (spec/map-of :sd.player/name :sd.round.players-scores/score))
+
+
+(defn total-scores-for-players
+  [names rounds]
+  (let [scores (->> names
+                    (map #(vector % (-> (total-score-for-player % rounds)
+                                        (assoc :opponents (set (opponents-for-player % rounds))))))
+                    (into {}))]
+    (->> scores
+         (map (fn [[n s]]
+                [n (->> (:opponents s)
+                        (map #(get-in scores [% :tournament]))
+                        (reduce +)
+                        (assoc s :sos))]))
+         (into {}))))
 
 
 (defn already-paired
@@ -369,12 +398,12 @@
                      merge-warns already-paired)))))
 
 
-;; (defn rename-player
-;;   [round old-name new-name]
-;;   (-> round
-;;       (update :players #(vec (remove (fn [name] (= name old-name)) %)))
-;;       (update :players conj new-name)
-;;       (update :games #(mapv (fn [game] (game/rename-player game old-name new-name)) %))))
+(defn rename-player
+  [round old-name new-name]
+  (-> round
+      (update :players #(vec (remove (fn [name] (= name old-name)) %)))
+      (update :players conj new-name)
+      (update :games #(mapv (fn [game] (game/rename-player game old-name new-name)) %))))
 
 
 (defn random-score

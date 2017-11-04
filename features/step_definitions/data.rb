@@ -59,11 +59,11 @@ Given("some Rounds have been defined") do
   validate_prompt
 end
 
-# Given("more Rounds have been defined") do
-#   @tournament = JSON.parse(File.read("features/data/moreRounds.json"))
-#   Pages::File.new
-#     .load
-#     .open("moreRounds.json")
-#   expect_toaster("File loaded")
-#   validate_prompt
-# end
+Given("more Rounds have been defined") do
+  @tournament = JSON.parse(File.read("features/data/moreRounds.json"))
+  Pages::Data.new
+    .load
+    .open("moreRounds.json")
+  expect_toaster("File loaded")
+  validate_prompt
+end

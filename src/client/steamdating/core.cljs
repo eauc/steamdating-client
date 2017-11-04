@@ -7,6 +7,7 @@
             [steamdating.pages.players-create]
             [steamdating.pages.players-edit]
             [steamdating.pages.players-list]
+            [steamdating.pages.rankings]
             [steamdating.pages.rounds-all]
             [steamdating.pages.rounds-next]
             [steamdating.pages.rounds-nth]

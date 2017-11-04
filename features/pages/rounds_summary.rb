@@ -26,7 +26,7 @@ module Pages
 
     def expect_rounds_summary(rows)
       expected_content = rows
-                           .map {|row| row[1..-1].reject {|c| c.empty?}.join("\\s+")}
+                           .map {|row| row.reject {|c| c.empty?}.join("\\s+")}
                            .join("\\s+")
       within(:table, "Rounds Summary", match: :first) do
         within("tbody") do

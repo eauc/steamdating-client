@@ -53,7 +53,7 @@
   (fn create-current-edit
     [{:keys [db]}]
     {:dispatch-n [[:sd.players/save db]
-                  ;; [:sd.rounds/rename-player db]
+                  [:sd.rounds/rename-player db]
                   [:sd.routes/back]]}))
 
 
@@ -83,14 +83,14 @@
        :sd.routes/back nil})))
 
 
-;; (db/reg-event-fx
-;;   :sd.players/toggle-drop
-;;   (fn toggle-drop
-;;     [{:keys [db]} [p]]
-;;     (let [n-rounds (count (get-in db [:tournament :rounds]))]
-;;       {:db (update-in db [:tournament :players]
-;;                       player/edit {:base p
-;;                                    :edit (player/toggle-drop p n-rounds)})})))
+(db/reg-event-fx
+  :sd.players/toggle-drop
+  (fn toggle-drop
+    [{:keys [db]} [p]]
+    (let [n-rounds (count (get-in db [:tournament :rounds]))]
+      {:db (update-in db [:tournament :players]
+                      player/save {:base p
+                                   :edit (player/toggle-drop p n-rounds)})})))
 
 
 (db/reg-event-fx

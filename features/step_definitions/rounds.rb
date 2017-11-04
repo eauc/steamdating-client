@@ -79,12 +79,12 @@ Then("I can edit the Next Round information") do
     .expect_games_selects_for_players(@tournament["players"])
 end
 
-# Then("I can edit the Next Round information for players:") do |table|
-#   @active_players = table.raw[0].map {|n| {"name" => n}}
-#   @page
-#     .expect_games_forms_for_players(@active_players)
-#     .expect_games_selects_for_players(@active_players)
-# end
+Then("I can edit the Next Round information for players:") do |table|
+  @active_players = table.raw[0].map {|n| {"name" => n}}
+  @page
+    .expect_games_forms_for_players(@active_players)
+    .expect_games_selects_for_players(@active_players)
+end
 
 Then("\"$player\" for game \#$game is empty") do |player, game|
   sleep 0.5
@@ -171,17 +171,17 @@ end
 #     .expect_games(games[n])
 # end
 
-# Then("player \"$name\" is in Next Round pairings") do |name|
-#   @page.expect_player_paired(name)
-# end
+Then("player \"$name\" is in Next Round pairings") do |name|
+  @page.expect_player_paired(name)
+end
 
-# Then("player \"$name\" is not in Next Round pairings") do |name|
-#   @page.expect_player_not_paired(name)
-# end
+Then("player \"$name\" is not in Next Round pairings") do |name|
+  @page.expect_player_not_paired(name)
+end
 
-# Then("I can edit $n pairings for Next Round") do |n|
-#   @page.expect_n_games_forms(n.to_i)
-# end
+Then("I can edit $n pairings for Next Round") do |n|
+  @page.expect_n_games_forms(n.to_i)
+end
 
 # Then("I see Round \#$nth games:") do |nth, table|
 #   @page.expect_round(nth, table.symbolic_hashes)

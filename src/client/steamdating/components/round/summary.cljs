@@ -60,25 +60,32 @@
 
 
 (defn result-cell
-  [{:keys [result] :as props}]
+  [{:keys [droped-after n result] :as props}]
   (let [{:keys [game list opponent score table]} result
-        {:keys [tournament]} score]
+        {:keys [tournament]} score
+        droped? (and (some? droped-after) (>= n droped-after))]
     [:td.sd-round-summary-round
      (-> props
          (dissoc :result)
-         (assoc :class (ui/classes (when (= 0 tournament) "loss")
+         (assoc :class (ui/classes (when droped? "droped")
+                                   (when (= 0 tournament) "loss")
                                    (when (= 1 tournament) "win"))
                 :title (game/->title game)))
-     [:div.sd-round-summary-opponent
-      (str table ". " (or opponent "Phantom"))]
-     [:div.sd-round-summary-list
-      list]]))
+     (cond
+       droped? [:div.sd-round-summary-opponent "Droped"]
+       :else (cljs.core/list
+               [:div.sd-round-summary-opponent
+                {:key :opp}
+                (str table ". " (or opponent "Phantom"))]
+               [:div.sd-round-summary-list
+                {:key :list}
+                list]))]))
 
 
 (defn player-row
   [{:keys [on-game-click on-player-click state] :as props}]
   (let [{:keys [icons player]} state
-        {:keys [name faction rank results]} player]
+        {:keys [droped-after name faction rank results]} player]
     [:tr (dissoc props :state :on-game-click :on-player-click)
      [:td.sd-round-summary-rank
       rank]
@@ -92,6 +99,8 @@
      [lists-cell props]
      (for [[n result] (map vector (range) (:results player))]
        [result-cell {:key n
+                     :droped-after droped-after
+                     :n n
                      :on-click #(on-game-click n (:game result))
                      :result result}])]))
 

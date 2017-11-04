@@ -49,14 +49,14 @@
                   (str "/rounds/nth/" (count (get-in db [:tournament :rounds])))]})))
 
 
-;; (db/reg-event-fx
-;;   :sd.rounds/rename-player
-;;   [(re-frame/path [:tournament :rounds])]
-;;   (fn rename-player
-;;     [{rounds :db} [{{old-name :name} :base
-;;                     {new-name :name} :edit}]]
-;;     {:db (mapv #(round/rename-player % old-name new-name)
-;;                rounds)}))
+(db/reg-event-fx
+  :sd.rounds/rename-player
+  [(re-frame/path [:tournament :rounds])]
+  (fn rename-player
+    [{rounds :db} [{{old-name :name} :base
+                    {new-name :name} :edit}]]
+    {:db (mapv #(round/rename-player % old-name new-name)
+               rounds)}))
 
 
 (db/reg-event-fx
@@ -124,15 +124,15 @@
 
 
 (defn next-sub
-  [[form-state factions origins ;; rankings
-    opponents icons]]
+  [[form-state factions origins rankings opponents icons]]
   {:pre [(debug/spec-valid? :sd.form/form form-state)
          (debug/spec-valid? :sd.player/factions factions)
          (debug/spec-valid? :sd.player/origins origins)
+         (debug/spec-valid? :sd.ranking/rankings rankings)
          (debug/spec-valid? :sd.round/opponents opponents)
          (debug/spec-valid? :sd.faction/icons icons)]
    :post [(debug/spec-valid? :sd.round/next %)]}
-  (let [options (round/players-options (:edit form-state))]
+  (let [options (round/players-options (:edit form-state) rankings)]
     (-> form-state
         (round/validate-pairings {:factions factions
                                   :opponents opponents
@@ -146,7 +146,7 @@
   :<- [:sd.forms/validate :round round/validate]
   :<- [:sd.players/factions]
   :<- [:sd.players/origins]
-  ;; :<- [:sd.rankings/players]
+  :<- [:sd.rankings/rankings]
   :<- [:sd.rounds/opponents]
   :<- [:sd.factions/icons]
   next-sub)
@@ -222,20 +222,21 @@
 
 
 (defn players-results-sub
-  [[rounds players]]
+  [[rounds rankings]]
   {:pre [(debug/spec-valid? :sd.round/rounds rounds)
-         (debug/spec-valid? :sd.player/players players)]
+         (debug/spec-valid? :sd.ranking/rankings rankings)]
    :post [(debug/spec-valid? :sd.round/players-results %)]}
-  (let [names (map :name players)]
-    {:players (mapv #(assoc % :results (round/results-for-player (:name %) rounds)) players)
+  (let [names (map :name rankings)]
+    {:players (->> rankings
+                   (mapv #(assoc % :results (round/results-for-player (:name %) rounds))))
      :lists (into {} (map #(vector % (round/lists-for-player % rounds)) names))
      :n-rounds (count rounds)}))
 
 (re-frame/reg-sub
   :sd.rounds/players-results
   :<- [:sd.rounds/rounds]
-  :<- [:sd.players/players]
-  ;; :<- [:sd.rankings/ranking]
+  ;; :<- [:sd.players/players]
+  :<- [:sd.rankings/rankings]
   players-results-sub)
 
 
@@ -275,13 +276,18 @@
   summary-sort-sub)
 
 
-;; (re-frame/reg-sub
-;;   :sd.rounds/players-scores
-;;   :<- [:sd.rounds/rounds]
-;;   :<- [:sd.players/names]
-;;   (fn players-scores-sub
-;;     [[rounds names] _]
-;;     (round/total-scores-for-players names rounds)))
+(defn players-scores-sub
+  [[rounds names] _]
+  {:pre [(debug/spec-valid? :sd.round/rounds rounds)
+         (debug/spec-valid? :sd.player/names names)]
+   :post [(debug/spec-valid? :sd.round/players-scores %)]}
+  (round/total-scores-for-players names rounds))
+
+(re-frame/reg-sub
+  :sd.rounds/players-scores
+  :<- [:sd.rounds/rounds]
+  :<- [:sd.players/names]
+  players-scores-sub)
 
 
 (defn summary-sub

@@ -52,8 +52,8 @@
               :active-on "#/players"}
     "Players"]
    [nav-link {:hash hash
-              :target "#/ranking"}
-    "Ranking"]
+              :target "#/rankings"}
+    "Rankings"]
    [nav-link {:hash hash
               :target "#/rounds/all"
               :active-on "#/rounds"}
