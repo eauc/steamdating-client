@@ -6,6 +6,7 @@
                                     "target"]
   :dependencies [[org.clojure/clojure "1.9.0-alpha16"]
                  [org.clojure/clojurescript "1.9.908"]
+                 [cljsjs/auth0-lock "10.21.1-0"]
                  [expound "0.3.1"]
                  [garden "1.3.3"]
                  [day8.re-frame/http-fx "0.1.4"]
@@ -30,12 +31,18 @@
   :cljsbuild
   {:builds
    {:client {:source-paths ["src/client"]
-             :compiler {:main "steamdating.core"
-                        :optimizations :none
-                        :output-to "resources/public/js/client.js"
+             :compiler {:optimizations :none
+                        :parallel-build true
+                        ;; :verbose true
+                        :output-dir "resources/public/js/client"
+                        :asset-path "js/client"
+                        :install-deps true
                         :npm-deps {:feather-icons "3.2.2"
                                    :sw-precache "5.2.0"}
-                        :install-deps true}}
+                        :modules {:main {:output-to "resources/public/js/client/main.js"
+                                         :entries #{"steamdating.core"}}
+                                  :auth {:output-to "resources/public/js/client/auth.js"
+                                         :entries #{"steamdating.services.auth"}}}}}
     :server {:source-paths ["src/server"]
              :compiler {:main "steamdating.core"
                         :target :nodejs
@@ -57,8 +64,7 @@
                 :pretty-print? true}}]}
   :profiles
   {:dev
-   {:dependencies [[org.clojars.stumitchell/clairvoyant "0.2.1"]
-                   [devcards "0.2.4" :exclusions [cljsjs/react
+   {:dependencies [[devcards "0.2.4" :exclusions [cljsjs/react
                                                   cljsjs/react-dom
                                                   commons-codec]]
                    [binaryage/devtools "0.9.7"]
@@ -67,10 +73,8 @@
     :cljsbuild
     {:builds
      {:client {:figwheel {:on-jsload "steamdating.core/mount-root"}
-               :compiler {:pretty-print true
-                          :output-dir "resources/public/js/client"
-                          :asset-path "js/client"
-                          :closure-defines {"clairvoyant.core.devmode" true}
+               :compiler {:output-to "resources/public/js/client/main.js"
+                          :pretty-print true
                           :preloads [devtools.preload]
                           :tooling-config {:devtools/config {:features-to-install :all}}}}
       :test {:figwheel {:devcards true}
@@ -78,13 +82,14 @@
              :compiler {:main "steamdating.core-test"
                         :devcards true
                         :optimizations :none
-                        :preloads [devtools.preload]
                         :pretty-print true
-                        :output-to "resources/public/js/test.js"
+                        :parallel-build true
+                        :output-to "resources/public/js/test/main.js"
                         :output-dir "resources/public/js/test"
                         :asset-path "js/test"
+                        :install-deps true
                         :npm-deps {:feather-icons "3.2.2"}
-                        :install-deps true}}}}}
+                        :preloads [devtools.preload]}}}}}
    :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
    :production
    {:cljsbuild

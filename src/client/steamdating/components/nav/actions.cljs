@@ -2,6 +2,7 @@
   (:require [re-frame.core :as re-frame]
             [reagent.core :as reagent]
             [steamdating.components.nav.toggle :refer [nav-toggle]]
+            [steamdating.components.online.login-button :refer [online-login-button]]
             [steamdating.components.tournament.save-button :refer [tournament-save-button]]
             [steamdating.services.routes]
             [steamdating.services.ui]))
@@ -21,5 +22,6 @@
 (defmethod nav-actions-content :default
   [{:keys [menu]}]
   [:div.sd-nav-actions-content
+   [online-login-button]
    [tournament-save-button]
    [nav-toggle {:menu menu}]])

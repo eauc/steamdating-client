@@ -5,6 +5,7 @@
             [steamdating.models.faction]
             [steamdating.models.filter]
             [steamdating.models.form]
+            [steamdating.models.online]
             [steamdating.models.prompt]
             [steamdating.models.route :refer [->route]]
             [steamdating.models.sort]
@@ -19,6 +20,7 @@
   (spec/keys :req-un [:sd.faction/factions
                       :sd.filter/filters
                       :sd.form/forms
+                      :sd.online/online
                       :sd.route/route
                       :sd.sort/sorts
                       :sd.tournament/tournament
@@ -59,6 +61,7 @@
   {:factions {}
    :filters {}
    :forms {}
+   :online {}
    :route (->route)
    :sorts {}
    :tournament (->tournament)

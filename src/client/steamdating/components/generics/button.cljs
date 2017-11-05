@@ -4,12 +4,13 @@
 
 
 (defn button
-  [{:keys [class element icon label type] :as props
+  [{:keys [class element icon label title type] :as props
     :or {element :button
          type :button}}]
   [element (-> props
                (dissoc :element :icon :label)
-               (assoc :class (ui/classes "sd-button" class))
+               (assoc :class (ui/classes "sd-button" class)
+                      :title (or title label))
                (cond-> (= element :button)
                  (assoc :type type)))
    (when (some? icon)

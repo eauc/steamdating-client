@@ -1,5 +1,6 @@
 (ns steamdating.core
-  (:require [reagent.core :as reagent]
+  (:require [cljs.loader :as loader]
+            [reagent.core :as reagent]
             [re-frame.core :as re-frame]
             [steamdating.pages.data]
             [steamdating.pages.games-edit]
@@ -45,3 +46,5 @@
   (routes-init)
   (ui-init)
   (mount-root))
+
+(loader/set-loaded! :main)

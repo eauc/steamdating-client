@@ -10,6 +10,7 @@
               :border (:border box-model)
               :border-radius (:border-radius box-model)
               :color (:text colors)
+              :cursor :pointer
               :display :flex
               :flex-direction :row
               :justify-content :center
