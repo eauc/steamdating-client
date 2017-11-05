@@ -39,28 +39,28 @@
 ;;   boolean?)
 
 
-;; (spec/def :sd.online.tournament/_id
-;;   (spec/and string? not-empty))
+(spec/def :sd.online.tournament/_id
+  (spec/and string? not-empty))
 
 
-;; (spec/def :sd.online.tournament/updatedAt
-;;   (spec/and string? not-empty))
+(spec/def :sd.online.tournament/updatedAt
+  (spec/and string? not-empty))
 
 
-;; (spec/def :sd.online.tournament/name
-;;   (spec/and string? not-empty))
+(spec/def :sd.online.tournament/name
+  (spec/and string? not-empty))
 
 
-;; (spec/def :sd.online.tournament/date
-;;   (spec/and string? not-empty))
+(spec/def :sd.online.tournament/date
+  (spec/and string? not-empty))
 
 
-;; (spec/def :sd.online.tournament/user
-;;   (spec/and string? not-empty))
+(spec/def :sd.online.tournament/user
+  (spec/and string? not-empty))
 
 
-;; (spec/def :sd.online.tournament/link
-;;   (spec/and string? not-empty))
+(spec/def :sd.online.tournament/link
+  (spec/and string? not-empty))
 
 
 ;; (spec/def :sd.online/edit
@@ -68,24 +68,42 @@
 ;;                       :sd.online.tournament/date]))
 
 
-;; (spec/def :sd.online/tournament
-;;   (spec/keys :req-un [:sd.online.tournament/_id
-;;                       :sd.online.tournament/updatedAt
-;;                       :sd.online.tournament/name
-;;                       :sd.online.tournament/date
-;;                       :sd.online.tournament/user
-;;                       :sd.online.tournament/link]))
+(spec/def :sd.online/tournament
+  (spec/keys :req-un [:sd.online.tournament/_id
+                      :sd.online.tournament/updatedAt
+                      :sd.online.tournament/name
+                      :sd.online.tournament/date
+                      :sd.online.tournament/user
+                      :sd.online.tournament/link]))
 
 
-;; (spec/def :sd.online/tournaments
-;;   (spec/or :list (spec/coll-of :sd.online/tournament :kind vector?)
-;;            :error #{:failed}))
+(spec/def :sd.online.tournaments/list
+  (spec/coll-of :sd.online/tournament :kind vector?))
+
+
+(spec/def :sd.online.tournaments/status
+  #{:init :loading :success :error})
+
+
+(spec/def :sd.online/tournaments
+  (spec/keys :opt-un [:sd.online.tournaments/list
+                      :sd.online.tournaments/status]))
+
+
+(spec/def :sd.online.tournaments/filter
+  :sd.filter/value)
+
+
+(spec/def :sd.online/tournaments-sub
+  (spec/keys :opt-un [:sd.online.tournaments/list
+                      :sd.online.tournaments/status
+                      :sd.online.tournaments/filter
+                      :sd.sort/sort]))
 
 
 (spec/def :sd.online/online
   (spec/keys :opt-un [:sd.online/user
-                      ;; :sd.online/tournaments
-                      ]))
+                      :sd.online/tournaments]))
 
 
 (def domain
@@ -104,24 +122,48 @@
     "https://steamdating-data.herokuapp.com"))
 
 
-;; (defn load-tournament-request
-;;   [link confirm?]
-;;   {:method :get
-;;    :uri (str api-url link)
-;;    :response-format (ajax/json-response-format {:keywords? true})
-;;    :on-success [:sd.online/load-tournament-success confirm?]
-;;    :on-failure [:sd.online/error-logout
-;;                 "Failed to load online tournament"]})
+(defn load-tournament-request
+  [link confirm?]
+  {:method :get
+   :uri (str api-url link)
+   :response-format (ajax/json-response-format {:keywords? true})
+   :on-success [:sd.online.tournament/load-success confirm?]
+   :on-failure [:sd.toaster/set
+                {:type :error
+                 :message "Failed to load tournament"}]})
 
 
-;; (defn load-tournaments-request
-;;   [token]
-;;   {:method :get
-;;    :uri (str api-url "/tournaments/mine")
-;;    :headers {"Authorization" (str "Bearer " token)}
-;;    :response-format (ajax/json-response-format {:keywords? true})
-;;    :on-success [:sd.online/load-tournaments-success]
-;;    :on-failure [:sd.online/load-tournaments-error]})
+(defn load-tournaments-request
+  [{:keys [token]}]
+  {:method :get
+   :uri (str api-url "/tournaments/mine")
+   :headers {"Authorization" (str "Bearer " token)}
+   :response-format (ajax/json-response-format {:keywords? true})
+   :on-success [:sd.online.tournaments/load-success]
+   :on-failure [:sd.online.tournaments/load-error]})
+
+
+(defn tournament-match-pattern?
+  [tournament pattern]
+  (some?
+    (first
+      (filter
+        (fn [[k v]]
+          (re-find pattern (str v)))
+        tournament))))
+
+
+(defn tournaments-filter-with
+  [pattern tournaments]
+  (vec (filter #(tournament-match-pattern? % pattern) tournaments)))
+
+
+(defn tournaments-sort-with
+  [{:keys [by reverse?]} tournaments]
+  (as-> tournaments $
+    (sort-by (juxt by :date) $)
+    (cond-> $ reverse? (reverse))
+    (vec $)))
 
 
 ;; (defn upload-tournament-request

@@ -5,6 +5,7 @@
             [steamdating.pages.data]
             [steamdating.pages.games-edit]
             [steamdating.pages.home]
+            [steamdating.pages.online]
             [steamdating.pages.players-create]
             [steamdating.pages.players-edit]
             [steamdating.pages.players-list]

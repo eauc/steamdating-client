@@ -14,6 +14,7 @@
             [steamdating.styles.5-components.game-edit :refer [game-edit]]
             [steamdating.styles.5-components.layout :refer [layout]]
             [steamdating.styles.5-components.nav :refer [nav]]
+            [steamdating.styles.5-components.online-tournaments :refer [online-tournaments]]
             [steamdating.styles.5-components.page :refer [page]]
             [steamdating.styles.5-components.player-file-imports :refer [player-file-imports]]
             [steamdating.styles.5-components.player-list :refer [player-list]]
@@ -28,6 +29,7 @@
             [steamdating.styles.5-components.tournament-file :refer [tournament-file]]
             [steamdating.styles.6-pages.data :refer [page-data]]
             [steamdating.styles.6-pages.loading :refer [page-loading]]
+            [steamdating.styles.6-pages.online :refer [page-online]]
             [steamdating.styles.6-pages.unknown :refer [page-unknown]]))
 
 
@@ -44,9 +46,11 @@
    icon
    layout
    nav
+   online-tournaments
    page
    page-data
    page-loading
+   page-online
    page-unknown
    player-file-imports
    player-list

@@ -31,8 +31,8 @@
 
 (defn best-by
   [score rankings]
-  (let [score-max (->> (mapv #(get-in % [:score score]) rankings)
-                       (apply max))]
+  (let [score-max (or (->> (mapv #(get-in % [:score score]) rankings)
+                           (apply max)) 0)]
     (if (= 0 score-max)
       nil
       {:value score-max
@@ -48,8 +48,9 @@
 
 
 (spec/def :sd.ranking.bests/score
-  (spec/keys :req-un [:sd.ranking.bests.score/names
-                      :sd.ranking.bests.score/value]))
+  (spec/nilable
+    (spec/keys :req-un [:sd.ranking.bests.score/names
+                        :sd.ranking.bests.score/value])))
 
 
 (spec/def :sd.ranking.bests/scores

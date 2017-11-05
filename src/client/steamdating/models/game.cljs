@@ -233,10 +233,10 @@
                     (spec/gen :sd.game/score-pair)))
         l1 (sgen/generate
              (sgen/elements
-               (get lists (get-in game [:player1 :name]) [nil])))
+               (or (get lists (get-in game [:player1 :name])) [nil])))
         l2 (sgen/generate
              (sgen/elements
-               (get lists (get-in game [:player2 :name]) [nil])))]
+               (or (get lists (get-in game [:player2 :name])) [nil])))]
     (-> game
         (assoc-in [:player1 :list] l1)
         (assoc-in [:player1 :score] s1)

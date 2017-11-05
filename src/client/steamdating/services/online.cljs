@@ -3,6 +3,7 @@
             [cljs.loader :as loader]
             [cljs.spec.alpha :as spec]
             [re-frame.core :as re-frame]
+            [steamdating.models.filter :as filter]
             [steamdating.models.form :as form]
             [steamdating.models.online :as online]
             [steamdating.services.db :as db]
@@ -39,22 +40,14 @@
     {:db (dissoc db :auth :tournaments)}))
 
 
-;; (db/reg-event-fx
-;;   :sd.online/error-logout
-;;   [(re-frame/path :online)]
-;;   (fn logout
-;;     [_ [message {:keys [status]}]]
-;;     {:dispatch-n [(when (= 401 status) [:sd.online/logout])
-;;                   [:sd.toaster/set
-;;                    {:type :error :message message}]]}))
-
-
 (db/reg-event-fx
   :sd.online/login-success
-  [(re-frame/path :online :user :auth :token)]
+  [(re-frame/path :online)]
   (fn login-success
     [{:keys [db]} [token]]
-    {:db token}))
+    {:db (-> db
+             (assoc-in [:user :auth :token] token)
+             (dissoc :tournaments))}))
 
 
 (when debug/debug?
@@ -71,58 +64,61 @@
 ;;     {:db (not db)}))
 
 
-;; (db/reg-event-fx
-;;   :sd.online/load-tournament
-;;   [(re-frame/path :online)]
-;;   (fn load-tournament
-;;     [{:keys [db]} [link confirm?]]
-;;     {:http-xhrio (online/load-tournament-request link confirm?)}))
+(db/reg-event-fx
+  :sd.online.tournament/load
+  (fn load-tournament
+    [_ [{:keys [link confirm?]}]]
+    {:http-xhrio (online/load-tournament-request link confirm?)}))
 
 
-;; (db/reg-event-fx
-;;   :sd.online/load-tournament-success
-;;   [(re-frame/path :tournament)]
-;;   (fn load-tournament-success
-;;     [{:keys [db]} [confirm? {:keys [tournament] :as info}]]
-;;     (let [new-tournament (assoc tournament :online (dissoc info :tournament))
-;;           valid? (spec/valid? :sd.tournament/tournament new-tournament)]
-;;       (if valid?
-;;         {:dispatch-n [(if confirm?
-;;                         [:sd.tournament/confirm-set new-tournament]
-;;                         [:sd.tournament/set new-tournament])
-;;                       [:sd.toaster/set
-;;                        {:type :success
-;;                         :message "Online tournament loaded"}]]}
-;;         {:dispatch [:sd.toaster/set
-;;                     {:type :error
-;;                      :message "Failed to load online tournament"}]}))))
+(db/reg-event-fx
+  :sd.online.tournament/load-success
+  [(re-frame/path :tournament)]
+  (fn load-tournament-success
+    [{:keys [db]} [confirm? {:keys [tournament] :as info}]]
+    (let [new-tournament (assoc tournament :online (dissoc info :tournament))
+          valid? (spec/valid? :sd.tournament/tournament new-tournament)]
+      (if valid?
+        {:dispatch-n [(if confirm?
+                        [:sd.tournament/confirm-set new-tournament]
+                        [:sd.tournament/set new-tournament])
+                      [:sd.toaster/set
+                       {:type :success
+                        :message "Online tournament loaded"}]]}
+        {:dispatch [:sd.toaster/set
+                    {:type :error
+                     :message "Invalid tournament data"}]}))))
 
 
-;; (db/reg-event-fx
-;;   :sd.online/load-tournaments
-;;   [(re-frame/path :online)]
-;;   (fn load-tournaments
-;;     [{:keys [db]} _]
-;;     {:http-xhrio (online/load-tournaments-request (:token db))}))
+(db/reg-event-fx
+  :sd.online.tournaments/load
+  [(re-frame/path :online)]
+  (fn load-tournaments
+    [{:keys [db]} _]
+    {:db (assoc-in db [:tournaments :status] :loading)
+     :http-xhrio (online/load-tournaments-request
+                   (get-in db [:user :auth]))}))
 
 
-;; (db/reg-event-fx
-;;   :sd.online/load-tournaments-success
-;;   [(re-frame/path :online :tournaments)]
-;;   (fn load-tournaments-success
-;;     [{:keys [db]} [{:keys [tournaments]}]]
-;;     {:db tournaments}))
+(db/reg-event-fx
+  :sd.online.tournaments/load-success
+  [(re-frame/path :online :tournaments)]
+  (fn load-tournaments-success
+    [{:keys [db]} [{:keys [tournaments]}]]
+    {:db {:status :success
+          :list tournaments}}))
 
 
-;; (db/reg-event-fx
-;;   :sd.online/load-tournaments-error
-;;   [(re-frame/path :online)]
-;;   (fn load-tournaments-success
-;;     [{:keys [db]} _]
-;;     {:db (assoc db :tournaments :failed)
-;;      :dispatch [:sd.toaster/set
-;;                 {:type :error
-;;                  :message "Failed to load online tournaments"}]}))
+(db/reg-event-fx
+  :sd.online.tournaments/load-error
+  [(re-frame/path :online :tournaments)]
+  (fn load-tournaments-success
+    [{:keys [db]} _]
+    {:db {:status :error
+          :list []}
+     :dispatch [:sd.toaster/set
+                {:type :error
+                 :message "Failed to load online tournaments"}]}))
 
 
 ;; (db/reg-event-fx
@@ -246,17 +242,63 @@
   user-status-sub)
 
 
-;; (re-frame/reg-sub
-;;   :sd.online/status
-;;   :<- [:sd.online/online]
-;;   :<- [:sd.tournament/online]
-;;   (fn status-sub
-;;     [[{:keys [token]} {:keys [link]}]]
-;;     (case [(some? token) (some? link)]
-;;       [true true] :synced
-;;       [true false] :online
-;;       [false false] :offline
-;;       [false true] :offline)))
+(defn tournaments-raw-sub
+  [db]
+  {:pre [(debug/spec-valid? :sd.db/db db)]
+   :post [(debug/spec-valid? :sd.online/tournaments %)]}
+  (get-in db [:online :tournaments] {}))
+
+(re-frame/reg-sub
+  :sd.online.tournaments/raw
+  tournaments-raw-sub)
+
+
+(defn tournaments-filter-sub
+  [[{:keys [list] :as input} f]]
+  {:pre [(debug/spec-valid? (spec/nilable :sd.online/tournaments) input)
+         (debug/spec-valid? :sd.filter/value f)]
+   :post [(debug/spec-valid? :sd.online/tournaments-sub %)]}
+  (assoc input
+         :list (online/tournaments-filter-with (filter/->pattern f) list)
+         :filter f))
+
+(re-frame/reg-sub
+  :sd.online.tournaments/filter
+  :<- [:sd.online.tournaments/raw]
+  :<- [:sd.filters/filter :online-tournaments]
+  tournaments-filter-sub)
+
+
+(defn tournaments-sort-sub
+  [[{:keys [list] :as input} s]]
+  {:pre [(debug/spec-valid? :sd.online/tournaments-sub input)
+         (debug/spec-valid? :sd.sort/sort s)]
+   :post [(debug/spec-valid? :sd.online/tournaments-sub %)]}
+  (assoc input
+         :list (online/tournaments-sort-with s list)
+         :sort s))
+
+(re-frame/reg-sub
+  :sd.online.tournaments/sort
+  :<- [:sd.online.tournaments/filter]
+  :<- [:sd.sorts/sort :online-tournaments {:by :date}]
+  tournaments-sort-sub)
+
+
+(defn tournaments-sub
+  [{:keys [status]
+    :or {status :init}
+    :as input}]
+  {:pre [(debug/spec-valid? :sd.online/tournaments-sub input)]
+   :post [(debug/spec-valid? :sd.online/tournaments-sub %)]}
+  (when (= :init status)
+    (re-frame/dispatch [:sd.online.tournaments/load]))
+  input)
+
+(re-frame/reg-sub
+  :sd.online/tournaments
+  :<- [:sd.online.tournaments/sort]
+  tournaments-sub)
 
 
 ;; (re-frame/reg-sub
