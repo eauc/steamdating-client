@@ -61,7 +61,7 @@
           :icon "message-circle"
           :label "Receive notifications"
           :on-click #(re-frame/dispatch
-                       [:sd.notification.push.subscription/create])}]))))
+                       [:sd.notifications.push.subscription/create])}]))))
 
 
 (defmethod nav-menu-content :follow

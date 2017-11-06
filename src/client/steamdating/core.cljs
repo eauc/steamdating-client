@@ -14,6 +14,7 @@
             [steamdating.pages.rounds-all]
             [steamdating.pages.rounds-next]
             [steamdating.pages.rounds-nth]
+            [steamdating.pages.settings]
             [steamdating.components.nav.actions :refer [nav-actions]]
             [steamdating.components.nav.menu :refer [nav-menu]]
             [steamdating.components.page.content :refer [page]]

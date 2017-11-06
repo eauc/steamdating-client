@@ -32,7 +32,7 @@
   [registration]
   ;; (js/console.info "Serviceworker registered")
   (when-let [push-manager (aget registration "pushManager")]
-    (re-frame/dispatch [:sd.notification.push.manager/set push-manager]))
+    (re-frame/dispatch [:sd.notifications.push.manager/set push-manager]))
   (aset registration "onupdatefound" #(on-worker-installing registration)))
 
 

@@ -3,7 +3,8 @@
             [re-frame.core :as re-frame]
             [steamdating.services.db :as db]
             [steamdating.services.debug :as debug]
-            [steamdating.services.file]))
+            [steamdating.services.file]
+            [steamdating.services.routes]))
 
 
 (db/reg-event-fx
@@ -49,21 +50,22 @@
         :message "File loaded"}]]}))
 
 
-;; (db/reg-event-fx
-;;   :steamdating.tournament/settings-start-edit
-;;   [(re-frame/path :tournament :settings)]
-;;   (fn settings-start-edit
-;;     [{settings :db} _]
-;;     {:dispatch
-;;      [:steamdating.forms/reset :settings settings]}))
+(db/reg-event-fx
+  :sd.tournament.settings/start-edit
+  [(re-frame/path :tournament :settings)]
+  (fn settings-start-edit
+    [{settings :db} _]
+    {:dispatch
+     [:sd.forms/reset :settings settings]}))
 
 
-;; (db/reg-event-fx
-;;   :steamdating.tournament/settings-save
-;;   (fn settings-save
-;;     [{:keys [db]} _]
-;;     (let [settings (get-in db [:forms :settings :edit])]
-;;       {:db (assoc-in db [:tournament :settings] settings)})))
+(db/reg-event-fx
+  :sd.tournament.settings/save
+  (fn settings-save
+    [{:keys [db]} _]
+    (let [settings (get-in db [:forms :settings :edit])]
+      {:db (assoc-in db [:tournament :settings] settings)
+       :dispatch [:sd.routes/back]})))
 
 
 (defn tournament-sub

@@ -55,7 +55,7 @@
       (.then (fn [subscription]
                ;; (js/console.log "check-push-subscription" subscription)
                (when (some? subscription)
-                 (re-frame/dispatch [:sd.notification.push.subscription/set subscription]))))
+                 (re-frame/dispatch [:sd.notifications.push.subscription/set subscription]))))
       (.catch (fn [error]
                 (js/console.error "error check-push-subscription" error)
                 (re-frame/dispatch [:sd.toaster/set
@@ -99,7 +99,7 @@
         (fn [subscription]
           ;; (js/console.log "create-push-subscription ok" (js/JSON.stringify subscription))
           (when (some? subscription)
-            (re-frame/dispatch [:sd.notification.push.subscription/upload subscription]))))
+            (re-frame/dispatch [:sd.notifications.push.subscription/upload subscription]))))
       (.catch
         (fn [error]
           (js/console.error "create-push-subscription error" error)
@@ -115,7 +115,7 @@
    :format (ajax/json-request-format)
    :params (.toJSON subscription)
    :response-format (ajax/json-response-format {:keywords? true})
-   :on-success [:sd.notification.push.subscription/upload-success id subscription]
+   :on-success [:sd.notifications.push.subscription/upload-success id subscription]
    :on-failure [:sd.toaster/set
                 {:type :error
                  :message "Online subscription failed"}]})
