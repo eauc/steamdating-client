@@ -17,6 +17,14 @@
                       :sd.route/route]))
 
 
+(spec/def :sd.ui.overlay/show?
+  boolean?)
+
+
+(spec/def :sd.ui/overlay-sub
+  (spec/keys :req-un [:sd.ui.overlay/show?]))
+
+
 (defn ->ui
   []
   {:menu nil})

@@ -9,6 +9,7 @@
             [steamdating.models.prompt]
             [steamdating.models.route :refer [->route]]
             [steamdating.models.sort]
+            [steamdating.models.spinner]
             [steamdating.models.toaster]
             [steamdating.models.tournament :refer [->tournament]]
             [steamdating.models.ui :refer [->ui]]
@@ -26,6 +27,7 @@
                       :sd.tournament/tournament
                       :sd.ui/ui]
              :opt-un [:sd.prompt/prompt
+                      :sd.spinner/spinner
                       :sd.toaster/toaster]))
 
 

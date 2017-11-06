@@ -141,10 +141,9 @@
   {:method :get
    :uri (str api-url link)
    :response-format (ajax/json-response-format {:keywords? true})
+   :timeout 10000
    :on-success [:sd.online.tournament/load-success confirm?]
-   :on-failure [:sd.toaster/set
-                {:type :error
-                 :message "Failed to load tournament"}]})
+   :on-failure [:sd.online.tournament/load-error]})
 
 
 (defn load-tournaments-request
@@ -153,6 +152,7 @@
    :uri (str api-url "/tournaments/mine")
    :headers {"Authorization" (str "Bearer " token)}
    :response-format (ajax/json-response-format {:keywords? true})
+   :timeout 10000
    :on-success [:sd.online.tournaments/load-success]
    :on-failure [:sd.online.tournaments/load-error]})
 
@@ -194,7 +194,6 @@
      :format (ajax/json-request-format)
      :params data
      :response-format (ajax/json-response-format {:keywords? true})
+     :timeout 10000
      :on-success [:sd.online.tournament/upload-success]
-     :on-failure [:sd.toaster/set
-                  {:type :error
-                   :message "Failed to upload current tournament"}]}))
+     :on-failure [:sd.online.tournament/upload-error]}))

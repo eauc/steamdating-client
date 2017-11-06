@@ -76,7 +76,9 @@
   :sd.online.tournament/load
   (fn tournament-load
     [_ [{:keys [link confirm?]}]]
-    {:http-xhrio (online/load-tournament-request link confirm?)}))
+    {:dispatch [:sd.spinner/set {:message "Downloading tournament"
+                                 :timeout 10000}]
+     :http-xhrio (online/load-tournament-request link confirm?)}))
 
 
 (db/reg-event-fx
@@ -90,12 +92,25 @@
         {:dispatch-n [(if confirm?
                         [:sd.tournament/confirm-set new-tournament]
                         [:sd.tournament/set new-tournament])
+                      [:sd.spinner/clear]
                       [:sd.toaster/set
                        {:type :success
                         :message "Online tournament loaded"}]]}
-        {:dispatch [:sd.toaster/set
-                    {:type :error
-                     :message "Invalid tournament data"}]}))))
+        {:dispatch-n [[:sd.spinner/clear]
+                      [:sd.toaster/set
+                       {:type :error
+                        :message "Invalid tournament data"}]]}))))
+
+
+(db/reg-event-fx
+  :sd.online.tournament/load-error
+  [(re-frame/path :tournament)]
+  (fn tournament-load-error
+    []
+    {:dispatch-n [[:sd.spinner/clear]
+                  [:sd.toaster/set
+                   {:type :error
+                    :message "Failed to load tournament"}]]}))
 
 
 (db/reg-event-fx
@@ -136,7 +151,9 @@
     (let [token (get-in db [:online :user :auth :token])
           tournament (get db :tournament)
           online (get-in db [:forms :online-tournament :edit])]
-      {:http-xhrio (online/upload-tournament-request token online tournament)})))
+      {:dispatch [:sd.spinner/set {:message "Uploading tournament"
+                                   :timeout 10000}]
+       :http-xhrio (online/upload-tournament-request token online tournament)})))
 
 
 (db/reg-event-fx
@@ -147,9 +164,21 @@
     {:db info
      :dispatch-n [[:sd.forms/reset :online-tournament info]
                   [:sd.online.tournaments/load]
+                  [:sd.spinner/clear]
                   [:sd.toaster/set
                    {:type :success
                     :message "Tournament uploaded"}]]}))
+
+
+(db/reg-event-fx
+  :sd.online.tournament/upload-error
+  [(re-frame/path :tournament :online)]
+  (fn tournament-upload-error
+    []
+    {:dispatch-n [[:sd.spinner/clear]
+                  [:sd.toaster/set
+                   {:type :error
+                    :message "Failed to upload tournament"}]]}))
 
 
 (db/reg-event-fx

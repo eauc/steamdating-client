@@ -14,13 +14,19 @@
              :font-style :italic}]
 
 
-   [:&-error {:background-color (:error-bckgnd colors)
-              :border-radius (:border-radius box-model)
-              :color (:text-inverted colors)
-              :display :flex
-              :flex-direction :column
-              :align-items :center
-              :padding (:padding-large box-model)}
+   [:&-error
+    :&-info {:border-radius (:border-radius box-model)
+             :color (:text-inverted colors)
+             :display :flex
+             :flex-direction :column
+             :align-items :center
+             :padding (:padding-large box-model)}]
+
+
+   [:&-info {:background-color (:info-bckgnd colors)}]
+
+
+   [:&-error {:background-color (:error-bckgnd colors)}
 
     [:.sd-button {:background-color (:error-bckgnd colors)
                   :border-color (:text-inverted colors)

@@ -27,6 +27,7 @@
             [steamdating.styles.5-components.round-nth :refer [round-nth]]
             [steamdating.styles.5-components.round-summary :refer [round-summary]]
             [steamdating.styles.5-components.sort-header :refer [sort-header]]
+            [steamdating.styles.5-components.spinner :refer [spinner]]
             [steamdating.styles.5-components.toaster :refer [toaster]]
             [steamdating.styles.5-components.tournament-file :refer [tournament-file]]
             [steamdating.styles.6-pages.data :refer [page-data]]
@@ -68,6 +69,7 @@
    round-summary
    section-header
    sort-header
+   spinner
    table
    toaster
    tournament-file])

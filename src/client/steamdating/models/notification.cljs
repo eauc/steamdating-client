@@ -24,6 +24,25 @@
                       :sd.notification.push/tournament-id]))
 
 
+(spec/def :sd.notification.push-sub/name
+  (spec/nilable
+    (spec/and string? not-empty)))
+
+
+(spec/def :sd.notification.push-sub/can-subscribe?
+  boolean?)
+
+
+(spec/def :sd.notification.push-sub/has-subscribed?
+  boolean?)
+
+
+(spec/def :sd.notification/push-sub
+  (spec/keys :req-un [:sd.notification.push-sub/name
+                      :sd.notification.push-sub/can-subscribe?
+                      :sd.notification.push-sub/has-subscribed?]))
+
+
 (spec/def :sd.notification/notification
   (spec/keys :opt-un [:sd.notification/push]))
 

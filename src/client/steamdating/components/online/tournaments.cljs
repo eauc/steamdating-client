@@ -2,6 +2,7 @@
   (:require [re-frame.core :as re-frame]
             [steamdating.components.form.input :refer [form-input]]
             [steamdating.components.generics.button :refer [button]]
+            [steamdating.components.generics.icon :refer [icon]]
             [steamdating.components.generics.sort-header :refer [sort-header]]
             [steamdating.services.debug :as debug]))
 
@@ -49,6 +50,14 @@
              :on-click #(re-frame/dispatch [:sd.online.tournaments/load])}]]])
 
 
+(defn loading
+  []
+  [:div.sd-online-tournaments
+   [:div.sd-online-tournaments-info
+    [icon {:name "loader"}]
+    [:p "Loading online tournaments"]]])
+
+
 (defn online-tournaments
   []
   (let [{:keys [status] :as state} @(re-frame/subscribe [:sd.online/tournaments])
@@ -57,6 +66,7 @@
         on-tournament-click #(re-frame/dispatch [:sd.online.tournament/load (assoc % :confirm? true)])]
     (case status
       :error [load-error]
+      :loading [loading]
       :success [online-tournaments-render
                 {:on-filter-update on-filter-update
                  :on-sort-by on-sort-by

@@ -3,6 +3,8 @@
             [re-frame.core :as re-frame]
             [steamdating.services.db :as db]
             [steamdating.services.prompt]
+            [steamdating.services.online]
+            [steamdating.services.spinner]
             [steamdating.services.debug :as debug]))
 
 
@@ -48,13 +50,18 @@
 
 
 (defn overlay-sub
-  [[prompt follow-status]]
-  ;; (debug/log "overlay" prompt follow-status)
+  [[prompt follow-status spinner]]
+  {:pre [(debug/spec-valid? (spec/nilable :sd.prompt/prompt) prompt)
+         (debug/spec-valid? :sd.online.follow/status-sub follow-status)
+         (debug/spec-valid? (spec/nilable :sd.spinner/spinner) spinner)]
+   :post [(debug/spec-valid? :sd.ui/overlay-sub %)]}
   {:show? (or (some? prompt)
-              (:show? follow-status))})
+              (:show? follow-status)
+              (some? spinner))})
 
 (re-frame/reg-sub
   :sd.ui/overlay
   :<- [:sd.prompt/prompt]
   :<- [:sd.online.follow/status]
+  :<- [:sd.spinner/spinner]
   overlay-sub)

@@ -1,11 +1,11 @@
 (ns steamdating.styles.5-components.prompt
-	(:require [garden.def :as gdef]
-						[steamdating.styles.0-settings.box-model :refer [box-model]]
-						[steamdating.styles.0-settings.colors :refer [colors]]))
+  (:require [garden.def :as gdef]
+            [steamdating.styles.0-settings.box-model :refer [box-model]]
+            [steamdating.styles.0-settings.colors :refer [colors]]))
 
 
 (gdef/defstyles prompt
-	[:&-prompt {:background-color :white
+  [:&-prompt {:background-color :white
               :border (:border box-model)
               :border-radius (:border-radius box-model)
               :box-shadow (:box-shadow box-model)

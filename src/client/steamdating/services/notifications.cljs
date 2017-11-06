@@ -6,6 +6,7 @@
             [steamdating.models.online :as online]
             [steamdating.services.db :as db]
             [steamdating.services.debug :as debug :refer [debug?]]
+            [steamdating.services.online]
             [steamdating.services.tournament]
             [steamdating.models.online :as online]))
 
@@ -72,6 +73,8 @@
 
 (defn push-sub
   [db]
+  {:pre [(debug/spec-valid? :sd.db/db db)]
+   :post [(debug/spec-valid? (spec/nilable :sd.notification/push) %)]}
   (get-in db [:online :notification :push]))
 
 (re-frame/reg-sub
@@ -82,6 +85,9 @@
 (defn push-status-sub
   [[{:keys [manager subscription tournament-id] :as push}
     {:keys [_id name] :as tournament-online}]]
+  {:pre [(debug/spec-valid? (spec/nilable :sd.notification/push) push)
+         (debug/spec-valid? (spec/nilable :sd.tournament/online) tournament-online)]
+   :post [(debug/spec-valid? :sd.notification/push-sub %)]}
   (let [can-subscribe? (some? manager)
         has-subscribed? (and (some? subscription)
                              (= _id tournament-id))]
