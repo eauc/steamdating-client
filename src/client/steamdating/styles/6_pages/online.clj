@@ -12,6 +12,10 @@
                    :padding-top (:padding box-model)}
 
 
+   [:fieldset {:margin 0
+               :margin-bottom (:padding-large box-model)}]
+
+
    [:&-login {:align-items :center
               :display :flex
               :flex-direction :column

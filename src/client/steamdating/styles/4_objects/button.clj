@@ -17,13 +17,20 @@
               :padding (str (:padding box-model) " " (:padding-large box-model))
               :text-decoration :none}
    [:&:hover
-    :&:focus {:background-color (:hover colors)}]
+    :&:focus {:background-color (:hover colors)
+              :outline :none}]
 
 
    [:&.success {:background-color (:valid-bckgnd colors)
                 :color (:text-inverted colors)}
     [:&:hover
      :&:focus {:background-color (:valid colors)}]]
+
+
+   [:&.disabled {:background-color (:hover colors)
+                 :color (:text-muted colors)
+                 :cursor :initial
+                 :pointer-events :none}]
 
 
    [:&-label {:margin "0 0.25em"}]])

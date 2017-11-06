@@ -3,6 +3,7 @@
             [cljs.spec.alpha :as spec]
             [clojure.string :as s]
             [re-frame.core :as re-frame]
+            [steamdating.models.filter]
             [steamdating.services.debug :refer [debug?]]))
 
 
@@ -63,9 +64,9 @@
   (spec/and string? not-empty))
 
 
-;; (spec/def :sd.online/edit
-;;   (spec/keys :req-un [:sd.online.tournament/name
-;;                       :sd.online.tournament/date]))
+(spec/def :sd.online.tournament/edit
+  (spec/keys :req-un [:sd.online.tournament/name
+                      :sd.online.tournament/date]))
 
 
 (spec/def :sd.online/tournament
@@ -166,23 +167,24 @@
     (vec $)))
 
 
-;; (defn upload-tournament-request
-;;   [token online tournament]
-;;   (let [link (get-in tournament [:online :link])
-;;         update? (some? link)
-;;         data (-> (get tournament :online)
-;;                  (merge online)
-;;                  (select-keys [:name :date])
-;;                  (assoc :tournament (dissoc tournament :online)))]
-;;     {:method (if update? :put :post)
-;;      :uri (str api-url (if update? link "/tournaments/mine"))
-;;      :headers {"Authorization" (str "Bearer " token)}
-;;      :format (ajax/json-request-format)
-;;      :params data
-;;      :response-format (ajax/json-response-format {:keywords? true})
-;;      :on-success [:sd.online/upload-current-success]
-;;      :on-failure [:sd.online/error-logout
-;;                   "Failed to upload current tournament"]}))
+(defn upload-tournament-request
+  [token online tournament]
+  (let [link (get-in tournament [:online :link])
+        update? (some? link)
+        data (-> (get tournament :online)
+                 (merge online)
+                 (select-keys [:name :date])
+                 (assoc :tournament (dissoc tournament :online)))]
+    {:method (if update? :put :post)
+     :uri (str api-url (if update? link "/tournaments/mine"))
+     :headers {"Authorization" (str "Bearer " token)}
+     :format (ajax/json-request-format)
+     :params data
+     :response-format (ajax/json-response-format {:keywords? true})
+     :on-success [:sd.online.tournament/upload-success]
+     :on-failure [:sd.toaster/set
+                  {:type :error
+                   :message "Failed to upload current tournament"}]}))
 
 
 ;; (defn check-push-subscription

@@ -4,6 +4,7 @@
             [steamdating.components.form.input-test]
             [steamdating.components.game.edit-test]
             [steamdating.components.online.tournaments-test]
+            [steamdating.components.online.tournament-edit-test]
             [steamdating.components.player.edit-test]
             [steamdating.components.player.list-test]
             [steamdating.components.ranking.bests-test]

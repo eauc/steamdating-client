@@ -66,7 +66,7 @@
 
 (db/reg-event-fx
   :sd.online.tournament/load
-  (fn load-tournament
+  (fn tournament-load
     [_ [{:keys [link confirm?]}]]
     {:http-xhrio (online/load-tournament-request link confirm?)}))
 
@@ -74,7 +74,7 @@
 (db/reg-event-fx
   :sd.online.tournament/load-success
   [(re-frame/path :tournament)]
-  (fn load-tournament-success
+  (fn tournament-load-success
     [{:keys [db]} [confirm? {:keys [tournament] :as info}]]
     (let [new-tournament (assoc tournament :online (dissoc info :tournament))
           valid? (spec/valid? :sd.tournament/tournament new-tournament)]
@@ -93,7 +93,7 @@
 (db/reg-event-fx
   :sd.online.tournaments/load
   [(re-frame/path :online)]
-  (fn load-tournaments
+  (fn tournaments-load
     [{:keys [db]} _]
     {:db (assoc-in db [:tournaments :status] :loading)
      :http-xhrio (online/load-tournaments-request
@@ -103,7 +103,7 @@
 (db/reg-event-fx
   :sd.online.tournaments/load-success
   [(re-frame/path :online :tournaments)]
-  (fn load-tournaments-success
+  (fn tournaments-load-success
     [{:keys [db]} [{:keys [tournaments]}]]
     {:db {:status :success
           :list tournaments}}))
@@ -112,7 +112,7 @@
 (db/reg-event-fx
   :sd.online.tournaments/load-error
   [(re-frame/path :online :tournaments)]
-  (fn load-tournaments-success
+  (fn tournaments-load-error
     [{:keys [db]} _]
     {:db {:status :error
           :list []}
@@ -121,35 +121,27 @@
                  :message "Failed to load online tournaments"}]}))
 
 
-;; (db/reg-event-fx
-;;   :sd.online/upload-current
-;;   (fn upload-current
-;;     [{:keys [db]} _]
-;;     (let [token (get-in db [:online :token])
-;;           tournament (get db :tournament)
-;;           online (get-in db [:forms :online :edit])]
-;;       {:http-xhrio (online/upload-tournament-request token online tournament)})))
+(db/reg-event-fx
+  :sd.online.tournament/upload
+  (fn tournament-upload
+    [{:keys [db]} _]
+    (let [token (get-in db [:online :user :auth :token])
+          tournament (get db :tournament)
+          online (get-in db [:forms :online-tournament :edit])]
+      {:http-xhrio (online/upload-tournament-request token online tournament)})))
 
 
-;; (db/reg-event-fx
-;;   :sd.online/clear-current-edit
-;;   [(re-frame/path :forms)]
-;;   (fn clear-current-edit
-;;     [{:keys [db]} _]
-;;     {:db (dissoc db :online)}))
-
-
-;; (db/reg-event-fx
-;;   :sd.online/upload-current-success
-;;   [(re-frame/path :tournament :online)]
-;;   (fn upload-current-success
-;;     [_ [info]]
-;;     {:db info
-;;      :dispatch-n [[:sd.online/clear-current-edit]
-;;                   [:sd.online/load-tournaments]
-;;                   [:sd.toaster/set
-;;                    {:type :success
-;;                     :message "Tournament uploaded"}]]}))
+(db/reg-event-fx
+  :sd.online.tournament/upload-success
+  [(re-frame/path :tournament :online)]
+  (fn tournament-upload-success
+    [_ [info]]
+    {:db info
+     :dispatch-n [[:sd.forms/reset :online-tournament info]
+                  [:sd.online.tournaments/load]
+                  [:sd.toaster/set
+                   {:type :success
+                    :message "Tournament uploaded"}]]}))
 
 
 ;; (db/reg-event-fx
@@ -299,6 +291,28 @@
   :sd.online/tournaments
   :<- [:sd.online.tournaments/sort]
   tournaments-sub)
+
+
+(defn tournament-id-sub
+  [db]
+  (get-in db [:tournament :online :_id]))
+
+(re-frame/reg-sub
+  :sd.online.tournament/id
+  tournament-id-sub)
+
+
+(defn tournament-status-sub
+  [[id user-status]]
+  (if (and (some? id) (= :logged user-status))
+    :online
+    :offline))
+
+(re-frame/reg-sub
+  :sd.online.tournament/status
+  :<- [:sd.online.tournament/id]
+  :<- [:sd.online.user/status]
+  tournament-status-sub)
 
 
 ;; (re-frame/reg-sub

@@ -22,7 +22,8 @@
   [(re-frame/path :tournament)]
   (fn set
     [_ [value]]
-    {:db value}))
+    {:db value
+     :dispatch [:sd.forms/reset :online-tournament (or (get value :online) {})]}))
 
 
 (db/reg-event-fx
