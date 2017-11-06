@@ -13,7 +13,9 @@
   []
   (-> js/localStorage
       (.getItem local-storage-key)
-      (reader/read-string)))
+      (reader/read-string)
+      ;; (debug/spy ">> read store")
+      ))
 
 
 (re-frame/reg-cofx
@@ -25,16 +27,25 @@
 
 (defn set-local-storage
   [state]
-  (->> (pr-str state)
+  (->> state
+       ;; (debug/spy "<< write store")
+       (pr-str)
        (.setItem js/localStorage local-storage-key)))
 
 
 (defn store-db
   [{:keys [online filters forms tournament]}]
-  (set-local-storage {:filters filters
-                      :forms forms
-                      :online (select-keys online [:token])
-                      :tournament tournament}))
+  (set-local-storage
+    {:filters filters
+     :forms forms
+     :online (let [tournament-id (get-in online [:notification :push :tournament-id])
+                   token (get-in online [:user :auth :token])]
+               (cond-> {}
+                 (some? tournament-id)
+                 (assoc-in [:notification :push :tournament-id] tournament-id)
+                 (some? token)
+                 (assoc-in [:user :auth :token] token)))
+     :tournament tournament}))
 
 
 (def store-db-interceptor

@@ -78,7 +78,8 @@
                          (reduce (fn [m [k v]] (assoc m k v)) default-db))]
       {:db (if (spec/valid? :sd.db/db stored-db)
              stored-db
-             default-db)
+             (do (debug/log "invalid stored-db" (expound-str :sd.db/db stored-db))
+                 default-db))
        :dispatch-n [[:sd.factions/initialize]]})))
 
 

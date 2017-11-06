@@ -161,63 +161,6 @@
                                             :confirm? false}]}))
 
 
-;; (db/reg-event-fx
-;;   :sd.online.push/set-manager
-;;   [(re-frame/path :online :push :manager)]
-;;   (fn push-set-manager
-;;     [_ [manager]]
-;;     {:db manager
-;;      :sd.online.push/check-subscription manager}))
-
-
-;; (re-frame/reg-fx
-;;   :sd.online.push/check-subscription
-;;   (fn push-check-subscription-fx
-;;     [manager]
-;;     (online/check-push-subscription manager)))
-
-
-;; (db/reg-event-fx
-;;   :sd.online.push/set-subscription
-;;   [(re-frame/path :online :push :subscription)]
-;;   (fn push-set-subscription
-;;     [_ [subscription]]
-;;     {:db subscription}))
-
-
-;; (db/reg-event-fx
-;;   :sd.online.push/create-subscription
-;;   [(re-frame/path :online :push :manager)]
-;;   (fn push-create-subscription
-;;     [{manager :db} _]
-;;     {:sd.online.push/create-subscription manager}))
-
-
-;; (re-frame/reg-fx
-;;   :sd.online.push/create-subscription
-;;   (fn push-create-subscription-fx
-;;     [manager]
-;;     (online/create-push-subscription manager)))
-
-
-;; (db/reg-event-fx
-;;   :sd.online.push/upload-subscription
-;;   (fn upload-subscription
-;;     [{:keys [db]} [subscription]]
-;;     (let [id (get-in db [:tournament :online :_id])]
-;;       {:http-xhrio (online/upload-subscription id subscription)})))
-
-
-;; (db/reg-event-fx
-;;   :sd.online.push/upload-subscription-success
-;;   (fn upload-subscription
-;;     [{:keys [db]} [subscription]]
-;;     {:dispatch-n [[:sd.online.push/set-subscription subscription]
-;;                   [:sd.toaster/set
-;;                    {:type :success
-;;                     :message "Online subscription success"}]]}))
-
-
 (defn user-auth-token-sub
   [db]
   {:pre [(debug/spec-valid? :sd.db/db db)]
@@ -328,36 +271,6 @@
   tournament-status-sub)
 
 
-;; (re-frame/reg-sub
-;;   :sd.online/tournaments
-;;   :<- [:sd.online/online]
-;;   (fn tournaments-sub
-;;     [{:keys [token tournaments]}]
-;;     (if (some? tournaments)
-;;       (if (= :failed tournaments)
-;;         {:status :failed
-;;          :tournaments []}
-;;         {:status :loaded
-;;          :tournaments (reverse (sort-by :date tournaments))})
-;;       (if (some? token)
-;;         (do
-;;           (re-frame/dispatch [:sd.online/load-tournaments])
-;;           {:status :loading
-;;            :tournaments []})
-;;         {:status :offline
-;;          :tournaments []}))))
-
-
-;; (re-frame/reg-sub
-;;   :sd.online/edit-current
-;;   (fn edit-current-sub
-;;     [{:keys [forms tournament]}]
-;;     (let [current-online (get tournament :online {})
-;;           form-state {:base current-online
-;;                       :edit (merge current-online (get-in forms [:online :edit]))}]
-;;       (form/validate form-state :sd.online/edit))))
-
-
 (defn follow-show-sub
   [db]
   {:pre [(debug/spec-valid? :sd.db/db db)]
@@ -385,16 +298,3 @@
   :<- [:sd.online.follow/show?]
   :<- [:sd.tournament/online]
   follow-status-sub)
-
-
-;; (re-frame/reg-sub
-;;   :sd.online/push
-;;   :<- [:sd.online/online]
-;;   :<- [:sd.tournament/online]
-;;   (fn push-sub [[{:keys [push]} {:keys [name]}]]
-;;     (let [{:keys [manager subscription]} push
-;;           can-subscribe? (some? manager)
-;;           has-subscribed? (some? subscription)]
-;;       {:name name
-;;        :can-subscribe? can-subscribe?
-;;        :has-subscribed? has-subscribed?})))

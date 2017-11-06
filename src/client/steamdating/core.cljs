@@ -23,7 +23,8 @@
             [steamdating.services.db :as db]
             [steamdating.services.factions]
             [steamdating.services.routes :refer [routes-init]]
-            [steamdating.services.ui :refer [ui-init]]))
+            [steamdating.services.ui :refer [ui-init]]
+            [steamdating.services.worker :refer [worker-init]]))
 
 
 (defn mount-root
@@ -47,6 +48,7 @@
   (re-frame/dispatch-sync [:steamdating.db/initialize])
   (routes-init)
   (ui-init)
+  (worker-init)
   (mount-root))
 
 (loader/set-loaded! :main)
