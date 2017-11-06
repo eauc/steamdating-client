@@ -77,9 +77,13 @@
   tournament-sub)
 
 
-;; (re-frame/reg-sub
-;;   :steamdating.tournament/online
-;;   :<- [:steamdating.tournament/tournament]
-;;   (fn tournament-online-sub
-;;     [{:keys [online]}]
-;;     online))
+(defn online-sub
+  [tournament]
+  {:pre [(debug/spec-valid? :sd.tournament/tournament tournament)]
+   :post [(debug/spec-valid? (spec/nilable :sd.tournament/online) %)]}
+  (get tournament :online))
+
+(re-frame/reg-sub
+  :sd.tournament/online
+  :<- [:sd.tournament/tournament]
+  online-sub)

@@ -2,6 +2,7 @@
   (:require [cljs.spec.alpha :as spec]
             [re-frame.core :as re-frame]
             [steamdating.services.db :as db]
+            [steamdating.services.prompt]
             [steamdating.services.debug :as debug]))
 
 
@@ -44,3 +45,16 @@
   :<- [:sd.ui/menu]
   :<- [:sd.routes/route]
   menu-route-sub)
+
+
+(defn overlay-sub
+  [[prompt follow-status]]
+  ;; (debug/log "overlay" prompt follow-status)
+  {:show? (or (some? prompt)
+              (:show? follow-status))})
+
+(re-frame/reg-sub
+  :sd.ui/overlay
+  :<- [:sd.prompt/prompt]
+  :<- [:sd.online.follow/status]
+  overlay-sub)

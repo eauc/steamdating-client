@@ -7,6 +7,7 @@
   :dependencies [[org.clojure/clojure "1.9.0-alpha16"]
                  [org.clojure/clojurescript "1.9.908"]
                  [cljsjs/auth0-lock "10.21.1-0"]
+                 [cljsjs/kjua "0.1.1-1"]
                  [expound "0.3.1"]
                  [garden "1.3.3"]
                  [day8.re-frame/http-fx "0.1.4"]

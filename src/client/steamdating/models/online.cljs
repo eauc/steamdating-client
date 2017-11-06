@@ -102,9 +102,37 @@
                       :sd.sort/sort]))
 
 
+(spec/def :sd.online.tournament/status-sub
+  #{:online :offline})
+
+
+(spec/def :sd.online.follow/show?
+  boolean?)
+
+
+(spec/def :sd.online.follow/name
+  (spec/nilable :sd.online.tournament/name))
+
+
+(spec/def :sd.online.follow/url
+  (spec/nilable
+    (spec/and string? not-empty)))
+
+
+(spec/def :sd.online/follow
+  (spec/keys :opt-un [:sd.online.follow/show?]))
+
+
+(spec/def :sd.online.follow/status-sub
+  (spec/keys :opt-un [:sd.online.follow/show?
+                      :sd.online.follow/name
+                      :sd.online.follow/url]))
+
+
 (spec/def :sd.online/online
-  (spec/keys :opt-un [:sd.online/user
-                      :sd.online/tournaments]))
+  (spec/keys :opt-un [:sd.online/follow
+                      :sd.online/tournaments
+                      :sd.online/user]))
 
 
 (def domain

@@ -14,7 +14,9 @@
             [steamdating.styles.5-components.game-edit :refer [game-edit]]
             [steamdating.styles.5-components.layout :refer [layout]]
             [steamdating.styles.5-components.nav :refer [nav]]
+            [steamdating.styles.5-components.online-follow :refer [online-follow]]
             [steamdating.styles.5-components.online-tournaments :refer [online-tournaments]]
+            [steamdating.styles.5-components.overlay :refer [overlay]]
             [steamdating.styles.5-components.page :refer [page]]
             [steamdating.styles.5-components.player-file-imports :refer [player-file-imports]]
             [steamdating.styles.5-components.player-list :refer [player-list]]
@@ -46,7 +48,9 @@
    icon
    layout
    nav
+   online-follow
    online-tournaments
+   overlay
    page
    page-data
    page-loading
