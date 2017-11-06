@@ -166,11 +166,6 @@ Then("I see Rounds/$nth page with games:") do |nth, table|
     .expect_games(table.symbolic_hashes)
 end
 
-# Then("I see the Round \#$n games") do |n|
-#   Pages::RoundsNth.new(n)
-#     .expect_games(games[n])
-# end
-
 Then("player \"$name\" is in Next Round pairings") do |name|
   @page.expect_player_paired(name)
 end
@@ -182,7 +177,3 @@ end
 Then("I can edit $n pairings for Next Round") do |n|
   @page.expect_n_games_forms(n.to_i)
 end
-
-# Then("I see Round \#$nth games:") do |nth, table|
-#   @page.expect_round(nth, table.symbolic_hashes)
-# end

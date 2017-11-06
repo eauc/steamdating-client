@@ -69,21 +69,25 @@ module Pages
       self
     end
 
-    # def expect_bests_in_faction(bests)
-    #   within(PAGE_CONTENT) do
-    #     expected_content = bests.map {|r| r.reject{|c| c.empty?}.join("\\s+")}.join("\\s+")
-    #     expect(page).to have_content(Regexp.new("Bests.*#{expected_content}", "i"))
-    #   end
-    #   self
-    # end
+    def expect_bests_in_faction(bests)
+      within_table("Bests in factions") do
+        within("tbody") do
+          expected_content = bests.map {|r| r.reject{|c| c.empty?}.join("\\s+")}.join("\\s+")
+          expect(page).to have_content(Regexp.new("^#{expected_content}$", "i"))
+        end
+      end
+      self
+    end
 
-    # def expect_bests_scores(bests)
-    #   within(PAGE_CONTENT) do
-    #     expected_content = bests.map {|r| r.reject{|c| c.empty?}.join("\\s+")}.join("\\s+")
-    #     expect(page).to have_content(Regexp.new("Bests.*#{expected_content}", "i"))
-    #   end
-    #   self
-    # end
+    def expect_bests_scores(bests)
+      within_table("Bests scores") do
+        within("tbody") do
+          expected_content = bests.map {|r| r.reject{|c| c.empty?}.join("\\s+")}.join("\\s+")
+          expect(page).to have_content(Regexp.new("^#{expected_content}$", "i"))
+        end
+      end
+      self
+    end
 
     def expect_player_droped_after(name, nth)
       within_player_row(name) do

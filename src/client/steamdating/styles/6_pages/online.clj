@@ -1,6 +1,5 @@
 (ns steamdating.styles.6-pages.online
   (:require [garden.def :as gdef]
-            [garden.stylesheet :as gstyle]
             [steamdating.styles.0-settings.box-model :refer [box-model]]))
 
 

@@ -3,6 +3,7 @@
             [reagent.core :as reagent]
             [re-frame.core :as re-frame]
             [steamdating.pages.data]
+            [steamdating.pages.follow]
             [steamdating.pages.games-edit]
             [steamdating.pages.home]
             [steamdating.pages.online]

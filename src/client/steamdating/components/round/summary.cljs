@@ -13,14 +13,15 @@
 
 
 (defn summary-caption
-  [{:keys [on-filter-update state]}]
+  [{:keys [filter? on-filter-update state] :or {filter? true}}]
   (let [{:keys [filter]} state]
     [:caption
      [:div.sd-table-caption
       [:div.sd-table-caption-label "Rounds Summary"]
-      [form-input {:on-update on-filter-update
-                   :placeholder "Filter"
-                   :value filter}]]]))
+      (when filter?
+        [form-input {:on-update on-filter-update
+                     :placeholder "Filter"
+                     :value filter}])]]))
 
 
 (defn summary-headers
@@ -111,7 +112,7 @@
   [{:keys [on-game-click on-player-click state] :as props}]
   (let [{:keys [players]} state]
     [:table.sd-table
-     (dissoc props :on-filter-update :on-game-click :on-player-click :on-sort-by :state)
+     (dissoc props :filter? :on-filter-update :on-game-click :on-player-click :on-sort-by :state)
      [summary-caption props]
      [summary-headers props]
      [:tbody
@@ -142,5 +143,19 @@
      {:on-filter-update on-filter-update
       :on-game-click on-game-click
       :on-player-click on-player-click
+      :on-sort-by on-sort-by
+      :state state}]))
+
+
+(defn round-summary-follow
+  []
+  (let [state @(re-frame/subscribe [:sd.rounds/summary {:filter :follow}])
+        ;; on-game-click #(re-frame/dispatch [:sd.games.edit/start %1 %2])
+        ;; on-player-click #(re-frame/dispatch [:sd.players.edit/start-edit %])
+        on-sort-by #(re-frame/dispatch [:sd.sorts/toggle :rounds-all % :name])]
+    [round-summary-render
+     { ;; :on-game-click on-game-click
+      ;; :on-player-click on-player-click
+      :filter? false
       :on-sort-by on-sort-by
       :state state}]))

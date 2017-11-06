@@ -152,12 +152,13 @@
                     :message "Tournament uploaded"}]]}))
 
 
-;; (db/reg-event-fx
-;;   :sd.online.follow/refresh
-;;   [(re-frame/path [:route :params :id])]
-;;   (fn follow-refresh
-;;     [{id :db}]
-;;     {:dispatch [:sd.online/load-tournament (str "/tournaments/" id) false]}))
+(db/reg-event-fx
+  :sd.online.follow/refresh
+  [(re-frame/path [:route :params :id])]
+  (fn follow-refresh
+    [{id :db}]
+    {:dispatch [:sd.online.tournament/load {:link (str "/tournaments/" id)
+                                            :confirm? false}]}))
 
 
 ;; (db/reg-event-fx
@@ -369,13 +370,11 @@
 
 
 (defn follow-status-sub
-  [[follow-show? tournament-status {:keys [_id name] :as tournament-online}]]
-  {:pre [(debug/spec-valid? :sd.online.follow/show? follow-show?)
-         (debug/spec-valid? :sd.online.tournament/status-sub tournament-status)
+  [[show? {:keys [_id name] :as tournament-online}]]
+  {:pre [(debug/spec-valid? :sd.online.follow/show? show?)
          (debug/spec-valid? (spec/nilable :sd.tournament/online) tournament-online)]
    :post [(debug/spec-valid? :sd.online.follow/status-sub %)]}
-  (let [url (str (.-origin js/location) "/#/follow/" _id)
-        show? (and (= :online tournament-status) follow-show?)]
+  (let [url (str (.-origin js/location) "/#/follow/" _id)]
     ;; (debug/log "follow-status" follow-show? tournament-status tournament-online url show?)
     {:show? show?
      :name name
@@ -384,7 +383,6 @@
 (re-frame/reg-sub
   :sd.online.follow/status
   :<- [:sd.online.follow/show?]
-  :<- [:sd.online.tournament/status]
   :<- [:sd.tournament/online]
   follow-status-sub)
 

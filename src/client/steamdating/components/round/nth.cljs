@@ -60,7 +60,7 @@
 
 
 (defn round-nth-render
-  [{:keys [on-filter-update on-game-click on-sort-by state]}]
+  [{:keys [filter? on-filter-update on-game-click on-sort-by state] :or {filter? true}}]
   (let [{:keys [filter icons factions n round sort]} state
         {:keys [games]} round]
     [:div.sd-round-nth
@@ -69,9 +69,10 @@
       [:caption
        [:div.sd-table-caption
         [:div.sd-table-caption-label (str "Round #" (inc n))]
-        [form-input {:on-update on-filter-update
-                     :placeholder "Filter"
-                     :value filter}]]]
+        (when filter?
+          [form-input {:on-update on-filter-update
+                       :placeholder "Filter"
+                       :value filter}])]]
       [:thead
        [:tr
         [:th.sd-round-nth-score "AP"]
@@ -109,5 +110,17 @@
     [round-nth-render
      {:on-filter-update on-filter-update
       :on-game-click on-game-click
+      :on-sort-by on-sort-by
+      :state state}]))
+
+
+(defn round-nth-follow
+  [{:keys [n]}]
+  (let [state @(re-frame/subscribe [:sd.rounds/nth {:n n :filter :follow}])
+        ;; on-game-click #(re-frame/dispatch [:sd.games.edit/start n %2])
+        on-sort-by #(re-frame/dispatch [:sd.sorts/toggle :round % :table])]
+    [round-nth-render
+     { ;; :on-game-click on-game-click
+      :filter? false
       :on-sort-by on-sort-by
       :state state}]))

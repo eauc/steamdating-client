@@ -30,12 +30,12 @@ module Pages
       self
     end
 
-    # def follow_current_tournament()
-    #   within(PAGE_CONTENT) do
-    #     click_on("Follow");
-    #   end
-    #   click_on("http")
-    # end
+    def follow_current_tournament()
+      within(PAGE_MENU) do
+        click_on("Follow online");
+      end
+      click_on("http")
+    end
 
     def expect_online_tournament(tournament)
       within_table("Online tournaments") do

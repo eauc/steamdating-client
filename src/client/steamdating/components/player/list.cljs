@@ -24,18 +24,19 @@
 
 
 (defn player-list-render
-  [{:keys [caption on-filter-update on-player-click on-sort-by state] :as props}]
+  [{:keys [caption filter? on-filter-update on-player-click on-sort-by state] :or {filter? true} :as props}]
   (let [{:keys [columns filter list icons sort]} state
         columns [:name :origin :faction :lists]]
     [:table.sd-table.sd-player-list
      (-> props
-         (dissoc :caption :on-filter-update :on-player-click :on-sort-by :state))
+         (dissoc :caption :filter? :on-filter-update :on-player-click :on-sort-by :state))
      [:caption
       [:div.sd-table-caption
        [:div.sd-table-caption-label "Players"]
-       [form-input {:on-update on-filter-update
-                    :placeholder "Filter"
-                    :value filter}]]]
+       (when filter?
+         [form-input {:on-update on-filter-update
+                      :placeholder "Filter"
+                      :value filter}])]]
      [:thead
       [:tr
        (for [c columns]
@@ -64,3 +65,14 @@
                            :on-sort-by on-sort-by
                            :state state}]
       [player-file-imports])))
+
+
+(defn player-list-follow
+  []
+  (let [state @(re-frame/subscribe [:sd.players/list {:filter :follow}])
+        ;; on-player-click #(re-frame/dispatch [:sd.players.edit/start-edit %])
+        on-sort-by #(re-frame/dispatch [:sd.sorts/toggle :players % :name])]
+    [player-list-render { ;; :on-player-click on-player-click
+                         :filter? false
+                         :on-sort-by on-sort-by
+                         :state state}]))

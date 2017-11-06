@@ -17,14 +17,15 @@
 
 
 (defn list-caption
-  [{:keys [on-filter-update state] :as props}]
+  [{:keys [filter? on-filter-update state] :or {filter? true} :as props}]
   (let [{:keys [filter]} state]
     [:caption
      [:div.sd-table-caption
       [:div.sd-table-caption-label "Rankings"]
-      [form-input {:on-update on-filter-update
-                   :placeholder "Filter"
-                   :value filter}]]]))
+      (when filter?
+        [form-input {:on-update on-filter-update
+                     :placeholder "Filter"
+                     :value filter}])]]))
 
 
 (defn list-headers
@@ -62,30 +63,36 @@
 
 
 (defn drop-cell
-  [{:keys [on-player-drop droped-after] :as props}]
+  [{:keys [edit? on-player-drop droped-after] :or {edit? true} :as props}]
   [:td.sd-ranking-list-drop-after
-   (if (some? droped-after)
+   (if edit?
+     (if (some? droped-after)
+       [:button.sd-ranking-list-drop
+        {:on-click on-player-drop}
+        [:div
+         (str "Round #" droped-after)]
+        [:div.sd-ranking-list-drop-hint
+         "(Click to un-drop)"]]
+       [:button.sd-ranking-list-drop
+        {:on-click on-player-drop}
+        [:div
+         "Click to drop"]
+        [:div.sd-ranking-list-drop-hint
+         "(Click to drop)"]])
      [:button.sd-ranking-list-drop
-      {:on-click on-player-drop}
       [:div
-       (str "Round #" droped-after)]
-      [:div.sd-ranking-list-drop-hint
-       "(Click to un-drop)"]]
-     [:button.sd-ranking-list-drop
-      {:on-click on-player-drop}
-      [:div
-       "Click to drop"]
-      [:div.sd-ranking-list-drop-hint
-       "(Click to drop)"]])])
+       (if (some? droped-after)
+         (str "Round #" droped-after)
+         "-")]])])
 
 
 (defn player-row
-  [{:keys [class on-player-click on-player-drop state] :as props}]
+  [{:keys [class edit? on-player-click on-player-drop state] :or {edit? true} :as props}]
   (let [{:keys [icons player]} state
         {:keys [droped-after faction name rank score]} player]
     [:tr.sd-ranking-list-player
      (-> props
-         (dissoc :on-player-click :on-player-drop :state)
+         (dissoc :edit? :on-player-click :on-player-drop :state)
          (assoc :class (ui/classes class (when (some? droped-after) "droped"))))
      [:td.sd-ranking-list-rank
       rank]
@@ -101,19 +108,21 @@
         {:key s}
         (get score s 0)])
      [drop-cell {:droped-after droped-after
+                 :edit? edit?
                  :on-player-drop on-player-drop}]]))
 
 
 (defn ranking-list-table
-  [{:keys [on-filter-update on-player-click on-player-drop on-sort-by state] :as props}]
+  [{:keys [edit? on-filter-update on-player-click on-player-drop on-sort-by state] :or {edit? true} :as props}]
   (let [{:keys [filter icons rankings sort]} state]
     [:table.sd-table
-     (dissoc props :on-filter-update :on-player-click :on-player-drop :on-sort-by :state)
+     (dissoc props :edit? :filter? :on-filter-update :on-player-click :on-player-drop :on-sort-by :state)
      [list-caption props]
      [list-headers props]
      [:tbody
       (for [{:keys [droped-after faction name rank score] :as player} rankings]
         [player-row {:key name
+                     :edit? edit?
                      :on-player-click #(on-player-click player)
                      :on-player-drop #(on-player-drop player)
                      :state (assoc state :player player)}])]]))
@@ -139,5 +148,16 @@
      {:on-filter-update on-filter-update
       :on-player-click on-player-click
       :on-player-drop on-player-drop
+      :on-sort-by on-sort-by
+      :state state}]))
+
+
+(defn ranking-list-follow
+  []
+  (let [state @(re-frame/subscribe [:sd.rankings/list {:filter :follow}])
+        on-sort-by #(re-frame/dispatch [:sd.sorts/toggle :rankings % :name])]
+    [ranking-list-render
+     {:edit? false
+      :filter? false
       :on-sort-by on-sort-by
       :state state}]))

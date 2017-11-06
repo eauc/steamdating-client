@@ -30,6 +30,7 @@
             [steamdating.styles.5-components.toaster :refer [toaster]]
             [steamdating.styles.5-components.tournament-file :refer [tournament-file]]
             [steamdating.styles.6-pages.data :refer [page-data]]
+            [steamdating.styles.6-pages.follow :refer [page-follow]]
             [steamdating.styles.6-pages.loading :refer [page-loading]]
             [steamdating.styles.6-pages.online :refer [page-online]]
             [steamdating.styles.6-pages.unknown :refer [page-unknown]]))
@@ -53,6 +54,7 @@
    overlay
    page
    page-data
+   page-follow
    page-loading
    page-online
    page-unknown

@@ -1,6 +1,6 @@
 require "httpclient"
 require_relative "../pages/online"
-# require_relative "../pages/follow"
+require_relative "../pages/follow"
 
 Before('@online') do
   client = HTTPClient.new
@@ -30,11 +30,27 @@ When("I download the online tournament \"$name\"") do |name|
   expect_toaster("Online tournament loaded")
 end
 
-# When("I follow current tournament") do
-#   @page.follow_current_tournament
-#   @page = Pages::Follow.new
-# end
+When("I follow current tournament") do
+  @page.follow_current_tournament
+  @page = Pages::Follow.new
+end
 
-# When("I filter followed tournament with \"$filter\"") do |filter|
-#   @page.filter_with(filter)
-# end
+When("I filter followed tournament with \"$filter\"") do |filter|
+  @page.filter_with(filter)
+end
+
+Then("I see the Follow page Rankings:") do |table|
+  @page.expect_ranking_list(table.raw)
+end
+
+Then("I see the Follow page Round \#$nth:") do |nth, table|
+  @page.expect_round(nth, table.symbolic_hashes)
+end
+
+Then("I see the Follow page Rounds summary:") do |table|
+  @page.expect_rounds_summary(table.raw)
+end
+
+Then("I see the Follow page Players list:") do |table|
+  @page.expect_players_list(table.raw)
+end
