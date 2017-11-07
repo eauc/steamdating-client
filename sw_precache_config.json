@@ -10,5 +10,14 @@
     "sw-push-handler.js"
   ],
   "staticFileGlobs": [
+    "resources/public/index.html",
+    "resources/public/css/**.css",
+    "resources/public/data/**",
+    "resources/public/fonts/**",
+    "resources/public/icons/**",
+    "resources/public/js/client/cljs_base.js",
+    "resources/public/js/client/main.js",
+    "resources/public/js/client/auth.js",
+    "resources/public/vendor/**"
   ]
 }
