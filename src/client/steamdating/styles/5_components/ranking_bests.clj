@@ -15,4 +15,8 @@
      :tablet
      [:& {:flex-direction :row}
       [:&-in-faction {:max-width "48%"}]
-      [:&-scores {:max-width "48%"}]])])
+      [:&-scores {:max-width "48%"}]])
+
+
+   [:.sd-table
+    [:th :td {:vertical-align :middle}]]])

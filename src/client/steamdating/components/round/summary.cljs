@@ -67,22 +67,23 @@
         droped? (and (some? droped-after) (>= n droped-after))
         no-game? (nil? result)]
     [:td.sd-round-summary-round
-     (-> props
-         (dissoc :droped-after :n :result)
-         (assoc :class (ui/classes (when (or no-game? droped?) "droped")
-                                   (when (= 0 tournament) "loss")
-                                   (when (= 1 tournament) "win"))
-                :title (game/->title game)))
-     (cond
-       droped? [:div.sd-round-summary-opponent "Droped"]
-       no-game? [:div.sd-round-summary-opponent "N/A"]
-       :else (cljs.core/list
-               [:div.sd-round-summary-opponent
-                {:key :opp}
-                (str table ". " (or opponent "Phantom"))]
-               [:div.sd-round-summary-list
-                {:key :list}
-                list]))]))
+      (-> props
+          (dissoc :droped-after :n :result)
+          (assoc :class (ui/classes (when (or no-game? droped?) "droped")
+                                    (when (= 0 tournament) "loss")
+                                    (when (= 1 tournament) "win"))
+                 :title (game/->title game)))
+     [:div.sd-round-summary-round-content
+      (cond
+        droped? [:div.sd-round-summary-opponent "Droped"]
+        no-game? [:div.sd-round-summary-opponent "N/A"]
+        :else (cljs.core/list
+                [:div.sd-round-summary-opponent
+                 {:key :opp}
+                 (str table ". " (or opponent "Phantom"))]
+                [:div.sd-round-summary-list
+                 {:key :list}
+                 list]))]]))
 
 
 (defn player-row

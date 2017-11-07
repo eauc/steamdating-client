@@ -42,7 +42,7 @@
 
 
    [:&-center {:width "1%"}
-    [:.sd-input {:width "3em"}]]
+    [:.sd-input {:width "3.5em"}]]
 
 
    [:.sd-table

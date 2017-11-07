@@ -128,7 +128,7 @@
 
 
 (spec/def :sd.player/origins
-  (spec/map-of :sd.player/name :sd.player/origin))
+  (spec/map-of :sd.player/name (spec/nilable :sd.player/origin)))
 
 
 (defn origins

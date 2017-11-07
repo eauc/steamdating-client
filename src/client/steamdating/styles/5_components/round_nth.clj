@@ -23,6 +23,12 @@
    [:&-player
     [:&.win {:background-color (:valid-bckgnd colors)}]
     [:&.loss {:background-color (:error-bckgnd colors)}]
+
+    [:&-content {:display :flex
+                 :flex-direction :column
+                 :justify-content :space-around
+                 :min-height "2em"}]
+
     [:&-list {:color (:text-muted colors)
               :font-size "0.8em"}]]
 

@@ -1,5 +1,6 @@
 (ns steamdating.styles.5-components.round-summary
   (:require [garden.def :as gdef]
+            [steamdating.styles.0-settings.box-model :refer [box-model]]
             [steamdating.styles.0-settings.break :refer [at-break]]
             [steamdating.styles.0-settings.colors :refer [colors]]))
 
@@ -27,7 +28,14 @@
    [:&-round {:cursor :pointer}
     [:&.win {:background-color (:valid-bckgnd colors)}]
     [:&.loss {:background-color (:error-bckgnd colors)}]
-    [:&.droped {:background-color (:disabled colors)}]]
+    [:&.droped {:background-color (:disabled colors)}]
+
+    [:&-content {:display :flex
+                 :flex-direction :column
+                 :justify-content :center
+                 :min-height "2.6em"
+                 :padding-left (:padding box-model)
+                 :padding-right (:padding box-model)}]]
 
 
    [:&-opponent {:white-space :nowrap}]

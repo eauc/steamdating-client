@@ -6,13 +6,14 @@
 
 (gdef/defstyles spinner
   [:&-spinner {:align-items :center
-               :background-color "rgba(0,0,0,0.6)"
-               :border-radius "5px"
-               :box-shadow "0px 0px 5px 5px rgba(0,0,0,0.6)"
+               :text-shadow "0px 0px 3px black"
                :color (:text-inverted colors)
                :display :none
                :flex-direction :column
                :padding (:padding-large box-model)}
    [:&.show {:display :flex}]
 
-   [:&-icon {:margin (:padding-large box-model)}]])
+   [:&-icon {:margin (:padding-large box-model)}
+    [:svg {:background-color "rgba(0,0,0,0.2)"
+           :box-shadow "0 0 2px 2px rgba(0,0,0,0.2)"
+           :border-radius "10px"}]]])

@@ -6,7 +6,9 @@
 (defn get-value
   [{:keys [multiple]} target]
   (if-not multiple
-    (-> target .-value)
+    (as-> target $
+      (.-value $)
+      (if (empty? $) nil $))
     (-> target .-options
         (js/Array.from)
         (.filter #(.-selected %))
@@ -32,7 +34,7 @@
             show-error? (and (not pristine?) (some? error))]
         [:div.sd-input
          (when (some? label)
-           [:label {:for name} label])
+           [:label.sd-input-label {:for name} label])
          [:select.sd-input-value
           (-> props
               (dissoc :autofocus? :error :label :on-update :options)

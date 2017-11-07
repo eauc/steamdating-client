@@ -5,16 +5,21 @@
 
 
 (gdef/defstyles ranking-list
-  [:&-ranking-list {:position :relative}
+  [:&-ranking-list {:overflow :hidden
+                    :position :relative}
 
 
    [:&-name {:cursor :pointer}]
 
 
-   [:.sd-faction-icon-label {:display :none}
+   [:.sd-faction-icon {:display :block}
     (at-break
       :tablet
-      [:& {:display :initial}])]
+      [:& {:display :flex}])
+    [:&-label {:display :none}
+     (at-break
+       :tablet
+       [:& {:display :initial}])]]
 
 
    [:&-score {:text-align :center

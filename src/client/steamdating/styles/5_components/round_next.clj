@@ -35,7 +35,7 @@
 
 
    [:&-table
-    [:.sd-input {:width "3em"}
+    [:.sd-input {:width "3.5em"}
      (at-break
        :tablet
        [:& {:width "4em"}])]]])
