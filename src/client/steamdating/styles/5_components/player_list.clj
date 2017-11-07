@@ -5,26 +5,36 @@
 
 
 (gdef/defstyles player-list
-  [:&-player-list {:flex-shrink 1
-                   :overflow-x :auto
-                   :overflow-y :hidden
-                   :position :relative
-                   :width "100%"}
+  [:&-player-list {:overflow :hidden
+                   :position :relative}
 
 
-   [:&-container {:height "100%"
-                  :overflow-x :hidden
-                  :overflow-y :auto
-                  :width "100%"}]
+   [:&-scrollable {:overflow-x :auto}]
 
 
-   [:tbody
-    [:tr {:cursor :pointer}]
-    [:td {:vertical-align :middle}]
-    [:td.lists {:font-size "0.8em"}]
+   [:&-overlay {:left 0
+                :pointer-events :none
+                :position :absolute
+                :top 0}
 
-    (at-break
-      :tablet
-      [:&
-       [:td {:padding (:padding box-model)}]
-       [:td.lists {:font-size :inherit}]])]])
+    [:caption {:background-color :white
+               :pointer-events :all}]
+
+    [:th :td {:background-color :white}
+     ["&:nth-child(n+2)" {:opacity :0}]]]
+
+
+   [:.sd-table
+    [:tbody
+     [:tr {:cursor :pointer}]
+
+     [:td {:vertical-align :middle}]
+
+     [:td.lists {:font-size "0.8em"}]
+
+     (at-break
+       :tablet
+       [:&
+        [:td {:padding (:padding box-model)}]
+
+        [:td.lists {:font-size :inherit}]])]]])

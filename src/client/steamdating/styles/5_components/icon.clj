@@ -19,7 +19,8 @@
   [:&-faction-icon {:align-items :center
                     :display :flex
                     :flex-direction :row
-                    :flex-wrap :nowrap}
+                    :flex-wrap :nowrap
+                    :height "2em"}
    [:img {:height "2em"
           :margin "-0.2em 0"
           :width "2em"}]

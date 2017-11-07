@@ -23,11 +23,11 @@
           value))])])
 
 
-(defn player-list-render
+(defn players-table
   [{:keys [caption filter? on-filter-update on-player-click on-sort-by state] :or {filter? true} :as props}]
   (let [{:keys [columns filter list icons sort]} state
         columns [:name :origin :faction :lists]]
-    [:table.sd-table.sd-player-list
+    [:table.sd-table
      (-> props
          (dissoc :caption :filter? :on-filter-update :on-player-click :on-sort-by :state))
      [:caption
@@ -51,6 +51,16 @@
                      :icons icons
                      :on-player-click on-player-click
                      :player player}])]]))
+
+
+(defn player-list-render
+  [{:keys [caption filter? on-filter-update on-player-click on-sort-by state] :or {filter? true} :as props}]
+  (let [{:keys [columns filter list icons sort]} state
+        columns [:name :origin :faction :lists]]
+    [:div.sd-player-list
+     [:div.sd-player-list-scrollable
+      [players-table props]]
+     [players-table (assoc props :class "sd-player-list-overlay")]]))
 
 
 (defn player-list

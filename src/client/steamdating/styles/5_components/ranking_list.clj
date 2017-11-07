@@ -12,10 +12,7 @@
    [:&-name {:cursor :pointer}]
 
 
-   [:.sd-faction-icon {:display :block}
-    (at-break
-      :tablet
-      [:& {:display :flex}])
+   [:.sd-faction-icon
     [:&-label {:display :none}
      (at-break
        :tablet
