@@ -18,9 +18,9 @@
 
 
 (defn file-save-button
-  [data]
+  []
   (let [url (atom nil)]
-    (fn [data]
+    (fn [{:keys [data]}]
       (when (some? @url)
         (revoke-link @url))
       (let [new-url (generate-link data)
