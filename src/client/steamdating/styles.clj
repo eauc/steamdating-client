@@ -3,6 +3,7 @@
             [garden.stylesheet :as gstyle]
             [steamdating.styles.2-generics.fonts :refer [fonts]]
             [steamdating.styles.3-elements.box-model :refer [box-model]]
+            [steamdating.styles.3-elements.input :refer [input]]
             [steamdating.styles.3-elements.text :refer [text]]
             [steamdating.styles.4-objects.button :refer [button]]
             [steamdating.styles.4-objects.section-header :refer [section-header]]
@@ -40,6 +41,7 @@
 (gdef/defstyles screen
   fonts
   box-model
+  input
   text
   [:.sd
    button

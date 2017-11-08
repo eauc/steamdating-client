@@ -9,10 +9,14 @@
 (defn action-button
   ([selectors props]
    (conj selectors
-         (merge {:background-color :transparent
+         (merge {:align-items :center
+                 :background-color :transparent
                  :border 0
                  :color (:text-inverted colors)
+                 :display :flex
+                 :flex-direction :column
                  :height "2em"
+                 :justify-content :center
                  :font-size "1.4em"
                  :width "2em"}
                 props)
