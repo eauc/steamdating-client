@@ -27,7 +27,8 @@
 
    [:.sd-table
     [:tbody
-     [:tr {:cursor :pointer}]
+     [:tr {:cursor :pointer}
+      [:&:hover {:background-color :transparent}]]
 
      [:td {:vertical-align :middle}]
 

@@ -41,9 +41,12 @@
 
 
    [:.sd-table
+    [:tbody
+     [:tr:hover {:background-color :transparent}]
 
-    [:.sd-ranking-list-drop-after {:padding 0}]
-    [:td {:vertical-align :middle}]]
+     [:.sd-ranking-list-drop-after {:padding 0}]
+
+     [:td {:vertical-align :middle}]]]
 
 
    [:&-scrollable {:overflow-x :auto}]
