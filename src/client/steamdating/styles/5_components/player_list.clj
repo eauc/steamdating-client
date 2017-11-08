@@ -21,7 +21,8 @@
                :pointer-events :all}]
 
     [:th :td {:background-color :white}
-     ["&:nth-child(n+2)" {:opacity :0}]]]
+     ["&:nth-child(1)" {:pointer-events :all}]
+     ["&:nth-child(n+2)" {:opacity 0}]]]
 
 
    [:.sd-table

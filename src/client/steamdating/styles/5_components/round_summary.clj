@@ -71,4 +71,6 @@
                :pointer-events :all}]
 
     [:td :th {:background-color :white}
+     ["&:nth-child(1)"
+      "&:nth-child(2)" {:pointer-events :all}]
      ["&:nth-child(n+3)" {:opacity :0}]]]])
