@@ -48,6 +48,7 @@
     [:&-caption {:align-items :stretch
                  :flex-direction :column}
      [:&-label {:text-align :left}]
+     [:.sd-filter-input {:position :relative}]
 
      (at-break
        :tablet

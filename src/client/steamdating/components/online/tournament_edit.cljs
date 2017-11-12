@@ -16,8 +16,7 @@
          :state state}
    [:div.sd-online-tournament-edit
     [form-input (form-model/field-input-props
-                  {:autofocus? true
-                   :field [:name]
+                  {:field [:name]
                    :form state
                    :label "Name"
                    :on-update on-field-update})]
