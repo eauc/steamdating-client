@@ -1,6 +1,6 @@
 (ns steamdating.components.ranking.list
   (:require [re-frame.core :as re-frame]
-            [steamdating.components.form.input :refer [form-input]]
+            [steamdating.components.form.filter-input :refer [filter-input]]
             [steamdating.components.generics.faction-icon :refer [faction-icon]]
             [steamdating.components.generics.sort-header :refer [sort-header]]
             [steamdating.models.player :as player]
@@ -23,9 +23,8 @@
      [:div.sd-table-caption
       [:div.sd-table-caption-label "Rankings"]
       (when filter?
-        [form-input {:on-update on-filter-update
-                     :placeholder "Filter"
-                     :value filter}])]]))
+        [filter-input {:on-filter-update on-filter-update
+                       :filter filter}])]]))
 
 
 (defn list-headers

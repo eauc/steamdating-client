@@ -24,8 +24,7 @@
                 :flex-direction :column
                 :flex-grow 1
                 :max-width "100%"
-                :padding-left (:padding box-model)
-                :padding-right (:padding box-model)}
+                :padding (:padding box-model)}
     (at-break
       :pc
       [:& {:padding (:padding-large box-model)}])]

@@ -1,7 +1,7 @@
 (ns steamdating.components.round.summary
   (:require [clojure.string :as s]
             [re-frame.core :as re-frame]
-            [steamdating.components.form.input :refer [form-input]]
+            [steamdating.components.form.filter-input :refer [filter-input]]
             [steamdating.components.generics.faction-icon :refer [faction-icon]]
             [steamdating.components.generics.sort-header :refer [sort-header]]
             [steamdating.models.ui :as ui]
@@ -13,15 +13,14 @@
 
 
 (defn summary-caption
-  [{:keys [filter? on-filter-update state] :or {filter? true}}]
+  [{:keys [filter? on-filter-update state] :or {filter? true} :as props}]
   (let [{:keys [filter]} state]
     [:caption
      [:div.sd-table-caption
-      [:div.sd-table-caption-label "Rounds Summary"]
+      [:div.sd-table-caption-label "Rounds"]
       (when filter?
-        [form-input {:on-update on-filter-update
-                     :placeholder "Filter"
-                     :value filter}])]]))
+        [filter-input {:on-filter-update on-filter-update
+                       :filter filter}])]]))
 
 
 (defn summary-headers

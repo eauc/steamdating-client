@@ -1,6 +1,6 @@
 (ns steamdating.components.round.nth
   (:require [re-frame.core :as re-frame]
-            [steamdating.components.form.input :refer [form-input]]
+            [steamdating.components.form.filter-input :refer [filter-input]]
             [steamdating.components.generics.faction-icon :refer [faction-icon]]
             [steamdating.components.generics.icon :refer [icon]]
             [steamdating.components.generics.sort-header :refer [sort-header]]
@@ -13,7 +13,7 @@
 (defn ck-cell
   [{:keys [game player]}]
   [:td.sd-round-nth-score
-   [:span {:style       {:opacity (if (get-in game [player :score :assassination]) 1 0)}}
+   [:span {:style {:opacity (if (get-in game [player :score :assassination]) 1 0)}}
     [icon {:name "check"}]]])
 
 
@@ -60,7 +60,7 @@
 
 
 (defn round-nth-render
-  [{:keys [filter? on-filter-update on-game-click on-sort-by state] :or {filter? true}}]
+  [{:keys [filter? on-filter-update on-game-click on-sort-by state] :or {filter? true} :as props}]
   (let [{:keys [filter icons factions n round sort]} state
         {:keys [games]} round]
     [:div.sd-round-nth
@@ -70,9 +70,8 @@
        [:div.sd-table-caption
         [:div.sd-table-caption-label (str "Round #" (inc n))]
         (when filter?
-          [form-input {:on-update on-filter-update
-                       :placeholder "Filter"
-                       :value filter}])]]
+          [filter-input {:on-filter-update on-filter-update
+                         :filter filter}])]]
       [:thead
        [:tr
         [:th.sd-round-nth-score "AP"]

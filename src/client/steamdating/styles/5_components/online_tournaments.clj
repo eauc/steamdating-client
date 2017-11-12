@@ -7,7 +7,7 @@
 
 
 (gdef/defstyles online-tournaments
-  [:&-online-tournaments
+  [:&-online-tournaments {:position :relative}
 
 
    [:&-hint {:color (:text-muted colors)

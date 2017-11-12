@@ -1,7 +1,7 @@
 (ns steamdating.pages.follow
   (:require [re-frame.core :as re-frame]
             [secretary.core :as secretary :refer-macros [defroute]]
-            [steamdating.components.form.input :refer [form-input]]
+            [steamdating.components.form.filter-input :refer [filter-input]]
             [steamdating.components.generics.button :refer [button]]
             [steamdating.components.nav.actions :refer [nav-actions-content]]
             [steamdating.components.nav.menu :refer [nav-menu-content]]
@@ -36,9 +36,9 @@
      [:h3 "Follow " (:name online)]
      (when has-subscribed?
        [:p "You subscribed to update notifications."])
-     [form-input {:on-update on-filter-update
-                  :placeholder "Filter"
-                  :value filter}]
+     [:div.sd-page-follow-filter
+      [filter-input {:on-filter-update on-filter-update
+                     :filter filter}]]
      [ranking-list-follow]
      (for [n (reverse (range n-rounds))]
        [round-nth-follow {:n n}])

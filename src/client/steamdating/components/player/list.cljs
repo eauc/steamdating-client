@@ -1,7 +1,7 @@
 (ns steamdating.components.player.list
   (:require [clojure.string :as s]
             [re-frame.core :as re-frame]
-            [steamdating.components.form.input :refer [form-input]]
+            [steamdating.components.form.filter-input :refer [filter-input]]
             [steamdating.components.generics.faction-icon :refer [faction-icon]]
             [steamdating.components.generics.sort-header :refer [sort-header]]
             [steamdating.components.player.file-imports :refer [player-file-imports]]))
@@ -34,9 +34,8 @@
       [:div.sd-table-caption
        [:div.sd-table-caption-label "Players"]
        (when filter?
-         [form-input {:on-update on-filter-update
-                      :placeholder "Filter"
-                      :value filter}])]]
+         [filter-input {:on-filter-update on-filter-update
+                        :filter filter}])]]
      [:thead
       [:tr
        (for [c columns]

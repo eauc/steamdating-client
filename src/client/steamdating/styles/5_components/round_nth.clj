@@ -5,7 +5,7 @@
 
 
 (gdef/defstyles round-nth
-  [:&-round-nth
+  [:&-round-nth {:position :relative}
 
 
    [:&-faction

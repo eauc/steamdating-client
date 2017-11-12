@@ -10,6 +10,7 @@
             [steamdating.styles.4-objects.table :refer [table]]
             [steamdating.styles.5-components.icon :refer [icon]]
             [steamdating.styles.5-components.file-open-button :refer [file-open-button]]
+            [steamdating.styles.5-components.filter-input :refer [filter-input]]
             [steamdating.styles.5-components.form :refer [form]]
             [steamdating.styles.5-components.form-input :refer [form-input]]
             [steamdating.styles.5-components.game-edit :refer [game-edit]]
@@ -46,6 +47,7 @@
   [:.sd
    button
    file-open-button
+   filter-input
    form
    form-input
    game-edit

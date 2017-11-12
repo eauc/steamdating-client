@@ -16,17 +16,16 @@
              :width "100%"}
 
 
-   [:&-caption {:align-items :center
+   [:&-caption {:align-items :baseline
                 :display :flex
                 :flex-direction :row}
 
     [:&-label {:font-weight :bold
                :padding (:padding box-model)
+               :padding-left 0
                :white-space :nowrap}]
 
-    [:.sd-input {:flex-grow 1
-                 :padding (:padding box-model)
-                 :margin 0}]]
+    [:.sd-filter-input {:flex-grow 1}]]
 
 
    [:tbody

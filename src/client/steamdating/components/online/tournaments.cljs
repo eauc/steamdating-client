@@ -1,6 +1,6 @@
 (ns steamdating.components.online.tournaments
   (:require [re-frame.core :as re-frame]
-            [steamdating.components.form.input :refer [form-input]]
+            [steamdating.components.form.filter-input :refer [filter-input]]
             [steamdating.components.generics.button :refer [button]]
             [steamdating.components.generics.icon :refer [icon]]
             [steamdating.components.generics.sort-header :refer [sort-header]]
@@ -15,9 +15,8 @@
       [:caption
        [:div.sd-table-caption
         [:div.sd-table-caption-label "Online tournaments"]
-        [form-input {:on-update on-filter-update
-                     :placeholder "Filter"
-                     :value filter}]]]
+        [filter-input {:on-filter-update on-filter-update
+                       :filter filter}]]]
       [:thead
        [:tr
         [sort-header {:col :date
