@@ -34,11 +34,10 @@ module Pages
       self
     end
 
-    def sort_by(sort)
-      within_list do
-        within("thead") do
-          find("th", text: sort).click
-        end
+    def sort_by(by)
+      match = ["#","Name"].include?(by) ? 1 : 0
+      within(PAGE_CONTENT) do
+        all("th", text: by)[match].click
       end
       self
     end

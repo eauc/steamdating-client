@@ -36,8 +36,14 @@ module Pages
       self
     end
 
+    def within_players_list
+      within(:table, "Players", match: :first) do
+        yield
+      end
+    end
+
     def start_edit_player(name)
-      within_table("Players") do
+      within_players_list do
         find("tr", text: name).click
       end
       within(PAGE_CONTENT) do

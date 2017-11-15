@@ -54,7 +54,7 @@ module Pages
                            .map {|row| row.reject {|c| c.empty?}.join("\\s+")}
                            .join("\\s+")
 
-      within(:table, "Rounds Summary", match: :first) do
+      within(:table, "Rounds", match: :first) do
         within("tbody") do
           # puts page.text
           # puts expected_content

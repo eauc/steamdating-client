@@ -61,12 +61,12 @@ When("I invert the Round sort order") do
 end
 
 When("I sort the Summary by \"$sort\"") do |sort|
-  @page.invert_sort_by(sort)
+  @page.sort_by(sort)
   @sort_by = sort
 end
 
 When("I invert the Summary sort order") do
-  @page.invert_sort_by(@sort_by)
+  @page.sort_by(@sort_by)
 end
 
 When("I delete current Round") do

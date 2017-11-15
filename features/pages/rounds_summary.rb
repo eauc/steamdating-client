@@ -2,13 +2,6 @@ require_relative "./rounds"
 
 module Pages
   class RoundsSummary < Rounds
-    # def go_to_round(n)
-    #   within(PAGE_CONTENT) do
-    #     click_on("Round ##{n}")
-    #   end
-    #   self
-    # end
-
     def filter(value)
       within(PAGE_CONTENT) do
         fill_in("Filter", match: :first, with: value)
@@ -17,9 +10,10 @@ module Pages
       self
     end
 
-    def invert_sort_by(by)
+    def sort_by(by)
+      match = ["#","Player"].include?(by) ? 1 : 0
       within(PAGE_CONTENT) do
-        find("th", match: :first, text: Regexp.new("^#{by}")).click
+        all("th", text: Regexp.new("^#{by}"))[match].click
       end
       self
     end
@@ -28,7 +22,7 @@ module Pages
       expected_content = rows
                            .map {|row| row.reject {|c| c.empty?}.join("\\s+")}
                            .join("\\s+")
-      within(:table, "Rounds Summary", match: :first) do
+      within(:table, "Rounds", match: :first) do
         within("tbody") do
           # puts page.text
           # puts expected_content
