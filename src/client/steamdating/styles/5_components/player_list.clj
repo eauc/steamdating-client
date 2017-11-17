@@ -17,8 +17,9 @@
                 :position :absolute
                 :top 0}
 
-    [:caption {:background-color :white
-               :pointer-events :all}]
+    [:.sd-table-caption-label {:background-color :white}]
+
+    [:.sd-filter-input {:opacity 0}]
 
     [:th :td {:background-color :white}
      ["&:nth-child(1)" {:pointer-events :all}]
