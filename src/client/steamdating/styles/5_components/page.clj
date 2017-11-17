@@ -48,7 +48,7 @@
 
     [:&-toggle {:align-items "center"
                 :background-color "white"
-                :bottom "1.75em"
+                :bottom "43%"
                 :border-bottom-left-radius "1em"
                 :border-color "#CCC"
                 :border-right-color :white
