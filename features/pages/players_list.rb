@@ -3,7 +3,7 @@ require_relative "./players"
 module Pages
   class PlayersList < Players
     def filter_with(filter)
-      within_players_list do
+      within(PAGE_CONTENT) do
         fill_in(placeholder: "Filter", with: filter)
       end
       sleep 0.5

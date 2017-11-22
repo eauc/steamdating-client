@@ -17,7 +17,10 @@
 
    [:&-clear {:border-radius 0
               :height "2.5em"
-              :position :absolute
-              :right 0
-              :top 0
-              :z-index 100}]])
+              :position :fixed
+              :right (:padding box-model)
+              :z-index 100}
+
+    (at-break
+      :tablet
+      [:& {:right (:padding-large box-model)}])]])

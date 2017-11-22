@@ -32,12 +32,12 @@
   (let [{:keys [sort]} state]
     [:thead
      [:tr
-      [sort-header {:class "sd-ranking-list-rank"
+      [sort-header {:class "sd-ranking-list-rank fixed"
                     :col [:rank]
                     :label "#"
                     :on-sort-by on-sort-by
                     :state sort}]
-      [sort-header {:class "sd-ranking-list-name"
+      [sort-header {:class "sd-ranking-list-name fixed"
                     :col [:name]
                     :label "Name"
                     :on-sort-by on-sort-by
@@ -92,11 +92,14 @@
     [:tr.sd-ranking-list-player
      (-> props
          (dissoc :edit? :on-player-click :on-player-drop :state)
-         (assoc :class (ui/classes class (when (some? droped-after) "droped"))))
+         (assoc :class (ui/classes class
+                                   (when (some? droped-after) "droped"))))
      [:td.sd-ranking-list-rank
+      {:class "fixed"}
       rank]
      [:td.sd-ranking-list-name
-      {:on-click on-player-click
+      {:class "fixed"
+       :on-click on-player-click
        :title (player/->title player)}
       name]
      [:td.sd-ranking-list-faction

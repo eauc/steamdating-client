@@ -2,13 +2,14 @@
   (:require [garden.def :as gdef]
             [steamdating.styles.0-settings.box-model :refer [box-model]]
             [steamdating.styles.0-settings.break :refer [at-break]]
-            [steamdating.styles.0-settings.colors :refer [colors]]))
+            [steamdating.styles.0-settings.colors :refer [colors]]
+            [steamdating.styles.1-tools.scrollable-table :refer [scrollable-table]]))
 
 
 (gdef/defstyles round-summary
-  [:&-round-summary {:overflow :hidden
-                     :position :relative}
+  [:&-round-summary
 
+   scrollable-table
 
    [:&-rank
     :&-faction {:width "1%"}]
@@ -47,8 +48,6 @@
 
    [:.sd-table
     [:tbody
-     [:tr:hover {:background-color :inherit}]
-
      [:td {:vertical-align :middle}]
 
      [:.sd-round-summary-lists {:background-color (:warning-bckgnd colors)
@@ -56,21 +55,4 @@
       [:&.ok {:background-color (:info-bckgnd colors)}]]]]
 
 
-   [:.sd-faction-icon-label {:display :none}]
-
-
-   [:&-scrollable {:overflow-y :auto}]
-
-
-   [:&-overlay.sd-table {:left 0
-                         :pointer-events :none
-                         :position :absolute
-                         :top 0}
-
-    [:caption {:background-color :white
-               :pointer-events :all}]
-
-    [:td :th {:background-color :white}
-     ["&:nth-child(1)"
-      "&:nth-child(2)" {:pointer-events :all}]
-     ["&:nth-child(n+3)" {:opacity :0}]]]])
+   [:.sd-faction-icon-label {:display :none}]])

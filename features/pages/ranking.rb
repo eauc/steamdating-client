@@ -27,7 +27,7 @@ module Pages
     end
 
     def filter_with(filter)
-      within_list do
+      within(PAGE_CONTENT) do
         fill_in("Filter", with: filter)
       end
       sleep 0.5

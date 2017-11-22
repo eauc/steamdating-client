@@ -4,7 +4,8 @@
             [steamdating.components.form.filter-input :refer [filter-input]]
             [steamdating.components.generics.faction-icon :refer [faction-icon]]
             [steamdating.components.generics.sort-header :refer [sort-header]]
-            [steamdating.components.player.file-imports :refer [player-file-imports]]))
+            [steamdating.components.player.file-imports :refer [player-file-imports]]
+            [steamdating.models.ui :as ui]))
 
 
 (defn player-row
@@ -13,7 +14,8 @@
         :on-click #(on-player-click player)}
    (for [c columns]
      [:td {:key c
-           :class (name c)}
+           :class (ui/classes (name c)
+                              (when (= :name c) "fixed"))}
       (let [value (get player c)]
         (case c
           :faction [faction-icon {:key :icon
@@ -40,6 +42,7 @@
       [:tr
        (for [c columns]
          [sort-header {:key c
+                       :class (when (= :name c) "fixed")
                        :col c
                        :on-sort-by on-sort-by
                        :state sort}])]]

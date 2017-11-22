@@ -1,12 +1,15 @@
 (ns steamdating.styles.5-components.ranking-list
   (:require [garden.def :as gdef]
             [steamdating.styles.0-settings.break :refer [at-break]]
-            [steamdating.styles.0-settings.colors :refer [colors]]))
+            [steamdating.styles.0-settings.colors :refer [colors]]
+            [steamdating.styles.1-tools.scrollable-table :refer [scrollable-table]]))
 
 
 (gdef/defstyles ranking-list
-  [:&-ranking-list {:overflow :hidden
-                    :position :relative}
+  [:&-ranking-list
+
+
+   scrollable-table
 
 
    [:&-name {:cursor :pointer}]
@@ -42,28 +45,10 @@
 
    [:.sd-table
     [:tbody
-     [:tr:hover {:background-color :transparent}]
-
      [:.sd-ranking-list-drop-after {:padding 0}]
 
      [:td {:vertical-align :middle}]]]
 
-
-   [:&-scrollable {:overflow-x :auto}]
-
-
-   [:&-overlay.sd-table {:left 0
-                         :pointer-events :none
-                         :position :absolute
-                         :top 0}
-
-    [:caption {:background-color :white
-               :pointer-events :all}]
-
-    [:td :th {:background-color :white}
-     ["&:nth-child(1)"
-      "&:nth-child(2)" {:pointer-events :all}]
-     ["&:nth-child(n+3)" {:opacity :0}]]
-
+   [:&-overlay.sd-table
     [:.sd-ranking-list-player.droped
      [:td :th {:background-color (:disabled colors)}]]]])

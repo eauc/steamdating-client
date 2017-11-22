@@ -28,12 +28,12 @@
   (let [{:keys [n-rounds sort]} state]
     [:thead
      [:tr
-      [sort-header {:class "sd-round-summary-rank"
+      [sort-header {:class "sd-round-summary-rank fixed"
                     :col :rank
                     :label "#"
                     :on-sort-by on-sort-by
                     :state sort}]
-      [sort-header {:class "sd-round-summary-player"
+      [sort-header {:class "sd-round-summary-player fixed"
                     :col :name
                     :label "Player"
                     :on-sort-by on-sort-by
@@ -91,9 +91,11 @@
         {:keys [droped-after name faction rank results]} player]
     [:tr (dissoc props :state :on-game-click :on-player-click)
      [:td.sd-round-summary-rank
+      {:class "fixed"}
       rank]
      [:td.sd-round-summary-player
-      {:on-click #(on-player-click player)
+      {:class "fixed"
+       :on-click #(on-player-click player)
        :title (player/->title player)}
       name]
      [:td.sd-round-summary-faction
