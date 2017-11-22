@@ -6,10 +6,10 @@
 (defn filter-input
   [{:keys [filter on-filter-update]}]
   [:div.sd-filter-input
+   [form-input {:on-update on-filter-update
+                :placeholder "Filter"
+                :value filter}]
    [button {:class "sd-filter-input-clear"
             :icon "delete"
             :on-click #(on-filter-update "")
-            :title "Clear filter"}]
-   [form-input {:on-update on-filter-update
-                :placeholder "Filter"
-                :value filter}]])
+            :title "Clear filter"}]])

@@ -7,18 +7,18 @@
 
 
 (gdef/defstyles filter-input
-  [:&-filter-input {}
+  [:&-filter-input {:display :flex}
 
 
-   [:.sd-input {}
+   [:.sd-input {:flex-grow 1
+                :margin-bottom 0}
 
     [:&-value {:height "2.5em"}]]
 
 
    [:&-clear {:border-radius 0
               :height "2.5em"
-              :position :fixed
-              :right (:padding box-model)
+              :margin-left "-1px"
               :z-index 100}
 
     (at-break

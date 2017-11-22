@@ -2,6 +2,7 @@
   (:require [garden.def :as gdef]
             [garden.color :as gcol]
             [garden.compiler :as gcomp]
+            [steamdating.styles.0-settings.break :refer [at-break]]
             [steamdating.styles.0-settings.box-model :refer [box-model]]
             [steamdating.styles.0-settings.colors :refer [colors]]))
 
@@ -16,11 +17,21 @@
              :width "100%"}
 
 
+   [:caption {:margin-left (str "-" (:padding box-model))
+              :max-width "100vw"
+              :padding-left (:padding box-model)
+              :padding-right (:padding box-model)}
+    (at-break
+      :tablet
+      [:& {:padding-right 0}])]
+
    [:&-caption {:align-items :baseline
                 :display :flex
-                :flex-direction :row}
+                :flex-direction :row
+                :margin-bottom (:padding box-model)}
 
-    [:&-label {:font-weight :bold
+    [:&-label {:flex-shrink 0
+               :font-weight :bold
                :padding (:padding box-model)
                :padding-left 0
                :white-space :nowrap}]
