@@ -6,10 +6,12 @@
     "casters": {
       "Baldur1": "Baldur the Stonecleaver",
       "Baldur2": "Baldur the Stonesoul",
-      "Dragibus1": "Bradigus",
+      "Dragibus1": "Bradigus Thorle the Runecarver",
       "Grayle1": "Grayle the Farstrider",
+      "Iona1": "Iona the Unseen",
       "Kaya1": "Kaya the Wildborne",
       "Kaya2": "Kaya the Moonhunter & Laris",
+      "Kaya3": "Kaya the Wildheart",
       "Kromac1": "Kromac the Ravenous",
       "Kromac2": "Kromac, Champion of the Wurm",
       "Krueger1": "Krueger the Stormwrath",
@@ -18,6 +20,7 @@
       "Morvahna1": "Morvahna the Autumnblade",
       "Morvahna2": "Morvahna the Dawnshadow",
       "Tanith1": "Tanith the Feral Song",
+      "Una2": "Una the Skyhunter",
       "Wurmwood1": "Wurmwood, Tree of Fate"
     }
   },
@@ -28,7 +31,9 @@
       "Aurora1": "Aurora, Numen of Aerogenesis",
       "Axis1": "Axis, the Harmonic Enforcer",
       "Directrix1": "Iron Mother Directrix",
+      "Locke1": "Aurum Lucanum Athanor Locke",
       "Lucant1": "Father Lucant, Divinity Architect",
+      "Orion1": "Eminent Configurator Orion",
       "Syntherion1": "Forge Master Syntherion"
     }
   },
@@ -49,9 +54,11 @@
       "Goreshade2": "Goreshade the Cursed",
       "Goreshade3": "Goreshade, Lord of Ruin",
       "Mortenebra1": "Master Necrotech Mortenebra",
+      "Mortenebra2": "Mortenebra, Numen of Necrogenesis",
       "Scaverous1": "Lord Exhumator Scaverous",
       "Skarre1": "Pirate Queen Skarre",
       "Skarre2": "Skarre, Queen of the Broken Coast",
+      "Skarre3": "Skarre, Admiral of the Black Fleet",
       "Sturgis2": "Sturgis The Corrupted",
       "Terminus1": "Lich Lord Terminus",
       "Venethrax1": "Lich Lord Venethrax"
@@ -63,8 +70,10 @@
     "casters": {
       "Blaize1": "Constance Blaize, Knight of the Prophet",
       "Brisbane1": "Major Markus 'Siege' Brisbane",
+      "Brisbane2": "Colonel Markus 'Siege' Brisbane",
       "Caine1": "Lieutenant Allister Caine",
       "Caine2": "Captain Allister Caine",
+      "Caine3": "Caine's Hellslingers",
       "Darius1": "Captain E. Dominic Darius",
       "Haley1": "Captain Victoria Haley",
       "Haley2": "Major Victoria Haley",
@@ -90,6 +99,7 @@
       "Dreamer1": "The Dreamer & Phantasms",
       "Heretic1": "The Heretic",
       "King1": "The King of Nothing",
+      "TheOldWitch3": "Zevanna Agha, the Fate Keeper",
       "Wanderer1": "The Wanderer"
     }
   },
@@ -108,8 +118,10 @@
       "Malakov2": "Kommander Andrei Malakov",
       "Sorscha1": "Kommander Sorscha",
       "Sorscha2": "Forward Kommander Sorscha",
+      "Sorscha3": "Kommandant Sorscha Kratikoff",
       "Strakhov1": "Kommander Strakhov",
       "TheOldWitch1": "Zevanna Agha, the Old Witch of Khador",
+      "TheOldWitch2": "Zevanna Agha, the Fate Keeper",
       "Vlad1": "Vladimir, The Dark Prince",
       "Vlad2": "Vladimir Tzepesci, the Dark Champion",
       "Vlad3": "Vladimir Tzepesci, Great Prince of Umbrey",
@@ -124,9 +136,11 @@
     "casters": {
       "Absylonia1": "Absylonia, Terror of Everblight",
       "Absylonia2": "Absylonia, Daughter of Everblight",
+      "Anamag1": "Anamag the Doom Feaster",
       "Bethayne1": "Bethayne & Belphagor",
       "Fyanna2": "Fyanna, Scourge of Everblight",
       "Kallus1": "Kallus, Wrath of Everblight",
+      "Kallus2": "Kallus, Devastation of Everblight",
       "Kryssa1" : "Kryssa, Conviction of Everblight",
       "Lylyth1": "Lylyth, Herald of Everblight",
       "Lylyth2": "Lylyth, Shadow of Everblight",
@@ -148,6 +162,8 @@
       "Ashlynn1": "Ashlynn d'Elyse",
       "Bartolo1": "Captain Bartolo Montador",
       "Blaize1": "Constance Blaize, Knight of the Prophet",
+      "Caine3": "Caine's Hellslingers",
+      "Crosse2": "Lieutenant Crosse, Resistance Fighter",
       "Cyphon1": "Cognifex Cyphon",
       "Damiano1": "Captain Damiano",
       "Fiona1": "Fiona the Black",
@@ -167,6 +183,7 @@
     "casters": {
       "Arkadius1": "Dr. Arkadius",
       "Barnabas1": "Bloody Barnabas",
+      "Barnabas2": "Barnabas, Lord of Blood",
       "Calaban1": "Calaban, the Gravewalker",
       "Carver1": "Lord Carver",
       "Helga1": "Helga the Conqueror",
@@ -184,9 +201,11 @@
     "casters": {
       "Amon1": "High Allegiant Amon Ad-Raza",
       "Anson1": "Anson Durst, Rock of the Faith",
+      "Cyrenia1": "High Exemplar Cyrenia",
       "Durant2": "Sovereign Tristan Durant",
       "Feora1": "Feora, Priestess of the Flame",
       "Feora2": "Feora, Protector of the Flame",
+      "Feora3": "Feora, the Conquering Flame",
       "Harbinger1": "The Harbinger of Menoth",
       "Kreoss1": "High Exemplar Kreoss",
       "Kreoss2": "Grand Exemplar Kreoss",
@@ -208,6 +227,7 @@
     "casters": {
       "Elara2": "Elara, Death's Shadow",
       "Garryth1": "Garryth, Blade of Retribution",
+      "Goreshade4": "Lord Ghyrrshyld, the Forgiven",
       "Helynna1": "Magister Helynna",
       "Issyria1": "Issyria, Sibyl of Dawn",
       "Kaelyssa1": "Kaelyssa, The Night's Whisper",
@@ -227,17 +247,20 @@
     "casters": {
       "Hexeris1": "Lord Tyrant Hexeris",
       "Hexeris2": "Lord Arbiter Hexeris",
+      "Jalaam1": "Primus Jalaam",
       "Makeda1": "Archdomina Makeda",
       "Makeda2": "Supreme Archdomina Makeda",
       "Makeda3": "Makeda and the Exalted Court",
       "Mordikaar1": "Void Seer Mordikaar",
       "Morghoul1": "Master Tormentor Morghoul",
       "Morghoul2": "Lord Assassin Morghoul",
+      "Morghoul3": "Dominar Morghoul and Escorts",
       "Naaresh1": "Master Ascetic Naaresh",
       "Rasheth1": "Dominar Rasheth",
       "Xekaar1": "Beast Master Xekaar",
       "Xerxis1": "Tyrant Xerxis",
       "Xerxis2": "Xerxis, Fury of Halaak",
+      "Zaadesh2": "Lord Tyrant Zaadesh",
       "Zaal1": "Supreme Aptimus Zaal & Kovaas",
       "Zaal2": "Zaal, the Ancestral Advocate"
     }
@@ -258,9 +281,12 @@
       "Hoarluk1": "Hoarluk Doomshaper, Shaman of the Gnarls",
       "Hoarluk2": "Hoarluk Doomshaper, Rage of Dhunia",
       "Hoarluk3": "Hoarluk Doomshaper, Dire Prophet",
+      "Horgle2": "Horgle, the Anvil",
+      "Kolgrima1": "Kolgrima Stonetruth, Winter Witch",
       "Jarl1": "Jarl Skuld, Devil Of Thornwood",
       "Madrak1": "Madrak Ironhide, Thornwood Chieftain",
       "Madrak2": "Madrak Ironhide, World Ender",
+      "Madrak3": "Madrak, Great Chieftain",
       "Ragnor1": "Ragnor Skysplitter, the Runemaster"
     }
   }
