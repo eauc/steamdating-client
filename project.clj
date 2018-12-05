@@ -14,7 +14,7 @@
                  [phrase "0.1-alpha1"]
                  [re-frame "0.10.2" :exclusions [reagent]]
                  [reagent "0.7.0"]
-                 [secretary "1.2.3"]
+                 [clj-commons/secretary "1.2.4"]
                  [org.clojure/test.check "0.9.0"]]
   :plugins [[lein-ancient "0.6.12"]
             [lein-cljsbuild "1.1.7" :exclusions [org.clojure/clojure
