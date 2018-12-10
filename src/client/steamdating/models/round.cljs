@@ -454,7 +454,7 @@
 
 (defn table->group
   [table tables-groups-size]
-  (inc (mod table tables-groups-size)))
+  (quot (dec table) tables-groups-size))
 
 
 (defn choose-table
